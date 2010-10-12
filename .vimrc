@@ -153,13 +153,15 @@ if has('autocmd')
   au BufEnter    * let &titleold    = substitute(getcwd(), $HOME, "~", '')
 
   " file types for nonstandard/additional config files
-  au BufEnter *conkyrc*      setlocal filetype=conkyrc
-  au BufEnter *muttrc*       setlocal filetype=muttrc
+  au BufEnter *conkyrc       setlocal filetype=conkyrc
+  au BufEnter *muttrc        setlocal filetype=muttrc
   au BufEnter *.txt          setlocal filetype=text
   au BufEnter *.rem          setlocal filetype=remind
   au BufEnter *.xcolors      setlocal filetype=xdefaults
   au BufEnter *.rss          setlocal filetype=xml
   au BufEnter ~/.mutt/temp/* setlocal filetype=mail
+  au BufEnter *.hamlet       setlocal filetype=hamlet
+  au BufEnter *.cassius      setlocal filetype=cassius
 
   if $SCREEN_CONF_DIR != ""
     au BufEnter $SCREEN_CONF_DIR/* setlocal filetype=screen
@@ -172,6 +174,7 @@ if has('autocmd')
   au FileType make   setlocal shiftwidth=8
   au FileType python setlocal shiftwidth=4 tabstop=4
   au FileType text   setlocal formatoptions+=taw
+  au FileType hamlet setlocal formatoptions+=tw
 
 
   " web options {{{
@@ -340,7 +343,7 @@ function! CommentLines()
   endtry
 endfunction
 
-" what a mess this funciton is...
+" what a mess this function is...
 function! Htmlize()
   let found = 0
 

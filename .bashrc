@@ -114,7 +114,7 @@ _add_to_path() {
 ### Bash exports {{{
 
 # set path
-_add_to_path "$HOME/.bin" "$HOME/Code/bin" '/opt/android-sdk/tools'
+_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" '/opt/android-sdk/tools'
 
 # set browser
 $_isxrunning && _set_browser "$xbrowsers" || _set_browser "$browsers"
@@ -313,6 +313,33 @@ fi
 # }}}
 
 ### Bash functions {{{
+
+# cabal has no uninstall...
+cabalremove() {
+  [[ -d "$HOME/.cabal" ]] || return 1
+
+  local pkg="$1"
+
+  ghc-pkg unregister "$pkg" && find "$HOME/.cabal/" -depth -name "$pkg"'*' -exec rm -r {} \;
+}
+
+# sometimes i need a clean slate
+cabalremoveall() {
+  [[ -d "$HOME/.cabal" ]] || return 1
+
+  local pkg
+
+  for pkg in $(find "$HOME/.cabal/packages/*/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
+    cabalremove "$pkg"
+  done
+}
+
+# test out the new dev site
+devsite() {
+  [[ -d "$HOME/devsite" ]] || return 1
+
+  cd "$HOME/devsite" && runhaskell simple-server.hs
+}
 
 # combine pdfs into one using ghostscript
 combinepdf() {
