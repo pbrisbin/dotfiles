@@ -1,0 +1,14 @@
+# conkyrc file for dzen
+###
+
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+update_interval 1
+total_run_times 0
+mpd_host 192.168.0.5
+mpd_port 6600
+
+TEXT
+[ ${mpd_status} ${if_mpd_playing}- ${mpd_elapsed}/${mpd_length}$endif ] ^fg(\#909090)${mpd_title}^fg() by ^fg(\#909090)${mpd_artist}^fg() from ^fg(\#909090)${mpd_album}^fg()  Cpu: ^fg(\#909090)${cpu}%^fg()  Mem: ^fg(\#909090)${memperc}%^fg()  Net: ^fg(\#909090)${downspeedf eth0} / ${upspeedf eth0}^fg()  ${time %a %b %d %H:%M}  

@@ -1,0 +1,333 @@
+####################################################
+## this is example configuration file, copy it to ##
+## ~/.ncmpcpp/config and set up your preferences  ##
+####################################################
+#
+##### connection settings #####
+#
+## set it in order to make tag editor and renaming files work properly
+#
+#mpd_host = "localhost"
+mpd_host = "192.168.0.5"
+#
+mpd_port = "6600"
+#
+#mpd_music_dir = ""
+mpd_music_dir = "/home/patrick/Music"
+#
+#mpd_connection_timeout = "5"
+#
+#mpd_crossfade_time = "5"
+mpd_crossfade_time = "3"
+#
+##### music visualizer #####
+##
+## Note: In order to make music visualizer work you'll
+## need to use mpd fifo output, whose format parameter
+## has to be set to 44100:16:1. Example configuration:
+## (it has to be put into mpd.conf)
+##
+## audio_output {
+##        type            "fifo"
+##        name            "My FIFO"
+##        path            "/tmp/mpd.fifo"
+##        format          "44100:16:1"
+## }
+##
+#
+#visualizer_fifo_path = ""
+visualizer_fifo_path = "/tmp/mpd.fifo"
+#
+##
+## Note: To enable spectrum frequency visualization
+## you need to compile ncmpcpp with fftw3 support.
+##
+#
+#visualizer_type = "wave" (spectrum/wave)
+#
+##### system encoding #####
+##
+## if you use encoding other than utf8, set it in
+## order to handle utf8 encoded strings properly.
+##
+#
+#system_encoding = ""
+#
+##### delays #####
+#
+## delay after playlist highlighting will be disabled (0 = don't disable)
+#
+#playlist_disable_highlight_delay = "3"
+#
+## defines how long various messages are supposed to be visible
+#
+#message_delay_time = "3"
+#
+##### song format #####
+##
+## for song format you can use:
+##
+## %l - length
+## %f - filename
+## %D - directory
+## %a - artist
+## %t - title
+## %b - album
+## %y - year
+## %n - track number (01/12 -> 01)
+## %N - full track info (01/12 -> 01/12)
+## %g - genre
+## %c - composer
+## %p - performer
+## %d - disc
+## %C - comment
+## $R - begin right alignment
+##
+## you can also put them in { } and then it will be displayed
+## only if all requested values are available and/or define alternate
+## value with { }|{ } eg. {%a - %t}|{%f}
+##
+## text can also have different color than the main window has,
+## eg. if you want length to be green, write $3%l$9
+##
+## available values:
+##
+## - 0 - default window color (discards all other colors)
+## - 1 - black
+## - 2 - red
+## - 3 - green
+## - 4 - yellow
+## - 5 - blue
+## - 6 - magenta
+## - 7 - cyan
+## - 8 - white
+## - 9 - end of current color
+##
+## Note: colors can be nested.
+##
+#
+#song_list_format = "{%a - }{%t}|{$8%f$9}$R{$3(%l)$9}"
+song_list_format = "{$3[%l]} {$7%a} {$0%t} {$4%y} $R {%n} {$7%b}"
+#
+#song_status_format = "{{%a{ \"%b\"{ (%y)}} - }{%t}}|{%f}"
+song_status_format = "{%a - }{%t}"
+#
+#song_library_format = "{%n - }{%t}|{%f}"
+#
+#tag_editor_album_format = "{(%y) }%b"
+#
+#browser_playlist_prefix = "$2playlist$9 "
+#
+#selected_item_prefix = "$6"
+#
+#selected_item_suffix = "$9"
+#
+##
+## Note: Below variables are for alternative version of user's interface.
+## Their syntax supports all tags and colors listed above plus some extra
+## markers used for text attributes. They are followed by character '$'.
+## After that you can put:
+##
+## - b - bold text
+## - r - reverse colors
+## - a - use alternative character set
+##
+## If you don't want to use an attribute anymore, just put it again, but
+## this time insert character '/' between '$' and attribute character,
+## e.g. {$b%t$/b}|{$r%f$/r} will display bolded title tag or filename
+## with reversed colors.
+##
+#
+#alternative_header_first_line_format = "$b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b"
+#
+#alternative_header_second_line_format = "{{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}"
+#
+## colors are not supported for below variable
+#
+#song_window_title_format = "{%a - }{%t}|{%f}"
+#
+##### columns settings #####
+##
+## syntax of song columns list format is "column column etc."
+##
+## - syntax for each column is:
+##
+## (width of column)[column's color]{displayed tag}
+##
+## Note: Width is by default in %, if you want a column to
+## have fixed size, add 'f' after the value, e.g. (10)[white]{a}
+## will be the column that take 10% of screen (so the real column's
+## width will depend on actual screen size), whereas (10f)[white]{a}
+## will take 10 terminal cells, no matter how wide the screen is.
+##
+## - color is optional (if you want the default one, type [])
+##
+## Note: You can give a column additional attributes by putting appropriate
+## character after displayed tag character. Available attributes are:
+##
+## - r - column will be right aligned
+## - E - if tag is empty, empty tag marker won't be displayed
+##
+## E.g. {lr} will give you right aligned column of lengths.
+##
+#
+#song_columns_list_format = "(7f)[green]{l} (25)[cyan]{a} (40)[]{t} (30)[red]{b}"
+#
+##### various settings #####
+#
+##
+## Note: Custom command that will be executed each
+## time song changes. Useful for notifications etc.
+##
+## Attention: It doesn't support song format anymore.
+## Use `ncmpcpp --now-playing SONG_FORMAT` instead.
+##
+#execute_on_song_change = ""
+#
+#playlist_show_remaining_time = "no"
+#
+#playlist_display_mode = "classic" (classic/columns)
+#
+#browser_display_mode = "classic" (classic/columns)
+#
+#search_engine_display_mode = "classic" (classic/columns)
+#
+#incremental_seeking = "yes"
+#
+#seek_time = "1"
+#
+#autocenter_mode = "no"
+autocenter_mode = "yes"
+#
+#progressbar_look = "=>"
+progressbar_look = "--"
+#
+#default_place_to_search_in = "database" (database/playlist)
+#
+#user_interface = "classic" (classic/alternative)
+#
+#media_library_left_column = "a" (possible values: a,y,g,c,p, legend above)
+#
+#default_find_mode = "wrapped" (wrapped/normal)
+#
+#default_space_mode = "add" (add/select)
+#
+#default_tag_editor_left_col = "albums" (albums/dirs)
+default_tag_editor_left_col = "dirs" (albums/dirs)
+#
+#default_tag_editor_pattern = "%n - %t"
+#
+#header_visibility = "yes"
+#
+#statusbar_visibility = "yes"
+#
+#header_text_scrolling = "yes"
+#
+#fancy_scrolling = "yes"
+#
+#cyclic_scrolling = "no"
+cyclic_scrolling = "yes"
+#
+#lines_scrolled = "2"
+#
+#follow_now_playing_lyrics = "no"
+follow_now_playing_lyrics = "yes"
+#
+#ncmpc_like_songs_adding = "no" (enabled - add/remove, disabled - always add)
+#
+#show_hidden_files_in_local_browser = "no"
+#
+#display_screens_numbers_on_start = "yes"
+#
+#jump_to_now_playing_song_at_start = "yes"
+#
+#ask_before_clearing_main_playlist = "no"
+ask_before_clearing_main_playlist = "yes"
+#
+#clock_display_seconds = "no"
+#
+#display_bitrate = "no"
+display_bitrate = "yes"
+#
+#display_remaining_time = "no"
+#
+#regular_expressions = "basic" (basic/extended)
+#
+##
+## Note: If below is enabled, ncmpcpp will ignore leading
+## "The" word while sorting items in browser, tags in
+## media library, etc.
+##
+#ignore_leading_the = "no"
+#
+#block_search_constraints_change_if_items_found = "yes"
+#
+#mouse_support = "yes"
+#
+#empty_tag_marker = "<empty>"
+#
+#enable_window_title = "yes"
+#
+##
+## Note: These triggers will allow you to phisically remove
+## files and directories from your hdd in using ncmpcpp's
+## browser screen.
+##
+#
+#allow_physical_files_deletion = "no"
+#
+#allow_physical_directories_deletion = "no"
+#
+##### lyrics support #####
+##
+## supported lyrics databases:
+##
+## - 1 - lyricsplugin.com
+##
+#
+#lyrics_database = "1"
+#
+#external_editor = ""
+#
+#use_console_editor = "no" (set to yes, if your editor is console app)
+#
+##### colors definitions #####
+#
+#colors_enabled = "yes"
+#
+#empty_tag_color = "cyan"
+#
+#header_window_color = "default"
+#
+#volume_color = "default"
+#
+#state_line_color = "default"
+#
+#state_flags_color = "default"
+#
+#main_window_color = "yellow"
+main_window_color = "white"
+#
+#color1 = "white"
+#
+#color2 = "green"
+color2 = "blue"
+#
+#main_window_highlight_color = "yellow"
+main_window_highlight_color = "white"
+#
+#progressbar_color = "default"
+#
+#statusbar_color = "default"
+#
+#alternative_ui_separator_color = "black"
+#
+#active_column_color = "red"
+#
+#window_border_color = "green"
+window_border_color = "blue"
+#
+#active_window_border = "red"
+active_window_border = "yellow"
+#
+#

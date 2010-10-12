@@ -1,0 +1,225 @@
+# vim:ft=config
+#
+# further reading: http://.com/pages/irssi-setup.html
+#
+###
+
+servers = (
+  {
+    address = "irc.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+    use_ssl = "no";
+    ssl_verify = "no";
+    autoconnect = "yes";
+  },
+
+  {
+    address = "irc.oftc.net";
+    chatnet = "oftc";
+    port = "6667";
+    use_ssl = "no";
+    ssl_verify = "no";
+    autoconnect = "no";
+  }
+);
+
+chatnets = {
+  Freenode = {
+    type = "IRC";
+    nick = "brisbin";
+    autosendcmd = "/msg nickserv identify ;wait 2000";
+  };
+  oftc = { type = "IRC"; };
+};
+
+channels = (
+  { name = "#archlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
+  {
+    name = "#archlinux-offtopic";
+    chatnet = "Freenode";
+    autojoin = "Yes";
+  },
+  { name = "#xmonad"; chatnet = "Freenode"; autojoin = "Yes"; }
+);
+
+aliases = {
+  J = "join";
+  LEAVE = "part";
+  E = "exec";
+  EO = "exec -o";
+  EXIT = "quit";
+  LL = "lastlog";
+  W = "window";
+  M = "mark";
+  WC = "window close";
+  WK = "window kill";
+  WN = "window new hide";
+  RUN = "SCRIPT LOAD";
+  Q = "QUERY";
+};
+
+statusbar = {
+  # formats:
+  # when using {templates}, the template is shown only if it's argument isn't
+  # empty unless no argument is given. for example {sb} is printed always,
+  # but {sb $T} is printed only if $T isn't empty.
+
+  items = {
+    # start/end text in statusbars
+    barstart = "{sbstart}";
+    barend = "{sbend}";
+
+    topicbarstart = "{topicsbstart}";
+    topicbarend = "{topicsbend}";
+
+    # treated "normally", you could change the time/user name to whatever
+    time = "{sb $Z}";
+    user = "{sb $N}";
+
+    # treated specially .. window is printed with non-empty windows,
+    # window_empty is printed with empty windows
+    window = "{sb $winref:$tag/$itemname{sbmode $M}}";
+    window_empty = "{sb $winref{sbservertag $tag}}";
+    prompt = "{prompt $[.15]itemname}";
+    prompt_empty = "{prompt $winname}";
+    topic = " $topic";
+    topic_empty = " Irssi v$J - http://irssi.org/help/";
+
+    # all of these treated specially, they're only displayed when needed
+    lag = "{sb Lag: $0-}";
+    act = "{sb Act: $0-}";
+    more = "-- more --";
+  };
+
+  # there's two type of statusbars. root statusbars are either at the top
+  # of the screen or at the bottom of the screen. window statusbars are at
+  # the top/bottom of each split window in screen.
+  default = {
+    # the "default statusbar" to be displayed at the bottom of the window.
+    # contains all the normal items.
+    window = {
+      disabled = "yes";
+
+      # window, root
+      type = "window";
+      # top, bottom
+      placement = "bottom";
+      # number
+      position = "0";
+      # active, inactive, always
+      visible = "active";
+
+      # list of items in statusbar in the display order
+      items = {
+        barstart = { priority = "100"; };
+        time = { };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+        active = { };
+        act = { };
+      };
+    };
+
+    # statusbar to use in inactive split windows
+    window_inact = {
+      type = "window";
+      placement = "bottom";
+      position = "1";
+      visible = "inactive";
+      items = {
+        barstart = { priority = "100"; };
+        window = { };
+        window_empty = { };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    # we treat input line as yet another statusbar :) It's possible to
+    # add other items before or after the input line item.
+    prompt = {
+      type = "root";
+      placement = "bottom";
+      # we want to be at the bottom always
+      position = "100";
+      visible = "always";
+      items = {
+        barstart = { priority = "100"; };
+        time = { };
+        user = { };
+        prompt = { priority = "-1"; };
+        prompt_empty = { priority = "-1"; };
+        # treated specially, this is the real input line.
+        input = { priority = "10"; };
+      };
+    };
+
+    # topicbar
+    topic = {
+      type = "root";
+      placement = "bottom";
+      position = "1";
+      visible = "always";
+      items = {
+        topicbarstart = { priority = "100"; };
+        topic = { };
+        topic_empty = { };
+        topicbarend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+  };
+};
+
+settings = {
+  core = {
+    real_name = "Patrick Brisbin";
+    user_name = "patrick";
+    nick = "brisbin";
+  };
+
+  "fe-text" = { actlist_sort = "refnum"; };
+
+  "fe-common/core" = {
+    emphasis = "OFF";
+    theme = "my";
+    beep_msg_level = "NOTICE MSGS HILIGHT";
+    bell_beeps = "no";
+    hilight_nick_matches = "no";
+    autolog_path = "~/.logs/irclogs/$tag/$0.log";
+    autolog = "yes";
+  };
+
+  "perl/core/scripts" = {
+    neat_maxlength = "13";
+    awl_display_key = "%w$N.$H$C$S";
+    awl_position = "0";
+    awl_sbar_maxlength = "no";
+    awl_maxlines = "1";
+    screen_away_message = "= screen detached, be back later.";
+  };
+};
+
+ignores = ( { level = "JOINS PARTS QUITS NICKS"; } );
+
+hilights = (
+  { text = "brisbin"; nick = "no"; word = "no"; fullword = "yes"; },
+  { text = ""; nick = "no"; word = "no"; fullword = "yes"; },
+  { text = "brisbin33"; nick = "no"; word = "no"; fullword = "yes"; },
+  { text = "brisbin34"; nick = "no"; word = "no"; fullword = "yes"; },
+  { text = "brisbin35"; nick = "no"; word = "no"; fullword = "yes"; }
+);
+
+logs = { };

@@ -1,0 +1,27 @@
+###
+# mutt 256 colors file
+###
+
+# source main colors and override
+source ~/.mutt/colors.muttrc
+
+# color MLs
+  color index      color69       default "~u"
+
+# uncolor certain messages
+uncolor index "~P"
+uncolor index "~C @.com"
+uncolor index "~N ~u"
+uncolor index "~N !~u"
+uncolor index "~T"
+uncolor index "~D"
+
+# and recolor them appropriately
+  color index      color240      default "~P"
+  color index      color120      default "~C @.com"
+  color index      color81       default "~N ~u"  # new ML mail
+  color index      brightgreen   default "~T"
+  color index      brightred     default "~D"
+
+# smileys
+  color body       color172      default "(^| )+(:[-^]?[][)(><}{|/DP])[\.\ $]+"

@@ -1,0 +1,106 @@
+#!/bin/bash
+#
+# aurget config file
+#
+###
+
+#
+# the exact command used to install the built packages. --asdeps will be
+# automatically added when appropriate. use --popt to add any
+# additional options at runtime.
+###
+if which pacman-color &>/dev/null; then
+  pacman_command='sudo pacman-color --noconfirm -U'
+else
+  pacman_command='sudo pacman --noconfirm -U'
+fi
+
+#
+# the exact command used to build packages. use --mopt to add any
+# additional options at runtime.
+###
+makepkg_command='makepkg -f -s --noconfirm'
+
+#
+# by default, the value of $EDITOR is used to edit pkgbuilds.
+# you can override this here if you'd like
+###
+pkgbuild_editor=
+
+#
+# where to save built packages. leave empty to use the value of PKGDEST
+# in makepkg.conf (or the current working directory if that's blank).
+###
+package_directory="$HOME/Packages"
+
+#
+# where to download source files and do the actual building. aurget
+# will create subdirectories named after the packages being built.
+# leave blank to the use current working dorectory. this replaces the
+# deprecated option source_directory.
+###
+build_directory="$HOME/Sources"
+
+#
+# set this as false to not remove all source files after building a
+# package.
+###
+discard_sources=true
+
+#
+# set this to override the above when building development packages
+# as defined by development_regex.
+###
+dont_discard_devels=true
+
+#
+# this regex is matched against package names to determine if a package
+# is a development package. development packages are not checked for
+# available upgrades but can be upgraded explicitly by passing --devel.
+###
+development_regex='.*-git$\|.*-hg$\|.*-svn$\|.*-darcs$\|.*-cvs$\|^ffcast$'
+
+#
+# set this to true and aurget will remove all makedepends that were
+# installed as part of the operation as the last step in said operation
+###
+remove_makedepends=false
+
+#
+# the default sync mode is the behavior when aurget -S <package> is
+# called. it can be one of install, build, or download
+###
+sync_mode=install
+
+#
+# this determines how the editing of pkgbuilds is handled. it can be
+# one of always, never, or prompt. this replaces the deprecated option
+# prompt_to_edit (which can still be used). edit_pkgbuilds=prompt is
+# analagous to prompt_to_edit=true, and edit_pkgbuilds=never is analagous
+# to prompt_to_edit=false
+###
+edit_pkgbuilds='never'
+
+#
+# set this as true to automatically resolve dependencies.
+###
+resolve_dependencies=true
+
+#
+# this is a space separated list of package names to be ignored
+###
+ignore_packages='eclim'
+
+#
+# by default, aurget uses no color. uncomment to enable/customize
+###
+nocolor="\e[0m"   # reset color
+colorW="\e[1;37m" # white
+colorB="\e[1;34m" # blue
+colorR="\e[1;31m" # red
+colorG="\e[1;32m" # green
+colorY="\e[1;33m" # yellow
+colorM="\e[1;35m" # magenta
+
+# no touching
+version="2.0-1"

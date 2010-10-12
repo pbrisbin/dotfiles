@@ -1,0 +1,40 @@
+[general]
+ui = TTY.TTYUI
+accounts = GMail,GMX
+
+[Account GMail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+maxsyncaccounts = 3
+maxconnections = 3
+
+[Account GMX]
+localrepository = GMX-Local
+remoterepository = GMX-Remote
+maxsyncaccounts = 3
+maxconnections = 3
+
+[Repository Gmail-Local]
+type = Maildir
+localfolders = ~/Mail/GMail
+
+[Repository GMX-Local]
+type = Maildir
+localfolders = ~/Mail/GMX
+
+[Repository Gmail-Remote]
+type = Gmail
+remoteuser = @gmail.com
+remotepass = 
+realdelete = no
+nametrans = lambda folder: re.sub('^inbox$', 'INBOX', re.sub(' +', '_', re.sub(r'.*/(.*)$', r'\1', folder).lower()))
+
+[Repository GMX-Remote]
+type = IMAP
+remotehost = imap.gmx.com
+remoteport = 143
+remoteuser = @gmx.com
+remotepass = 
+nametrans = lambda folder: re.sub('^inbox$', 'INBOX', folder.lower())
+
+# vim: ft=cfg tw=0

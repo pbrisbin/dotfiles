@@ -1,0 +1,12 @@
+# vim: ft=uzbl
+#
+# used only for ../bin/webpreview
+#
+###
+ 
+set socket_dir         = /tmp
+set status_background  = #303030
+set uri_section        = \@[\@uri]\@
+set status_format      = <span font_family="Verdana" foreground="#909090">@uri_section</span>
+set title_format_short = Uzbl - \@TITLE
+set title_format_long  = @title_format_short

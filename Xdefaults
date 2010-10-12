@@ -1,0 +1,71 @@
+! Cursor theme
+!Xcursor.theme: Obsidian
+Xcursor.theme: CG
+
+! Colors
+!#include "/home/patrick/.xcolors/bright_neon.xcolors"
+!#include "/home/patrick/.xcolors/subtle_neon.xcolors"
+!#include "/home/patrick/.xcolors/theme_ten.xcolors"
+!#include "/home/patrick/.xcolors/taters_dark.xcolors"
+!#include "/home/patrick/.xcolors/zenburn.xcolors"
+#include "/home/patrick/.xcolors/jasonwryan.xcolors"
+
+! Fonts {{{
+Xft.antialias: true
+Xft.hinting:   true
+Xft.rgba:      rgb
+Xft.hintstyle: hintfull
+
+! }}}
+
+! Urxvt {{{
+URxvt*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+
+URxvt*scrollBar:  false
+URxvt*jumpScroll: true
+URxvt*skipScroll: true
+URxvt*visualBell: false
+
+URxvt*depth:       32
+URxvt*buffered:    true
+URxvt*foreground:  #dcdccc
+URxvt*background:  rgba:0000/0000/0000/dddd
+URxvt*transparent: false
+URxvt*fading:      2%
+URxvt*fadeColor:   grey
+URxvt*shading:     75
+
+URxvt*intensityStyles: true
+URxvt*termName:        rxvt-256color
+URxvt*urgentOnBell:    true
+
+! URLs in rxvt
+URxvt*perl-ext-common: default,matcher
+URxvt*urlLauncher:     browser
+URxvt*matcher.button:  1
+
+! }}}
+
+! Xterm {{{
+xterm*Geometry:   100x60
+xterm*foreground: #909090
+xterm*background: #303030
+xterm*font:       -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+xterm*boldFont:   -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+xterm*scrollBar:  false
+xterm*termName:   xterm-256color
+
+! }}}
+
+! Xmessage {{{
+Xmessage*font:                  -xos4-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
+Xmessage*background:            #303030
+Xmessage*foreground:            #909090
+Xmessage*form.*.shapeStyle:     rectangle
+Xmessage*Scrollbar.width:       0
+Xmessage*Scrollbar.borderWidth: 0
+Xmessage*Buttons:               Quit
+Xmessage*defaultButton:         Quit
+
+! }}}

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+
+<menu id="system-menu" label="Openbox">
+  <item label="Configure">
+    <action name="Execute">
+      <command>obconf</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Reconfigure">
+    <action name="Reconfigure" />
+  </item>
+</menu>
+
+<menu id="power-menu" label="Session">
+  <item label="Logout">
+    <action name="Execute">
+      <execute>/home/patrick/.bin/leave -e</execute>
+    </action>
+  </item>
+  <item label="Reboot">
+    <action name="Execute">
+      <execute>/home/patrick/.bin/leave -r</execute>
+    </action>
+  </item>
+  <item label="Shutdown">
+    <action name="Execute">
+      <execute>/home/patrick/.bin/leave -s</execute>
+    </action>
+  </item>
+</menu>
+
+<menu id="term-menu" label="Terminals">
+  <item label="Single Rxvt">
+    <action name="Execute">
+      <command>urxvtc</command>
+    </action>
+  </item>
+  <item label="Double Rxvt">
+    <action name="Execute">
+      <execute>/home/patrick/.config/openbox/dualtermsu</execute>
+    </action>
+  </item>
+  <item label="Single Xterm">
+    <action name="Execute">
+      <command>xterm</command>
+    </action>
+  </item>
+  <item label="Double Xterm">
+    <action name="Execute">
+      <execute>/home/patrick/.config/openbox/dualtermsx</execute>
+    </action>
+  </item>
+</menu>
+
+<menu id="web-menu" label="Browsers">
+  <item label="Firefox">
+    <action name="Execute">
+      <command>firefox</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+      <wmclass>Firefox</wmclass>
+    </action>
+  </item>
+  <item label="Uzbl">
+    <action name="Execute">
+      <command>uzbl -u "www.blackle.com"</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="root-menu" label="Openbox 3">
+  <item label="System Monitor">
+    <action name="Execute">
+      <command>urxvtc -g 120x40 -e htop</command>
+    </action>
+  </item>
+  <item label="Run...">
+    <action name="Execute">
+      <command>gmrun</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Mixer">
+    <action name="Execute">
+      <command>ossxmix</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <menu id="term-menu"/>
+  <separator />
+  <item label="Music">
+    <action name="Execute">
+      <command>urxvtc -g 120x40 -e ncmpcpp</command>
+    </action>
+  </item>
+  <menu id="web-menu"/>
+  <item label="Mail">
+    <action name="Execute">
+      <command>urxvtc -g 150x50 -e mutt</command>
+    </action>
+  </item>
+  <item label="Chat">
+    <action name="Execute">
+      <command>pidgin</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <separator />
+  <item label="Home">
+    <action name="Execute">
+      <command>pcmanfm /home/patrick/</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Root">
+    <action name="Execute">
+      <command>pcmanfm /</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <separator />
+  <menu id="system-menu"/>
+  <menu id="power-menu"/>
+  <separator />
+  <menu id="pipe-weather" label="Weather" execute="python ~/.config/openbox/gweather.py BOSTON"/>
+</menu>
+</openbox_menu>

@@ -1,0 +1,15 @@
+###
+# gmx specific options
+###
+
+color status cyan default
+
+  set from      = "@gmx.com"
+  set sendmail  = "/usr/bin/msmtp -a gmx"
+  set mbox      = "+GMX/archive"
+  set record    = "+GMX/sent"
+  set postponed = "+GMX/drafts"
+
+macro index A "<save-message>+GMX/archive<enter>" "archive message"
+macro index D "<save-message>+GMX/trash<enter>"   "move message to the trash"
+macro index S "<save-message>+GMX/spam<enter>" 	  "mark message as spam"
