@@ -443,34 +443,34 @@ google() {
 }
 
 # go to google for a definition 
-#define() {
-#  _have lynx || return 1
-#
-#  local lang charset tmp
-#
-#  lang="${LANG%%_*}"
-#  charset="${LANG##*.}"
-#  tmp='/tmp/define'
-#  
-#  lynx -accept_all_cookies \
-#       -dump \
-#       -hiddenlinks=ignore \
-#       -nonumbers \
-#       -assume_charset="$charset" \
-#       -display_charset="$charset" \
-#       "http://www.google.com/search?hl=$lang&q=define%3A+$1&btnG=Google+Search" | grep -m 5 -C 2 -A 5 -w "*" > "$tmp"
-#
-#  if [[ ! -s "$tmp" ]]; then
-#    echo -e "No definition found.\n"
-#  else
-#    echo -e "$(grep -v Search "$tmp" | sed "s/$1/\\\e[1;32m&\\\e[0m/g")\n"
-#  fi
-#
-#  rm -f "$tmp"
-#}
+define() {
+  _have lynx || return 1
+
+  local lang charset tmp
+
+  lang="${LANG%%_*}"
+  charset="${LANG##*.}"
+  tmp='/tmp/define'
+  
+  lynx -accept_all_cookies \
+       -dump \
+       -hiddenlinks=ignore \
+       -nonumbers \
+       -assume_charset="$charset" \
+       -display_charset="$charset" \
+       "http://www.google.com/search?hl=$lang&q=define%3A+$1&btnG=Google+Search" | grep -m 5 -C 2 -A 5 -w "*" > "$tmp"
+
+  if [[ ! -s "$tmp" ]]; then
+    echo -e "No definition found.\n"
+  else
+    echo -e "$(grep -v Search "$tmp" | sed "s/$1/\\\e[1;32m&\\\e[0m/g")\n"
+  fi
+
+  rm -f "$tmp"
+}
 
 #
-# man readlink
+# just use readlink -f
 #
 # accepts a relative path and returns an absolute 
 #rel2abs() {
