@@ -162,6 +162,7 @@ if has('autocmd')
   au BufEnter ~/.mutt/temp/* setlocal filetype=mail
   au BufEnter *.hamlet       setlocal filetype=hamlet
   au BufEnter *.cassius      setlocal filetype=cassius
+  au BufEnter *.pdc          setlocal filetype=pdc
 
   if $SCREEN_CONF_DIR != ""
     au BufEnter $SCREEN_CONF_DIR/* setlocal filetype=screen
@@ -174,7 +175,8 @@ if has('autocmd')
   au FileType make   setlocal shiftwidth=8
   au FileType python setlocal shiftwidth=4 tabstop=4
   au FileType text   setlocal formatoptions+=taw
-  au FileType hamlet setlocal formatoptions+=tw, spell
+  au FileType hamlet setlocal formatoptions+=tw
+  au FileType pdc    setlocal formatoptions+=tw, shiftwidth=4
 
 
   " web options {{{
