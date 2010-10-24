@@ -34,13 +34,10 @@ chatnets = {
 };
 
 channels = (
-  { name = "#archlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  {
-    name = "#archlinux-offtopic";
-    chatnet = "Freenode";
-    autojoin = "Yes";
-  },
-  { name = "#xmonad"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#archlinux";          chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#archlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#xmonad";             chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#haskell";            chatnet = "Freenode"; autojoin = "Yes"; }
 );
 
 aliases = {
