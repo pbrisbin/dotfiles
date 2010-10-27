@@ -631,11 +631,31 @@ wht='\[\e[1;37m\]'      # bold white
 # root is bold red, user is bold blue
 $_isroot && bld='\[\e[1;31m\]' || bld='\[\e[1;34m\]'
 
-# change prompt behavior in screen -- why does this never work?!
+# loosely based on  rson's
+_git_prompt() {
+  if [[ -d .git ]]; then
+    # determine repo/branch; todo: find a better way
+    git_repo="$(git remote -v | tail -n 1 | sed 's|^.*/\(.*\)\.git .*$|\1|g')"
+    git_branch="$(basename "$(git symbolic-ref HEAD 2>/dev/null)")"
+    
+    # note changes yet to be committed
+    if git status | grep -Fq 'nothing to commit (working directory clean)'; then
+      git_status=''
+    else
+      git_status='*'
+    fi
+
+    echo git::${git_repo}:${git_branch}${git_status}
+  else
+    # normal directory display
+    echo ${PWD/$HOME/\~}
+  fi
+}
+
+# change prompt behavior in screen
 [[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
 
-#export PS1="$bld//$wht\h$bld/$wht\$?$bld/$wht\w/ $nrm"
-export PS1="$_screen$bld//$wht\h$bld/$wht\$?$bld/$wht\w/ $nrm"
+export PS1="${_screen}$bld//$wht\h$bld/$wht\$?$bld/$wht\$(_git_prompt)/ $nrm"
 export PS2="$bld// $nrm"
 
 # fallback prompt
