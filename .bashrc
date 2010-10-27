@@ -645,7 +645,7 @@ _git_prompt() {
       git_status='*'
     fi
 
-    echo git::${git_repo}:${git_branch}${git_status}
+    echo git/${git_repo}:${git_branch}${git_status}
   else
     # normal directory display
     echo ${PWD/$HOME/\~}
