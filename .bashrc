@@ -183,20 +183,11 @@ fi
 alias la='ls -la'
 alias ll='ls -l'
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias cd..='cd ..'
-alias cd...='cd ../..'
-
 alias df='df -h'
 alias grep='grep --color=auto'
 alias mkdir='mkdir -p'
 alias myip='lynx -dump http://tnx.nl/ip'
-alias nocomment='grep -Ev "^\s*(#|$)"'
 alias path='echo -e "${PATH//:/\n}"'
-alias rawcode='grep -cv ^#\|^$'
-alias sizeof='du -sh'
-alias xmodocs='$BROWSER "http://www.eng.uwaterloo.ca/~aavogt/xmonad/docs/"'
 
 # only if we have mpc
 if _have mpc; then
@@ -238,7 +229,6 @@ fi
 _have mytime    && alias t='mytime'
 _have curlpaste && alias pastie='curlpaste -s ghost -n pbrisbin'
 _have hoogle    && alias hoogle='hoogle --color=true --n=10'
-_have tree      && alias lt='tree'
 _have x11vnc    && alias vncup='x11vnc -nopw -ncache 10 -display :0 -localhost'
 _have xprop     && alias xp='xprop | grep "^WM_WINDOW_ROLE\|^WM_CLASS\|^WM_NAME"'
 
@@ -253,8 +243,6 @@ if _have mplayer; then
   alias playiso='mplayer dvd://1 -dvd-device'
   alias playdvd='mplayer dvdnav:// /dev/sr0'
   alias playcda='mplayer cdda:// -cdrom-device /dev/sr0 -cache 10000'
-
-  alias wers='mplayer -playlist http://wers.org/wers.asx'
 fi
 
 # only for rdesktop
@@ -334,13 +322,6 @@ cabalremoveall() {
   done
 }
 
-# test out the new dev site
-devsite() {
-  [[ -d "$HOME/devsite" ]] || return 1
-
-  cd "$HOME/devsite" && runhaskell simple-server.hs
-}
-
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs || return 1
@@ -372,7 +353,7 @@ thumbit() {
 
     [[ -z "$thumb" ]] && return 1
 
-    cp "$pic" "$thumb" && mogrify -resize 20% "$thumb"
+    cp "$pic" "$thumb" && mogrify -resize 10% "$thumb"
   done
 }
 
@@ -533,31 +514,6 @@ printr() {
       echo "$REPLY"
     done) | enscript -p - | psselect -r | lp
   fi
-}
-
-# print a webpage to pdf
-web2pdf() {
-  $_isxrunning || return 1
-  _have wkhtmltopdf || return 1
-
-  local file="$1"; shift
-
-  for url in "$@"; do
-    wget -O - "$url" | wkhtmltopdf --no-background --page-size A4 --margin-top 20 --margin-bottom 20 --margin-left 24 - "$file"
-  done
-}
-
-# print a webpage from CLI
-web2paper() {
-  $_isxrunning || return 1
-  _have wkhtmltopdf || return 1
-
-  local tmp='/tmp/webpage.pdf'
-
-  for url in "$@"; do
-    wget -O - "$url" | wkhtmltopdf --no-background --page-size A4 --margin-top 20 --margin-bottom 20 --margin-left 24 - "$tmp"
-    enscript -p - "$tmp" | psselect -r | lp && rm /tmp/webpage.pdf
-  done
 }
 
 # set an ad-hoc GUI timer 
