@@ -176,34 +176,12 @@ if has('autocmd')
   au FileType python setlocal shiftwidth=4 tabstop=4
   au FileType text   setlocal formatoptions+=taw
   au FileType hamlet setlocal formatoptions+=tw
-  au FileType pdc    setlocal formatoptions+=tw, shiftwidth=4
+  au FileType pdc    call SetPdcOpts()
 
-
-  " web options {{{
-  au BufEnter *.html setlocal filetype=php
-  au BufEnter *.html call SetWebOpts()
-  au BufEnter *.html call SetHtmlOpts()
-
-  au BufEnter *.php  call SetWebOpts()
-  au BufEnter *.php  call SetPhpOpts()
-
-  au BufEnter *.phps setlocal filetype=php
-  au BufEnter *.phps call SetPhpOpts()
-
-  function! SetWebOpts()
-    command! CheckPHP :! php -l %
-    command! OpenPHP  :! php %
-
-    if $DISPLAY != ""
-      command! Open :! webpreview --open %
-      command! Reload :! webpreview --reload %
-
-      au BufWritePost /srv/http/pages/* silent Reload
-    endif
-  endfunction
-
-  function! SetHtmlOpts()
-    setlocal spell textwidth=80 formatoptions+=t
+  " pandoc options {{{
+  function! SetPdcOpts()
+    setlocal formatoptions+=tw
+    setlocal shiftwidth=4
 
     " reformat paragraphs
     nmap <F1> gqap
@@ -213,13 +191,29 @@ if has('autocmd')
     map! <F2> <ESC>gqqji
     map! <F3> <ESC>kgqji
 
-    " comments
-    let g:StartComment = "<!--"
-    let g:EndComment   = "-->"
+    if $DISPLAY != ""
+      command! Open :! webpreview --open %
+      command! Reload :! webpreview --reload %
+
+      au BufWritePost /srv/http/pandoc/* silent Reload
+    endif
+  endfunction
+  " }}}
+
+  " web options {{{
+  au BufEnter *.html call SetHtmlOpts()
+  au BufEnter *.php  call SetPhpOpts()
+
+  function! SetHtmlOpts()
+    let g:StartComment = "<!-- "
+    let g:EndComment   = " -->"
   endfunction
 
   function! SetPhpOpts()
     setlocal shiftwidth=4
+
+    command! CheckPHP :! php -l %
+    command! OpenPHP  :! php %
 
     let g:StartComment = "//"
   endfunction
