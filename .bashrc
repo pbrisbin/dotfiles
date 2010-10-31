@@ -191,8 +191,6 @@ alias path='echo -e "${PATH//:/\n}"'
 
 # only if we have mpc
 if _have mpc; then
-  alias np='mpc --format "  %title% by %artist% #[%album%#]" | head -n1'
-
   alias add='mpc add'
   alias addall='mpc --no-status clear && mpc ls | mpc --no-status add && mpc --no-status play; np'
 
