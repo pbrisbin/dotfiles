@@ -315,7 +315,7 @@ cabalremoveall() {
 
   local pkg
 
-  for pkg in $(find "$HOME/.cabal/packages/*/" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
+  for pkg in $(find "$HOME/.cabal/packages"/*/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
     cabalremove "$pkg"
   done
 }
