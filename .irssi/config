@@ -116,7 +116,6 @@ statusbar = {
         barstart = { priority = "100"; };
         time = { };
         user = { };
-        window = { };
         window_empty = { };
         lag = { priority = "-1"; };
         more = { priority = "-1"; alignment = "right"; };
@@ -189,6 +188,7 @@ settings = {
     real_name = "Patrick Brisbin";
     user_name = "patrick";
     nick = "brisbin";
+    awaylog_file = "\"\"";
   };
 
   "fe-text" = { actlist_sort = "refnum"; };
@@ -224,3 +224,71 @@ hilights = (
 );
 
 logs = { };
+windows = {
+  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  2 = {
+    items = (
+      {
+        type = "QUERY";
+        chat_type = "IRC";
+        name = "nickserv";
+        tag = "Freenode";
+      }
+    );
+  };
+  3 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#archlinux";
+        tag = "Freenode";
+      }
+    );
+  };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#archlinux-offtopic";
+        tag = "Freenode";
+      }
+    );
+  };
+  5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#xmonad";
+        tag = "Freenode";
+      }
+    );
+  };
+  6 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#haskell";
+        tag = "Freenode";
+      }
+    );
+  };
+  7 = {
+    items = (
+      {
+        type = "QUERY";
+        chat_type = "IRC";
+        name = "Ghost1227";
+        tag = "Freenode";
+      }
+    );
+  };
+  8 = { name = "hilight"; sticky = "yes"; };
+};
+mainwindows = {
+  1 = { first_line = "7"; lines = "77"; };
+  8 = { first_line = "1"; lines = "6"; };
+};
