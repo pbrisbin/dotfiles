@@ -192,12 +192,12 @@ alias path='echo -e "${PATH//:/\n}"'
 # only if we have mpc
 if _have mpc; then
   alias add='mpc add'
-  alias addall='mpc --no-status clear && mpc ls | mpc --no-status add && mpc --no-status play; np'
+  alias addall='mpc --no-status clear && mpc ls | mpc --no-status add && mpc play'
 
-  alias P='mpc --no-status toggle; np'
-  alias n='mpc --no-status next; np'
-  alias p='mpc --no-status prev; np'
-  alias s='mpc --no-status stop'
+  alias P='mpc toggle'
+  alias n='mpc next'
+  alias p='mpc prev'
+  alias s='mpc stop'
 fi
 
 if _have ossvol; then
