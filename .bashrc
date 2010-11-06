@@ -208,6 +208,7 @@ fi
 
 # only if we have a screen_conf
 if [[ -d "$SCREEN_CONF_DIR" ]]; then
+  alias main='SCREEN_CONF=main screen -S main -D -R main'
   alias clean='SCREEN_CONF=clean screen -S clean -D -R clean'
 
   if _have rtorrent; then
