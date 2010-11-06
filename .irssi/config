@@ -209,7 +209,7 @@ settings = {
     awl_position = "0";
     awl_sbar_maxlength = "no";
     awl_maxlines = "1";
-    screen_away_message = "= screen detached, be back later.";
+    screen_away_message = "\"screen's detached, be back later\"";
     hilightwin_showprivmsg = "no";
   };
 };
@@ -277,17 +277,7 @@ windows = {
       }
     );
   };
-  7 = {
-    items = (
-      {
-        type = "QUERY";
-        chat_type = "IRC";
-        name = "Ghost1227";
-        tag = "Freenode";
-      }
-    );
-  };
-  8 = { name = "hilight"; sticky = "yes"; };
+  7 = { name = "hilight"; sticky = "yes"; };
 };
 mainwindows = {
   1 = { first_line = "7"; lines = "77"; };
