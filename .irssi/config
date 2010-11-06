@@ -188,7 +188,7 @@ settings = {
     real_name = "Patrick Brisbin";
     user_name = "patrick";
     nick = "brisbin";
-    awaylog_file = "\"\"";
+    awaylog_file = "/dev/null";
   };
 
   "fe-text" = { actlist_sort = "refnum"; };
@@ -210,6 +210,7 @@ settings = {
     awl_sbar_maxlength = "no";
     awl_maxlines = "1";
     screen_away_message = "= screen detached, be back later.";
+    hilightwin_showprivmsg = "no";
   };
 };
 
