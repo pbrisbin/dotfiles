@@ -163,6 +163,7 @@ if has('autocmd')
   au BufEnter *.hamlet       setlocal filetype=hamlet
   au BufEnter *.cassius      setlocal filetype=cassius
   au BufEnter *.pdc          setlocal filetype=pdc
+  au BufEnter *.md           setlocal filetype=pdc
 
   if $SCREEN_CONF_DIR != ""
     au BufEnter $SCREEN_CONF_DIR/* setlocal filetype=screen
