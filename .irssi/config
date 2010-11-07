@@ -209,7 +209,7 @@ settings = {
     awl_position = "0";
     awl_sbar_maxlength = "no";
     awl_maxlines = "1";
-    screen_away_message = "\"screen's detached, be back later\"";
+    screen_away_message = "screen's detached, be back later";
     hilightwin_showprivmsg = "no";
   };
 };
