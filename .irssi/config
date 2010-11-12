@@ -21,6 +21,12 @@ servers = (
     use_ssl = "no";
     ssl_verify = "no";
     autoconnect = "no";
+  },
+
+  { 
+    address = "localhost";
+    chatnet = "bittlebee";
+    autoconnect = "yes";
   }
 );
 
@@ -31,6 +37,7 @@ chatnets = {
     autosendcmd = "/msg nickserv identify ;wait 2000";
   };
   oftc = { type = "IRC"; };
+  bittlebee = { type = "IRC"; };
 };
 
 channels = (
@@ -208,20 +215,23 @@ settings = {
     awl_display_key = "%w$N.$H$C$S";
     awl_position = "0";
     awl_sbar_maxlength = "no";
-    awl_maxlines = "1";
+    awl_maxlines = "3";
     screen_away_message = "screen's detached, be back later";
     hilightwin_showprivmsg = "no";
   };
 };
 
-ignores = ( { level = "JOINS PARTS QUITS NICKS"; } );
+ignores = (
+  { level = "JOINS PARTS QUITS NICKS"; },
+  { level = "MODES"; channels = ( "&bitlbee" ); }
+);
 
 hilights = (
-  { text = "brisbin"; nick = "no"; word = "no"; fullword = "yes"; },
-  { text = ""; nick = "no"; word = "no"; fullword = "yes"; },
-  { text = "brisbin33"; nick = "no"; word = "no"; fullword = "yes"; },
-  { text = "brisbin34"; nick = "no"; word = "no"; fullword = "yes"; },
-  { text = "brisbin35"; nick = "no"; word = "no"; fullword = "yes"; }
+  { text = "brisbin"; nick = "yes"; word = "yes"; fullword = "no"; },
+  #  { text = ""; nick = "no"; word = "no"; fullword = "yes"; },
+  #  { text = "brisbin33"; nick = "no"; word = "no"; fullword = "yes"; },
+  #  { text = "brisbin34"; nick = "no"; word = "no"; fullword = "yes"; },
+  #  { text = "brisbin35"; nick = "no"; word = "no"; fullword = "yes"; }
 );
 
 logs = { };
@@ -280,6 +290,6 @@ windows = {
   7 = { name = "hilight"; sticky = "yes"; };
 };
 mainwindows = {
-  1 = { first_line = "7"; lines = "77"; };
-  8 = { first_line = "1"; lines = "6"; };
+  1 = { first_line = "11"; lines = "77"; };
+  8 = { first_line = "1"; lines = "10"; };
 };
