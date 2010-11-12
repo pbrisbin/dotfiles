@@ -59,7 +59,7 @@ set smartindent
 set smarttab
 set splitright
 set tabstop=8
-set tags=~/.tags
+set tags=tags
 set title
 set textwidth=72
 set visualbell t_vb=
