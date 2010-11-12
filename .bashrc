@@ -534,13 +534,13 @@ send() {
 }
 
 # simple calculator 
-calc() {
-  if _have bc; then
-    echo "scale=3; $*" | bc -l
-  else
-    awk "BEGIN { print $* }"
-  fi
-}
+#calc() {
+#  if _have bc; then
+#    echo "scale=3; $*" | bc -l
+#  else
+#    awk "BEGIN { print $* }"
+#  fi
+#}
 
 # run a bash script in 'debug' mode
 debug() {
