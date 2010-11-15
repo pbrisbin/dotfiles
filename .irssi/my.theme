@@ -246,7 +246,7 @@ abstracts = {
 };
 formats = {
   "fe-common/core" = {
-    pubmsg = "{pubmsgnick {pubnick %b$[-13]0}$2}$1";
+    pubmsg = "{pubmsgnick {pubnick %w$[-13]0}$2}$1";
     own_msg = "{ownmsgnick {ownnick $[-13]0$2}}$1";
     own_msg_channel = "{ownmsgnick {ownnick $[-13]0$3}{msgchannel $1}}$2";
     own_msg_private_query = "{ownprivmsgnick {ownprivnick $[-13]2}}$1";
@@ -254,7 +254,7 @@ formats = {
     pubmsg_me_channel = "{pubmsgmenick {menick $[-13]0$3}{msgchannel $1}}$2";
     pubmsg_hilight = "{pubmsghinick $0 $0 $[-13]1$3%n}$2";
     pubmsg_hilight_channel = "{pubmsghinick $0 $[-13]1$4{msgchannel $2}}$3";
-    pubmsg_channel = "{pubmsgnick {pubnick %b$[-13]0}$2}$1";
+    pubmsg_channel = "{pubmsgnick {pubnick %w$[-13]0}$2}$1";
     msg_private_query = "{privmsgnick $[-13]0}$2";
   };
   "fe-common/irc" = {

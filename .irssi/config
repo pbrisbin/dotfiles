@@ -129,6 +129,7 @@ statusbar = {
         barend = { priority = "100"; alignment = "right"; };
         active = { };
         act = { };
+        typing_notice = { };
       };
     };
 
@@ -218,6 +219,7 @@ settings = {
     awl_maxlines = "3";
     screen_away_message = "screen's detached, be back later";
     hilightwin_showprivmsg = "no";
+    bitlbee_send_typing = "yes";
   };
 };
 
