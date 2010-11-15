@@ -94,7 +94,7 @@ hdr_order from: to: cc: date: subject:                            # and in this 
 
 # lists and boxes
 subscribe arch-announce arch-dev-public arch-general xmonad
-mailboxes +--Gmail---- +GMail/INBOX +GMail/all_mail +GMail/sent_mail +GMail/drafts +GMail/trash +GMail/arch_lists +GMail/xmonad_list
+mailboxes +--Gmail---- +GMail/INBOX +GMail/all_mail +GMail/disqus +GMail/arch_lists +GMail/xmonad_list +GMail/sent_mail +GMail/drafts +GMail/trash 
 mailboxes +--Gmx------ +GMX/INBOX +GMX/archive +GMX/sent +GMX/drafts +GMX/trash
 
 # conditionally source a 256 colors file
