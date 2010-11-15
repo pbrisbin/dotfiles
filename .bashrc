@@ -321,6 +321,13 @@ cabalremoveall() {
   done
 }
 
+# cabal as no -Qq
+caballist() {
+  [[ -d "$HOME/.cabal" ]] || return 1
+
+  find "$HOME/.cabal/packages"/*/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
+}
+
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs || return 1
