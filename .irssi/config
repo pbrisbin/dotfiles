@@ -63,6 +63,7 @@ aliases = {
   WC = "window close";
   WK = "window kill";
   WN = "window new hide";
+  WA = "window goto active";
   RUN = "SCRIPT LOAD";
   Q = "QUERY";
 };
@@ -229,11 +230,7 @@ ignores = (
 );
 
 hilights = (
-  { text = "brisbin"; nick = "yes"; word = "yes"; fullword = "no"; },
-  #  { text = ""; nick = "no"; word = "no"; fullword = "yes"; },
-  #  { text = "brisbin33"; nick = "no"; word = "no"; fullword = "yes"; },
-  #  { text = "brisbin34"; nick = "no"; word = "no"; fullword = "yes"; },
-  #  { text = "brisbin35"; nick = "no"; word = "no"; fullword = "yes"; }
+  { text = "brisbin"; nick = "no"; word = "yes"; fullword = "no"; }
 );
 
 logs = { };
