@@ -21,8 +21,11 @@ if [[ -f /etc/bash_completion ]]; then
   _have sudo && complete -cf sudo
 fi
 
-# bash > 4 has ./** support
-[[ ${BASH_VERSINFO[0]} -ge 4 ]] && shopt -s globstar
+# bash 4 features
+if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
+  shopt -s globstar
+  shopt -s autocd
+fi
 
 shopt -s checkwinsize
 shopt -s extglob
