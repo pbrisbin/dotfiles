@@ -4,7 +4,7 @@
 altscreen on
 attrcolor b ".I"
 autodetach on
-bell_msg '^G'
+bell_msg '^Gbell in window %n...'
 bufferfile "$HOME/.screen/exchange"
 deflogin on
 defbce on
