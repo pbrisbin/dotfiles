@@ -7,10 +7,18 @@
 " fuck vi
 set nocompatible
 
-" set 256 colors if we can
-if $TERM =~ "-256color"
-  set t_Co=256
-  colorscheme zenburn 
+
+" zenburn won't work in windows?
+if has('win32') || has('win64')
+  colorscheme desert
+  " todo: font
+  " todo: guioptions
+else
+  " set 256 colors if we can
+  if $TERM =~ "-256color"
+    set t_Co=256
+    colorscheme zenburn 
+  endif
 endif
 
 " set the window title in screen
@@ -30,6 +38,7 @@ endif
 " main options
 set autoindent
 set autowrite
+set background=dark
 set backspace=indent,eol,start
 set completeopt=longest
 set cursorline
