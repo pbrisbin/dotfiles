@@ -185,11 +185,11 @@ fi
 # standard
 alias la='ls -la'
 alias ll='ls -l'
-
-alias df='df -h'
+alias cp='cp -r'
+alias rm='rm -r'
 alias grep='grep --color=auto'
 alias mkdir='mkdir -p'
-alias myip='lynx -dump http://tnx.nl/ip'
+alias myip='curl --silent http://tnx.nl/ip'
 alias path='echo -e "${PATH//:/\n}"'
 
 # only if we have mpc
@@ -228,10 +228,8 @@ if _have colortail; then
 fi
 
 # need certain apps
-_have mytime    && alias t='mytime'
 _have curlpaste && alias pastie='curlpaste -s ghost -n pbrisbin'
 _have hoogle    && alias hoogle='hoogle --color=true --n=10'
-_have x11vnc    && alias vncup='x11vnc -nopw -ncache 10 -display :0 -localhost'
 _have xprop     && alias xp='xprop | grep "^WM_WINDOW_ROLE\|^WM_CLASS\|^WM_NAME"'
 
 # only if we have a disc drive
@@ -251,53 +249,16 @@ fi
 if _have rdesktop; then
   alias rdp='rdesktop -K -g 1280x1040'
   alias rdpat='rdesktop -K -g 1280x1040 -d GREENBEACON -u PBrisbin -p -'
-  alias rdfaf='rdesktop -K -g 1280x1040 -d FAF -u pbrisbin www.faf.com -p -'
-  alias rdste='rdesktop -K -g 1280x1040 -d STEINER -u pbrisbin -p -'
+  alias rdpfaf='rdesktop -K -g 1280x1040 -d FAF -u pbrisbin www.faf.com -p -'
+  alias rdpste='rdesktop -K -g 1280x1040 -d STEINER -u pbrisbin -p -'
 fi
 
-# we're on ARCH
+# minimal pacman aliases
 if $_isarch; then
-
-  # we're not root
-  if ! $_isroot; then
-
-    # pacman-color is installed
-    if _have pacman-color; then
-      alias pacman='sudo pacman-color'
-
-      alias pacsearch='pacman-color -Ss'
-      alias pacin='sudo pacman-color -S'
-      alias pacout='sudo pacman-color -R'
-      alias pacup='sudo pacman-color -Syu'
-      alias pacorphans='sudo pacman-color -Rs $(/usr/bin/pacman -Qtdq)'
-      alias paccorrupt='sudo find /var/cache/pacman/pkg -name '\''*.part.*'\'''
-      alias pactesting='pacman-color -Q $(/usr/bin/pacman -Sql {community-,}testing) 2>/dev/null'
-
-    # pacman-color not installed
-    else
-      alias pacman='sudo pacman'
-
-      alias pacsearch='/usr/bin/pacman -Ss'
-      alias pacin='pacman -S'
-      alias pacout='pacman -R'
-      alias pacup='pacman -Syu'
-      alias pacorphans='pacman -Rs $(/usr/bin/pacman -Qtdq)'
-      alias paccorrupt='sudo find /var/cache/pacman/pkg -name '\''*.part.*'\'''
-      alias pactesting='/usr/bin/pacman -Q $(/usr/bin/pacman -Sql {community-,}testing) 2>/dev/null'
-    fi
-
-  # we are root
-  else
-      alias pacman &>/dev/null && unalias pacman
-
-      alias pacsearch='pacman -Ss'
-      alias pacin='pacman -S'
-      alias pacout='pacman -R'
-      alias pacup='pacman -Syu'
-      alias pacorphans='pacman -Rs $(pacman -Qtdq)'
-      alias paccorrupt='find /var/cache/pacman/pkg -name '\''*.part.*'\'''
-      alias pactesting='pacman -Q $(pacman -Sql {community-,}testing) 2>/dev/null'
-  fi
+  _have pacman-color && alias pacman='pacman-color'
+  alias pacorphans='pacman -Rs $(pacman -Qtdq)'
+  alias paccorrupt='find /var/cache/pacman/pkg -name '\''*.part.*'\'''
+  alias pactesting='pacman -Q $(pacman -Sql {community-,multilib-,}testing) 2>/dev/null'
 fi
 
 # }}}
@@ -306,19 +267,17 @@ fi
 
 # cabal has no uninstall...
 cabalremove() {
-  [[ -d "$HOME/.cabal" ]] || return 1
-
   local pkg="$1"
 
+  [[ -d "$HOME/.cabal" ]] || return 1
   ghc-pkg unregister "$pkg" && find "$HOME/.cabal/" -depth -name "$pkg"'*' -exec rm -r {} \;
 }
 
 # sometimes i need a clean slate
 cabalremoveall() {
-  [[ -d "$HOME/.cabal" ]] || return 1
-
   local pkg
 
+  [[ -d "$HOME/.cabal" ]] || return 1
   for pkg in $(find "$HOME/.cabal/packages"/*/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
     cabalremove "$pkg"
   done
@@ -327,7 +286,6 @@ cabalremoveall() {
 # cabal as no -Qq
 caballist() {
   [[ -d "$HOME/.cabal" ]] || return 1
-
   find "$HOME/.cabal/packages"/*/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
 }
 
@@ -348,7 +306,7 @@ addartist() {
   mpc play
 }
 
-# make a thumb %20 the size of a pic 
+# make a thumb
 thumbit() {
   _have mogrify || return 1
 
@@ -497,13 +455,6 @@ fix() {
   done
 }
 
-# manage services 
-service() {
-  $_isarch || return 1
-  
-  sudo /etc/rc.d/$1 $2
-}
-
 # print docs to default printer in reverse page order 
 printr() {
   _have enscript || return 1
@@ -543,15 +494,6 @@ send() {
   echo 'Auto-sent from linux. Please see attached.' | mutt -s 'File Attached' -a "$1" "$2"
 }
 
-# simple calculator 
-#calc() {
-#  if _have bc; then
-#    echo "scale=3; $*" | bc -l
-#  else
-#    awk "BEGIN { print $* }"
-#  fi
-#}
-
 # run a bash script in 'debug' mode
 debug() {
   local script="$1"; shift
@@ -576,27 +518,19 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 # }}}
 
 ### Titlebar and Prompt {{{
-# order matters here
 
-# set the default titlebar
-PROMPT_COMMAND='echo -ne "\0033]0;${HOSTNAME} ${PWD/$HOME/~}\007"'
-
-# set a crazy-ass ssh titlebar -- uptime broken on mac os x
-#[[ -n "$SSH_TTY" ]] && PROMPT_COMMAND='echo -ne "\033]0;$USER@$HOSTNAME$(who -m | sed -e "s%^.* \(pts/[0-9]*\).*(\(.*\))%[\1] (\2)%g")[$(uptime | sed -e "s/.*: \([^,]*\).*/\1/" -e "s/ //g")/$(ps aux | wc -l)]\007"'
-
-# nothing in console
-[[ $TERM == 'linux' ]] && PROMPT_COMMAND=''
-
+# default prompt command
+[[ $TERM != 'linux' ]] && PROMPT_COMMAND='echo -ne "\0033]0;${HOSTNAME} ${PWD/$HOME/~}\007"' || PROMPT_COMMAND=''
 export PROMPT_COMMAND
 
 # set colors for PS1
-nrm='\[\e[0m\]'         # normal
-wht='\[\e[1;37m\]'      # bold white
+nrm='\[\e[0m\]'    # normal
+wht='\[\e[1;37m\]' # bold white
 
 # root is bold red, user is bold blue
 $_isroot && bld='\[\e[1;31m\]' || bld='\[\e[1;34m\]'
 
-# loosely based on  rson's
+# loosely based on rson's
 _git_prompt() {
   if [[ -d .git ]]; then
     # determine repo/branch; todo: find a better way
@@ -622,10 +556,6 @@ _git_prompt() {
 
 export PS1="${_screen}$bld//$wht\h$bld/$wht\$?$bld/$wht\$(_git_prompt)/ $nrm"
 export PS2="$bld// $nrm"
-
-# fallback prompt
-#PS1='[ \A ][ \w ]\n> '
-#PS2='>'
 
 # }}}
 
