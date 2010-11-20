@@ -46,6 +46,7 @@
   set spoolfile           = "+GMail/INBOX"                        # GMail is default inbox
 
 # main options
+  set beep_new                                                    # terminal bell on new message
 unset confirmappend                                               # don't ask, just do
   set delete                                                      # don't ask, just do
   set mail_check          = 0                                     # minimum time between scans
