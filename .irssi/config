@@ -230,7 +230,8 @@ ignores = (
 );
 
 hilights = (
-  { text = "brisbin"; nick = "no"; word = "yes"; fullword = "no"; }
+  { text = "brisbin"; nick = "no"; word = "yes"; fullword = "yes"; },
+  { text = ".com"; nick = "no"; word = "yes"; fullword = "no"; }
 );
 
 logs = { };
