@@ -253,9 +253,14 @@ if _have rdesktop; then
   alias rdpste='rdesktop -K -g 1280x1040 -d STEINER -u pbrisbin -p -'
 fi
 
-# minimal pacman aliases
+# pacman aliases
 if $_isarch; then
-  _have pacman-color && alias pacman='pacman-color'
+  if ! $_isroot; then
+    _have pacman-color && alias pacman='sudo pacman-color' || alias pacman='sudo pacman'
+  else
+    _have pacman-color && alias pacman='pacman-color'
+  fi
+
   alias pacorphans='pacman -Rs $(pacman -Qtdq)'
   alias paccorrupt='find /var/cache/pacman/pkg -name '\''*.part.*'\'''
   alias pactesting='pacman -Q $(pacman -Sql {community-,multilib-,}testing) 2>/dev/null'
