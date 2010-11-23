@@ -291,5 +291,5 @@ windows = {
 };
 mainwindows = {
   1 = { first_line = "11"; lines = "77"; };
-  8 = { first_line = "1"; lines = "10"; };
+  7 = { first_line = "1"; lines = "10"; };
 };
