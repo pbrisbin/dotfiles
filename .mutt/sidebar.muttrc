@@ -11,6 +11,6 @@
 color sidebar_new brightyellow default
 
 # bindings
-bind index,pager \CN    sidebar-next
-bind index,pager \CP    sidebar-prev
-bind index,pager \CO    sidebar-open
+bind index,pager \CJ sidebar-next
+bind index,pager \CK sidebar-prev
+bind index,pager \CL sidebar-open
