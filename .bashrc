@@ -251,6 +251,7 @@ if _have rdesktop; then
   alias rdpat='rdesktop -K -g 1280x1040 -d GREENBEACON -u PBrisbin -p -'
   alias rdpfaf='rdesktop -K -g 1280x1040 -d FAF -u pbrisbin www.faf.com -p -'
   alias rdpste='rdesktop -K -g 1280x1040 -d STEINER -u pbrisbin -p -'
+  alias rdpamp='rdesktop -K -g 1280x1040 -d Amp_Research -u beacon -p -'
 fi
 
 # pacman aliases
