@@ -7,9 +7,10 @@ urxvtd -q -f -o &                           # start urxvt daemon
 xcompmgr -fF &                              # allow transparency
 xrdb $HOME/.Xdefaults &                     # load Xdefaults
 xset fp+ /usr/share/fonts/local &           # add local fonts
-#xset s 1200 1200 &                          # set monitor to sleep 20 mins
+xset s 1200 1200 &                          # set monitor to sleep 20 mins
 xset s off &                                # disable screensaver
 xsetroot -cursor_name left_ptr              # required for xmonad's cursor
+android-receiver start                      # start listening for phone events
 
 (sleep 3 && xmodmap $HOME/.Xmodmap) &       # remove capslock - delay required
 
