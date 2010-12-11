@@ -32,7 +32,7 @@ URxvt*buffered:    true
 URxvt*foreground:  #dcdccc
 URxvt*background:  rgba:0000/0000/0000/dddd
 URxvt*transparent: false
-URxvt*fading:      2%
+URxvt*fading:      10%
 URxvt*fadeColor:   grey
 URxvt*shading:     75
 
