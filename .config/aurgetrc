@@ -89,7 +89,7 @@ resolve_dependencies=true
 #
 # this is a space separated list of package names to be ignored
 ###
-ignore_packages='eclim nvidia-beta nvidia-utils-beta'
+ignore_packages='nvidia-beta nvidia-utils-beta'
 
 #
 # by default, aurget uses no color. uncomment to enable/customize
