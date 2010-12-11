@@ -37,7 +37,10 @@ chatnets = {
     autosendcmd = "/msg nickserv identify ;wait 2000";
   };
   oftc = { type = "IRC"; };
-  bittlebee = { type = "IRC"; };
+  bittlebee = {
+    type = "IRC";
+    autosendcmd = "/msg -bitlbee &bitlbee identify ;wait 2000";
+  };
 };
 
 channels = (
@@ -54,8 +57,8 @@ channels = (
 aliases = {
   J = "join";
   LEAVE = "part";
-  E = "exec";
-  EO = "exec -o";
+  E = "exec -";
+  EO = "exec - -o";
   EXIT = "quit";
   LL = "lastlog";
   W = "window";
