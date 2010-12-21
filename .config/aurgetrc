@@ -12,9 +12,6 @@ build_directory="$HOME/Sources"
 edit_pkgbuilds='never'
 resolve_dependencies=true
 
-# these won't build right now
-ignore_packages='nvidia-beta nvidia-utils-beta'
-
 # like pacman-color
 nocolor="\e[0m"   # reset color
 colorW="\e[1;37m" # white
