@@ -37,8 +37,10 @@
   set tmpdir              = ~/.mutt/temp                          # where to keep temp files
   set editor              = "vim +:silent+?^$"                    # use vim and skip to last blank line
   set ispell              = "aspell -e -c"                        # use aspell as ispell
-  set query_command       = "abook --mutt-query '%s'"             # query abook for contacts
+#  set query_command       = "abook --mutt-query '%s'"             # query abook for contacts
+  set query_command       = "DM_ROOT=$HOME/.dm $HOME/.dm/bin/contacts.py -m short -r -s name %s" # query google directly
   set print_command       = "enscript -p - | psselect -r | lp"    # print email in reverse page order
+
 
 # maildir settings
   set mbox_type           = Maildir                               # mailbox type
