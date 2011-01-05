@@ -1,0 +1,11 @@
+! remap capslock to escape
+!remove Lock = Caps_Lock
+!keysym Caps_Lock = Escape
+
+! remap capslock to control
+remove Lock = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L
+
+! remap muhenkan to super
+keysym Muhenkan = Super_L
