@@ -30,6 +30,9 @@ fi
 shopt -s checkwinsize
 shopt -s extglob
 
+# should've done this a long time ago
+set -o vi
+
 # list of apps to be tried in order
 xbrowsers='browser:chromium:google-chrome:firefox'
 browsers='elinks:lynx:links'
