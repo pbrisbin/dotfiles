@@ -298,6 +298,22 @@ caballist() {
   find "$HOME/.cabal/packages"/*/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
 }
 
+# build/install haskell packages
+hbuild() {
+  local setup
+
+  if [[ -f Setup.hs ]]; then
+    setup='Setup.hs'
+  elif [[ -f Setup.lsh ]]; then
+    setup='Setup.lhs'
+  fi
+
+  runhaskell $setup configure --prefix=$HOME --user || return 1
+  runhaskell $setup build                           || return 1
+  runhaskell $setup install                         || return 1
+  runhaskell $setup haddock                         || return 1
+}
+
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs || return 1
