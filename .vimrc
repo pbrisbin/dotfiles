@@ -179,7 +179,7 @@ if has('autocmd')
   endif
 
   " shorter filetype stuff
-  au FileType c      setlocal formatoptions+=ro
+  au FileType c      setlocal formatoptions+=ro shiftwidth=4
   au FileType c,cpp  let g:StartComment = "//"
   au FileType c,cpp  syn match matchName /\(#define\)\@<= .*/
   au FileType make   setlocal shiftwidth=8
@@ -190,8 +190,11 @@ if has('autocmd')
 
   " pandoc options {{{
   function! SetPdcOpts()
+    source ~/.vim/autofix.vimrc " auto-correct
     setlocal formatoptions+=tw
     setlocal shiftwidth=4
+    setlocal spell
+    setlocal nohlsearch
 
     " reformat paragraphs
     nmap <F1> gqap
@@ -231,6 +234,9 @@ if has('autocmd')
 
   " haskell options {{{
   au Filetype haskell call SetHaskellOpts()
+
+  " paragraph formatting within hamlet blocks
+  setlocal formatoptions+=w
 
   function! SetHaskellOpts()
     setlocal autochdir
