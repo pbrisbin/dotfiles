@@ -93,27 +93,27 @@ _add_to_path() {
 }
 
 # ssh-agent stuff
-#_ssh_env="$HOME/.ssh/environment"
-#
-#_start_agent() {
-#  _have ssh-agent || return 1
-#
-#  ssh-agent | sed 's/^echo/#echo/g' > "$_ssh_env"
-#
-#  chmod 600 "$_ssh_env"
-#  . "$_ssh_env" >/dev/null
-#
-#  ssh-add
-#}
-#
-#if [[ -f "$_ssh_env" ]]; then
-#  . "$_ssh_env" >/dev/null
-#  if ! ps "$SSH_AGENT_PID" | grep 'ssh-agent$'; then
-#    _start_agent
-#  fi
-#else
-#  _start_agent
-#fi
+_ssh_env="$HOME/.ssh/environment"
+
+_start_agent() {
+  _have ssh-agent || return 1
+
+  ssh-agent | sed 's/^echo/#echo/g' > "$_ssh_env"
+
+  chmod 600 "$_ssh_env"
+  . "$_ssh_env" >/dev/null
+
+  ssh-add
+}
+
+if [[ -f "$_ssh_env" ]]; then
+  . "$_ssh_env" >/dev/null
+  if ! ps "$SSH_AGENT_PID" | grep 'ssh-agent$'; then
+    _start_agent
+  fi
+else
+  _start_agent
+fi
 
 # }}}
 
