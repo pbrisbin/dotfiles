@@ -298,20 +298,24 @@ caballist() {
   find "$HOME/.cabal/packages"/*/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
 }
 
+# update haskell documentation and publish it to my server
+hdocs() {
+  _have cabal || return 1
+
+  # update
+  cabal haddock \
+    --html-location='http://hackage.haskell.org/packages/archive/$pkg/latest/doc/html' \
+    --hyperlink-source $@ || return 1
+
+  # publish
+  cp -r dist/doc/* /srv/http/haskell/docs/
+}
+
 # build/install haskell packages
 hbuild() {
-  local setup
-
-  if [[ -f Setup.hs ]]; then
-    setup='Setup.hs'
-  elif [[ -f Setup.lsh ]]; then
-    setup='Setup.lhs'
-  fi
-
-  runhaskell $setup configure --prefix=$HOME --user || return 1
-  runhaskell $setup build                           || return 1
-  runhaskell $setup install                         || return 1
-  runhaskell $setup haddock                         || return 1
+  _have cabal   || return 1
+  cabal install || return 1
+  hdocs "$@"    || return 1
 }
 
 # combine pdfs into one using ghostscript
