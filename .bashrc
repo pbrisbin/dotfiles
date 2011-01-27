@@ -108,7 +108,7 @@ _start_agent() {
 
 if [[ -f "$_ssh_env" ]]; then
   . "$_ssh_env" >/dev/null
-  if ! ps "$SSH_AGENT_PID" | grep 'ssh-agent$'; then
+  if ! ps "$SSH_AGENT_PID" | grep -q 'ssh-agent$'; then
     _start_agent
   fi
 else
