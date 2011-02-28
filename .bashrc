@@ -140,6 +140,13 @@ if [[ -d "$HOME/.screen/configs" ]]; then
   export SCREEN_CONF='main'
 fi
 
+# albumart.php
+if _have albumart.php; then
+  export AWS_LIB="$HOME/Code/php/albumart/lib"
+  export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
+  export AWS_PRIVATE_KEY_FILE="$HOME/.aws/pk-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
+fi
+
 # standard
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
