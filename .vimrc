@@ -56,7 +56,7 @@ set nowrap
 set novisualbell
 set number
 set ruler
-set scrolloff=5
+set scrolloff=999
 set shiftwidth=2
 set shortmess+=r
 set showmode
@@ -98,12 +98,12 @@ let java_highlight_functions="style"
 let java_allow_cpp_keywords=1
 
 " eclim
-let g:EclimBrowser     = '$BROWSER'
-let g:EclimHome        = '/usr/share/vim/vimfiles/eclim'
-let g:EclimEclipseHome = '/usr/share/eclipse'
-
-let g:EclimPhpValidate = 0
-let g:EclimXmlValidate = 0
+let g:EclimBrowser          = '$BROWSER'
+let g:EclimHome             = '/usr/share/vim/vimfiles/eclim'
+let g:EclimEclipseHome      = '/usr/share/eclipse'
+let g:EclimShowCurrentError = 0
+let g:EclimPhpValidate      = 0
+let g:EclimXmlValidate      = 0
 
 " default comment symbols
 let g:StartComment="#"
@@ -187,6 +187,7 @@ if has('autocmd')
   au FileType text   setlocal formatoptions+=taw
   au FileType hamlet setlocal formatoptions+=tw
   au FileType pdc    call SetPdcOpts()
+  au FileType javascript setlocal shiftwidth=4
 
   " pandoc options {{{
   function! SetPdcOpts()
@@ -220,6 +221,7 @@ if has('autocmd')
   function! SetHtmlOpts()
     let g:StartComment = "<!-- "
     let g:EndComment   = " -->"
+    setlocal shiftwidth=4
   endfunction
 
   function! SetPhpOpts()
