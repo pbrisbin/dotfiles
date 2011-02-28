@@ -17,7 +17,8 @@ abstracts = {
   ##
 
   # text to insert at the beginning of each non-message line
-  line_start = "%c»»%n ";
+  #line_start = "%c»»%n ";
+  line_start = "%c>>%n ";
 
   # timestamp styling, nothing by default
   timestamp = "%K$0-%n";
