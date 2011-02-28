@@ -34,12 +34,12 @@ chatnets = {
   Freenode = {
     type = "IRC";
     nick = "brisbin";
-    autosendcmd = "/msg nickserv identify ;wait 2000";
+    autosendcmd = "/^msg nickserv identify ; wait 2000";
   };
   oftc = { type = "IRC"; };
   bittlebee = {
     type = "IRC";
-    autosendcmd = "/msg -bitlbee &bitlbee identify ;wait 2000";
+    autosendcmd = "/^msg -bitlbee &bitlbee identify ; wait -bitlbee 2000";
   };
 };
 
@@ -201,6 +201,8 @@ settings = {
     user_name = "patrick";
     nick = "brisbin";
     awaylog_file = "/dev/null";
+    recode_autodetect_utf8 = "yes";
+    recode_fallback = "CP1252";
   };
 
   "fe-text" = { actlist_sort = "refnum"; };
