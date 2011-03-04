@@ -120,7 +120,7 @@ fi
 ### Bash exports {{{
 
 # set path
-_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" '/opt/android-sdk/tools'
+_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin"
 
 # set browser
 $_isxrunning && _set_browser "$xbrowsers" || _set_browser "$browsers"
@@ -275,6 +275,13 @@ if $_isarch; then
   alias pacorphans='pacman -Rs $(pacman -Qtdq)'
   alias paccorrupt='find /var/cache/pacman/pkg -name '\''*.part.*'\'''
   alias pactesting='pacman -Q $(pacman -Sql {community-,multilib-,}testing) 2>/dev/null'
+fi
+
+# ghc aliases
+if _have ghc-pkg; then
+  alias gc='ghc-pkg check'
+  alias gl='ghc-pkg list'
+  alias gu='ghc-pkg unregister'
 fi
 
 # }}}
