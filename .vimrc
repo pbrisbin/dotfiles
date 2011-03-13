@@ -171,6 +171,7 @@ if has('autocmd')
   au BufEnter ~/.mutt/temp/* setlocal filetype=mail
   au BufEnter *.hamlet       setlocal filetype=hamlet
   au BufEnter *.cassius      setlocal filetype=cassius
+  au BufEnter *.julius       setlocal filetype=julius
   au BufEnter *.pdc          setlocal filetype=pdc
   au BufEnter *.md           setlocal filetype=pdc
 
