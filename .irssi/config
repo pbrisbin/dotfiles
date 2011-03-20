@@ -226,6 +226,7 @@ settings = {
     screen_away_message = "away";
     hilightwin_showprivmsg = "no";
     bitlbee_send_typing = "yes";
+    lt_in_queries = "yes";
   };
 };
 
