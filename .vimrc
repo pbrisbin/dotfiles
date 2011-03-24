@@ -40,7 +40,7 @@ set autoindent
 set autowrite
 set background=dark
 set backspace=indent,eol,start
-set completeopt=longest
+set completeopt=menu,longest
 set cursorline
 set expandtab
 set formatoptions-=t
@@ -74,7 +74,6 @@ set textwidth=72
 set visualbell t_vb=
 set wildmode=longest,full
 
-
 " syntax highlighting
 syntax on
 filetype plugin indent on
@@ -104,6 +103,15 @@ let g:EclimEclipseHome      = '/usr/share/eclipse'
 let g:EclimShowCurrentError = 0
 let g:EclimPhpValidate      = 0
 let g:EclimXmlValidate      = 0
+
+" supertab
+let g:SuperTabDefaultCompletionTypeDiscovery = [
+\ "&completefunc:<c-x><c-u>",
+\ "&omnifunc:<c-x><c-o>",
+\ ]
+
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabLongestHighlight = 1
 
 " default comment symbols
 let g:StartComment="#"
@@ -256,20 +264,13 @@ if has('autocmd')
     setlocal shiftwidth=4
     setlocal foldmethod=indent
 
+    let g:StartComment="//"
+
     nnoremap <silent> <LocalLeader>i :JavaImport<CR>
     nnoremap <silent> <LocalLeader>d :JavaDocSearch -x declarations<CR>
     nnoremap <silent> <LocalLeader><CR> :JavaSearchContext<CR>
     nnoremap <silent> <LocalLeader>jv :Validate<CR>
     nnoremap <silent> <LocalLeader>jc :JavaCorrect<CR>
-
-    " supertab
-    let g:SuperTabDefaultCompletionTypeDiscovery = [
-    \ "&completefunc:<c-x><c-u>",
-    \ "&omnifunc:<c-x><c-o>",
-    \ ]
-
-    let g:SuperTabLongestHighlight = 1
-    let g:StartComment="//"
   endfunction
   " }}}
 
