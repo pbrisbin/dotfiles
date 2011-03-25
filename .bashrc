@@ -96,7 +96,8 @@ _add_to_path() {
 _ssh_env="$HOME/.ssh/environment"
 
 _start_agent() {
-  _have ssh-agent || return 1
+  [[ -d "$HOME/.ssh" ]] || return 1
+  _have ssh-agent       || return 1
 
   ssh-agent | sed 's/^echo/#echo/g' > "$_ssh_env"
 
@@ -171,8 +172,10 @@ if _have less; then
   fi
 fi
 
-export MPD_HOST=192.168.0.5
-export MPD_PORT=6600
+if _have mpc; then
+  export MPD_HOST=192.168.0.5
+  export MPD_PORT=6600
+fi
 
 # }}}
 
@@ -183,10 +186,10 @@ alias blue='ssh patrick@blue'
 alias howie='ssh patrick@howard'
 alias htpc='ssh xbmc@htpc'
 alias susie='ssh patrick@susan'
+alias slice='ssh patrick@50.56.101.27'
 
 # only for linux
 if $_islinux; then
-  alias dir='dir --color'
   alias ls='ls -h --group-directories-first --color=auto'
 else
   alias ls='ls -h'
@@ -195,22 +198,15 @@ fi
 # standard
 alias la='ls -la'
 alias ll='ls -l'
-alias cp='cp -r'
-alias rm='rm -r'
 alias grep='grep --color=auto'
-alias mkdir='mkdir -p'
 alias myip='curl --silent http://tnx.nl/ip'
 alias path='echo -e "${PATH//:/\n}"'
 
 # only if we have mpc
 if _have mpc; then
-  alias add='mpc add'
   alias addall='mpc --no-status clear && mpc ls | mpc --no-status add && mpc play'
-
-  alias P='mpc toggle'
   alias n='mpc next'
   alias p='mpc prev'
-  alias s='mpc stop'
 fi
 
 if _have ossvol; then
@@ -273,7 +269,7 @@ if $_isarch; then
   fi
 
   alias pacorphans='pacman -Rs $(pacman -Qtdq)'
-  alias paccorrupt='find /var/cache/pacman/pkg -name '\''*.part.*'\'''
+  alias paccorrupt='sudo find /var/cache/pacman/pkg -name '\''*.part.*'\''' # sudo so we can quickly add -delete
   alias pactesting='pacman -Q $(pacman -Sql {community-,multilib-,}testing) 2>/dev/null'
 fi
 
@@ -296,22 +292,6 @@ cabalremove() {
   ghc-pkg unregister "$pkg" && find "$HOME/.cabal/" -depth -name "$pkg"'*' -exec rm -r {} \;
 }
 
-# sometimes i need a clean slate
-cabalremoveall() {
-  local pkg
-
-  [[ -d "$HOME/.cabal" ]] || return 1
-  for pkg in $(find "$HOME/.cabal/packages"/*/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;); do
-    cabalremove "$pkg"
-  done
-}
-
-# cabal as no -Qq
-caballist() {
-  [[ -d "$HOME/.cabal" ]] || return 1
-  find "$HOME/.cabal/packages"/*/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
-}
-
 # update haskell documentation and publish it to my server
 hdocs() {
   _have cabal || return 1
@@ -319,7 +299,7 @@ hdocs() {
   # update
   cabal haddock \
     --html-location='http://hackage.haskell.org/packages/archive/$pkg/latest/doc/html' \
-    --hyperlink-source $@ || return 1
+    --hyperlink-source "$@" || return 1
 
   # publish
   cp -r dist/doc/* /srv/http/haskell/docs/
@@ -339,14 +319,6 @@ combinepdf() {
   local out="$1"; shift
 
   gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$out" "$@"
-}
-
-# add by artist to mpc 
-addartist() {
-  _have mpc || return 1
-
-  mpc search artist "$*" | mpc add &>/dev/null
-  mpc play
 }
 
 # make a thumb
@@ -546,15 +518,6 @@ debug() {
   fi
 }
 
-# go to a directory or file's parent
-goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
-
-# copy and follow
-cpf() { cp "$@" && goto "$_"; }
-
-# move and follow
-mvf() { mv "$@" && goto "$_"; }
-
 # print the url to a manpage
 webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 
@@ -584,10 +547,10 @@ _git_prompt() {
     if git status | grep -Fq 'nothing to commit (working directory clean)'; then
       git_status=''
     else
-      git_status='*'
+      git_status='\e[1;31m*\e[\0m'
     fi
 
-    echo git/${git_repo}:${git_branch}${git_status}
+    echo -e git/${git_repo}:${git_branch}${git_status}
   else
     # normal directory display
     echo ${PWD/$HOME/\~}
