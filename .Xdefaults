@@ -50,8 +50,7 @@ URxvt*matcher.button:  1
 
 ! Xterm {{{
 xterm*Geometry:   100x60
-xterm*foreground: #909090
-xterm*background: #303030
+xterm*foreground: #dcdccc
 xterm*font:       -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 xterm*boldFont:   -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 xterm*scrollBar:  false
