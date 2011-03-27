@@ -284,6 +284,26 @@ fi
 
 ### Bash functions {{{
 
+# http://pbrisbin.com/posts/notes
+noteit() {
+  _have mutt || return 1
+
+  local subject="$*" message
+
+  [[ -z "$subject" ]] && { echo 'no subject.'; return 1; }
+
+  echo -e "^D to save, ^C to cancel\nNote:\n"
+
+  message="$(cat)"
+
+  [[ -z "$message" ]] && { echo 'no message.'; return 1; }
+
+  # send message
+  echo "$message" | mutt -s "Note - $subject" -- pbrisbin@gmail.com
+
+  echo -e "\nnoted.\n"
+}
+
 # cabal has no uninstall...
 cabalremove() {
   local pkg="$1"
