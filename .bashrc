@@ -148,6 +148,12 @@ if _have albumart.php; then
   export AWS_PRIVATE_KEY_FILE="$HOME/.aws/pk-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
 fi
 
+# dmenu options
+if _have dmenu; then
+  # dmenu-xft required
+  export DMENU_OPTIONS='-i -fn Verdana-8 -nb #303030 -nf #909090 -sb #909090 -sf #303030'
+fi
+
 # standard
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
