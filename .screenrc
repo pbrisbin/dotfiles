@@ -18,7 +18,7 @@ nonblock on
 setenv LC_CTYPE en_US.UTF-8
 shelltitle '/ |bash'
 startup_message off
-term screen-256color
+term xterm-256color
 vbell off
 
 # display settings
