@@ -1,5 +1,8 @@
 ! jwr low contrast
 
+*foreground: #dcdccc
+*background: #000000
+
 !black
 *color0: #222222
 *color8: #454545

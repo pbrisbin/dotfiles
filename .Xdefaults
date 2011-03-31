@@ -21,7 +21,6 @@ Xft.hintstyle: hintfull
 ! Urxvt {{{
 URxvt*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-
 URxvt*scrollBar:  false
 URxvt*jumpScroll: true
 URxvt*skipScroll: true
@@ -29,10 +28,9 @@ URxvt*visualBell: false
 
 URxvt*depth:       32
 URxvt*buffered:    true
-URxvt*foreground:  #dcdccc
 URxvt*background:  rgba:0000/0000/0000/dddd
 URxvt*transparent: false
-URxvt*fading:      10%
+URxvt*fading:      5%
 URxvt*fadeColor:   grey
 URxvt*shading:     75
 
@@ -49,13 +47,13 @@ URxvt*matcher.button:  1
 ! }}}
 
 ! Xterm {{{
-xterm*Geometry:   100x60
-xterm*foreground: #dcdccc
-xterm*background: #000000
-xterm*font:       -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-xterm*boldFont:   -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-xterm*scrollBar:  false
-xterm*termName:   xterm-256color
+XTerm*font:       -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*boldFont:   -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*scrollBar:  false
+XTerm*termName:   xterm-256color
+
+xterm*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+xterm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
 ! }}}
 

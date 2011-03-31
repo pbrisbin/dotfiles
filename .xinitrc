@@ -2,9 +2,7 @@
 
 android-receiver &                          # display android-notifications
 eval `cat $HOME/.fehbg` &                   # set background
-numlockx on &                               # numlock on
 setxkbmap -option terminate:ctrl_alt_bksp & # add C-A-BS to kill X
-urxvtd -q -f -o &                           # start urxvt daemon
 xcompmgr -fF &                              # allow transparency
 xrdb $HOME/.Xdefaults &                     # load Xdefaults
 xset fp+ /usr/share/fonts/local &           # add local fonts
