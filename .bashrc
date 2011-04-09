@@ -135,6 +135,11 @@ _set_editor
 # custom log directory
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
 
+# https://github.com/trapd00r/LS_COLORS
+if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
+  . "$HOME/.lscolors" # exports LS_COLORS variable
+fi
+
 # screen tricks
 if [[ -d "$HOME/.screen/configs" ]]; then
   export SCREEN_CONF_DIR="$HOME/.screen/configs"
@@ -336,6 +341,17 @@ hbuild() {
   _have cabal   || return 1
   cabal install || return 1
   hdocs "$@"    || return 1
+}
+
+# somewhat general build/deploy for a yesod app
+toslice() {
+  [[ -f ./fastcgi.hs ]] || return 1
+
+  local ip="${1:-50.56.101.27}"
+
+  touch ./Settings.hs # so CPP declarations take
+  ghc -threaded -DPROD --make -o ./app.cgi ./fastcgi.hs && scp -r ./static ./app.cgi "$ip":~/
+  touch ./Settings.hs
 }
 
 # combine pdfs into one using ghostscript
