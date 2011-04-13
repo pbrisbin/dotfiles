@@ -354,6 +354,19 @@ toslice() {
   touch ./Settings.hs
 }
 
+# once there we deploy
+atslice() {
+  sudo /etc/rc.d/lighttpd stop || return 1
+
+  cp    /srv/http/app.cgi ./app.cgi.bak || return 1 
+  cp -r /srv/http/static  ./static.bak  || return 1
+
+  sudo cp    ./app.cgi  /srv/http/app.cgi || return 1
+  sudo cp -r ./static/* /srv/http/static/ || return 1
+
+  sudo /etc/rc.d/lighttpd start
+}
+
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs || return 1
