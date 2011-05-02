@@ -1,5 +1,7 @@
 # ~/.screenrc
 
+shell /bin/bash
+
 # main options
 altscreen on
 attrcolor b ".I"
@@ -9,7 +11,6 @@ bufferfile "$HOME/.screen/exchange"
 deflogin on
 defbce on
 defflow off
-defshell $SHELL
 defscrollback 5000
 defutf8 on
 encoding UTF-8
