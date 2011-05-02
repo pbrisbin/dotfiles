@@ -4,21 +4,13 @@
 
 " options {{{
 
-" fuck vi
+" this is not vi
 set nocompatible
 
-
-" zenburn won't work in windows?
-if has('win32') || has('win64')
-  colorscheme desert
-  " todo: font
-  " todo: guioptions
-else
-  " set 256 colors if we can
-  if $TERM =~ "-256color"
-    set t_Co=256
-    colorscheme zenburn 
-  endif
+" set 256 colors if we can
+if $TERM =~ "-256color"
+  set t_Co=256
+  colorscheme zenburn 
 endif
 
 " set the window title in screen
@@ -46,7 +38,7 @@ set expandtab
 set formatoptions-=t
 set history=50
 set hlsearch
-set ignorecase smartcase
+set ignorecase
 set incsearch
 set laststatus=2
 set mouse=v
@@ -228,18 +220,17 @@ if has('autocmd')
   au BufEnter *.php  call SetPhpOpts()
 
   function! SetHtmlOpts()
+    setlocal shiftwidth=4
     let g:StartComment = "<!-- "
     let g:EndComment   = " -->"
-    setlocal shiftwidth=4
   endfunction
 
   function! SetPhpOpts()
     setlocal shiftwidth=4
-
+    let g:StartComment = "//"
+    let g:EndComment   = ""
     command! CheckPHP :! php -l %
     command! OpenPHP  :! php %
-
-    let g:StartComment = "//"
   endfunction
   " }}}
 
