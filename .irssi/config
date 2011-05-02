@@ -45,11 +45,6 @@ chatnets = {
 
 channels = (
   { name = "#archlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  {
-    name = "#archlinux-offtopic";
-    chatnet = "Freenode";
-    autojoin = "Yes";
-  },
   { name = "#xmonad"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#haskell"; chatnet = "Freenode"; autojoin = "Yes"; }
 );
@@ -268,7 +263,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#archlinux-offtopic";
+        name = "#xmonad";
         tag = "Freenode";
       }
     );
@@ -278,23 +273,13 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#xmonad";
-        tag = "Freenode";
-      }
-    );
-  };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
         name = "#haskell";
         tag = "Freenode";
       }
     );
   };
-  7 = { name = "hilight"; sticky = "yes"; };
-  8 = {
+  6 = { name = "hilight"; sticky = "yes"; };
+  7 = {
     items = (
       {
         type = "CHANNEL";
@@ -307,5 +292,5 @@ windows = {
 };
 mainwindows = {
   1 = { first_line = "12"; lines = "72"; };
-  7 = { first_line = "1"; lines = "11"; };
+  6 = { first_line = "1"; lines = "11"; };
 };
