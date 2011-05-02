@@ -215,7 +215,7 @@ alias path='echo -e "${PATH//:/\n}"'
 
 # only if we have mpc
 if _have mpc; then
-  alias addall='mpc --no-status clear && mpc ls | mpc --no-status add && mpc play'
+  alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
   alias n='mpc next'
   alias p='mpc prev'
 fi
@@ -587,6 +587,7 @@ export PROMPT_COMMAND
 # set colors for PS1
 nrm='\[\e[0m\]'    # normal
 wht='\[\e[1;37m\]' # bold white
+red='\[\e[1;31m\]' # bold red
 
 # root is bold red, user is bold blue
 $_isroot && bld='\[\e[1;31m\]' || bld='\[\e[1;34m\]'
@@ -598,24 +599,23 @@ _git_prompt() {
     git_repo="$(git remote -v | tail -n 1 | sed 's|^.*/\(.*\)\.git .*$|\1|g')"
     git_branch="$(basename "$(git symbolic-ref HEAD 2>/dev/null)")"
     
-    # note changes yet to be committed
-    if git status | grep -Fq 'nothing to commit (working directory clean)'; then
-      git_status=''
-    else
-      git_status='\e[1;31m*\e[\0m'
-    fi
-
-    echo -e git/${git_repo}:${git_branch}${git_status}
+    echo "git/${git_repo}:${git_branch}"
   else
     # normal directory display
     echo ${PWD/$HOME/\~}
   fi
 }
 
+_git_status() {
+  if [[ -d .git ]] && ! git status | grep -Fq 'nothing to commit (working directory clean)'; then
+    echo '*'
+  fi
+}
+
 # change prompt behavior in screen
 [[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
 
-export PS1="${_screen}$bld//$wht\h$bld/$wht\$?$bld/$wht\$(_git_prompt)/ $nrm"
+export PS1="${_screen}$bld//$wht\h$bld/$wht\$?$bld/$wht\$(_git_prompt)$red\$(_git_status)$wht/ $nrm"
 export PS2="$bld// $nrm"
 
 # }}}
