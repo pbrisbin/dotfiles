@@ -128,6 +128,9 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-n> :next<CR>
 nnoremap <C-p> :prev<CR>
 
+" escape is too far
+inoremap jj <Esc>
+
 " a transpose key
 nmap <LocalLeader>t xp
 
