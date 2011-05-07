@@ -145,8 +145,8 @@ if has('autocmd')
   au BufEnter *.hamlet       setlocal filetype=hamlet
   au BufEnter *.cassius      setlocal filetype=cassius
   au BufEnter *.julius       setlocal filetype=julius
-  au BufEnter *.pdc          setlocal filetype=pandoc
-  au BufEnter *.md           setlocal filetype=pandoc
+  au BufEnter *.pdc          setlocal filetype=pdc
+  au BufEnter *.md           setlocal filetype=pdc
   au BufEnter *.hs           compiler ghc
 
   if $SCREEN_CONF_DIR != ""
