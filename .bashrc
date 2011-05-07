@@ -363,6 +363,9 @@ toslice() {
 atslice() {
   sudo /etc/rc.d/lighttpd stop || return 1
 
+  # sometimes lighttpd doesn't really stop
+  pgrep app.cgi && return 2
+
   cp    /srv/http/app.cgi ./app.cgi.bak || return 1 
   cp -r /srv/http/static  ./static.bak  || return 1
 
@@ -399,33 +402,32 @@ thumbit() {
   done
 }
 
-# convert any media for transfer to my ipad
-iconvert() {
-  local drop="$HOME/Movies/converted" infile outfile hb
+# rip a dvd with handbrake
+hbrip() {
+  _have HandBrakeCLI || return 1
 
-  hb="$(which HandBrakeCLI 2>/dev/null)"
-  [[ -z "$hb" ]] && return 1
-
+  local name="$1" out drop="$HOME/Movies"; shift
   [[ -d "$drop" ]] || mkdir -p "$drop"
 
-  # allow quality override
-  if [[ "$1" = '-q' ]]; then
-    hb="$hb -q $2"
-    shift 2
-  fi
+  out="$drop/$name.mp4"
 
-  for infile in "$@"; do
-    # handle /dev/sr0 input
-    if [[ -b "$infile" ]]; then
-      outfile="$drop/movie.mp4"
-    else
-      outfile="$drop/$(basename "${infile%.*}").mp4"
-    fi
+  echo "rip /dev/sr0 --> $out"
+  HandBrakeCLI -Z iPad "$@" -i /dev/sr0 -o "$out" 2>/dev/null
+  echo
+}
 
-    echo "convert $infile --> $outfile"
-    $hb -Z iPad -i "$infile" -o "$outfile" 2>/dev/null
-    echo
-  done
+# convert media to ipad format with handbrake
+hbconvert() {
+  _have HandBrakeCLI || return 1
+
+  local in="$1" out drop="$HOME/Movies/converted"; shift
+  [[ -d "$drop" ]] || mkdir -p "$drop"
+
+  out="$drop/$(basename "${in%.*}").mp4"
+
+  echo "convert $in --> $out"
+  HandBrakeCLI -Z iPad "$@" -i "$in" -o "$out" 2>/dev/null
+  echo
 }
 
 # share a file out of my public dropbox
@@ -564,9 +566,11 @@ timer() {
 
 # auto send an attachment from CLI 
 send() {
-  _have mutt || return 1
+  _have mutt    || return 1
+  [[ -f "$1" ]] || return 1
+  [[ -z "$2" ]] || return 1
 
-  echo 'Auto-sent from linux. Please see attached.' | mutt -s 'File Attached' -a "$1" "$2"
+  echo 'Auto-sent from linux. Please see attached.' | mutt -s 'File Attached' -a "$1" -- "$2"
 }
 
 # run a bash script in 'debug' mode
