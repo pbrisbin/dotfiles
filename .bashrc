@@ -33,6 +33,11 @@ shopt -s extglob
 # should've done this a long time ago
 set -o vi
 
+# no flow control outside of the dumb tty
+if [[ "$TERM" != 'linux' ]]; then
+  stty -ixon -ixoff
+fi
+
 # list of apps to be tried in order
 xbrowsers='browser:chromium:google-chrome:firefox'
 browsers='elinks:lynx:links'
