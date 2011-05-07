@@ -3,8 +3,6 @@
 "
 
 " options {{{
-
-" this is not vi
 set nocompatible
 
 " set 256 colors if we can
@@ -27,12 +25,22 @@ if has ('folding')
   set foldcolumn=0
 endif
 
+" utf-8
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
 " main options
 set autoindent
 set autowrite
 set background=dark
 set backspace=indent,eol,start
-set completeopt=menu,longest
+set completeopt=menuone,preview
 set cursorline
 set expandtab
 set formatoptions-=t
@@ -58,6 +66,7 @@ set sm
 set smartcase
 set smartindent
 set smarttab
+set splitbelow
 set splitright
 set tabstop=8
 set tags=tags
@@ -73,36 +82,8 @@ filetype plugin indent on
 " local leader commands
 let maplocalleader = ','
 
-" python
-let python_highlight_all=1
-let python_highlight_space_errors=1
-let python_fold=1
-
-" lua
-let lua_fold=1
-let lua_version=5
-let lua_subversion=1
-
-" java
-let java_highlight_all=1
-let java_highlight_functions="style"
-let java_allow_cpp_keywords=1
-
-" eclim
-let g:EclimBrowser          = '$BROWSER'
-let g:EclimHome             = '/usr/share/vim/vimfiles/eclim'
-let g:EclimEclipseHome      = '/usr/share/eclipse'
-let g:EclimShowCurrentError = 0
-let g:EclimPhpValidate      = 0
-let g:EclimXmlValidate      = 0
-
 " supertab
-let g:SuperTabDefaultCompletionTypeDiscovery = [
-\ "&completefunc:<c-x><c-u>",
-\ "&omnifunc:<c-x><c-o>",
-\ ]
-
-let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
 let g:SuperTabLongestHighlight = 1
 
 " default comment symbols
@@ -112,19 +93,16 @@ let g:EndComment=""
 " }}}
 
 " keymaps {{{
-
-" unmap annoying keys
+" annoying
 nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
-" quicker window navigation
+" window/buffer navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
-
-" quicker buffer navigation
 nnoremap <C-n> :next<CR>
 nnoremap <C-p> :prev<CR>
 
@@ -137,20 +115,12 @@ nmap <LocalLeader>t xp
 " comment/uncomment a visual block
 vmap <LocalLeader>c :call CommentLines()<CR>
 
-" htmlize/unhtmlize a visual block
-vmap <LocalLeader>h :call Htmlize()<CR>
-
 " save the current file as root
 cmap w!! w !sudo tee % >/dev/null<CR>:e!<CR><CR>
-
-" indenting with built-in repeat
-"vnoremap < <gv
-"vnoremap > >gv
 
 " }}}
 
 " autocommands {{{
-
 if has('autocmd')
   " vim itself
   au FileType vim let g:StartComment = "\""
@@ -161,8 +131,8 @@ if has('autocmd')
   au BufReadPost * call RestoreCursorPos()
   au BufWinEnter * call OpenFoldOnRestore()
 
-  au BufEnter    * let &titlestring = "vim: " . substitute(expand("%:p"), $HOME, "~", '')
-  au BufEnter    * let &titleold    = substitute(getcwd(), $HOME, "~", '')
+  au BufEnter * let &titlestring = "vim: " . substitute(expand("%:p"), $HOME, "~", '')
+  au BufEnter * let &titleold    = substitute(getcwd(), $HOME, "~", '')
 
   " file types for nonstandard/additional config files
   au BufEnter *conkyrc       setlocal filetype=conkyrc
@@ -175,148 +145,35 @@ if has('autocmd')
   au BufEnter *.hamlet       setlocal filetype=hamlet
   au BufEnter *.cassius      setlocal filetype=cassius
   au BufEnter *.julius       setlocal filetype=julius
-  au BufEnter *.pdc          setlocal filetype=pdc
-  au BufEnter *.md           setlocal filetype=pdc
+  au BufEnter *.pdc          setlocal filetype=pandoc
+  au BufEnter *.md           setlocal filetype=pandoc
+  au BufEnter *.hs           compiler ghc
 
   if $SCREEN_CONF_DIR != ""
     au BufEnter $SCREEN_CONF_DIR/* setlocal filetype=screen
   endif
 
   " shorter filetype stuff
-  au FileType c      setlocal formatoptions+=ro shiftwidth=4
-  au FileType c,cpp  let g:StartComment = "//"
-  au FileType c,cpp  syn match matchName /\(#define\)\@<= .*/
-  au FileType make   setlocal shiftwidth=8
-  au FileType python setlocal shiftwidth=4 tabstop=4
-  au FileType text   setlocal formatoptions+=taw
-  au FileType hamlet setlocal formatoptions+=tw
-  au FileType pdc    call SetPdcOpts()
+  au FileType c          setlocal formatoptions+=ro shiftwidth=4
+  au FileType c,cpp      let g:StartComment = "//"
+  au FileType c,cpp      syn match matchName /\(#define\)\@<= .*/
+  au FileType make       setlocal shiftwidth=8
+  au FileType text       setlocal formatoptions+=taw
+  au FileType hamlet     setlocal formatoptions+=tw
   au FileType javascript setlocal shiftwidth=4
 
-  " pandoc options {{{
-  function! SetPdcOpts()
-    source ~/.vim/autofix.vimrc " auto-correct
-    setlocal formatoptions+=tw
-    setlocal shiftwidth=4
-    setlocal spell
-    setlocal nohlsearch
-
-    " reformat paragraphs
-    nmap <F1> gqap
-    nmap <F2> gqqj
-    nmap <F3> kgqj
-    map! <F1> <ESC>gqapi
-    map! <F2> <ESC>gqqji
-    map! <F3> <ESC>kgqji
-
-    if $DISPLAY != ""
-      command! Open :! webpreview --open %
-      command! Reload :! webpreview --reload %
-
-      au BufWritePost /srv/http/pandoc/* silent Reload
-    endif
-  endfunction
-  " }}}
-
-  " web options {{{
-  au BufEnter *.html call SetHtmlOpts()
-  au BufEnter *.php  call SetPhpOpts()
-
-  function! SetHtmlOpts()
-    setlocal shiftwidth=4
-    let g:StartComment = "<!-- "
-    let g:EndComment   = " -->"
-  endfunction
-
-  function! SetPhpOpts()
-    setlocal shiftwidth=4
-    let g:StartComment = "//"
-    let g:EndComment   = ""
-    command! CheckPHP :! php -l %
-    command! OpenPHP  :! php %
-  endfunction
-  " }}}
-
-  " haskell options {{{
-  au Filetype haskell call SetHaskellOpts()
-
-  " paragraph formatting within hamlet blocks
-  setlocal formatoptions+=w
-
-  function! SetHaskellOpts()
-    setlocal autochdir
-    setlocal shiftwidth=4
-    command! CheckHaskell :! ghci -ilib %
-    let g:StartComment = "--"
-  endfunction
-  " }}}
-
-  " java options {{{
-  au Filetype java call SetJavaOpts()
-
-  function! SetJavaOpts()
-    setlocal shiftwidth=4
-    setlocal foldmethod=indent
-
-    let g:StartComment="//"
-
-    nnoremap <silent> <LocalLeader>i :JavaImport<CR>
-    nnoremap <silent> <LocalLeader>d :JavaDocSearch -x declarations<CR>
-    nnoremap <silent> <LocalLeader><CR> :JavaSearchContext<CR>
-    nnoremap <silent> <LocalLeader>jv :Validate<CR>
-    nnoremap <silent> <LocalLeader>jc :JavaCorrect<CR>
-  endfunction
-  " }}}
-
-  " mail options {{{
-  au Filetype mail call SetMailOpts()
-
-  function! SetMailOpts()
-    source ~/.vim/autofix.vimrc " auto-correct
-
-    setlocal spell
-    setlocal nohlsearch
-
-    setlocal formatoptions+=aw
-
-    nmap <F1> gqap
-    nmap <F2> gqqj
-    nmap <F3> kgqj
-    map! <F1> <ESC>gqapi
-    map! <F2> <ESC>gqqji
-    map! <F3> <ESC>kgqji
-  endfunction
-  " }}}
-
-  " latex options {{{
-  au Filetype tex call SetTexOpts()
-
-  function! SetTexOpts()
-    setlocal autochdir
-    setlocal shiftwidth=4
-    setlocal spell
-
-    let g:StartComment="%"
-
-    if $DISPLAY != ""
-      command! Open   :! (file="%"; pdflatex "$file" $>/dev/null && zathura "${file/.tex/.pdf}" &>/dev/null) &
-      command! Reload :! (pdflatex % &>/dev/null) &
-
-      au BufWritePost *.tex silent Reload
-    endif
-  endfunction
-  " }}}
+  " note: all other filetype-specific code has been moved to
+  " the correct .vim/ftplugin/<filetype>.vim file
 endif
 
 " }}}
 
 " functions/commands {{{ 
-
 function! SetStatusLine()
-    let l:s1="%3.3n\\ %f\\ %h%m%r%w"
-    let l:s2="[%{strlen(&filetype)?&filetype:'?'},\\ %{&encoding},\\ %{&fileformat}]"
-    let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
-    execute "set statusline=" . l:s1 . l:s2 . l:s3
+  let l:s1="%3.3n\\ %f\\ %h%m%r%w"
+  let l:s2="[%{strlen(&filetype)?&filetype:'?'},\\ %{&encoding},\\ %{&fileformat}]"
+  let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
+  execute "set statusline=" . l:s1 . l:s2 . l:s3
 endfunction
 
 function! RestoreCursorPos()
@@ -351,61 +208,6 @@ function! CommentLines()
     execute ":s@^@".g:StartComment."@g"
     execute ":s@$@".g:EndComment."@g"
   endtry
-endfunction
-
-" what a mess this function is...
-function! Htmlize()
-  let found = 0
-
-  try 
-    execute ":s/&amp;/\\&/g" 
-    let found = 1
-    execute ":s/&lt;/</g" 
-    let found = 1
-    execute ":s/&gt;/>/g"
-    let found = 1
-  catch
-    try 
-      execute ":s/&lt;/</g" 
-      let found = 1
-      execute ":s/&gt;/>/g"
-      let found = 1
-    catch
-      try 
-        execute ":s/&gt;/>/g"
-        let found = 1
-      catch
-        " do nothing
-      endtry 
-    endtry 
-  endtry
-
-  if (found == 0)
-    try
-      execute ":s/&/\\&amp;/g"
-      execute ":s/</\\&lt;/g"
-      execute ":s/>/\\&gt;/g"
-    catch
-      try
-        execute ":s/</\\&lt;/g"
-        execute ":s/>/\\&gt;/g"
-      catch
-        try
-          execute ":s/>/\\&gt;/g"
-        catch
-          " do nothing
-        endtry
-      endtry
-    endtry
-  endif
-endfunction
-
-function! s:DiffWithSaved()
-  let filetype=&filetype
-  diffthis
-  vnew | r # | normal! 1Gdd
-  diffthis
-  exe "setlocal bt=nofile bh=wipe nobl noswf ro filetype=" . filetype
 endfunction
 
 command! DiffSaved call s:DiffWithSaved()
