@@ -14,7 +14,10 @@
 # is $1 installed?
 _have() { which "$1" &>/dev/null; }
 
-[[ -f $HOME/.dircolors ]] && eval $(/bin/dircolors -b $HOME/.dircolors)
+if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
+  # https://github.com/trapd00r/LS_COLORS
+  eval $( dircolors -b $HOME/.lscolors )
+fi
 
 if [[ -f /etc/bash_completion ]]; then
   source /etc/bash_completion
@@ -139,11 +142,6 @@ _set_editor
 
 # custom log directory
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
-
-# https://github.com/trapd00r/LS_COLORS
-if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
-  . "$HOME/.lscolors" # exports LS_COLORS variable
-fi
 
 # screen tricks
 if [[ -d "$HOME/.screen/configs" ]]; then
@@ -530,6 +528,17 @@ fix() {
     find "$dir" -type d -exec chmod 755 {} \; 
     find "$dir" -type f -exec chmod 644 {} \;
   done
+}
+
+markdown2html() {
+  _have pandoc || return 1
+
+  local in="$1" out; shift
+
+  out="${in%.*}.html"
+
+  pandoc -f markdown -t html -o "$out" "$@" "$in"
+  echo "created: $out"
 }
 
 # print docs to default printer in reverse page order 
