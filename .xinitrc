@@ -1,6 +1,6 @@
 #!/bin/sh
 
-android-receiver &                          # display android-notifications
+android-receiver --handler dzen-handler &   # display android-notifications
 eval `cat $HOME/.fehbg` &                   # set background
 setxkbmap -option terminate:ctrl_alt_bksp & # add C-A-BS to kill X
 urxvtd -q -f -o &                           # start urxvt daemon
