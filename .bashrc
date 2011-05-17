@@ -608,6 +608,7 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 
 # element colors
 host_color=WHITE
+dir_color=WHITE
 retval_color=WHITE
 sep_color=BLUE
 root_sep_color=RED
@@ -646,6 +647,7 @@ colors_reset='\['`tput sgr0`'\]'
 
 # replace symbolic colors names to raw terminfo strings
 host_color=${!host_color}
+dir_color=${!dir_color}
 retval_color=${!retval_color}
 sep_color=${!sep_color}
 root_sep_color=${!root_sep_color}
@@ -735,8 +737,7 @@ _parse_git_status() { # {{{
     elif  [[ -d "$git_dir/.dotest-merge" ]] ;  then
       op="rebase -m"
       # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
-
-      # lvv: not always works. Should  ./.dotest  be used instead?
+      #     lvv: not always works. Should  ./.dotest  be used instead?
     elif  [[ -f "$git_dir/MERGE_HEAD" ]] ;  then
       op="merge"
       # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)"
@@ -788,9 +789,9 @@ _parse_git_status() { # {{{
 #      file_list=${file_list:0:100}
 #    fi
 
-    echo "$vcs_color${vcs_info}$vcs_color${file_list}$colors_reset/"
+    echo "${vcs_color}${vcs_info}${vcs_color}${file_list}${colors_reset}"
   else
-    echo "${PWD/$HOME/~}/"
+    echo "${dir_color}${PWD/$HOME/~}${colors_reset}"
   fi
 }
 
@@ -812,8 +813,8 @@ prompt_command_function() {
   host_retval=${_sep_color}//${host_color}$HOSTNAME${_sep_color}/${retval_color}${retval}${_sep_color}/${colors_reset}
 
   # add the git or cwd info
-  PS1="${_screen}${host_retval}${git_info} "
-  PS2="${_sep_color}//${colors_reset} "
+  PS1="${_screen}${host_retval}${git_info}${_sep_color}/ ${colors_reset}"
+  PS2="${_sep_color}// ${colors_reset}"
 }
 
 unset PROMPT_COMMAND
