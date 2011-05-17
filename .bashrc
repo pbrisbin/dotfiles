@@ -597,45 +597,227 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 # }}}
 
 ### Titlebar and Prompt {{{
+#
+# A simplification on http://volnitsky.com/project/git-prompt/.
+#
+# todo: did i break screen command recognition?
+#
+###
 
-# default prompt command
-[[ $TERM != 'linux' ]] && PROMPT_COMMAND='echo -ne "\0033]0;${HOSTNAME} ${PWD/$HOME/~}\007"' || PROMPT_COMMAND=''
-export PROMPT_COMMAND
+# colors setup {{{
 
-# set colors for PS1
-nrm='\[\e[0m\]'    # normal
-wht='\[\e[1;37m\]' # bold white
-red='\[\e[1;31m\]' # bold red
+# element colors
+host_color=WHITE
+retval_color=WHITE
+sep_color=BLUE
+root_sep_color=RED
 
-# root is bold red, user is bold blue
-$_isroot && bld='\[\e[1;31m\]' || bld='\[\e[1;34m\]'
+# vcs colors
+init_vcs_color=white
+clean_vcs_color=white
+modified_vcs_color=red
+added_vcs_color=green
+addmoded_vcs_color=yellow
+untracked_vcs_color=white
+op_vcs_color=magenta
+detached_vcs_color=red
+hex_vcs_color=white
 
-# loosely based on rson's
-_git_prompt() {
-  if [[ -d .git ]]; then
-    # determine repo/branch; todo: find a better way
-    git_repo="$(git remote -v | tail -n 1 | sed 's|^.*/\(.*\)\.git .*$|\1|g')"
-    git_branch="$(basename "$(git symbolic-ref HEAD 2>/dev/null)")"
-    
-    echo "git/${git_repo}:${git_branch}"
+# term color codes
+black='\['`tput sgr0; tput setaf 0`'\]'
+red='\['`tput sgr0; tput setaf 1`'\]'
+green='\['`tput sgr0; tput setaf 2`'\]'
+yellow='\['`tput sgr0; tput setaf 3`'\]'
+blue='\['`tput sgr0; tput setaf 4`'\]'
+magenta='\['`tput sgr0; tput setaf 5`'\]'
+cyan='\['`tput sgr0; tput setaf 6`'\]'
+white='\['`tput sgr0; tput setaf 7`'\]'
+
+BLACK='\['`tput setaf 0; tput bold`'\]'
+RED='\['`tput setaf 1; tput bold`'\]'
+GREEN='\['`tput setaf 2; tput bold`'\]'
+YELLOW='\['`tput setaf 3; tput bold`'\]'
+BLUE='\['`tput setaf 4; tput bold`'\]'
+MAGENTA='\['`tput setaf 5; tput bold`'\]'
+CYAN='\['`tput setaf 6; tput bold`'\]'
+WHITE='\['`tput setaf 7; tput bold`'\]'
+
+colors_reset='\['`tput sgr0`'\]'
+
+# replace symbolic colors names to raw terminfo strings
+host_color=${!host_color}
+retval_color=${!retval_color}
+sep_color=${!sep_color}
+root_sep_color=${!root_sep_color}
+
+init_vcs_color=${!init_vcs_color}
+modified_vcs_color=${!modified_vcs_color}
+untracked_vcs_color=${!untracked_vcs_color}
+clean_vcs_color=${!clean_vcs_color}
+added_vcs_color=${!added_vcs_color}
+op_vcs_color=${!op_vcs_color}
+addmoded_vcs_color=${!addmoded_vcs_color}
+detached_vcs_color=${!detached_vcs_color}
+hex_vcs_color=${!hex_vcs_color}
+
+# }}}
+
+_parse_git_status() { # {{{
+  local git_dir file_regex added_files modified files untracked_files
+  local freshness op rawhex branch vcs_info status vcs_color
+
+  git_dir="$(git rev-parse --git-dir 2> /dev/null)"
+  
+  if [[  -n ${git_dir/./} ]]; then
+    file_regex='\([^/ ]*\/\{0,1\}\).*'
+    added_files=()
+    modified_files=()
+    untracked_files=()
+    freshness="="
+
+    # quoting hell
+    eval "$(
+      git status 2>/dev/null |
+      sed -n '
+      s/^# On branch /branch=/p
+      s/^nothing to commi.*/clean=clean/p
+      s/^# Initial commi.*/init=init/p
+
+      s/^# Your branch is ahead of .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/freshness=${WHITE}↑/p
+      s/^# Your branch is behind .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/freshness=${YELLOW}↓/p
+      s/^# Your branch and .[/[:alnum:]]\+. have diverged.*/freshness=${YELLOW}↕/p
+
+      /^# Changes to be committed:/,/^# [A-Z]/ {
+      s/^# Changes to be committed:/added=added;/p
+      s/^#	modified:   '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
+      s/^#	new file:   '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
+      s/^#	renamed:[^>]*> '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
+      s/^#	copied:[^>]*> '"$file_regex"'/ 	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
+      }
+
+      /^# Changed but not updated:/,/^# [A-Z]/ {
+      s/^# Changed but not updated:/modified=modified;/p
+      s/^#	modified:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      s/^#	unmerged:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      }
+
+      /^# Changes not staged for commit:/,/^# [A-Z]/ {
+      s/^# Changes not staged for commit:/modified=modified;/p
+      s/^#	modified:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      s/^#	unmerged:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      }
+
+      /^# Unmerged paths:/,/^[^#]/ {
+      s/^# Unmerged paths:/modified=modified;/p
+      s/^#	both modified:\s*'"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      }
+
+      /^# Untracked files:/,/^[^#]/{
+      s/^# Untracked files:/untracked=untracked;/p
+      s/^#	'"$file_regex"'/		[[ \" ${untracked_files[*]} ${modified_files[*]} ${added_files[*]} \" =~ \" \1 \" ]] || untracked_files[${#untracked_files[@]}]=\"\1\"/p
+      }
+      '
+    )"
+
+    grep -q "^ref:" $git_dir/HEAD 2>/dev/null || detached=detached
+
+    if [[ -d "$git_dir/.dotest" ]] ;  then
+      if [[ -f "$git_dir/.dotest/rebasing" ]] ;  then
+        op="rebase"
+      elif [[ -f "$git_dir/.dotest/applying" ]] ; then
+        op="am"
+      else
+        op="am/rebase"
+      fi
+    elif  [[ -f "$git_dir/.dotest-merge/interactive" ]] ;  then
+      op="rebase -i"
+      # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif  [[ -d "$git_dir/.dotest-merge" ]] ;  then
+      op="rebase -m"
+      # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
+
+      # lvv: not always works. Should  ./.dotest  be used instead?
+    elif  [[ -f "$git_dir/MERGE_HEAD" ]] ;  then
+      op="merge"
+      # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)"
+    elif  [[ -f "$git_dir/index.lock" ]] ;  then
+      op="locked"
+    else
+      [[  -f "$git_dir/BISECT_LOG"  ]]   &&  op="bisect"
+      # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
+      #     branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
+      #     branch="$(cut -c1-7 "$git_dir/HEAD")..."
+    fi
+
+    rawhex=$(git rev-parse HEAD 2>/dev/null)
+    rawhex=${rawhex/HEAD/}
+    rawhex="$hex_vcs_color${rawhex:0:5}"
+
+    if [[ $init ]];  then 
+      vcs_info=${white}init
+    else
+      if [[ "$detached" ]] ;  then
+        branch="<detached:`git name-rev --name-only HEAD 2>/dev/null`"
+      elif   [[ "$op" ]];  then
+        branch="$op:$branch"
+        if [[ "$op" == "merge" ]] ;  then
+          branch+="<--$(git name-rev --name-only $(<$git_dir/MERGE_HEAD))"
+        fi
+        #branch="<$branch>"
+      fi
+      vcs_info="$branch$freshness$rawhex"
+    fi
+
+    status=${op:+op}
+    status=${status:-$detached}
+    status=${status:-$clean}
+    status=${status:-$modified}
+    status=${status:-$added}
+    status=${status:-$untracked}
+    status=${status:-$init}
+    eval vcs_color="\${${status}_vcs_color}"
+
+    [[ ${added_files[0]}     ]] && file_list+=" "$added_vcs_color${added_files[@]}
+    [[ ${modified_files[0]}  ]] && file_list+=" "$modified_vcs_color${modified_files[@]}
+    [[ ${untracked_files[0]} ]] && file_list+=" "$untracked_vcs_color${untracked_files[@]}
+
+# todo: bring back limiting, but do it by number of files, not number of
+# characters -- if you cut off a terminal color escape the whole prompt
+# falls apart
+#    if [[ ${#file_list} -gt 100 ]]; then
+#      file_list=${file_list:0:100}
+#    fi
+
+    echo "$vcs_color${vcs_info}$vcs_color${file_list}$colors_reset/"
   else
-    # normal directory display
-    echo ${PWD/$HOME/\~}
+    echo "${PWD/$HOME/~}/"
   fi
 }
 
-_git_status() {
-  if [[ -d .git ]] && ! git status | grep -Fq 'nothing to commit (working directory clean)'; then
-    echo '*'
-  fi
+# }}}
+
+prompt_command_function() {
+  local retval="$?" _screen _sep_color host_retval
+
+  # sep changes colors for root
+  $_isroot && _sep_color=$root_sep_color || _sep_color=$sep_color
+
+  # add control characters for screen
+  [[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
+
+  # parse git info if we're in a git repo
+  git_info="$(_parse_git_status)"
+
+  # set the main section
+  host_retval=${_sep_color}//${host_color}$HOSTNAME${_sep_color}/${retval_color}${retval}${_sep_color}/${colors_reset}
+
+  # add the git or cwd info
+  PS1="${_screen}${host_retval}${git_info} "
+  PS2="${_sep_color}//${colors_reset} "
 }
 
-# change prompt behavior in screen
-[[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
-
-export PS1="${_screen}$bld//$wht\h$bld/$wht\$?$bld/$wht\$(_git_prompt)$red\$(_git_status)$wht/ $nrm"
-export PS2="$bld// $nrm"
-
+unset PROMPT_COMMAND
+PROMPT_COMMAND=prompt_command_function
 # }}}
 
 ### Starting X {{{
