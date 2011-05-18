@@ -79,7 +79,7 @@ alternative_order text/plain text/enriched text/html              # but save it 
   set index_format        = "%3C %Z %[!%m/%d] %-17.17F %s"
   set quote_regexp        = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
   set reply_regexp        = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-  set status_format       = "-%r- %v ─┴────/ %f %m%?n? [+%n]?%?d? [-%d]?%?t? [*%t]? /%?p?───/ %p waiting to send /?─%>─(%P)───"
+  set status_format       = "-%r- %v ──────┴────/ %f %m%?n? [+%n]?%?d? [-%d]?%?t? [*%t]? /%?p?───/ %p waiting to send /?─%>─(%P)───"
 
 # composing mail
   set askcc                                                       # always ask for CC:
@@ -97,9 +97,9 @@ unignore from: to: cc: date: subject:                             # show only th
 hdr_order from: to: cc: date: subject:                            # and in this order
 
 # lists and boxes
-subscribe arch-announce arch-dev-public aur-general xmonad arch-haskell
-mailboxes +--Gmail---- +GMail/INBOX +GMail/all_mail +GMail/disqus +GMail/arch_lists +GMail/xmonad_list +GMail/sent_mail +GMail/notes +GMail/drafts +GMail/trash 
-mailboxes +--Gmx------ +GMX/INBOX +GMX/archive +GMX/sent +GMX/drafts +GMX/trash
+subscribe arch-announce arch-dev-public aur-general xmonad arch-haskell web-devel
+mailboxes +--Gmail------------- +GMail/INBOX +GMail/all_mail +GMail/disqus +GMail/arch_lists +GMail/xmonad_list +GMail/web_devel +GMail/sent_mail +GMail/notes +GMail/drafts +GMail/trash 
+mailboxes +--Gmx--------------- +GMX/INBOX +GMX/archive +GMX/sent +GMX/drafts +GMX/trash
 
 # conditionally source a 256 colors file
 #source `FILE=$HOME/.mutt/colors.muttrc; [[ $TERM =~ 256 ]] && FILE=$HOME/.mutt/256colors.muttrc; echo $FILE`
