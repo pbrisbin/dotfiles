@@ -4,7 +4,7 @@
 
 color status green default
 
-  set from      = "@gmail.com"
+  set from      = "pbrisbin@gmail.com"
   set sendmail  = "/usr/bin/msmtp -a gmail"
   set mbox      = "+GMail/all_mail"
 unset record

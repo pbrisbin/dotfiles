@@ -4,7 +4,7 @@
 
 color status cyan default
 
-  set from      = "@gmx.com"
+  set from      = "pbrisbin@gmx.com"
   set sendmail  = "/usr/bin/msmtp -a gmx"
   set mbox      = "+GMX/archive"
   set record    = "+GMX/sent"

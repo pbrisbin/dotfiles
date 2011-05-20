@@ -1,16 +1,17 @@
 # vim:ft=config
 #
-# further reading: http://.com/posts/irssi/
+# further reading: http://pbrisbin.com/posts/irssi/
 #
 ###
 
 servers = (
   {
     address = "irc.freenode.net";
-    chatnet = "Freenode";
-    port = "6667";
-    use_ssl = "no";
-    ssl_verify = "no";
+    chatnet = "freenode";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    ssl_capath = "/etc/ssl/certs/";
     autoconnect = "yes";
   },
 
@@ -31,22 +32,15 @@ servers = (
 );
 
 chatnets = {
-  Freenode = {
-    type = "IRC";
-    nick = "brisbin";
-    autosendcmd = "/^msg nickserv identify ; wait 2000";
-  };
+  freenode = { type = "IRC"; nick = "brisbin"; };
   oftc = { type = "IRC"; };
-  bittlebee = {
-    type = "IRC";
-    autosendcmd = "/^msg -bitlbee &bitlbee identify ; wait -bitlbee 2000";
-  };
+  bittlebee = { type = "IRC"; };
 };
 
 channels = (
-  { name = "#archlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#xmonad"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#haskell"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#archlinux"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#xmonad"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#haskell"; chatnet = "freenode"; autojoin = "Yes"; }
 );
 
 aliases = {
@@ -232,29 +226,20 @@ ignores = (
 
 hilights = (
   { text = "brisbin"; nick = "no"; word = "yes"; fullword = "yes"; },
-  { text = ".com"; nick = "no"; word = "yes"; fullword = "no"; }
+  { text = "pbrisbin.com"; nick = "no"; word = "yes"; fullword = "no"; }
 );
 
 logs = { };
 windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
-  2 = {
-    items = (
-      {
-        type = "QUERY";
-        chat_type = "IRC";
-        name = "nickserv";
-        tag = "Freenode";
-      }
-    );
-  };
+  2 = { name = "hilight"; sticky = "yes"; };
   3 = {
     items = (
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#archlinux";
-        tag = "Freenode";
+        tag = "freenode";
       }
     );
   };
@@ -264,7 +249,7 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#xmonad";
-        tag = "Freenode";
+        tag = "freenode";
       }
     );
   };
@@ -274,12 +259,11 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#haskell";
-        tag = "Freenode";
+        tag = "freenode";
       }
     );
   };
-  6 = { name = "hilight"; sticky = "yes"; };
-  7 = {
+  6 = {
     items = (
       {
         type = "CHANNEL";
@@ -292,5 +276,5 @@ windows = {
 };
 mainwindows = {
   1 = { first_line = "12"; lines = "72"; };
-  6 = { first_line = "1"; lines = "11"; };
+  2 = { first_line = "1"; lines = "11"; };
 };

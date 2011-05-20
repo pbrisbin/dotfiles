@@ -117,7 +117,7 @@ folder-hook GMail/*      source ~/.mutt/gmail.muttrc
 folder-hook GMX/*        source ~/.mutt/gmx.muttrc
 
 # alternate "me"s
-alternates (@(gmail|gmx).com|.*@.com)
+alternates (pbrisbin@(gmail|gmx).com|.*@pbrisbin.com)
 
 # these just give me headaches
 bind index,pager \#   noop
@@ -158,4 +158,4 @@ macro index,pager         A   "<pipe-message>abook --add-email<return>" "add sen
 # mid-compose to abort; instead, just :wq and abort from the compose
 # menu
 unhook send-hook
-send-hook "~u" "push '<edit-cc>,@gmail.com<enter>'"
+send-hook "~u" "push '<edit-cc>,pbrisbin@gmail.com<enter>'"
