@@ -359,6 +359,9 @@ toslice() {
 
 # once there we deploy
 atslice() {
+  [[ -f ./app.cgi ]] || return 1
+  [[ -d ./static  ]] || return 1
+
   sudo /etc/rc.d/lighttpd stop || return 1
 
   # sometimes lighttpd doesn't really stop
@@ -375,7 +378,8 @@ atslice() {
 
 # combine pdfs into one using ghostscript
 combinepdf() {
-  _have gs || return 1
+  _have gs       || return 1
+  [[ $# -ge 2 ]] || return 1
 
   local out="$1"; shift
 
@@ -403,6 +407,7 @@ thumbit() {
 # rip a dvd with handbrake
 hbrip() {
   _have HandBrakeCLI || return 1
+  [[ -n "$1" ]]      || return 1
 
   local name="$1" out drop="$HOME/Movies"; shift
   [[ -d "$drop" ]] || mkdir -p "$drop"
@@ -417,6 +422,7 @@ hbrip() {
 # convert media to ipad format with handbrake
 hbconvert() {
   _have HandBrakeCLI || return 1
+  [[ -n "$1" ]]      || return 1
 
   local in="$1" out drop="$HOME/Movies/converted"; shift
   [[ -d "$drop" ]] || mkdir -p "$drop"
@@ -427,21 +433,6 @@ hbconvert() {
   HandBrakeCLI -Z iPad "$@" -i "$in" -o "$out" 2>/dev/null
   echo
 }
-
-# share a file out of my public dropbox
-#dbshare() {
-#  local db="$HOME/Dropbox/Public" uid='472835' file url
-#
-#  file="${1/$db/}"
-#
-#  [[ -f "$db/$file" ]] || return 1
-#
-#  url="http://dl.dropbox.com/u/$uid/$file"
-#
-#  echo -n "$url" | xlip 2>/dev/null
-#
-#  echo "$url"
-#}
 
 # simple spellchecker, uses /usr/share/dict/words
 spellcheck() {
@@ -492,21 +483,6 @@ define() {
   rm -f "$tmp"
 }
 
-#
-# just use readlink -f
-#
-# accepts a relative path and returns an absolute 
-#rel2abs() {
-#  local file dir
-#
-#  file="$(basename "$1")"
-#  dir="$(dirname "$1")"
-#
-#  pushd "${dir:-./}" &>/dev/null || return 1
-#  echo "$PWD/$file"
-#  popd &>/dev/null
-#}
-
 # grep by paragraph 
 grepp() { perl -00ne "print if /$1/i" < "$2"; }
 
@@ -530,36 +506,21 @@ fix() {
   done
 }
 
-markdown2html() {
-  _have pandoc || return 1
-
-  local in="$1" out; shift
-
-  out="${in%.*}.html"
-
-  pandoc -f markdown -t html -o "$out" "$@" "$in"
-  echo "created: $out"
-}
-
 # print docs to default printer in reverse page order 
 printr() {
   _have enscript || return 1
 
+  # stdin?
+  if [[ -z "$*" ]]; then
+    cat | enscript -p - | psselect -r | lp
+    return 0
+  fi
+
   local file
 
-  # files on commandline
-  if [[ $# -ne 0 ]]; then
-    for file in "$@"; do
-      enscript -p - "$file" | psselect -r | lp
-    done
-  # try stdin
-  else
-    local IFS=$'\n'
-
-    (while read -r; do
-      echo "$REPLY"
-    done) | enscript -p - | psselect -r | lp
-  fi
+  for file in "$@"; do
+    enscript -p - "$file" | psselect -r | lp
+  done
 }
 
 # set an ad-hoc GUI timer 
@@ -567,7 +528,7 @@ timer() {
   $_isxrunning || return 1
   _have zenity || return 1
 
-  local N=$1; shift
+  local N="${1:-5m}"; shift
 
   (sleep $N && zenity --info --title="Time's Up" --text="${*:-DING}") &
   echo "timer set for $N"
@@ -600,8 +561,6 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 #
 # A simplification on http://volnitsky.com/project/git-prompt/.
 #
-# todo: did i break screen command recognition?
-#
 ###
 
 # colors setup {{{
@@ -619,7 +578,7 @@ clean_vcs_color=white
 modified_vcs_color=red
 added_vcs_color=green
 addmoded_vcs_color=yellow
-untracked_vcs_color=white
+untracked_vcs_color=cyan
 op_vcs_color=magenta
 detached_vcs_color=red
 hex_vcs_color=white
@@ -670,14 +629,14 @@ _parse_git_status() { # {{{
 
   git_dir="$(git rev-parse --git-dir 2> /dev/null)"
   
-  if [[  -n ${git_dir/./} ]]; then
+  if [[ -n ${git_dir/./} ]]; then
     file_regex='\([^/ ]*\/\{0,1\}\).*'
     added_files=()
     modified_files=()
     untracked_files=()
-    freshness="="
+    freshness=''
 
-    # quoting hell
+    # todo: do the double quotes in the sed script really need escaping?
     eval "$(
       git status 2>/dev/null |
       sed -n '
@@ -685,38 +644,38 @@ _parse_git_status() { # {{{
       s/^nothing to commi.*/clean=clean/p
       s/^# Initial commi.*/init=init/p
 
-      s/^# Your branch is ahead of .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/freshness=${WHITE}↑/p
-      s/^# Your branch is behind .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/freshness=${YELLOW}↓/p
+      s/^# Your branch is ahead of .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/freshness=\" ${WHITE}↑\"/p
+      s/^# Your branch is behind .[/[:alnum:]]\+. by [[:digit:]]\+ commit.*/  freshness=\" ${YELLOW}↓\"/p
       s/^# Your branch and .[/[:alnum:]]\+. have diverged.*/freshness=${YELLOW}↕/p
 
       /^# Changes to be committed:/,/^# [A-Z]/ {
       s/^# Changes to be committed:/added=added;/p
-      s/^#	modified:   '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
-      s/^#	new file:   '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
-      s/^#	renamed:[^>]*> '"$file_regex"'/	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
-      s/^#	copied:[^>]*> '"$file_regex"'/ 	[[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files[${#added_files[@]}]=\"\1\"/p
+      s/^#	modified:   '"$file_regex"'/    [[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files+=(\"\1\")/p
+      s/^#	new file:   '"$file_regex"'/    [[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files+=(\"\1\")/p
+      s/^#	renamed:[^>]*> '"$file_regex"'/ [[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files+=(\"\1\")/p
+      s/^#	copied:[^>]*> '"$file_regex"'/  [[ \" ${added_files[*]} \" =~ \" \1 \" ]] || added_files+=(\"\1\")/p
       }
 
       /^# Changed but not updated:/,/^# [A-Z]/ {
       s/^# Changed but not updated:/modified=modified;/p
-      s/^#	modified:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
-      s/^#	unmerged:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      s/^#	modified:   '"$file_regex"'/ [[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files+=(\"\1\")/p
+      s/^#	unmerged:   '"$file_regex"'/ [[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files+=(\"\1\")/p
       }
 
       /^# Changes not staged for commit:/,/^# [A-Z]/ {
       s/^# Changes not staged for commit:/modified=modified;/p
-      s/^#	modified:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
-      s/^#	unmerged:   '"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      s/^#	modified:   '"$file_regex"'/ [[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files+=(\"\1\")/p
+      s/^#	unmerged:   '"$file_regex"'/ [[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files+=(\"\1\")/p
       }
 
       /^# Unmerged paths:/,/^[^#]/ {
       s/^# Unmerged paths:/modified=modified;/p
-      s/^#	both modified:\s*'"$file_regex"'/	[[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files[${#modified_files[@]}]=\"\1\"/p
+      s/^#	both modified:\s*'"$file_regex"'/ [[ \" ${modified_files[*]} \" =~ \" \1 \" ]] || modified_files+=(\"\1\")/p
       }
 
       /^# Untracked files:/,/^[^#]/{
       s/^# Untracked files:/untracked=untracked;/p
-      s/^#	'"$file_regex"'/		[[ \" ${untracked_files[*]} ${modified_files[*]} ${added_files[*]} \" =~ \" \1 \" ]] || untracked_files[${#untracked_files[@]}]=\"\1\"/p
+      s/^#	'"$file_regex"'/ [[ \" ${untracked_files[*]} ${modified_files[*]} ${added_files[*]} \" =~ \" \1 \" ]] || untracked_files+=(\"\1\")/p
       }
       '
     )"
@@ -724,27 +683,27 @@ _parse_git_status() { # {{{
     grep -q "^ref:" $git_dir/HEAD 2>/dev/null || detached=detached
 
     if [[ -d "$git_dir/.dotest" ]] ;  then
-      if [[ -f "$git_dir/.dotest/rebasing" ]] ;  then
+      if [[ -f "$git_dir/.dotest/rebasing" ]]; then
         op="rebase"
-      elif [[ -f "$git_dir/.dotest/applying" ]] ; then
+      elif [[ -f "$git_dir/.dotest/applying" ]]; then
         op="am"
       else
         op="am/rebase"
       fi
-    elif  [[ -f "$git_dir/.dotest-merge/interactive" ]] ;  then
+    elif  [[ -f "$git_dir/.dotest-merge/interactive" ]]; then
       op="rebase -i"
       # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
-    elif  [[ -d "$git_dir/.dotest-merge" ]] ;  then
+    elif  [[ -d "$git_dir/.dotest-merge" ]]; then
       op="rebase -m"
       # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
       #     lvv: not always works. Should  ./.dotest  be used instead?
-    elif  [[ -f "$git_dir/MERGE_HEAD" ]] ;  then
+    elif  [[ -f "$git_dir/MERGE_HEAD" ]]; then
       op="merge"
       # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)"
-    elif  [[ -f "$git_dir/index.lock" ]] ;  then
+    elif  [[ -f "$git_dir/index.lock" ]]; then
       op="locked"
     else
-      [[  -f "$git_dir/BISECT_LOG"  ]]   &&  op="bisect"
+      [[ -f "$git_dir/BISECT_LOG" ]] && op="bisect"
       # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
       #     branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
       #     branch="$(cut -c1-7 "$git_dir/HEAD")..."
@@ -754,19 +713,19 @@ _parse_git_status() { # {{{
     rawhex=${rawhex/HEAD/}
     rawhex="$hex_vcs_color${rawhex:0:5}"
 
-    if [[ $init ]];  then 
+    if [[ $init ]]; then 
       vcs_info=${white}init
     else
-      if [[ "$detached" ]] ;  then
+      if [[ "$detached" ]]; then
         branch="<detached:`git name-rev --name-only HEAD 2>/dev/null`"
-      elif   [[ "$op" ]];  then
+      elif [[ "$op" ]]; then
         branch="$op:$branch"
-        if [[ "$op" == "merge" ]] ;  then
+        if [[ "$op" == "merge" ]]; then
           branch+="<--$(git name-rev --name-only $(<$git_dir/MERGE_HEAD))"
         fi
         #branch="<$branch>"
       fi
-      vcs_info="$branch$freshness$rawhex"
+      vcs_info="$branch $rawhex$fresshness"
     fi
 
     status=${op:+op}
