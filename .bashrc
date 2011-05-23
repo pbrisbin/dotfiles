@@ -559,13 +559,21 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 
 ### Titlebar and Prompt {{{
 #
-# A simplification on http://volnitsky.com/project/git-prompt/.
+# /[0]/[1]/[2]/[3]/
+#
+# 0: % batt remaining (if BAT0 exists)
+# 1: host name
+# 2: last exit status
+# 3: git summary or current directory
 #
 ###
 
 # colors setup {{{
 
 # element colors
+batt_color=WHITE
+batt_med_color=YELLOW
+batt_low_color=RED
 host_color=WHITE
 dir_color=WHITE
 retval_color=WHITE
@@ -605,6 +613,9 @@ WHITE='\['`tput setaf 7; tput bold`'\]'
 colors_reset='\['`tput sgr0`'\]'
 
 # replace symbolic colors names to raw terminfo strings
+batt_color=${!batt_color}
+batt_med_color=${!batt_med_color}
+batt_low_color=${!batt_low_color}
 host_color=${!host_color}
 dir_color=${!dir_color}
 retval_color=${!retval_color}
@@ -623,9 +634,39 @@ hex_vcs_color=${!hex_vcs_color}
 
 # }}}
 
-_parse_git_status() { # {{{
-  local git_dir file_regex added_files modified files untracked_files
+_battery_info() { # {{{
+  local bat='/proc/acpi/battery/BAT0/' batt_level _batt_color
+
+  unset batt_info
+
+  if [[ -d "$bat" ]]; then
+    read -r batt_level < <(cat "$bat/info" "$bat/state" | awk '
+      /^remaining capacity: / { rem = $3 }
+      /^design capacity: /    { max = $3 }
+
+      END { printf "%d", (rem/max*100); }')
+
+      # set color based on level
+      if [[ batt_level -le 10 ]]; then
+        _batt_color=$batt_low_color
+      elif [[ $batt_level -le 30 ]]; then
+        _batt_color=$batt_med_color
+      else
+        _batt_color=$batt_color
+      fi
+
+      batt_info="${batt_color}~${_batt_color}${batt_level}${batt_color}%${colors_reset}"
+  fi
+}
+# }}}
+
+# a simplification on http://volnitsky.com/project/git-prompt/ {{{
+_parse_git_status() {
+  local git_dir file_regex added_files modified file_list untracked_files
   local freshness op rawhex branch vcs_info status vcs_color
+
+  unset git_info # default
+  git_info="${dir_color}${PWD/$HOME/~}${colors_reset}"
 
   git_dir="$(git rev-parse --git-dir 2> /dev/null)"
   
@@ -737,27 +778,19 @@ _parse_git_status() { # {{{
     status=${status:-$init}
     eval vcs_color="\${${status}_vcs_color}"
 
-    [[ ${added_files[0]}     ]] && file_list+=" "$added_vcs_color${added_files[@]}
-    [[ ${modified_files[0]}  ]] && file_list+=" "$modified_vcs_color${modified_files[@]}
-    [[ ${untracked_files[0]} ]] && file_list+=" "$untracked_vcs_color${untracked_files[@]}
+    [[ ${added_files[0]}     ]] && file_list+=" $added_vcs_color${added_files[@]}"
+    [[ ${modified_files[0]}  ]] && file_list+=" $modified_vcs_color${modified_files[@]}"
+    [[ ${untracked_files[0]} ]] && file_list+=" $untracked_vcs_color${untracked_files[@]}"
 
-# todo: bring back limiting, but do it by number of files, not number of
-# characters -- if you cut off a terminal color escape the whole prompt
-# falls apart
-#    if [[ ${#file_list} -gt 100 ]]; then
-#      file_list=${file_list:0:100}
-#    fi
-
-    echo "${vcs_color}${vcs_info}${vcs_color}${file_list}${colors_reset}"
-  else
-    echo "${dir_color}${PWD/$HOME/~}${colors_reset}"
+    # real git info
+    git_info="${vcs_color}${vcs_info}${vcs_color}${file_list}${colors_reset}"
   fi
 }
 
 # }}}
 
 prompt_command_function() {
-  local retval="$?" _screen _sep_color host_retval
+  local retval="$?" _screen _sep_color host_retval _ps
 
   # sep changes colors for root
   $_isroot && _sep_color=$root_sep_color || _sep_color=$sep_color
@@ -765,15 +798,18 @@ prompt_command_function() {
   # add control characters for screen
   [[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
 
-  # parse git info if we're in a git repo
-  git_info="$(_parse_git_status)"
+  _battery_info
+  _parse_git_status
 
-  # set the main section
-  host_retval=${_sep_color}//${host_color}$HOSTNAME${_sep_color}/${retval_color}${retval}${_sep_color}/${colors_reset}
+  # build that prompt
+   _ps="$_sep_color/$batt_info"
+  _ps+="$_sep_color/$host_color$HOSTNAME"
+  _ps+="$_sep_color/$retval_color$retval"
+  _ps+="$_sep_color/$git_info"
 
-  # add the git or cwd info
-  PS1="${_screen}${host_retval}${git_info}${_sep_color}/ ${colors_reset}"
-  PS2="${_sep_color}// ${colors_reset}"
+  PS1="$_ps$_sep_color/ $colors_reset"
+  PS2="$_sep_color// $colors_reset"
+  PS3="$_sep_color// $colors_reset"
 }
 
 unset PROMPT_COMMAND
