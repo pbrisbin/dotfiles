@@ -7,7 +7,7 @@
 ###
 
 # get out if non-interactive
-[[ -z "$PS1" ]] && return
+[[ $- != *i* ]] && return
 
 ### General options {{{
 
