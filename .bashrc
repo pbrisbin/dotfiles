@@ -802,7 +802,7 @@ prompt_command_function() {
   _parse_git_status
 
   # build that prompt
-   _ps="$_sep_color/$batt_info"
+  _ps="$_screen$_sep_color/$batt_info"
   _ps+="$_sep_color/$host_color$HOSTNAME"
   _ps+="$_sep_color/$retval_color$retval"
   _ps+="$_sep_color/$git_info"
