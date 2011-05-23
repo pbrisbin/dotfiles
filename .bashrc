@@ -197,6 +197,7 @@ fi
 
 # ssh
 alias blue='ssh patrick@blue'
+alias bruno='ssh patrick@bruno'
 alias howie='ssh patrick@howard'
 alias htpc='ssh xbmc@htpc'
 alias susie='ssh patrick@susan'
