@@ -577,6 +577,7 @@ batt_low_color=RED
 host_color=WHITE
 dir_color=WHITE
 retval_color=WHITE
+retval_nonzero_color=MAGENTA
 sep_color=BLUE
 root_sep_color=RED
 
@@ -619,6 +620,7 @@ batt_low_color=${!batt_low_color}
 host_color=${!host_color}
 dir_color=${!dir_color}
 retval_color=${!retval_color}
+retval_nonzero_color=${!retval_nonzero_color}
 sep_color=${!sep_color}
 root_sep_color=${!root_sep_color}
 
@@ -790,24 +792,33 @@ _parse_git_status() {
 # }}}
 
 prompt_command_function() {
-  local retval="$?" _screen _sep_color host_retval _ps
+  local retval="$?" _sep_color host_info retval_info ps
 
   # sep changes colors for root
   $_isroot && _sep_color=$root_sep_color || _sep_color=$sep_color
 
-  # add control characters for screen
-  [[ -n "$STY" ]] && _screen='\[\ek\e\\\]\[\ek\w\e\\\]' || _screen=''
-
   _battery_info
   _parse_git_status
 
-  # build that prompt
-  _ps="$_screen$_sep_color/$batt_info"
-  _ps+="$_sep_color/$host_color$HOSTNAME"
-  _ps+="$_sep_color/$retval_color$retval"
-  _ps+="$_sep_color/$git_info"
+  host_info="$host_color$HOSTNAME"
 
-  PS1="$_ps$_sep_color/ $colors_reset"
+  if [[ $retval -eq 0 ]]; then
+    retval_info="$retval_color$retval"
+  else
+    retval_info="$retval_nonzero_color$retval"
+  fi
+
+  # add control characters for screen
+  [[ -n "$STY" ]] && ps='\[\ek\e\\\]\[\ek\w\e\\\]' || ps=''
+
+  # build that prompt
+  ps+="$_sep_color/$batt_info"
+  ps+="$_sep_color/$host_info"
+  ps+="$_sep_color/$retval_info"
+  ps+="$_sep_color/$git_info"
+  ps+="$_sep_color/ $colors_reset"
+
+  PS1="$ps"
   PS2="$_sep_color// $colors_reset"
   PS3="$_sep_color// $colors_reset"
 }
