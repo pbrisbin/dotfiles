@@ -585,7 +585,7 @@ root_sep_color=RED
 # vcs colors
 init_vcs_color=white
 clean_vcs_color=white
-modified_vcs_color=red
+modified_vcs_color=magenta
 added_vcs_color=green
 addmoded_vcs_color=yellow
 untracked_vcs_color=cyan
@@ -675,13 +675,11 @@ _parse_git_status() {
   git_dir="$(git rev-parse --git-dir 2> /dev/null)"
   
   if [[ -n ${git_dir/./} ]]; then
-    freshness=''
     file_regex='\([^/ ]*\/\{0,1\}\).*'
     added_files=()
     modified_files=()
     untracked_files=()
 
-    # todo: do the double quotes in the sed script really need escaping?
     eval "$(
       git status 2>/dev/null |
       sed -n '
@@ -735,23 +733,16 @@ _parse_git_status() {
       else
         op="am/rebase"
       fi
-    elif  [[ -f "$git_dir/.dotest-merge/interactive" ]]; then
+    elif [[ -f "$git_dir/.dotest-merge/interactive" ]]; then
       op="rebase -i"
-      # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
-    elif  [[ -d "$git_dir/.dotest-merge" ]]; then
+    elif [[ -d "$git_dir/.dotest-merge" ]]; then
       op="rebase -m"
-      # ??? branch="$(cat "$git_dir/.dotest-merge/head-name")"
-      #     lvv: not always works. Should  ./.dotest  be used instead?
-    elif  [[ -f "$git_dir/MERGE_HEAD" ]]; then
+    elif [[ -f "$git_dir/MERGE_HEAD" ]]; then
       op="merge"
-      # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)"
-    elif  [[ -f "$git_dir/index.lock" ]]; then
+    elif [[ -f "$git_dir/index.lock" ]]; then
       op="locked"
-    else
-      [[ -f "$git_dir/BISECT_LOG" ]] && op="bisect"
-      # ??? branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
-      #     branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
-      #     branch="$(cut -c1-7 "$git_dir/HEAD")..."
+    elif [[ -f "$git_dir/BISECT_LOG" ]]; then
+      op="bisect"
     fi
 
     rawhex=$(git rev-parse HEAD 2>/dev/null)
@@ -765,12 +756,10 @@ _parse_git_status() {
         branch="<detached:`git name-rev --name-only HEAD 2>/dev/null`"
       elif [[ "$op" ]]; then
         branch="$op:$branch"
-        if [[ "$op" == "merge" ]]; then
-          branch+="<--$(git name-rev --name-only $(<$git_dir/MERGE_HEAD))"
-        fi
-        #branch="<$branch>"
+        [[ "$op" == 'merge' ]] && branch+="<--$(git name-rev --name-only $(<$git_dir/MERGE_HEAD))"
       fi
-      vcs_info="$branch $rawhex$fresshness"
+
+      vcs_info="$branch${white}[$rawhex${white}]$fresshness"
     fi
 
     status=${op:+op}
