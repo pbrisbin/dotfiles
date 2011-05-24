@@ -645,7 +645,7 @@ _battery_info() { # {{{
   if [[ -d "$bat" ]]; then
     read -r batt_level < <(cat "$bat/info" "$bat/state" | awk '
       /^remaining capacity: / { rem = $3 }
-      /^design capacity: /    { max = $3 }
+      /^last full capacity: / { max = $3 }
 
       END { printf "%d", (rem/max*100); }')
 
