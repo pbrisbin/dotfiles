@@ -665,8 +665,9 @@ _battery_info() { # {{{
 
 # a simplification on http://volnitsky.com/project/git-prompt/ {{{
 _parse_git_status() {
-  local git_dir file_regex added_files modified file_list untracked_files
-  local freshness op rawhex branch vcs_info status vcs_color
+  local git_dir file_regex added_files modified_files untracked_files file_list
+  local freshness clean init added modified untracked detached
+  local op rawhex branch vcs_info status vcs_color
 
   unset git_info # default
   git_info="${dir_color}${PWD/$HOME/~}${colors_reset}"
@@ -674,11 +675,11 @@ _parse_git_status() {
   git_dir="$(git rev-parse --git-dir 2> /dev/null)"
   
   if [[ -n ${git_dir/./} ]]; then
+    freshness=''
     file_regex='\([^/ ]*\/\{0,1\}\).*'
     added_files=()
     modified_files=()
     untracked_files=()
-    freshness=''
 
     # todo: do the double quotes in the sed script really need escaping?
     eval "$(
