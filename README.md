@@ -12,8 +12,9 @@ this script for more details if you're intested.
 ### Note
 
 For my vimrc, please see its own [repo][vim-repo], same goes for my
-[xmonad][xmonad-repo] setup.
+[xmonad][xmonad-repo] and [mutt][mutt-repo] setups.
 
-[dotfiles]: https://github.com/pbrisbin/scripts/blob/master/dotfiles
-[vim-repo]: https://github.com/pbrisbin/vim-config
+[dotfiles]:    https://github.com/pbrisbin/scripts/blob/master/dotfiles
+[vim-repo]:    https://github.com/pbrisbin/vim-config
 [xmonad-repo]: https://github.com/pbrisbin/xmonad-config
+[mutt-repo]:   https://github.com/pbrisbin/mutt-config
