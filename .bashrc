@@ -637,6 +637,13 @@ hex_vcs_color=${!hex_vcs_color}
 
 # }}}
 
+_update_title() { # {{{
+  case ${TERM} in
+    xterm*|rxvt*|Eterm|aterm|kterm|gnome*) echo -en "\033]0;${PWD/$HOME/~}\007" ;;
+  esac
+}
+#}}}
+
 _battery_info() { # {{{
   local bat='/proc/acpi/battery/BAT0/' batt_level _batt_color
 
@@ -812,6 +819,8 @@ prompt_command_function() {
   PS1="$ps"
   PS2="$_sep_color// $colors_reset"
   PS3="$_sep_color// $colors_reset"
+
+  _update_title
 }
 
 unset PROMPT_COMMAND
