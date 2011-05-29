@@ -47,10 +47,11 @@ URxvt*matcher.button:  1
 ! }}}
 
 ! Xterm {{{
-XTerm*font:       -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-XTerm*boldFont:   -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-XTerm*scrollBar:  false
-XTerm*termName:   xterm-256color
+XTerm*font:         -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*boldFont:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*scrollBar:    false
+XTerm*termName:     xterm-256color
+XTerm*bellIsUrgent: true
 
 xterm*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 xterm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
