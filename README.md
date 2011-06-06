@@ -2,19 +2,31 @@
 
 Various configuration files for my main system. Take what you like.
 
-### Automatic usage
+### Usage
 
-I now use a symlink approach (via my [dotfiles][] script) which symlinks 
-a subset of these dotfiles (specified by a mapping file on each machine) 
-to the correct locations under `~/` and `/root/`. See the comments in 
-this script for more details if you're interested.
+Feel free to script this process to your specific needs; I usually do 
+some variation on the following:
+
+    # clone into some direcotry
+    git clone git://github.com/pbrisbin/dotfiles.git some/directory
+
+    # link individual dotfiles to their actual location
+    ln -s some/directory/.some/dotfile .
+
+    # optionally, add it for root too
+    su -
+    Password:
+    ln -s /home/your-user/.some/dotfile .
+    exit
+
+    # updating later is simple
+    cd some/directory && git pull
 
 ### Note
 
-For my vimrc, please see its own [repo][vim-repo], same goes for my
-[xmonad][xmonad-repo] and [mutt][mutt-repo] setups.
+For my vimrc, please see its own [repo][vim], same goes for my 
+[xmonad][] and [mutt][] setups.
 
-[dotfiles]:    https://github.com/pbrisbin/scripts/blob/master/dotfiles
-[vim-repo]:    https://github.com/pbrisbin/vim-config
-[xmonad-repo]: https://github.com/pbrisbin/xmonad-config
-[mutt-repo]:   https://github.com/pbrisbin/mutt-config
+[vim]:    https://github.com/pbrisbin/vim-config
+[xmonad]: https://github.com/pbrisbin/xmonad-config
+[mutt]:   https://github.com/pbrisbin/mutt-config
