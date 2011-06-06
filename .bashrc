@@ -254,7 +254,10 @@ _have hoogle    && alias hoogle='hoogle --color=true --n=10'
 _have xprop     && alias xp='xprop | grep "^WM_WINDOW_ROLE\|^WM_CLASS\|^WM_NAME"'
 
 # only if we have a disc drive
-[[ -b '/dev/sr0' ]] && alias eject='eject -T /dev/sr0'
+if [[ -b '/dev/sr0' ]]; then
+  alias eject='eject -T /dev/sr0'
+  alias mountdvd='sudo mount -t iso9660 -o ro /dev/sr0 /media/dvd/'
+fi
 
 # only if we have xmonad
 [[ -f "$HOME/.xmonad/xmonad.hs" ]] && alias checkmonad='(cd ~/.xmonad && ghci -ilib xmonad.hs)'
