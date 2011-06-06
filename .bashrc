@@ -163,27 +163,28 @@ if _have dmenu; then
 fi
 
 # standard
-export HISTSIZE=1000000
-export HISTFILESIZE=1000000
-export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.utf8
+
+HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*"
+HISTCONTROL="ignoreboth:erasedups"
+HISTSIZE=1000000
+HISTFILESIZE=1000000
+export ${!HIST@}
 
 # less
 if _have less; then
   export PAGER=less
 
-  # these look terrible on a mac or in console
-  if $_islinux && [[ "$TERM" != 'linux' ]]; then
-    export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-    export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-    export LESS_TERMCAP_me=$'\E[0m'           # end mode
-    export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-    export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-    export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-    export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-  fi
+  LESS=-R # use -X to avoid sending terminal initialization
+  LESS_TERMCAP_mb=$'\e[01;31m'
+  LESS_TERMCAP_md=$'\e[01;31m'
+  LESS_TERMCAP_me=$'\e[0m'
+  LESS_TERMCAP_se=$'\e[0m'
+  LESS_TERMCAP_so=$'\e[01;44;33m'
+  LESS_TERMCAP_ue=$'\e[0m'
+  LESS_TERMCAP_us=$'\e[01;32m'
+  export ${!LESS@}
 fi
 
 if _have mpc; then
