@@ -465,27 +465,19 @@ google() {
 define() {
   _have lynx || return 1
 
-  local lang charset tmp
+  local lang charset
 
   lang="${LANG%%_*}"
   charset="${LANG##*.}"
-  tmp='/tmp/define'
   
-  lynx -accept_all_cookies \
-       -dump \
-       -hiddenlinks=ignore \
-       -nonumbers \
-       -assume_charset="$charset" \
+  lynx -accept_all_cookies         \
+       -dump                       \
+       -hiddenlinks=ignore         \
+       -nonumbers                  \
+       -assume_charset="$charset"  \
        -display_charset="$charset" \
-       "http://www.google.com/search?hl=$lang&q=define%3A+$1&btnG=Google+Search" | grep -m 5 -C 2 -A 5 -w "*" > "$tmp"
-
-  if [[ ! -s "$tmp" ]]; then
-    echo -e "No definition found.\n"
-  else
-    echo -e "$(grep -v Search "$tmp" | sed "s/$1/\\\e[1;32m&\\\e[0m/g")\n"
-  fi
-
-  rm -f "$tmp"
+       "http://www.google.com/search?hl=$lang&q=define%3A+$1&btnG=Google+Search" \
+       | grep -A 100 '^    1\. ' | egrep '^    (1\.|  ) '
 }
 
 # grep by paragraph 
