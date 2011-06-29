@@ -7,7 +7,6 @@
 # Main options (alphabetically)
 alignment bl
 background yes
-color1 909090 
 default_color 606060
 draw_outline no
 draw_shades no
