@@ -351,36 +351,6 @@ hbuild() {
   hdocs "$@"    || return 1
 }
 
-# somewhat general build/deploy for a yesod app
-toslice() {
-  [[ -f ./fastcgi.hs ]] || return 1
-
-  local ip="${1:-50.56.101.27}"
-
-  touch ./Settings.hs # so CPP declarations take
-  ghc -threaded -DPROD --make -o ./app.cgi ./fastcgi.hs && scp -r ./static ./app.cgi "$ip":~/
-  touch ./Settings.hs
-}
-
-# once there we deploy
-atslice() {
-  [[ -f ./app.cgi ]] || return 1
-  [[ -d ./static  ]] || return 1
-
-  sudo /etc/rc.d/lighttpd stop || return 1
-
-  # sometimes lighttpd doesn't really stop
-  pgrep app.cgi && return 2
-
-  cp    /srv/http/app.cgi ./app.cgi.bak || return 1 
-  cp -r /srv/http/static  ./static.bak  || return 1
-
-  sudo cp    ./app.cgi  /srv/http/app.cgi || return 1
-  sudo cp -r ./static/* /srv/http/static/ || return 1
-
-  sudo /etc/rc.d/lighttpd start
-}
-
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs       || return 1
