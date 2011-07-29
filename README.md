@@ -25,8 +25,9 @@ some variation on the following:
 ### Note
 
 For my vimrc, please see its own [repo][vim], same goes for my 
-[xmonad][] and [mutt][] setups.
+[xmonad][], [mutt][], and [screen][] setups.
 
 [vim]:    https://github.com/pbrisbin/vim-config
 [xmonad]: https://github.com/pbrisbin/xmonad-config
 [mutt]:   https://github.com/pbrisbin/mutt-config
+[screen]: https://github.com/pbrisbin/screen-config
