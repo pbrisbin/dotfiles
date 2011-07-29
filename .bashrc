@@ -20,7 +20,7 @@ if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
 fi
 
 if [[ -f /etc/bash_completion ]]; then
-  source /etc/bash_completion
+  . /etc/bash_completion
   _have sudo && complete -cf sudo
 fi
 
@@ -144,10 +144,12 @@ _set_editor
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
 
 # screen tricks
-if [[ -d "$HOME/.screen/configs" ]]; then
-  export SCREEN_CONF_DIR="$HOME/.screen/configs"
-  export SCREEN_CONF='main'
-fi
+_bashrc_screen="$HOME/.screen/bashrc.screen"
+[[ -f "$_bashrc_screen" ]] && . "$_bashrc_screen"
+
+# raw AWS keys stored and exported in separate file
+_aws_keys="$HOME/.aws_keys"
+[[ -f "$_aws_keys" ]] && . "$_aws_keys"
 
 # albumart.php
 if _have albumart.php; then
@@ -229,19 +231,6 @@ if _have ossvol; then
   alias u='ossvol -i 3'
   alias d='ossvol -d 3'
   alias m='ossvol -t'
-fi
-
-# only if we have a screen_conf
-if [[ -d "$SCREEN_CONF_DIR" ]]; then
-  alias main='SCREEN_CONF=main screen -S main -D -R main'
-  alias clean='SCREEN_CONF=clean screen -S clean -D -R clean'
-
-  if _have rtorrent; then
-    alias rtorrent='SCREEN_CONF=rtorrent screen -S rtorrent -R -D rtorrent'
-    alias gtorrent='SCREEN_CONF=gtorrent screen -S gtorrent -R -D gtorrent'
-  fi
-
-  _have irssi && alias irssi='SCREEN_CONF=irssi screen -S irssi -R -D irssi'
 fi
 
 if _have colortail; then
