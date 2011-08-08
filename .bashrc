@@ -100,6 +100,13 @@ _add_to_path() {
   done
 }
 
+# source a file if readable
+_source () {
+  local file="$1"
+  [[ -r "$file" ]] || return 1
+  . "$file"
+}
+
 # ssh-agent stuff
 _ssh_env="$HOME/.ssh/environment"
 
@@ -144,12 +151,10 @@ _set_editor
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
 
 # screen tricks
-_bashrc_screen="$HOME/.screen/bashrc.screen"
-[[ -f "$_bashrc_screen" ]] && . "$_bashrc_screen"
+_source "$HOME/.screen/bashrc.screen"
 
 # raw AWS keys stored and exported in separate file
-_aws_keys="$HOME/.aws_keys"
-[[ -f "$_aws_keys" ]] && . "$_aws_keys"
+_source "$HOME/.aws_keys"
 
 # albumart.php
 if _have albumart.php; then
