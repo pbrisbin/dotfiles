@@ -293,6 +293,9 @@ if _have ghc-pkg; then
   alias gu='ghc-pkg unregister'
 fi
 
+# some database helpers
+_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<< '\''select id,"threadId","timeStamp","userEmail",substring("content",1,60) from "SqlComment";'\'''
+
 # }}}
 
 ### Bash functions {{{
