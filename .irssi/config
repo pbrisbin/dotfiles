@@ -24,23 +24,20 @@ servers = (
     autoconnect = "no";
   },
 
-  { 
-    address = "localhost";
-    chatnet = "bittlebee";
-    autoconnect = "yes";
-  }
+  { address = "localhost"; chatnet = "bitlbee"; autoconnect = "yes"; }
 );
 
 chatnets = {
   freenode = { type = "IRC"; nick = "brisbin"; };
   oftc = { type = "IRC"; };
-  bittlebee = { type = "IRC"; };
+  bitlbee = { type = "IRC"; };
 };
 
 channels = (
   { name = "#archlinux"; chatnet = "freenode"; autojoin = "Yes"; },
   { name = "#xmonad"; chatnet = "freenode"; autojoin = "Yes"; },
-  { name = "#haskell"; chatnet = "freenode"; autojoin = "Yes"; }
+  { name = "#haskell"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#yesod"; chatnet = "freenode"; autojoin = "Yes"; }
 );
 
 aliases = {
@@ -268,8 +265,18 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
+        name = "#yesod";
+        tag = "freenode";
+      }
+    );
+  };
+  7 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
         name = "&bitlbee";
-        tag = "bittlebee";
+        tag = "bitlbee";
       }
     );
   };
