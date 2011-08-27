@@ -613,11 +613,10 @@ _battery_info() { # {{{
   unset batt_info
 
   if [[ -d "$bat" ]]; then
-    read -r batt_level < <(cat "$bat/info" "$bat/state" | awk '
+    eval "$(awk '
       /^remaining capacity: / { rem = $3 }
       /^last full capacity: / { max = $4 }
-
-      END { printf "%d", (rem/max*100); }')
+      END { printf ("batt_level=%d", rem/max*100) }' "$bat"/{info,state})"
 
       # set color based on level
       if [[ batt_level -le 10 ]]; then
