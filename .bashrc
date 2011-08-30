@@ -136,7 +136,7 @@ fi
 ### Bash exports {{{
 
 # set path
-_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin"
+_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
 
 # set browser
 $_isxrunning && _set_browser "$xbrowsers" || _set_browser "$browsers"
