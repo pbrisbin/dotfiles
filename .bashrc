@@ -169,9 +169,11 @@ if _have dmenu; then
   export DMENU_OPTIONS='-i -fn Verdana-8 -nb #303030 -nf #909090 -sb #909090 -sf #303030'
 fi
 
-# standard
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.utf8
+# standard in linux
+if $_is_linux; then
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.utf8
+fi
 
 HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*"
 HISTCONTROL="ignoreboth:erasedups"
