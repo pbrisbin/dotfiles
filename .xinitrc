@@ -7,7 +7,7 @@ urxvtd -q -f -o &                           # start urxvt daemon
 xcompmgr -fF &                              # allow transparency
 xrdb $HOME/.Xdefaults &                     # load Xdefaults
 xset fp+ /usr/share/fonts/local &           # add local fonts
-xset s 1200 1200 &                          # set monitor to sleep 20 mins
+xset s 7200 7200 &                          # set monitor to sleep 2 hours
 xset s off &                                # disable screensaver
 xsetroot -cursor_name left_ptr              # required for xmonad's cursor
 
