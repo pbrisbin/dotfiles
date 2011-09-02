@@ -16,11 +16,17 @@ _have() { which "$1" &>/dev/null; }
 
 if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
   # https://github.com/trapd00r/LS_COLORS
-  eval $( dircolors -b $HOME/.lscolors )
+  _have dircolors && eval $( dircolors -b $HOME/.lscolors )
 fi
 
 if [[ -f /etc/bash_completion ]]; then
   . /etc/bash_completion
+  _have sudo && complete -cf sudo
+fi
+
+# macports path
+if [[ -f /opt/local/etc/bash_completion ]]; then
+  . /opt/local/etc/bash_completion
   _have sudo && complete -cf sudo
 fi
 
@@ -296,7 +302,7 @@ if _have ghc-pkg; then
 fi
 
 # some database helpers
-_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<< '\''select id,"threadId","timeStamp","userEmail",substring("content",1,60) from "SqlComment";'\'''
+_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<< '\''select id,"threadId","timeStamp","userEmail",substring("content",1,60) from "SqlComment" order by "timeStamp" asc;'\'''
 
 # }}}
 
