@@ -308,6 +308,13 @@ _have psql && alias newcomments='sudo -u postgres psql pbrisbin <<< '\''select i
 
 ### Bash functions {{{
 
+# filegrep 'foo.*' ./some/dir, greps all files in the given dir for the
+# given regex
+filegrep() {
+  local dir="$2" regex="$1"
+  find "$dir" -type f -exec grep --color=auto -- "$regex" {} \+
+}
+
 # http://pbrisbin.com/posts/notes
 noteit() {
   _have mutt || return 1
