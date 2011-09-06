@@ -176,7 +176,7 @@ if _have dmenu; then
 fi
 
 # standard in linux
-if $_is_linux; then
+if $_islinux; then
   export LANG=en_US.UTF-8
   export LC_ALL=en_US.utf8
 fi
