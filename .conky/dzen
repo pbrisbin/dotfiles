@@ -11,4 +11,4 @@ mpd_host 192.168.0.5
 mpd_port 6600
 
 TEXT
-[ ${mpd_status} ${if_mpd_playing}- ${mpd_elapsed}/${mpd_length}$endif ] ^fg(\#909090)${mpd_title}^fg() by ^fg(\#909090)${mpd_artist}^fg() from ^fg(\#909090)${mpd_album}^fg()  Cpu: ^fg(\#909090)${cpu}%^fg()  Mem: ^fg(\#909090)${memperc}%^fg()  Net: ^fg(\#909090)${downspeedf eth0} / ${upspeedf eth0}^fg()  ${time %a %b %d %H:%M}  
+[ ^ca(1, mpc toggle)${mpd_status}^ca() ${if_mpd_playing}- ${mpd_elapsed}/${mpd_length}$endif ] ^fg(\#909090)^ca(1, mpc next)${mpd_title}^ca()^fg() by ^fg(\#909090)${mpd_artist}^fg() from ^fg(\#909090)${mpd_album}^fg()  Cpu: ^fg(\#909090)${cpu}%^fg()  Mem: ^fg(\#909090)${memperc}%^fg()  Net: ^fg(\#909090)${downspeedf eth0} / ${upspeedf eth0}^fg()  ${time %a %b %d %H:%M}  
