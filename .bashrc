@@ -543,7 +543,7 @@ webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 # 0: % batt remaining (if BAT0 exists)
 # 1: host name
 # 2: last exit status
-# 3: git summary or current directory
+# 3: git/svn summary or current directory
 #
 ###
 
@@ -653,8 +653,7 @@ _parse_git_status() {
   local freshness clean init added modified untracked detached
   local op rawhex branch vcs_info status vcs_color
 
-  unset git_info # default
-  git_info="${dir_color}${PWD/$HOME/~}${colors_reset}"
+  unset git_info
 
   git_dir="$(git rev-parse --git-dir 2> /dev/null)"
   
@@ -764,6 +763,47 @@ _parse_git_status() {
   fi
 }
 
+_parse_svn_status() {
+  local repo_dir rev modified_files untracked_files modified untracked
+  local clean status vcs_info
+
+  unset svn_info # default
+
+  if [[ -d ./.svn  ]]; then
+    eval $(sed -n '
+      s@^URL[^/]*//@repo_dir=@p
+      s/^Revision: /rev=/p
+      ' < <(svn info)
+    )
+
+    modified_files=()
+    untracked_files=()
+
+    eval $(sed -n '
+      s/^A...    \([^.].*\)/modified=modified;    modified_files+=(  \"\1\" );/p
+      s/^M...    \([^.].*\)/modified=modified;    modified_files+=(  \"\1\" );/p
+      s/^\?...    \([^.].*\)/untracked=untracked; untracked_files+=( \"\1\" );/p
+      ' < <(svn status 2>/dev/null)
+    )
+
+    # TODO branch detection
+
+    [[ -z $modified ]] && [[ -z $untracked ]] && clean=clean
+
+    status=${op:+op}
+    status=${status:-$clean}
+    status=${status:-$modified}
+    status=${status:-$untracked}
+    eval vcs_color="\${${status}_vcs_color}"
+
+    [[ ${modified_files[0]}  ]] && file_list+=" $modified_vcs_color${modified_files[@]}"
+    [[ ${untracked_files[0]} ]] && file_list+=" $untracked_vcs_color${untracked_files[@]}"
+
+    vcs_info=svn:r$rev
+    svn_info="${vcs_color}${vcs_info}${vcs_color}${file_list}${colors_reset}"
+  fi
+}
+
 # }}}
 
 prompt_command_function() {
@@ -774,6 +814,18 @@ prompt_command_function() {
 
   _battery_info
   _parse_git_status
+  _parse_svn_status
+
+  if [[ -n "$git_info" ]]; then
+    # Git
+    vcs_info="$git_info"
+  elif [[ -n "$svn_info" ]]; then
+    # SVN
+    vcs_info="$svn_info"
+  else
+    # directory display
+    vcs_info="${dir_color}${PWD/$HOME/~}${colors_reset}"
+  fi
 
   host_info="$host_color$HOSTNAME"
 
@@ -790,7 +842,7 @@ prompt_command_function() {
   ps+="$_sep_color/$batt_info"
   ps+="$_sep_color/$host_info"
   ps+="$_sep_color/$retval_info"
-  ps+="$_sep_color/$git_info"
+  ps+="$_sep_color/$vcs_info"
   ps+="$_sep_color/ $colors_reset"
 
   PS1="$ps"
