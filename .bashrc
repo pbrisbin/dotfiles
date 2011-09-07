@@ -764,8 +764,7 @@ _parse_git_status() {
 }
 
 _parse_svn_status() {
-  local repo_dir rev modified_files untracked_files modified untracked
-  local clean status vcs_info
+  local repo_dir rev branch vcs_info
 
   unset svn_info # default
 
@@ -776,31 +775,14 @@ _parse_svn_status() {
       ' < <(svn info)
     )
 
-    modified_files=()
-    untracked_files=()
+    if [[ "$repo_dir" =~ trunk ]]; then
+      branch='trunk'
+    elif [[ "$repo_dir" =~ branches/(.*) ]]; then
+      branch="${BASH_REMATCH[1]}"
+    fi
 
-    eval $(sed -n '
-      s/^A...    \([^.].*\)/modified=modified;    modified_files+=(  \"\1\" );/p
-      s/^M...    \([^.].*\)/modified=modified;    modified_files+=(  \"\1\" );/p
-      s/^\?...    \([^.].*\)/untracked=untracked; untracked_files+=( \"\1\" );/p
-      ' < <(svn status 2>/dev/null)
-    )
-
-    # TODO branch detection
-
-    [[ -z $modified ]] && [[ -z $untracked ]] && clean=clean
-
-    status=${op:+op}
-    status=${status:-$clean}
-    status=${status:-$modified}
-    status=${status:-$untracked}
-    eval vcs_color="\${${status}_vcs_color}"
-
-    [[ ${modified_files[0]}  ]] && file_list+=" $modified_vcs_color${modified_files[@]}"
-    [[ ${untracked_files[0]} ]] && file_list+=" $untracked_vcs_color${untracked_files[@]}"
-
-    vcs_info=svn:r$rev
-    svn_info="${vcs_color}${vcs_info}${vcs_color}${file_list}${colors_reset}"
+    vcs_info=svn:$branch:r$rev
+    svn_info="${clean_vcs_color}${vcs_info}${colors_reset}"
   fi
 }
 
