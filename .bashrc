@@ -101,7 +101,7 @@ _set_browser() {
 _add_to_path() {
   local path
 
-  for path in "$@"; do
+  for path; do
     [[ -d "$path" ]] && [[ ! ":${PATH}:" =~ :${path}: ]] && export PATH=${path}:$PATH
   done
 }
@@ -219,16 +219,7 @@ alias htpc='ssh xbmc@htpc'
 alias susie='ssh patrick@susan'
 alias slice='ssh patrick@50.56.101.27'
 
-# only for linux
-if $_islinux; then
-  alias ls='ls -h --group-directories-first --color=auto'
-else
-  alias ls='ls -h'
-fi
-
-# standard
-alias la='ls -la'
-alias ll='ls -l'
+alias ls='ls -h --group-directories-first --color=auto'
 alias grep='grep --color=auto'
 alias myip='curl --silent http://tnx.nl/ip'
 alias path='echo -e "${PATH//:/\n}"'
@@ -272,15 +263,6 @@ if _have mplayer; then
   alias playcda='mplayer cdda:// -cdrom-device /dev/sr0 -cache 10000'
 fi
 
-# only for rdesktop
-if _have rdesktop; then
-  alias rdp='rdesktop -K -g 1280x1040'
-  alias rdpat='rdesktop -K -g 1280x1040 -d GREENBEACON -u PBrisbin -p -'
-  alias rdpfaf='rdesktop -K -g 1280x1040 -d FAF -u pbrisbin www.faf.com -p -'
-  alias rdpste='rdesktop -K -g 1280x1040 -d STEINER -u pbrisbin -p -'
-  alias rdpamp='rdesktop -K -g 1280x1040 -d Amp_Research -u beacon -p -'
-fi
-
 # pacman aliases
 if $_isarch; then
   if ! $_isroot; then
@@ -302,7 +284,16 @@ if _have ghc-pkg; then
 fi
 
 # some database helpers
-_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<< '\''select id,"threadId","timeStamp","userEmail",substring("content",1,60) from "SqlComment" order by "timeStamp" asc;'\'''
+_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<EOF
+select
+  id,
+  "threadId",
+  "timeStamp",
+  "userEmail",
+  substring("content", 1, 60)
+from "SqlComment"
+order by "timeStamp" asc;
+EOF'
 
 # }}}
 
@@ -377,7 +368,7 @@ combinepdf() {
 thumbit() {
   _have mogrify || return 1
 
-  for pic in "$@"; do
+  for pic; do
     case "$pic" in
       *.jpg)  thumb="${pic/.jpg/-thumb.jpg}"   ;;
       *.jpeg) thumb="${pic/.jpeg/-thumb.jpeg}" ;;
@@ -425,7 +416,7 @@ hbconvert() {
 spellcheck() {
   [[ -f /usr/share/dict/words ]] || return 1
 
-  for word in "$@"; do
+  for word; do
     if grep -Fqx "$word" /usr/share/dict/words; then
       echo -e "\e[1;32m$word\e[0m" # green
     else
@@ -479,7 +470,7 @@ pullout() {
 fix() {
   local dir
 
-  for dir in "$@"; do
+  for dir; do
     find "$dir" -type d -exec chmod 755 {} \; 
     find "$dir" -type f -exec chmod 644 {} \;
   done
@@ -497,7 +488,7 @@ printr() {
 
   local file
 
-  for file in "$@"; do
+  for file; do
     enscript -p - "$file" | psselect -r | lp
   done
 }
