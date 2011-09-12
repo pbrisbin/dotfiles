@@ -224,6 +224,9 @@ alias grep='grep --color=auto'
 alias myip='curl --silent http://tnx.nl/ip'
 alias path='echo -e "${PATH//:/\n}"'
 
+# a good overview of a yesod application
+alias apptree='tree -I "dist|config|tmp|pandoc"'
+
 # only if we have mpc
 if _have mpc; then
   alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
@@ -283,8 +286,15 @@ if _have ghc-pkg; then
   alias gu='ghc-pkg unregister'
 fi
 
-# some database helpers
-_have psql && alias newcomments='sudo -u postgres psql pbrisbin <<EOF
+# }}}
+
+### Bash functions {{{
+
+# shortcuts to check recent comments on pbrisbin.com
+newcomments() {
+  _have psql || return 1
+
+  psql -U pbrisbin pbrisbin << EOF
 select
   id,
   "threadId",
@@ -293,11 +303,8 @@ select
   substring("content", 1, 60)
 from "SqlComment"
 order by "timeStamp" asc;
-EOF'
-
-# }}}
-
-### Bash functions {{{
+EOF
+}
 
 # filegrep 'foo.*' ./some/dir, greps all files in the given dir for the
 # given regex
