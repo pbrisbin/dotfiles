@@ -310,7 +310,7 @@ EOF
 # given regex
 filegrep() {
   local dir="$2" regex="$1"
-  find "$dir" -type f -exec grep --color=auto -- "$regex" {} \+
+  find "$dir" -type f ! -wholename '*/.svn/*' ! -wholename '*/.git/*' -exec grep --color=auto -- "$regex" {} \+
 }
 
 # http://pbrisbin.com/posts/notes
