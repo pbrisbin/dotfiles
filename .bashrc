@@ -368,16 +368,6 @@ hdocs() {
   cp -r dist/doc/* /srv/http/haskell/docs/
 }
 
-<<<<<<< HEAD
-# build/install haskell packages
-hbuild() {
-  _have cabal   || return 1
-  cabal install || return 1
-  hdocs "$@"
-}
-
-=======
->>>>>>> fbd4aa7040a666c0feadeac9dd4ebd624255b362
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs       || return 1
