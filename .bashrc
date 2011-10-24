@@ -290,6 +290,42 @@ fi
 
 ### Bash functions {{{
 
+svndiff() {
+  _have svn  || return 1
+  _have less || return 1
+
+  if _have colordiff; then
+    svn diff "$@" | colordiff | less
+  else
+    svn diff "$@" | less
+  fi
+}
+
+svnlog() {
+  _have svn  || return 1
+  _have less || return 1
+
+  svn log "$@" | less
+}
+
+runsql() {
+  if $_islinux; then
+    _have psql || return 1
+    psql -U pbrisbin pbrisbin;
+  else
+    _have mysql5 || return 1
+    mysql5 -urails -pdev ideeli_development;
+  fi
+}
+
+# startup a synergy client
+synergyc() {
+  _have synergyc || return 1
+
+  local host="${1:-blue}"
+  /usr/bin/synergyc -f "$host" &>"$LOGS/synergy.log" &
+}
+
 # shortcuts to check recent comments on pbrisbin.com
 newcomments() {
   _have psql || return 1
@@ -351,7 +387,7 @@ hdocs() {
 hbuild() {
   _have cabal   || return 1
   cabal install || return 1
-  hdocs "$@"    || return 1
+  hdocs "$@"
 }
 
 # combine pdfs into one using ghostscript
