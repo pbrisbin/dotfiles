@@ -42,11 +42,6 @@ shopt -s extglob
 # should've done this a long time ago
 set -o vi
 
-# no flow control outside of the dumb tty
-if [[ "$TERM" != 'linux' ]]; then
-  stty -ixon -ixoff
-fi
-
 # list of apps to be tried in order
 xbrowsers='browser:chromium:google-chrome:firefox'
 browsers='elinks:lynx:links'
@@ -156,6 +151,9 @@ _set_editor
 # custom log directory
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
 
+# rvm
+_source "$HOME/.rvm/scripts/rvm"
+
 # screen tricks
 _source "$HOME/.screen/bashrc.screen"
 
@@ -211,17 +209,9 @@ fi
 
 ### Bash aliases {{{
 
-# ssh
-alias blue='ssh patrick@blue'
-alias bruno='ssh patrick@bruno'
-alias howie='ssh patrick@howard'
-alias htpc='ssh xbmc@htpc'
-alias susie='ssh patrick@susan'
-alias slice='ssh patrick@50.56.101.27'
-
 alias ls='ls -h --group-directories-first --color=auto'
 alias grep='grep --color=auto'
-alias myip='curl --silent http://tnx.nl/ip'
+alias myip='printf "%s\n" "$(curl --silent http://tnx.nl/ip)"'
 alias path='echo -e "${PATH//:/\n}"'
 
 # a good overview of a yesod application
@@ -244,11 +234,6 @@ if _have colortail; then
   alias tailirc='/usr/bin/colortail -q -k /etc/colortail/conf.irc'
   alias colortail='colortail -q -k /etc/colortail/conf.messages'
 fi
-
-# need certain apps
-_have curlpaste && alias pastie='curlpaste -s ghost -n pbrisbin'
-_have hoogle    && alias hoogle='hoogle --color=true --n=10'
-_have xprop     && alias xp='xprop | grep "^WM_WINDOW_ROLE\|^WM_CLASS\|^WM_NAME"'
 
 # only if we have a disc drive
 if [[ -b '/dev/sr0' ]]; then
@@ -290,6 +275,15 @@ fi
 
 ### Bash functions {{{
 
+# leave my work machine's ip dynamic but allow simple ssh via avahi
+# service discovery
+sshwork() {
+  local ip
+  read -r _ ip < <(avahi-resolve -4 --name IDE-593-Sorbo-MacBook-Pro.local 2>/dev/null) \
+    && [[ -n "$ip" ]] \
+    && ssh "$ip" "$@"
+}
+
 # shortcuts to check recent comments on pbrisbin.com
 newcomments() {
   _have psql || return 1
@@ -304,13 +298,6 @@ select
 from "SqlComment"
 order by "timeStamp" asc;
 EOF
-}
-
-# filegrep 'foo.*' ./some/dir, greps all files in the given dir for the
-# given regex
-filegrep() {
-  local dir="$2" regex="$1"
-  find "$dir" -type f -exec grep --color=auto -- "$regex" {} \+
 }
 
 # http://pbrisbin.com/posts/notes
@@ -333,14 +320,6 @@ noteit() {
   echo -e "\nnoted.\n"
 }
 
-# cabal has no uninstall...
-cabalremove() {
-  local pkg="$1"
-
-  [[ -d "$HOME/.cabal" ]] || return 1
-  ghc-pkg unregister "$pkg" && find "$HOME/.cabal/" -depth -name "$pkg"'*' -exec rm -r {} \;
-}
-
 # update haskell documentation and publish it to my server
 hdocs() {
   _have cabal || return 1
@@ -354,13 +333,6 @@ hdocs() {
   cp -r dist/doc/* /srv/http/haskell/docs/
 }
 
-# build/install haskell packages
-hbuild() {
-  _have cabal   || return 1
-  cabal install || return 1
-  hdocs "$@"    || return 1
-}
-
 # combine pdfs into one using ghostscript
 combinepdf() {
   _have gs       || return 1
@@ -369,24 +341,6 @@ combinepdf() {
   local out="$1"; shift
 
   gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$out" "$@"
-}
-
-# make a thumb
-thumbit() {
-  _have mogrify || return 1
-
-  for pic; do
-    case "$pic" in
-      *.jpg)  thumb="${pic/.jpg/-thumb.jpg}"   ;;
-      *.jpeg) thumb="${pic/.jpeg/-thumb.jpeg}" ;;
-      *.png)  thumb="${pic/.png/-thumb.png}"   ;;
-      *.bmp)  thumb="${pic/.bmp/-thumb.bmp}"   ;;
-    esac
-
-    [[ -z "$thumb" ]] && return 1
-
-    cp "$pic" "$thumb" && mogrify -resize 10% "$thumb"
-  done
 }
 
 # rip a dvd with handbrake
@@ -511,13 +465,13 @@ timer() {
   echo "timer set for $N"
 }
 
-# auto send an attachment from CLI 
+# send an attachment from CLI 
 send() {
   _have mutt    || return 1
   [[ -f "$1" ]] || return 1
   [[ -z "$2" ]] || return 1
 
-  echo 'Auto-sent from linux. Please see attached.' | mutt -s 'File Attached' -a "$1" -- "$2"
+  echo 'Please see attached.' | mutt -s "File: $1" -a "$1" -- "$2"
 }
 
 # run a bash script in 'debug' mode
@@ -528,9 +482,6 @@ debug() {
     PS4='+$LINENO:$FUNCNAME: ' bash -x "$script" "$@"
   fi
 }
-
-# print the url to a manpage
-webman() { echo "http://unixhelp.ed.ac.uk/CGI/man-cgi?$1"; }
 
 # }}}
 
@@ -807,7 +758,7 @@ prompt_command_function() {
     vcs_info="${dir_color}${PWD/$HOME/~}${colors_reset}"
   fi
 
-  host_info="$host_color$HOSTNAME"
+  host_info="$host_color${HOSTNAME/.local/}"
 
   if [[ $retval -eq 0 ]]; then
     retval_info="$retval_color$retval"
