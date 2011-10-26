@@ -432,21 +432,13 @@ google() {
 
 # go to google for a definition 
 define() {
-  _have lynx || return 1
+  _have w3m     || return 1
+  _have mplayer || return 1
 
-  local lang charset
+  local word="$*"
 
-  lang="${LANG%%_*}"
-  charset="${LANG##*.}"
-  
-  lynx -accept_all_cookies         \
-       -dump                       \
-       -hiddenlinks=ignore         \
-       -nonumbers                  \
-       -assume_charset="$charset"  \
-       -display_charset="$charset" \
-       "http://www.google.com/search?hl=$lang&q=define%3A+$1&btnG=Google+Search" \
-       | grep -A 100 '^    1\. ' | egrep '^    (1\.|  ) '
+  w3m -dump "http://www.google.ca/search?q=define%20${word// /_}" | awk '/^     1./,/^        More info >>/'
+  mplayer "http://ssl.gstatic.com/dictionary/static/sounds/de/0/${word// /_}.mp3" &>/dev/null
 }
 
 # grep by paragraph 
