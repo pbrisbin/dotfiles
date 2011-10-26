@@ -32,12 +32,10 @@ fi
 
 # bash 4 features
 if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
-  shopt -s globstar
-  shopt -s autocd
+  shopt -s globstar autocd
 fi
 
-shopt -s checkwinsize
-shopt -s extglob
+shopt -s cdspell dirspell extglob histverify no_empty_cmd_completion checkwinsize
 
 # should've done this a long time ago
 set -o vi
@@ -274,6 +272,17 @@ fi
 # }}}
 
 ### Bash functions {{{
+
+# share via sprunge
+sprunge() {
+  local url
+
+  _have curl || return 1
+  read -r url < <(curl -sF 'sprunge=<-' 'http://sprunge.us' < "${1:-/dev/stdin}")
+
+  _have xclip && echo -n "$url" | xclip
+  echo $url
+}
 
 # leave my work machine's ip dynamic but allow simple ssh via avahi
 # service discovery
