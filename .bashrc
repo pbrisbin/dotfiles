@@ -113,12 +113,16 @@ _start_agent() {
   [[ -d "$HOME/.ssh" ]] || return 1
   _have ssh-agent       || return 1
 
+  local key
+
   ssh-agent | sed 's/^echo/#echo/g' > "$_ssh_env"
 
   chmod 600 "$_ssh_env"
   . "$_ssh_env" >/dev/null
 
-  ssh-add
+  for key in "$HOME/.ssh/id_rsa"*; do
+    ssh-add "$key"
+  done
 }
 
 if [[ -f "$_ssh_env" ]]; then
@@ -217,10 +221,13 @@ alias apptree='tree -I "dist|config|tmp|pandoc"'
 
 # only if we have mpc
 if _have mpc; then
+
   alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
   alias n='mpc next'
   alias p='mpc prev'
 fi
+
+_have albumbler && alias a='albumbler'
 
 if _have ossvol; then
   alias u='ossvol -i 3'
