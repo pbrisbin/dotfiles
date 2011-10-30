@@ -1,23 +1,6 @@
 #!/bin/bash
-
-# add pacman color if we can
-which pacman-color &>/dev/null && pacman_command='sudo pacman-color -U'
-
-# don't confirm on -U commands
 popts='--noconfirm'
-
-# diverge from default behavior
 package_directory="$HOME/Packages"
 build_directory="$HOME/Sources"
 edit_pkgbuilds='never'
 resolve_dependencies=true
-
-# like pacman-color
-nocolor="\e[0m"   # reset color
-colorW="\e[1;37m" # white
-colorC="\e[1;36m" # cyan
-colorB="\e[1;34m" # blue
-colorR="\e[1;31m" # red
-colorG="\e[1;32m" # green
-colorY="\e[1;33m" # yellow
-colorM="\e[1;35m" # magenta
