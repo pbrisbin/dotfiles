@@ -113,15 +113,18 @@ _start_agent() {
   [[ -d "$HOME/.ssh" ]] || return 1
   _have ssh-agent       || return 1
 
-  local key
+  local key keyfile
 
   ssh-agent | sed 's/^echo/#echo/g' > "$_ssh_env"
 
   chmod 600 "$_ssh_env"
   . "$_ssh_env" >/dev/null
 
-  for key in "$HOME/.ssh/id_rsa"*; do
-    ssh-add "$key"
+  for key in id_rsa id_rsa.pbrisbin id_rsa.github; do
+    keyfile="$HOME/.ssh/$key"
+    if [[ -r "$keyfile" ]]; then
+      ssh-add "$keyfile"
+    fi
   done
 }
 
@@ -152,9 +155,6 @@ _set_editor
 
 # custom log directory
 [[ -d "$HOME/.logs" ]] && export LOGS="$HOME/.logs" || export LOGS='/tmp'
-
-# rvm
-_source "$HOME/.rvm/scripts/rvm"
 
 # screen tricks
 _source "$HOME/.screen/bashrc.screen"
