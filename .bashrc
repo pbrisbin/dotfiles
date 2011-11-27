@@ -854,12 +854,9 @@ PROMPT_COMMAND=prompt_command_function
 
 ### Starting X {{{
 
-# auto startx if on tty1 and logout if/when X ends
 if [[ $(tty) = /dev/tty1 ]] && ! $_isroot && ! $_isxrunning; then
   _set_browser "$xbrowsers"
-
-  startx | tee "$LOGS/X.log"
-  logout
+  exec startx
 fi
 
 # }}}
