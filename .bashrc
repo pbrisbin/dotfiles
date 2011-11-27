@@ -207,6 +207,8 @@ if _have mpc; then
   export MPD_PORT=6600
 fi
 
+_source "$HOME/.rvm/scripts/rvm"
+
 # }}}
 
 ### Bash aliases {{{
@@ -375,13 +377,33 @@ noteit() {
 hdocs() {
   _have cabal || return 1
 
+  local  name="${PWD##*/}"
+  local  here="dist/doc/html/$name"
+  local there="$HOME/Code/haskell/devsite/static/docs/haskell/$name"
+
   # update
   cabal haddock \
     --html-location='http://hackage.haskell.org/packages/archive/$pkg/latest/doc/html' \
     --hyperlink-source "$@" || return 1
 
   # publish
-  cp -r dist/doc/* /srv/http/haskell/docs/
+  rm -rf "$there"
+  cp -r "$here" "$there"
+}
+
+# update ruby documentation and publish it to my server
+rdocs() {
+  _have rdoc || return 1
+
+  local name="${PWD##*/}"
+  local there="$HOME/Code/haskell/devsite/static/docs/ruby/$name"
+
+  # update
+  rdoc --title="$name" "$@"
+
+  # publish
+  rm -rf "$there"
+  cp -r doc "$there"
 }
 
 # combine pdfs into one using ghostscript
