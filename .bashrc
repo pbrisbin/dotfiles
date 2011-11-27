@@ -323,31 +323,13 @@ synergyc() {
   /usr/bin/synergyc -f "$host" &>"$LOGS/synergy.log" &
 }
 
-svndiff() {
-  _have svn  || return 1
-  _have less || return 1
-
-  if _have colordiff; then
-    svn diff "$@" | colordiff | less
-  else
-    svn diff "$@" | less
-  fi
-}
-
-svnlog() {
-  _have svn  || return 1
-  _have less || return 1
-
-  svn log "$@" | less
-}
-
 runsql() {
   if $_islinux; then
     _have psql || return 1
     psql -U pbrisbin pbrisbin;
   else
-    _have mysql5 || return 1
-    mysql5 -urails -pdev ideeli_development;
+    _have mysql || return 1
+    mysql -urails -pdev ideeli_development;
   fi
 }
 
