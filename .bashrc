@@ -223,7 +223,6 @@ alias apptree='tree -I "dist|config|tmp|pandoc"'
 
 # only if we have mpc
 if _have mpc; then
-
   alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
   alias n='mpc next'
   alias p='mpc prev'
@@ -281,6 +280,20 @@ fi
 # }}}
 
 ### Bash functions {{{
+
+# run a rails test suite via the parallel_tests gem
+runtests() {
+  local suite="${1:-(unit|functional|integration)}"
+  local suffix="${1:-parallel_trunk}"
+
+  rake DBSUFFIX="$suffix" \
+    clean                 \
+    tmp:clear             \
+    parallel:drop         \
+    parallel:create       \
+    parallel:migrate      \
+    parallel:test[^"'$suite'"] --trace
+}
 
 # share via sprunge
 sprunge() {
