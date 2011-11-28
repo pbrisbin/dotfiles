@@ -144,6 +144,12 @@ fi
 # set path
 _add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
 
+# some custom paths used on mac os x
+_add_to_path /opt/local/libexec/gnubin \
+             /opt/local/bin            \
+             /opt/local/sbin           \
+             /usr/local/mongodb/bin
+
 # set browser
 $_isxrunning && _set_browser "$xbrowsers" || _set_browser "$browsers"
 
