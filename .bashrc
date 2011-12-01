@@ -306,15 +306,6 @@ sprunge() {
   echo $url
 }
 
-# leave my work machine's ip dynamic but allow simple ssh via avahi
-# service discovery
-sshwork() {
-  local ip
-  read -r _ ip < <(avahi-resolve -4 --name IDE-593-Sorbo-MacBook-Pro.local 2>/dev/null) \
-    && [[ -n "$ip" ]] \
-    && ssh "$ip" "$@"
-}
-
 # startup a synergy client
 synergyc() {
   _have synergyc || return 1
