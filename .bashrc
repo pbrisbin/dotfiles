@@ -500,14 +500,20 @@ define() {
 # grep by paragraph 
 grepp() { perl -00ne "print if /$1/i" < "$2"; }
 
-# pull a single file out of a .tar.gz, stops on first match
-# useful for .PKGINFO files in .pkg.tar.gz files
+# pull a single file out of an achive, stops on first match. useful for
+# .PKGINFO files in .pkg.tar.[gx]z files.
 pullout() {
-  $_islinux || return 1
+  _have bsdtar || return 1
 
-  [[ "$2" =~ .tar.gz$|.tgz$ ]] || return 1
+  local opt
 
-  gunzip < "$2" | bsdtar -qxf - "$1"
+  case "$2" in
+    *gz) opt='-qxzf' ;;
+    *xz) opt='-qxJf' ;;
+    *)   return 1    ;;
+  esac
+
+  bsdtar $opt "$2" "$1"
 }
 
 # recursively 'fix' dir/file perm
