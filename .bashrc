@@ -287,6 +287,32 @@ fi
 
 ### Bash functions {{{
 
+ideeliup() {
+  $_isarch || return 1
+
+  sudo /etc/rc.d/mysql start
+  sudo /etc/rc.d/mongodb start
+  sudo /etc/rc.d/memcached --port 11211 start
+  sudo /etc/rc.d/memcached --port 11212 start
+  sudo /etc/rc.d/riak start
+  sudo /etc/rc.d/activemq start
+
+  rvm use ree
+}
+
+ideelidown() {
+  $_isarch || return 1
+
+  sudo /etc/rc.d/activemq stop
+  sudo /etc/rc.d/riak stop
+  sudo /etc/rc.d/memcached --port 11211 stop
+  sudo /etc/rc.d/memcached --port 11212 stop
+  sudo /etc/rc.d/mongodb stop
+  sudo /etc/rc.d/mysql stop
+
+  rvm use ruby-1.9.3
+}
+
 # run a rails test suite via the parallel_tests gem
 runtests() {
   local suite="${1:-(unit|functional|integration)}"
