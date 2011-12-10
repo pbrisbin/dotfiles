@@ -287,6 +287,13 @@ fi
 
 ### Bash functions {{{
 
+# demolish any --user installed cabal packages.
+cabalwipe() {
+  rm -rf "$HOME/.cabal/packages"/*/*
+  rm -rf "$HOME/.cabal/bin"/*
+  rm -rf "$HOME/.ghc"
+}
+
 ideeliup() {
   $_isarch || return 1
 
