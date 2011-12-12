@@ -294,6 +294,39 @@ fi
 
 ### Bash functions {{{
 
+# demolish any --user installed cabal packages.
+cabalwipe() {
+  rm -rf "$HOME/.cabal/packages"/*/*
+  rm -rf "$HOME/.cabal/bin"/*
+  rm -rf "$HOME/.ghc"
+}
+
+ideeliup() {
+  $_isarch || return 1
+
+  sudo /etc/rc.d/mysql start
+  sudo /etc/rc.d/mongodb start
+  sudo /etc/rc.d/memcached --port 11211 start
+  sudo /etc/rc.d/memcached --port 11212 start
+  sudo /etc/rc.d/riak start
+  sudo /etc/rc.d/activemq start
+
+  rvm use ree
+}
+
+ideelidown() {
+  $_isarch || return 1
+
+  sudo /etc/rc.d/activemq stop
+  sudo /etc/rc.d/riak stop
+  sudo /etc/rc.d/memcached --port 11211 stop
+  sudo /etc/rc.d/memcached --port 11212 stop
+  sudo /etc/rc.d/mongodb stop
+  sudo /etc/rc.d/mysql stop
+
+  rvm use ruby-1.9.3
+}
+
 # run a rails test suite via the parallel_tests gem
 runtests() {
   local suite="${1:-(unit|functional|integration)}"
@@ -317,15 +350,6 @@ sprunge() {
 
   _have xclip && echo -n "$url" | xclip
   echo $url
-}
-
-# leave my work machine's ip dynamic but allow simple ssh via avahi
-# service discovery
-sshwork() {
-  local ip
-  read -r _ ip < <(avahi-resolve -4 --name IDE-593-Sorbo-MacBook-Pro.local 2>/dev/null) \
-    && [[ -n "$ip" ]] \
-    && ssh "$ip" "$@"
 }
 
 # startup a synergy client
@@ -490,14 +514,20 @@ define() {
 # grep by paragraph 
 grepp() { perl -00ne "print if /$1/i" < "$2"; }
 
-# pull a single file out of a .tar.gz, stops on first match
-# useful for .PKGINFO files in .pkg.tar.gz files
+# pull a single file out of an achive, stops on first match. useful for
+# .PKGINFO files in .pkg.tar.[gx]z files.
 pullout() {
-  $_islinux || return 1
+  _have bsdtar || return 1
 
-  [[ "$2" =~ .tar.gz$|.tgz$ ]] || return 1
+  local opt
 
-  gunzip < "$2" | bsdtar -qxf - "$1"
+  case "$2" in
+    *gz) opt='-qxzf' ;;
+    *xz) opt='-qxJf' ;;
+    *)   return 1    ;;
+  esac
+
+  bsdtar $opt "$2" "$1"
 }
 
 # recursively 'fix' dir/file perm
