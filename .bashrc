@@ -297,7 +297,7 @@ cabalwipe() {
 ideeliup() {
   $_isarch || return 1
 
-  sudo /etc/rc.d/mysql start
+  sudo /etc/rc.d/mysqld start
   sudo /etc/rc.d/mongodb start
   sudo /etc/rc.d/memcached --port 11211 start
   sudo /etc/rc.d/memcached --port 11212 start
@@ -315,7 +315,7 @@ ideelidown() {
   sudo /etc/rc.d/memcached --port 11211 stop
   sudo /etc/rc.d/memcached --port 11212 stop
   sudo /etc/rc.d/mongodb stop
-  sudo /etc/rc.d/mysql stop
+  sudo /etc/rc.d/mysqld stop
 
   rvm use ruby-1.9.3
 }
