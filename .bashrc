@@ -32,10 +32,10 @@ fi
 
 # bash 4 features
 if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
-  shopt -s globstar autocd
+  shopt -s globstar autocd dirspell 
 fi
 
-shopt -s cdspell dirspell extglob histverify no_empty_cmd_completion checkwinsize
+shopt -s cdspell extglob histverify no_empty_cmd_completion checkwinsize
 
 # should've done this a long time ago
 set -o vi
@@ -207,6 +207,13 @@ if _have less; then
   LESS_TERMCAP_us=$'\e[01;32m'
   export ${!LESS@}
 fi
+
+# REE GC optimizations
+RUBY_HEAP_MIN_SLOTS=2400000
+RUBY_HEAP_SLOTS_INCREMENT=100000
+RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+RUBY_GC_MALLOC_LIMIT=40000000
+export ${!RUBY_@}
 
 if _have mpc; then
   export MPD_HOST=192.168.0.5
