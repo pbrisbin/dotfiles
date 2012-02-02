@@ -294,6 +294,14 @@ fi
 
 ### Bash functions {{{
 
+# pull for git-svn at work
+gitup() {
+  git stash         && \
+    git svn rebase  && \
+    git stash apply && \
+    ctags -f tmp/tags -R --langmap="ruby:+.rake.builder.rjs" --languages='-javascript'
+}
+
 # demolish any --user installed cabal packages.
 cabalwipe() {
   rm -rf "$HOME/.cabal/packages"/*/*
