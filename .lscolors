@@ -1,8 +1,8 @@
 #                                    LS_COLORS
 # Maintainer: Magnus Woldrich <m@japh.se>
 #        URL: https://github.com/trapd00r/LS_COLORS
-#    Version: 0.220
-#    Updated: 2011-08-28 16:33:58
+#    Version: 0.228
+#    Updated: 2012-02-02 07:14:47
 #
 #   This is a collection of extension:color mappings, suitable to use as your
 #   LS_COLORS environment variable. Most of them use the extended color map,
@@ -63,6 +63,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .cs                   38;5;74;1
 .css                  38;5;91
 .csv                  38;5;78
+.ctp                  38;5;95
 .diff                 48;5;197;38;5;232
 .enc                  38;5;192;3
 .eps                  38;5;192
@@ -97,6 +98,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .mkd                  38;5;184
 .mtx                  38;5;36;3
 .nfo                  38;5;220
+.o                    38;5;240
 .pacnew               38;5;33
 .patch                48;5;197;38;5;232;1
 .pc                   38;5;100
@@ -191,9 +193,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .qcow                 38;5;141
 #}}}
 # video                                                                      {{{
+.VOB                  38;5;137
+.IFO                  38;5;240
+.BUP                  38;5;241
 .MOV                  38;5;42
+.asf                  38;5;25
 .avi                  38;5;114
 .flv                  38;5;131
+.m2v                  38;5;166
 .mkv                  38;5;202
 .mov                  38;5;42
 .mp4                  38;5;124
@@ -204,11 +211,13 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .rmvb                 38;5;112
 .sample               38;5;130;1
 .ts                   38;5;39
+.vob                  38;5;137
 .webm                 38;5;132
 .wmv                  38;5;113
 #}}}
 # music, audio                                                               {{{
 .S3M                  38;5;71;1
+.aac                  38;5;137
 .cue                  38;5;112
 .dat                  38;5;165
 .fcm                  38;5;41
@@ -216,6 +225,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .m3u                  38;5;172
 .m4                   38;5;196;3
 .m4a                  38;5;137;1
+.mid                  38;5;102
+.midi                 38;5;102
 .mod                  38;5;72
 .mp3                  38;5;191
 .oga                  38;5;95
@@ -256,6 +267,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .a                    38;5;46
 .arj                  38;5;41
 .bz2                  38;5;44
+.ipk                  38;5;117
 .jad                  38;5;50
 .jar                  38;5;51
 .part                 38;5;240;1
@@ -409,6 +421,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;1
 .pi                   38;5;126
 .properties           38;5;197;1
 .torrent              38;5;58
+.gp3                  38;5;114
+.gp4                  38;5;115
+.tg                   38;5;99
 #}}}
 
 TERM Eterm
@@ -462,4 +477,4 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 
-# vim: ft=dircolors:
+# vim: set ft=dircolors fdm=marker et sw=2:
