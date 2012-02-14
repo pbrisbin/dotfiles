@@ -209,11 +209,11 @@ if _have less; then
 fi
 
 # REE GC optimizations
-RUBY_HEAP_MIN_SLOTS=2400000
-RUBY_HEAP_SLOTS_INCREMENT=100000
-RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-RUBY_GC_MALLOC_LIMIT=40000000
-export ${!RUBY_@}
+#RUBY_HEAP_MIN_SLOTS=2400000
+#RUBY_HEAP_SLOTS_INCREMENT=100000
+#RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+#RUBY_GC_MALLOC_LIMIT=40000000
+#export ${!RUBY_@}
 
 if _have mpc; then
   export MPD_HOST=192.168.0.5
@@ -232,7 +232,7 @@ alias myip='printf "%s\n" "$(curl --silent http://tnx.nl/ip)"'
 alias path='echo -e "${PATH//:/\n}"'
 
 # a good overview of a yesod application
-alias apptree='tree -I "dist|config|tmp|pandoc"'
+alias apptree='tree -I "dist|config|static|pandoc|tmp"'
 
 # only if we have mpc
 if _have mpc; then
@@ -290,9 +290,35 @@ if _have ghc-pkg; then
   alias gu='ghc-pkg unregister'
 fi
 
+alias updatehtpc='curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&parameter=XBMC.updatelibrary(video)"'
+
 # }}}
 
 ### Bash functions {{{
+
+watchtv() {
+  _have watch_rss || return 1
+
+  watch_rss "$@" --media     ~/TV_shows                    \
+                 --torrent   ~/Downloads                   \
+                 --completed ~/Downloads/torrent/completed \
+                 --ignore "Arrested Development"           \
+                 --ignore "Boardwalk Empire"               \
+                 --ignore "Bored to Death"                 \
+                 --ignore "Breaking Bad"                   \
+                 --ignore "Buffy The Vampire Slayer"       \
+                 --ignore "Dexter"                         \
+                 --ignore "Family Guy"                     \
+                 --ignore "Firefly"                        \
+                 --ignore "Flight of the Conchords"        \
+                 --ignore "Friday Night Lights"            \
+                 --ignore "Happy Endings"                  \
+                 --ignore "Home Movies"                    \
+                 --ignore "Modern Family"                  \
+                 --ignore "The Wire" || return 1
+
+  curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&parameter=XBMC.updatelibrary(video)"
+}
 
 # pull for git-svn at work
 gitup() {
