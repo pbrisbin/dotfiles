@@ -299,22 +299,23 @@ alias updatehtpc='curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&p
 watchtv() {
   _have watch_rss || return 1
 
-  watch_rss "$@" --media     ~/TV_shows                    \
-                 --torrent   ~/Downloads                   \
-                 --completed ~/Downloads/torrent/completed \
-                 --ignore "Arrested Development"           \
-                 --ignore "Boardwalk Empire"               \
-                 --ignore "Bored to Death"                 \
-                 --ignore "Breaking Bad"                   \
-                 --ignore "Buffy The Vampire Slayer"       \
-                 --ignore "Dexter"                         \
-                 --ignore "Family Guy"                     \
-                 --ignore "Firefly"                        \
-                 --ignore "Flight of the Conchords"        \
-                 --ignore "Friday Night Lights"            \
-                 --ignore "Happy Endings"                  \
-                 --ignore "Home Movies"                    \
-                 --ignore "Modern Family"                  \
+  watch_rss "$@" --media     ~/TV_shows                     \
+                 --torrent   ~/Downloads                    \
+                 --completed ~/Downloads/torrents/completed \
+                 --ignore "Arrested Development"            \
+                 --ignore "Boardwalk Empire"                \
+                 --ignore "Bored to Death"                  \
+                 --ignore "Breaking Bad"                    \
+                 --ignore "Buffy The Vampire Slayer"        \
+                 --ignore "Dexter"                          \
+                 --ignore "Doctor Who (2005)"               \
+                 --ignore "Family Guy"                      \
+                 --ignore "Firefly"                         \
+                 --ignore "Flight of the Conchords"         \
+                 --ignore "Friday Night Lights"             \
+                 --ignore "Happy Endings"                   \
+                 --ignore "Home Movies"                     \
+                 --ignore "Modern Family"                   \
                  --ignore "The Wire" || return 1
 
   curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&parameter=XBMC.updatelibrary(video)"
