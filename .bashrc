@@ -329,11 +329,23 @@ gitup() {
     ctags -f tmp/tags -R --langmap="ruby:+.rake.builder.rjs" --languages='-javascript'
 }
 
-# demolish any --user installed cabal packages.
-cabalwipe() {
-  rm -rf "$HOME/.cabal/packages"/*/*
-  rm -rf "$HOME/.cabal/bin"/*
-  rm -rf "$HOME/.ghc"
+ghc-pkg-clean() {
+  _have ghc-pkg || return 1
+
+  while read -r pkg; do
+    echo "attempting to unregister $pkg..."
+    ghc-pkg $* unregister $pkg
+  done <(ghc-pkg $* check |& sed '/^There are problems in package \([^:]*\):$/!d; s//\1/')
+}
+
+ghc-pkg-reset() {
+  read -p 'Are you sure (y/n)? ' ans
+
+  if [[ "$ans" =~ y*|Y* ]]; then
+    rm -rf "$HOME/.cabal/packages"/*/*
+    rm -rf "$HOME/.cabal/bin"/*
+    rm -rf "$HOME/.ghc"
+  fi
 }
 
 ideeliup() {
