@@ -348,44 +348,28 @@ ghc-pkg-reset() {
   fi
 }
 
-ideeliup() {
+# start or stop services need for ideeli development
+ideeli() {
   $_isarch || return 1
 
-  sudo /etc/rc.d/mysqld start
-  sudo /etc/rc.d/mongodb start
-  sudo /etc/rc.d/memcached --port 11211 start
-  sudo /etc/rc.d/memcached --port 11212 start
-  sudo /etc/rc.d/riak start
-  sudo /etc/rc.d/activemq start
-
-  rvm use ree
-}
-
-ideelidown() {
-  $_isarch || return 1
-
-  sudo /etc/rc.d/activemq stop
-  sudo /etc/rc.d/riak stop
-  sudo /etc/rc.d/memcached --port 11211 stop
-  sudo /etc/rc.d/memcached --port 11212 stop
-  sudo /etc/rc.d/mongodb stop
-  sudo /etc/rc.d/mysqld stop
-
-  rvm use ruby-1.9.3
-}
-
-# run a rails test suite via the parallel_tests gem
-runtests() {
-  local suite="${1:-(unit|functional|integration)}"
-  local suffix="${1:-parallel_trunk}"
-
-  rake DBSUFFIX="$suffix" \
-    clean                 \
-    tmp:clear             \
-    parallel:drop         \
-    parallel:create       \
-    parallel:migrate      \
-    parallel:test[^"'$suite'"] --trace
+  case "$1" in
+    up)
+      sudo /etc/rc.d/mysqld start
+      sudo /etc/rc.d/mongodb start
+      sudo /etc/rc.d/memcached --port 11211 start
+      sudo /etc/rc.d/memcached --port 11212 start
+      sudo /etc/rc.d/riak start
+      sudo /etc/rc.d/activemq start
+      ;;
+    down)
+      sudo /etc/rc.d/activemq stop
+      sudo /etc/rc.d/riak stop
+      sudo /etc/rc.d/memcached --port 11211 stop
+      sudo /etc/rc.d/memcached --port 11212 stop
+      sudo /etc/rc.d/mongodb stop
+      sudo /etc/rc.d/mysqld stop
+      ;;
+  esac
 }
 
 # share via sprunge
