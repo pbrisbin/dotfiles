@@ -335,7 +335,7 @@ ghc-pkg-clean() {
   while read -r pkg; do
     echo "attempting to unregister $pkg..."
     ghc-pkg $* unregister $pkg
-  done <(ghc-pkg $* check |& sed '/^There are problems in package \([^:]*\):$/!d; s//\1/')
+  done < <(ghc-pkg $* check |& sed '/^There are problems in package \([^:]*\):$/!d; s//\1/')
 }
 
 ghc-pkg-reset() {
