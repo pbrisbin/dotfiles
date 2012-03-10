@@ -142,7 +142,11 @@ fi
 ### Bash exports {{{
 
 # set path
-_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
+_add_to_path "$HOME/.bin"       \
+             "$HOME/Code/bin"   \
+             "$HOME/.cabal/bin" \
+             "$HOME/.rvm/bin"   \
+             "/Library/Frameworks/Python.framework/Versions/2.7/bin"
 
 # some custom paths used on mac os x
 _add_to_path /opt/local/libexec/gnubin \
