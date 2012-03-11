@@ -59,13 +59,8 @@ _add_to_path /Library/Frameworks/Python.framework/Versions/2.7/bin \
 _source "$HOME/.screen/bashrc.screen"
 _source "$HOME/.aws_keys"
 
-export EDITOR=vim
-
-if _have chromium
-  export BROWSER=chromium
-elif _have chrome
-  export BROWSER=chrome
-fi
+_have vim      && export EDITOR=vim
+_have chromium && export BROWSER=chromium
 
 if _have albumart.php; then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
