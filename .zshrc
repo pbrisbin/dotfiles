@@ -4,11 +4,11 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="zhann"
 
+zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.pbrisbin id_rsa.github id_rsa.ideeli
+
 plugins=(git gem archlinux bundler rails rake sprunge ssh-agent vagrant vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-
-zstyle :omz:plugins:ssh-agent id_rsa id_rsa.pbrisbin id_rsa.github id_rsa.ideeli
 
 _is_linux() {
   [[ "$(uname -s)" =~ Linux\|GNU ]]
