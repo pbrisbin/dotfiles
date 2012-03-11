@@ -35,26 +35,12 @@ alias ls='ls -h --group-directories-first --color=auto'
 alias grep='grep --color=auto'
 alias myip='printf "%s\n" "$(curl --silent http://tnx.nl/ip)"'
 alias path='echo -e "${PATH//:/\n}"'
-
 alias apptree='tree -I "dist|config|static|pandoc|tmp"'
 
 if _have mpc; then
   alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
   alias n='mpc next'
   alias p='mpc prev'
-fi
-
-_have albumbler && alias a='albumbler'
-
-if _have ossvol; then
-  alias u='ossvol -i 3'
-  alias d='ossvol -d 3'
-  alias m='ossvol -t'
-fi
-
-if _have colortail; then
-  alias tailirc='/usr/bin/colortail -q -k /etc/colortail/conf.irc'
-  alias colortail='colortail -q -k /etc/colortail/conf.messages'
 fi
 
 if [[ -b '/dev/sr0' ]]; then
@@ -68,12 +54,6 @@ if _have mplayer; then
   alias playiso='mplayer dvd://1 -dvd-device'
   alias playdvd='mplayer dvdnav:// /dev/sr0'
   alias playcda='mplayer cdda:// -cdrom-device /dev/sr0 -cache 10000'
-fi
-
-if _have ghc-pkg; then
-  alias gc='ghc-pkg check'
-  alias gl='ghc-pkg list'
-  alias gu='ghc-pkg unregister'
 fi
 
 alias updatehtpc='curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&parameter=XBMC.updatelibrary(video)"'

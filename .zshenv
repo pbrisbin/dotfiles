@@ -1,4 +1,9 @@
-# commands which export environment variables
+# ~/.zshenv: commands which export environment variables are collected
+# here. primarily so that a proper PATH is available to all the
+# customizations that occur in ~/.zshrc. Note: one Arch this may need to
+# be moved to ~/.zprofile due to the non-default initializator order
+# there.
+
 _have() {
   which $1 &>/dev/null
 }
