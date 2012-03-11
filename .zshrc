@@ -1,20 +1,23 @@
 ZSH=$HOME/.oh-my-zsh
 
-#ZSH_THEME="suvash"
 ZSH_THEME="zhann"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
 
 plugins=(git gem archlinux bundler rails rake sprunge ssh-agent vagrant vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/home/patrick/.rvm/gems/ree-1.8.7-2011.03/bin:/home/patrick/.rvm/gems/ree-1.8.7-2011.03@global/bin:/home/patrick/.rvm/rubies/ree-1.8.7-2011.03/bin:/home/patrick/.rvm/bin:/home/patrick/.cabal/bin:/home/patrick/Code/bin:/home/patrick/.bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/usr/bin/core_perl
-
 set -o vi
 
 zstyle :omz:plugins:ssh-agent id_rsa id_rsa.github id_rsa.ideeli
+
+# helpers {{{
+_is_linux() {
+  [[ "$(uname -s)" =~ Linux\|GNU ]]
+}
+
+_is_arch() {
+  [[ -f /etc/arch-release ]]
+}
 
 _is_root() {
   [[ $UID -eq 0 ]]
@@ -33,11 +36,36 @@ _source () {
   [[ -r "$file" ]] && source "$file"
 }
 
+# adds one or more directories to the front of PATH if they're not part
+# of it already
+_add_to_path() {
+  local dir
+
+  for dir; do
+    if [[ -d "$dir" ]] && [[ ! ":${PATH}:" =~ ":${dir}:" ]]; then
+      export PATH="$dir:$PATH"
+    fi
+  done
+}
+# }}}
+
+# exports {{{
+_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
+
+# some custom paths used on mac OS X
+_add_to_path /Library/Frameworks/Python.framework/Versions/2.7/bin \
+             /opt/local/libexec/gnubin /opt/local/bin /opt/local/sbin
+
 _source "$HOME/.screen/bashrc.screen"
 _source "$HOME/.aws_keys"
 
-# exports {{{
 export EDITOR=vim
+
+if _have chromium
+  export BROWSER=chromium
+elif _have chrome
+  export BROWSER=chrome
+fi
 
 if _have albumart.php; then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
@@ -248,8 +276,33 @@ timer() {
   echo "timer set for $N"
 }
 
+runsql() {
+  if _is_linux; then
+    _have psql || return 1
+    psql -U pbrisbin pbrisbin;
+  else
+    _have mysql || return 1
+    mysql -urails -pdev ideeli_development;
+  fi
+}
+
+newcomments() {
+  if _is_linux; then
+    runsql << EOF
+select
+  id,
+  "threadId",
+  "timeStamp",
+  "userEmail",
+  substring("content", 1, 60)
+from "SqlComment"
+order by "timeStamp" asc;
+EOF
+  fi
+}
+
 # }}}
 
-if [[ `tty` = /dev/tty1 ]] && ! _is_root && ! _is_x_running; then
+if [[ $(tty) = /dev/tty1 ]] && ! _is_root && ! _is_x_running; then
   exec startx
 fi
