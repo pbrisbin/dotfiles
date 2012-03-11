@@ -341,7 +341,7 @@ ghc-pkg-clean() {
 ghc-pkg-reset() {
   read -p 'Are you sure (y/n)? ' ans
 
-  if [[ "$ans" =~ y*|Y* ]]; then
+  if [[ "$ans" =~ y|yes ]]; then
     rm -rf "$HOME/.cabal/packages"/*/*
     rm -rf "$HOME/.cabal/bin"/*
     rm -rf "$HOME/.ghc"
