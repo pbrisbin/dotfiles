@@ -2,7 +2,8 @@ set -o vi
 
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="zhann"
+#ZSH_THEME="zhann"
+ZSH_THEME="pbrisbin"
 
 zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.pbrisbin id_rsa.github id_rsa.ideeli
 
