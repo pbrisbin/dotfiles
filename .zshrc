@@ -1,3 +1,5 @@
+set -o vi
+
 ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="zhann"
@@ -6,11 +8,8 @@ plugins=(git gem archlinux bundler rails rake sprunge ssh-agent vagrant vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
-set -o vi
-
 zstyle :omz:plugins:ssh-agent id_rsa id_rsa.github id_rsa.ideeli
 
-# helpers {{{
 _is_linux() {
   [[ "$(uname -s)" =~ Linux\|GNU ]]
 }
@@ -30,70 +29,6 @@ _is_x_running() {
 _have() {
   which $1 &>/dev/null
 }
-
-_source () {
-  local file="$1"
-  [[ -r "$file" ]] && source "$file"
-}
-
-# adds one or more directories to the front of PATH if they're not part
-# of it already
-_add_to_path() {
-  local dir
-
-  for dir; do
-    if [[ -d "$dir" ]] && [[ ! ":${PATH}:" =~ ":${dir}:" ]]; then
-      export PATH="$dir:$PATH"
-    fi
-  done
-}
-# }}}
-
-# exports {{{
-_add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
-
-# some custom paths used on mac OS X
-_add_to_path /Library/Frameworks/Python.framework/Versions/2.7/bin \
-             /opt/local/libexec/gnubin /opt/local/bin /opt/local/sbin
-
-_source "$HOME/.screen/bashrc.screen"
-_source "$HOME/.aws_keys"
-
-_have vim      && export EDITOR=vim
-_have chromium && export BROWSER=chromium
-
-if _have albumart.php; then
-  export AWS_LIB="$HOME/Code/php/albumart/lib"
-  export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
-  export AWS_PRIVATE_KEY_FILE="$HOME/.aws/pk-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
-fi
-
-if _have dmenu; then
-  # dmenu-xft required
-  export DMENU_OPTIONS='-i -fn Verdana-8 -nb #303030 -nf #909090 -sb #909090 -sf #303030'
-fi
-
-if _have mpc; then
-  export MPD_HOST=192.168.0.5
-  export MPD_PORT=6600
-fi
-
-if _have less; then
-  export PAGER=less
-
-  export LESS=-R # use -X to avoid sending terminal initialization
-  export LESS_TERMCAP_mb=$'\e[01;31m'
-  export LESS_TERMCAP_md=$'\e[01;31m'
-  export LESS_TERMCAP_me=$'\e[0m'
-  export LESS_TERMCAP_se=$'\e[0m'
-  export LESS_TERMCAP_so=$'\e[01;44;33m'
-  export LESS_TERMCAP_ue=$'\e[0m'
-  export LESS_TERMCAP_us=$'\e[01;32m'
-fi
-
-_source "$HOME/.rvm/scripts/rvm"
-
-# }}}
 
 # aliases {{{
 alias ls='ls -h --group-directories-first --color=auto'
@@ -297,6 +232,12 @@ EOF
 }
 
 # }}}
+
+unset -f _is_linux
+unset -f _is_arch
+unset -f _is_root
+unset -f _is_x_running
+unset -f _have
 
 if [[ $(tty) = /dev/tty1 ]] && ! _is_root && ! _is_x_running; then
   exec startx
