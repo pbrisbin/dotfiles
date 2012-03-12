@@ -34,8 +34,12 @@ module Dotfiles
 
     def install!
       puts "--> installing #{dotfile} as #{target}..."
-      if File.exists?(target) || File.symlink?(target)
-        mv target, "#{target}.backup", :verbose => true
+      if File.exists?(target)
+        if File.symlink?(target)
+          rm target, :verbose => true
+        else
+          mv target, "#{target}.backup", :verbose => true
+        end
       end
 
       ln_s source, target, :verbose => true
