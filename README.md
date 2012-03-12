@@ -1,33 +1,37 @@
 # Dotfiles
 
-Various configuration files for my main system. Take what you like.
+Various configuration files for my main system and a rake task to 
+install them.
+
+### Features
+
+The features you'll enjoy if you choose to install my setup:
+
+1. A nice vim setup with lots of plugins
+2. A nice zsh setup using oh-my-zsh
+3. A nice screen setup
+4. A nice git setup
+5. Pretty threaded htop
+6. Pretty ls colors
+7. Pretty X colors
 
 ### Usage
 
-Feel free to script this process to your specific needs; I usually do 
-some variation on the following:
+1. Clone or fork-then-clone the repo
+2. Customize as desired
+3. Sanity-check the Rakefile
+4. `rake install`
 
-    # clone into some direcotry
-    git clone git://github.com/pbrisbin/dotfiles.git some/directory
+### Warning
 
-    # link individual dotfiles to their actual location
-    ln -s some/directory/.some/dotfile .
+The `rake install` functionality is new and only marginally tested. It 
+should be safe except for one gotcha:
 
-    # optionally, add it for root too
-    su -
-    Password:
-    ln -s /home/your-user/.some/dotfile .
-    exit
+If, for example, it installs `.foo` and you already have a `.foo` it 
+will `mv` it to `.foo.backup` before proceeding. This is a Good Thing.
 
-    # updating later is simple
-    cd some/directory && git pull
+However, If you then run `rake install` again it will again find `.foo` 
+and again `mv` it to `.foo.backup`. Unfortunately, it's now overwrote 
+your actual backup with the link it previously installed.
 
-### Note
-
-For my vimrc, please see its own [repo][vim], same goes for my 
-[xmonad][], [mutt][], and [screen][] setups.
-
-[vim]:    https://github.com/pbrisbin/vim-config
-[xmonad]: https://github.com/pbrisbin/xmonad-config
-[mutt]:   https://github.com/pbrisbin/mutt-config
-[screen]: https://github.com/pbrisbin/screen-config
+Coding around this is complexity I just don't need.
