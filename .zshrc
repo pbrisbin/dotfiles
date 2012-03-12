@@ -214,12 +214,6 @@ EOF
 
 # }}}
 
-unset -f _is_linux
-unset -f _is_arch
-unset -f _is_root
-unset -f _is_x_running
-unset -f _have
-
 if [[ $(tty) = /dev/tty1 ]] && ! _is_root && ! _is_x_running; then
   exec startx
 fi
