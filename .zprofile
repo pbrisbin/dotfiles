@@ -24,13 +24,13 @@ _add_to_path() {
 
 _add_to_path "$HOME/.bin" "$HOME/Code/bin" "$HOME/.cabal/bin" "$HOME/.rvm/bin"
 
-# some custom paths used on mac OS X
-_add_to_path /Library/Frameworks/Python.framework/Versions/2.7/bin \
-             /opt/local/libexec/gnubin /opt/local/bin /opt/local/sbin
-
 _source "$HOME/.screen/bashrc.screen"
 _source "$HOME/.aws_keys"
 _source "$HOME/.secrets"
+
+if _have brew; then
+  _add_to_path "$(brew --prefix coreutils)/libexec/gnubin"
+fi
 
 _have vim      && export EDITOR=vim
 _have chromium && export BROWSER=chromium
