@@ -87,16 +87,16 @@ ideeli() {
     up)
       sudo /etc/rc.d/mysqld start
       sudo /etc/rc.d/mongodb start
-      sudo /etc/rc.d/memcached --port 11211 start
-      sudo /etc/rc.d/memcached --port 11212 start
+      sudo /etc/rc.d/memcached start
+      sudo /etc/rc.d/memcached_secondary start
       sudo /etc/rc.d/riak start
       sudo /etc/rc.d/activemq start
       ;;
     down)
       sudo /etc/rc.d/activemq stop
       sudo /etc/rc.d/riak stop
-      sudo /etc/rc.d/memcached --port 11211 stop
-      sudo /etc/rc.d/memcached --port 11212 stop
+      sudo /etc/rc.d/memcached_secondary stop
+      sudo /etc/rc.d/memcached stop
       sudo /etc/rc.d/mongodb stop
       sudo /etc/rc.d/mysqld stop
       ;;
