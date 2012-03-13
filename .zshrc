@@ -134,7 +134,7 @@ rdocs() {
 
 # combine pdfs into one using ghostscript
 combinepdf() {
-  have gs       || return 1
+  have gs        || return 1
   [[ $# -ge 2 ]] || return 1
 
   local out="$1"; shift
@@ -144,7 +144,7 @@ combinepdf() {
 
 # rip a dvd with handbrake
 hbrip() {
-  have HandBrakeCLI || return 1
+  have HandBrakeCLI  || return 1
   [[ -n "$1" ]]      || return 1
 
   local name="$1" out drop="$HOME/Movies"; shift
@@ -159,7 +159,7 @@ hbrip() {
 
 # convert media to ipad format with handbrake
 hbconvert() {
-  have HandBrakeCLI || return 1
+  have HandBrakeCLI  || return 1
   [[ -n "$1" ]]      || return 1
 
   local in="$1" out drop="$HOME/Movies/converted"; shift
@@ -175,7 +175,7 @@ hbconvert() {
 # set an ad-hoc GUI timer 
 timer() {
   _is_x_running || return 1
-  have zenity  || return 1
+  have zenity   || return 1
 
   local N="${1:-5m}"; shift
 
