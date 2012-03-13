@@ -35,6 +35,10 @@ fi
 _have vim      && export EDITOR=vim
 _have chromium && export BROWSER=chromium
 
+if _have dircolors && [[ -f $HOME/.lscolors ]]; then
+  eval $(dircolors -b $HOME/.lscolors)
+fi
+
 if _have albumart.php; then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
   export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
