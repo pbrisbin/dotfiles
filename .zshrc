@@ -27,10 +27,6 @@ _is_x_running() {
   [[ -n "$DISPLAY" ]]
 }
 
-_have() {
-  which $1 &>/dev/null
-}
-
 # aliases {{{
 alias ls='ls -h --group-directories-first --color=auto'
 alias grep='grep --color=auto'
@@ -38,7 +34,7 @@ alias myip='printf "%s\n" "$(curl --silent http://tnx.nl/ip)"'
 alias path='echo -e "${PATH//:/\n}"'
 alias apptree='tree -I "dist|config|static|pandoc|tmp"'
 
-if _have mpc; then
+if have mpc; then
   alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
   alias n='mpc next'
   alias p='mpc prev'
@@ -51,7 +47,7 @@ fi
 
 [[ -f "$HOME/.xmonad/xmonad.hs" ]] && alias checkmonad='(cd ~/.xmonad && ghci -ilib xmonad.hs)'
 
-if _have mplayer; then
+if have mplayer; then
   alias playiso='mplayer dvd://1 -dvd-device'
   alias playdvd='mplayer dvdnav:// /dev/sr0'
   alias playcda='mplayer cdda:// -cdrom-device /dev/sr0 -cache 10000'
@@ -63,7 +59,7 @@ alias updatehtpc='curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&p
 
 # functions {{{
 ghc-pkg-clean() {
-  _have ghc-pkg || return 1
+  have ghc-pkg || return 1
 
   while read -r pkg; do
     echo "attempting to unregister $pkg..."
@@ -105,7 +101,7 @@ ideeli() {
 
 # update haskell documentation and publish it to my server
 hdocs() {
-  _have cabal || return 1
+  have cabal || return 1
 
   local  name="${PWD##*/}"
   local  here="dist/doc/html/$name"
@@ -123,7 +119,7 @@ hdocs() {
 
 # update ruby documentation and publish it to my server
 rdocs() {
-  _have rdoc || return 1
+  have rdoc || return 1
 
   local name="${PWD##*/}"
   local there="$HOME/Code/haskell/devsite/static/docs/ruby/$name"
@@ -138,7 +134,7 @@ rdocs() {
 
 # combine pdfs into one using ghostscript
 combinepdf() {
-  _have gs       || return 1
+  have gs       || return 1
   [[ $# -ge 2 ]] || return 1
 
   local out="$1"; shift
@@ -148,7 +144,7 @@ combinepdf() {
 
 # rip a dvd with handbrake
 hbrip() {
-  _have HandBrakeCLI || return 1
+  have HandBrakeCLI || return 1
   [[ -n "$1" ]]      || return 1
 
   local name="$1" out drop="$HOME/Movies"; shift
@@ -163,7 +159,7 @@ hbrip() {
 
 # convert media to ipad format with handbrake
 hbconvert() {
-  _have HandBrakeCLI || return 1
+  have HandBrakeCLI || return 1
   [[ -n "$1" ]]      || return 1
 
   local in="$1" out drop="$HOME/Movies/converted"; shift
@@ -179,7 +175,7 @@ hbconvert() {
 # set an ad-hoc GUI timer 
 timer() {
   _is_x_running || return 1
-  _have zenity  || return 1
+  have zenity  || return 1
 
   local N="${1:-5m}"; shift
 
@@ -189,10 +185,10 @@ timer() {
 
 runsql() {
   if _is_linux; then
-    _have psql || return 1
+    have psql || return 1
     psql -U pbrisbin pbrisbin;
   else
-    _have mysql || return 1
+    have mysql || return 1
     mysql -urails -pdev ideeli_development;
   fi
 }
