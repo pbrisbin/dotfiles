@@ -8,7 +8,7 @@ module Dotfiles
       '.gitconfig',
       '.gitignore',
       '.htoprc',
-      '.lscolors',
+      '.dir_colors',
       '.Xdefaults',
       '.zprofile',
       '.zshrc',
@@ -49,7 +49,7 @@ end
 
 desc "updates all submodules"
 task :submodules do
-  unless system('git submodule update --init')
+  unless system('git submodule update --init --recursive')
     raise 'error initializing submodules'
   end
 end
@@ -57,12 +57,6 @@ end
 desc "installs all dotfiles into the proper places"
 task :install => [:submodules] do
   Dotfiles.each(&:install!)
-
-  Dir.chdir('.vim') do
-    unless system('git submodule update --init')
-      raise 'error initializing vim submodules'
-    end
-  end
 
   vimrc = Dotfiles::Dotfile.new('.vimrc')
   vimrc.source = File.join(ENV['HOME'], '.vim', 'vimrc')
