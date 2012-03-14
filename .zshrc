@@ -1,43 +1,34 @@
-set -o vi
+zstyle ':omz:editor'            keymap         'vi'
+zstyle ':omz:*:*'               color          'yes'
+zstyle ':omz:terminal'          auto-title     'yes'
+zstyle ':omz:*:*'               case-sensitive 'no'
+zstyle ':omz:editor'            dot-expansion  'no'
+zstyle ':omz:load'              plugin         'git'       \
+                                               'rails'     \
+                                               'ruby'      \
+                                               'ssh-agent'
+zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
+                                               'id_rsa.pbrisbin' \
+                                               'id_rsa.github'   \
+                                               'id_rsa.ideeli'
 
-ZSH=$HOME/.oh-my-zsh
+zstyle ':omz:prompt' theme 'pbrisbin'
 
-#ZSH_THEME="zhann"
-ZSH_THEME="pbrisbin"
-
-zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa.pbrisbin id_rsa.github id_rsa.ideeli
-
-plugins=(git gem archlinux brew bundler rails rake sprunge ssh-agent vagrant vi-mode)
-
-source $ZSH/oh-my-zsh.sh
-
-_is_linux() {
-  [[ "$(uname -s)" =~ Linux\|GNU ]]
-}
-
-_is_arch() {
-  [[ -f /etc/arch-release ]]
-}
-
-_is_root() {
-  [[ $UID -eq 0 ]]
-}
-
-_is_x_running() {
-  [[ -n "$DISPLAY" ]]
-}
+source "$HOME/.oh-my-zsh/init.zsh"
 
 # aliases {{{
-alias ls='ls -h --group-directories-first --color=auto'
 alias grep='grep --color=auto'
 alias myip='printf "%s\n" "$(curl --silent http://tnx.nl/ip)"'
 alias path='echo -e "${PATH//:/\n}"'
 alias apptree='tree -I "dist|config|static|pandoc|tmp"'
 
-if have mpc; then
-  alias addall='mpc --no-status clear && mpc listall | mpc --no-status add && mpc play'
+if (( $+commands[mpc] )); then
   alias n='mpc next'
   alias p='mpc prev'
+
+  if (( $+commands[albumbler] )); then
+    alias a='albumbler'
+  fi
 fi
 
 if [[ -b '/dev/sr0' ]]; then
@@ -45,9 +36,7 @@ if [[ -b '/dev/sr0' ]]; then
   alias mountdvd='sudo mount -t iso9660 -o ro /dev/sr0 /media/dvd/'
 fi
 
-[[ -f "$HOME/.xmonad/xmonad.hs" ]] && alias checkmonad='(cd ~/.xmonad && ghci -ilib xmonad.hs)'
-
-if have mplayer; then
+if (( $+commands[mplayer] )); then
   alias playiso='mplayer dvd://1 -dvd-device'
   alias playdvd='mplayer dvdnav:// /dev/sr0'
   alias playcda='mplayer cdda:// -cdrom-device /dev/sr0 -cache 10000'
@@ -59,7 +48,7 @@ alias updatehtpc='curl "http://htpc:8080/xbmcCmds/xbmcHttp?command=ExecBuiltIn&p
 
 # functions {{{
 ghc-pkg-clean() {
-  have ghc-pkg || return 1
+  (( $+commands[ghc-pkg] )) || return 1
 
   while read -r pkg; do
     echo "attempting to unregister $pkg..."
@@ -77,7 +66,6 @@ ghc-pkg-reset() {
   fi
 }
 
-# start or stop services need for ideeli development
 ideeli() {
   case "$1" in
     up)
@@ -99,53 +87,47 @@ ideeli() {
   esac
 }
 
-# update haskell documentation and publish it to my server
 hdocs() {
-  have cabal || return 1
+  (( $+commands[cabal] )) || return 1
 
   local  name="${PWD##*/}"
   local  here="dist/doc/html/$name"
   local there="$HOME/Code/haskell/devsite/static/docs/haskell/$name"
 
-  # update
   cabal haddock \
     --html-location='http://hackage.haskell.org/packages/archive/$pkg/latest/doc/html' \
     --hyperlink-source "$@" || return 1
 
-  # publish
   rm -rf "$there"
   cp -r "$here" "$there"
 }
 
 # update ruby documentation and publish it to my server
 rdocs() {
-  have rdoc || return 1
+  (( $+commands[rdoc] )) || return 1
 
   local name="${PWD##*/}"
   local there="$HOME/Code/haskell/devsite/static/docs/ruby/$name"
 
-  # update
   rdoc --title="$name" "$@"
 
-  # publish
   rm -rf "$there"
   cp -r doc "$there"
 }
 
-# combine pdfs into one using ghostscript
 combinepdf() {
-  have gs        || return 1
-  [[ $# -ge 2 ]] || return 1
+  (( $+commands[gs] )) || return 1
 
-  local out="$1"; shift
+  if [[ $# -ge 2 ]]; then
+    local out="$1"; shift
 
-  gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$out" "$@"
+    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$out" "$@"
+  fi
 }
 
-# rip a dvd with handbrake
 hbrip() {
-  have HandBrakeCLI  || return 1
-  [[ -n "$1" ]]      || return 1
+  (( $+commands[HandBrakeCLI] )) || return 1
+  [[ -n "$1" ]] || return 1
 
   local name="$1" out drop="$HOME/Movies"; shift
   [[ -d "$drop" ]] || mkdir -p "$drop"
@@ -157,10 +139,9 @@ hbrip() {
   echo
 }
 
-# convert media to ipad format with handbrake
 hbconvert() {
-  have HandBrakeCLI  || return 1
-  [[ -n "$1" ]]      || return 1
+  (( $+commands[HandBrakeCLI] )) || return 1
+  [[ -n "$1" ]] || return 1
 
   local in="$1" out drop="$HOME/Movies/converted"; shift
   [[ -d "$drop" ]] || mkdir -p "$drop"
@@ -172,30 +153,20 @@ hbconvert() {
   echo
 }
 
-# set an ad-hoc GUI timer 
 timer() {
-  _is_x_running || return 1
-  have zenity   || return 1
+  (( $+commands[zenity] )) || return 1
 
-  local N="${1:-5m}"; shift
+  if [[ -n $DISPLAY ]]; then
+    local N="${1:-5m}"; shift
 
-  (sleep $N && zenity --info --title="Time's Up" --text="${*:-DING}") &
-  echo "timer set for $N"
-}
-
-runsql() {
-  if _is_linux; then
-    have psql || return 1
-    psql -U pbrisbin pbrisbin;
-  else
-    have mysql || return 1
-    mysql -urails -pdev ideeli_development;
+    (sleep $N && zenity --info --title="Time's Up" --text="${*:-DING}") &
+    echo "timer set for $N"
   fi
 }
 
 newcomments() {
-  if _is_linux; then
-    runsql << EOF
+  if (( $+commands[psql] )); then
+    psql -U pbrisbin pbrisbin << EOF
 select
   id,
   "threadId",
@@ -210,6 +181,6 @@ EOF
 
 # }}}
 
-if [[ $(tty) = /dev/tty1 ]] && ! _is_root && ! _is_x_running; then
+if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
   exec startx
 fi
