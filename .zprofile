@@ -64,6 +64,5 @@ if (( $+commands[less] )); then
   export LESS_TERMCAP_us=$'\e[01;32m'
 fi
 
-unset -f _have
 unset -f _source
 unset -f _add_to_path

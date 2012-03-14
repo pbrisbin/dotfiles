@@ -1,3 +1,12 @@
+# temporary hack until i track down which actions load which files. it's
+# getting frustrating when zshenv/zprofile doesn't work...
+if (( ! $ZPROFILE_LOADED )); then
+  source ~/.zprofile
+  export ZPROFILE_LOADED=1
+fi
+
+source ~/.zprofile
+
 zstyle ':omz:editor'            keymap         'vi'
 zstyle ':omz:*:*'               color          'yes'
 zstyle ':omz:terminal'          auto-title     'yes'
@@ -12,7 +21,7 @@ zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
                                                'id_rsa.github'   \
                                                'id_rsa.ideeli'
 
-zstyle ':omz:prompt' theme 'pbrisbin'
+zstyle ':omz:prompt' theme 'sorin'
 
 source "$HOME/.oh-my-zsh/init.zsh"
 
