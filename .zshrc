@@ -1,11 +1,9 @@
 # temporary hack until i track down which actions load which files. it's
 # getting frustrating when zshenv/zprofile doesn't work...
-if (( ! $ZPROFILE_LOADED )); then
+if (( ! ${ZPROFILE_LOADED:-0} )); then
   source ~/.zprofile
   export ZPROFILE_LOADED=1
 fi
-
-source ~/.zprofile
 
 zstyle ':omz:editor'            keymap         'vi'
 zstyle ':omz:*:*'               color          'yes'
