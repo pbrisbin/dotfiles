@@ -10,7 +10,6 @@ module Dotfiles
       '.htoprc',
       '.dir_colors',
       '.Xdefaults',
-      '.zprofile',
       '.zshrc',
       '.oh-my-zsh',
       '.screen',
