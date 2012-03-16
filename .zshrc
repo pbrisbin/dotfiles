@@ -10,11 +10,15 @@ zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
                                                'id_rsa.ideeli'
 
 # Plugins
-zstyle ':omz:load' plugin 'git'       \
+zstyle ':omz:load' plugin 'archive'   \
+                          'git'       \
+                          'gnu-utils' \
+                          'osx'       \
+                          'pacman'    \
                           'rails'     \
                           'ruby'      \
+                          'screen'    \
                           'ssh-agent' \
-                          'vagrant'
 
 # Theme
 zstyle ':omz:prompt' theme 'pbrisbin'
