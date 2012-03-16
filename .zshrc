@@ -10,16 +10,23 @@ zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
                                                'id_rsa.ideeli'
 
 # Plugins
-zstyle ':omz:load' plugin 'git'   \
-                          'rails' \
-                          'ruby'  \
-                          'ssh-agent'
+zstyle ':omz:load' plugin 'git'       \
+                          'rails'     \
+                          'ruby'      \
+                          'ssh-agent' \
+                          'vagrant'
 
 # Theme
 zstyle ':omz:prompt' theme 'pbrisbin'
 
 # Start OMZ
 source "$HOME/.oh-my-zsh/init.zsh"
+
+# Fix backspace
+bindkey "^W" backward-kill-word
+bindkey "^H" backward-delete-char
+bindkey "^U" backward-kill-line
+bindkey "^?" backward-delete-char
 
 # Start X when appropriate
 if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
