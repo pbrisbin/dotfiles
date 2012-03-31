@@ -28,8 +28,5 @@
 [branch]
   autosetupmerge = true
   autosetuprebase = always
-[branch "master"]
-  remote = origin
-  merge  = refs/heads/master
 [diff]
   mnemonicprefix = true
