@@ -12,13 +12,11 @@ zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
 # Plugins
 zstyle ':omz:load' plugin 'archive'   \
                           'git'       \
-                          'gnu-utils' \
-                          'osx'       \
-                          'pacman'    \
                           'rails'     \
                           'ruby'      \
                           'screen'    \
                           'ssh-agent' \
+                          'syntax-highlighting'
 
 # Theme
 zstyle ':omz:prompt' theme 'pbrisbin'
