@@ -15,8 +15,7 @@ zstyle ':omz:load' plugin 'archive'   \
                           'rails'     \
                           'ruby'      \
                           'screen'    \
-                          'ssh-agent' \
-                          'syntax-highlighting'
+                          'ssh-agent'
 
 # Theme
 zstyle ':omz:prompt' theme 'pbrisbin'
