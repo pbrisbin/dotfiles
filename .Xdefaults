@@ -40,7 +40,7 @@ URxvt*urgentOnBell:    true
 
 ! URLs in rxvt
 URxvt*perl-ext-common: default,matcher
-URxvt*urlLauncher:     $BROWSER
+URxvt*urlLauncher:     /usr/bin/chromium
 URxvt*keysym.C-o:      perl:matcher
 URxvt*matcher.button:  1
 
