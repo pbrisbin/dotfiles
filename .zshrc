@@ -30,12 +30,6 @@ zstyle ':omz:load' omodule 'environment' \
 
 source "$OMZ/init.zsh"
 
-# fix backspace (TODO: put this in omz editor module)
-bindkey "^W" backward-kill-word
-bindkey "^H" backward-delete-char
-bindkey "^U" backward-kill-line
-bindkey "^?" backward-delete-char
-
 # start X when appropriate
 if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
   exec startx
