@@ -1,35 +1,42 @@
-# Main settings
-zstyle ':omz:editor'            keymap         'vi'
-zstyle ':omz:*:*'               color          'yes'
-zstyle ':omz:*:*'               case-sensitive 'no'
-zstyle ':omz:terminal'          auto-title     'yes'
-zstyle ':omz:editor'            dot-expansion  'no'
-zstyle ':omz:plugins:ssh-agent' identities     'id_rsa'          \
-                                               'id_rsa.pbrisbin' \
-                                               'id_rsa.github'   \
-                                               'id_rsa.ideeli'
+export OMZ="$HOME/.oh-my-zsh"
 
-# Plugins
-zstyle ':omz:load' plugin 'archive'   \
-                          'git'       \
-                          'rails'     \
-                          'ruby'      \
-                          'screen'    \
-                          'ssh-agent'
+zstyle ':omz:*:*'              case-sensitive 'no'
+zstyle ':omz:*:*'              color          'yes'
+zstyle ':omz:module:editor'    dot-expansion  'no'
+zstyle ':omz:module:editor'    keymap         'vi'
+zstyle ':omz:module:prompt'    theme          'pbrisbin'
+zstyle ':omz:module:terminal'  auto-title     'yes'
+zstyle ':omz:module:ssh-agent' identities     'id_rsa'          \
+                                              'id_rsa.pbrisbin' \
+                                              'id_rsa.github'   \
+                                              'id_rsa.ideeli'
 
-# Theme
-zstyle ':omz:prompt' theme 'pbrisbin'
+zstyle ':omz:load' omodule 'environment' \
+                           'terminal'    \
+                           'editor'      \
+                           'completion'  \
+                           'history'     \
+                           'directory'   \
+                           'spectrum'    \
+                           'alias'       \
+                           'utility'     \
+                           'prompt'      \
+                           'archive'     \
+                           'git'         \
+                           'rails'       \
+                           'ruby'        \
+                           'screen'      \
+                           'ssh-agent'
 
-# Start OMZ
-source "$HOME/.oh-my-zsh/init.zsh"
+source "$OMZ/init.zsh"
 
-# Fix backspace
+# fix backspace (TODO: put this in omz editor module)
 bindkey "^W" backward-kill-word
 bindkey "^H" backward-delete-char
 bindkey "^U" backward-kill-line
 bindkey "^?" backward-delete-char
 
-# Start X when appropriate
+# start X when appropriate
 if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
   exec startx
 fi
