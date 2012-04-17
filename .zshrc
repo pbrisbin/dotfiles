@@ -20,6 +20,7 @@ zstyle ':omz:load' omodule 'environment' \
                            'spectrum'    \
                            'alias'       \
                            'utility'     \
+                           'pbrisbin'    \
                            'prompt'      \
                            'archive'     \
                            'git'         \
