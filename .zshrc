@@ -20,18 +20,19 @@ zstyle ':omz:load' omodule 'environment' \
                            'spectrum'    \
                            'alias'       \
                            'utility'     \
-                           'pbrisbin'    \
-                           'prompt'      \
                            'archive'     \
                            'git'         \
+                           'pbrisbin'    \
                            'rails'       \
                            'ruby'        \
                            'screen'      \
-                           'ssh-agent'
+                           'ssh-agent'   \
+                           'prompt' # prompt should be last since it
+                                    # uses things setup in other modules
 
 source "$OMZ/init.zsh"
 
-# start X when appropriate
+# Start X appropriately.
 if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
   exec startx
 fi
