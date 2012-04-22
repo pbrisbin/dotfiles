@@ -62,4 +62,13 @@ task :install => [:submodules] do
   vimrc.install!
 end
 
+desc "pulls latest version from github"
+task :pull do
+  unless system('git pull origin master')
+    raise 'error pulling latest from github'
+  end
+end
+
+task :update => [:pull, :submodules]
+
 task :default => :install
