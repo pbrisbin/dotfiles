@@ -1,9 +1,9 @@
 [submodule ".vim"]
 	path = .vim
-	url = git@github.com:pbrisbin/vim-config
+	url = https://github.com/pbrisbin/vim-config
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
-	url = git@github.com:pbrisbin/oh-my-zsh
+	url = https://github.com/pbrisbin/oh-my-zsh
 [submodule ".screen"]
 	path = .screen
-	url = git@github.com:pbrisbin/screen-config
+	url = https://github.com/pbrisbin/screen-config
