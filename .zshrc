@@ -22,6 +22,7 @@ zstyle ':omz:load' omodule 'environment' \
                            'utility'     \
                            'archive'     \
                            'git'         \
+                           'pacman'      \
                            'pbrisbin'    \
                            'rails'       \
                            'ruby'        \
