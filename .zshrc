@@ -1,6 +1,6 @@
 export OMZ="$HOME/.oh-my-zsh"
 
-zstyle ':omz:*:*'              case-sensitive 'no'
+zstyle ':omz:*:*'              case-sensitive 'yes'
 zstyle ':omz:*:*'              color          'yes'
 zstyle ':omz:module:editor'    dot-expansion  'no'
 zstyle ':omz:module:editor'    keymap         'vi'
