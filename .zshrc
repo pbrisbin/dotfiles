@@ -1,4 +1,9 @@
-export OMZ="$HOME/.oh-my-zsh"
+#
+# Sets Oh My Zsh options.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
 zstyle ':omz:*:*'              case-sensitive 'yes'
 zstyle ':omz:*:*'              color          'yes'
@@ -14,12 +19,11 @@ zstyle ':omz:module:ssh-agent' identities     'id_rsa'          \
 zstyle ':omz:load' omodule 'environment' \
                            'terminal'    \
                            'editor'      \
-                           'completion'  \
                            'history'     \
                            'directory'   \
                            'spectrum'    \
-                           'alias'       \
                            'utility'     \
+                           'completion'  \
                            'archive'     \
                            'git'         \
                            'pacman'      \
