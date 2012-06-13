@@ -11,6 +11,8 @@ module Dotfiles
       '.dir_colors',
       '.Xdefaults',
       '.zshrc',
+      '.zshenv',
+      '.zlogin',
       '.oh-my-zsh',
       '.screen',
       '.vim'
