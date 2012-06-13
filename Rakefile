@@ -15,7 +15,8 @@ module Dotfiles
       '.zlogin',
       '.oh-my-zsh',
       '.screen',
-      '.vim'
+      '.vim',
+      '.irssi'
     ].each do |file|
       yield Dotfile.new(file)
     end
