@@ -7,3 +7,6 @@
 [submodule ".screen"]
 	path = .screen
 	url = https://github.com/pbrisbin/screen-config
+[submodule ".irssi"]
+	path = .irssi
+	url = https://github.com/pbrisbin/irssi-config
