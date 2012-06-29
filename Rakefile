@@ -8,6 +8,7 @@ module Dotfiles
       '.gitconfig',
       '.gitignore',
       '.htoprc',
+      '.irbrc',
       '.dir_colors',
       '.Xdefaults',
       '.zshrc',
