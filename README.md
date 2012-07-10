@@ -6,17 +6,19 @@ An installable environment!
 
 The features you'll enjoy if you choose to install my setup:
 
-1. A nice vim setup with lots of plugins
-2. A nice zsh setup using oh-my-zsh
-3. A nice screen setup (needs some tweaking since I've moved to zsh)
-4. A nice git setup
-5. Tweaked htop
-6. Pretty ls colors
-7. Pretty X colors
+1. A nice vim setup with lots of plugins (especially for haskell/ruby).
+2. A nice zsh setup using oh-my-zsh (sorin's fork)
+3. An interesting approach to screen (optional, should be configured).
+4. Decent gitconfig/ignore.
+5. A nice, minimal irssi with useful scripts loaded.
+6. Tweaks for common utilities like htop, xcolors, etc.
 
 ### Usage
 
 1. Clone or fork-then-clone the repo
-2. Customize as desired
+2. Customize if desired
 3. Sanity-check the Rakefile
 4. `rake install`
+
+Note: Installation will backup any existing files (but clobber any 
+existing symlinks).
