@@ -94,6 +94,8 @@ visualizer_fifo_path = "/tmp/mpd.fifo"
 #
 #visualizer_type = "wave" (spectrum/wave)
 #
+#visualizer_look = "◆│"
+#
 ##### system encoding #####
 ##
 ## ncmpcpp should detect your charset encoding
