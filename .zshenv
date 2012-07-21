@@ -88,7 +88,7 @@ path=(
   "$HOME/Code/bin"
   "$HOME/.cabal/bin"
   "$HOME/.bin"
-  /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
+  /usr/local/Cellar/coreutils/8.15/libexec/gnubin
   $path
 )
 
