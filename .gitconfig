@@ -30,3 +30,6 @@
   autosetuprebase = always
 [diff]
   mnemonicprefix = true
+
+[url "git@github.com:pbrisbin/"]
+  pushInsteadOf = "https://github.com/pbrisbin/"
