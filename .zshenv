@@ -10,12 +10,13 @@ export OMZ="$HOME/.oh-my-zsh"
 
 # Paths
 typeset -gU cdpath fpath mailpath manpath path
-typeset -gUT INFOPATH infopath 2>/dev/null # errors on reloads
+typeset -gUT INFOPATH infopath
 
 # Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
+cdpath=(
+  "$HOME/Code"
+  $cdpath
+)
 
 # Set the list of directories that info searches for manuals.
 infopath=(
@@ -38,6 +39,12 @@ unset path_file
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  "$HOME/Code/bin"
+  "$HOME/.cabal/bin"
+  "$HOME/.bin"
+  /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
+  /usr/bin/vendor_perl/
+
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
@@ -50,9 +57,8 @@ done
 unset path_file
 
 # Language
-if [[ "$OSTYPE" != darwin* ]]; then
-  export LANG=en_US.UTF-8
-  export LC_ALL=en_US.utf8
+if [[ -z "$LANG" ]]; then
+  eval "$(locale)"
 fi
 
 # Editors
@@ -63,6 +69,8 @@ export PAGER='less'
 # Browser (Default)
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
+else
+  export BROWSER='chromium'
 fi
 
 # Less
@@ -77,21 +85,7 @@ if (( $+commands[lesspipe.sh] )); then
   export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 fi
 
-
 # Custom
-cdpath=(
-  "$HOME/Code"
-  $cdpath
-)
-
-path=(
-  "$HOME/Code/bin"
-  "$HOME/.cabal/bin"
-  "$HOME/.bin"
-  /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
-  $path
-)
-
 if (( $+commands[albumart.php] )); then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
   export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
