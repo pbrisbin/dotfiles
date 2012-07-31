@@ -42,7 +42,6 @@ path=(
   "$HOME/Code/bin"
   "$HOME/.cabal/bin"
   "$HOME/.bin"
-  /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
   /usr/bin/vendor_perl/
 
   /usr/local/{bin,sbin}
@@ -86,6 +85,11 @@ if (( $+commands[lesspipe.sh] )); then
 fi
 
 # Custom
+if (( $+commands[brew] )); then
+  # if we have brew, add gnu coreutils to path
+  path=( "$(brew --prefix coreutils)/libexec/gnubin" $path )
+fi
+
 if (( $+commands[albumart.php] )); then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
   export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
