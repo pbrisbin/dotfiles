@@ -43,6 +43,7 @@ path=(
   "$HOME/.cabal/bin"
   "$HOME/.bin"
   /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
+  /usr/bin/core_perl/
   /usr/bin/vendor_perl/
 
   /usr/local/{bin,sbin}
