@@ -14,7 +14,7 @@ module Dotfiles
       '.zshrc',
       '.zshenv',
       '.zlogin',
-      '.oh-my-zsh',
+      '.prezto',
       '.screen',
       '.vim',
       '.irssi'
