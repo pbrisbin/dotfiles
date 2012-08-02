@@ -5,6 +5,7 @@ eval `cat $HOME/.fehbg` &                   # set background
 setxkbmap -option terminate:ctrl_alt_bksp & # add C-A-BS to kill X
 urxvtd -q -f -o &                           # start urxvt daemon
 xcompmgr -fF &                              # allow transparency
+xflux -z 02139                              # colors by time of day
 xrdb $HOME/.Xdefaults &                     # load Xdefaults
 xset fp+ /usr/share/fonts/local &           # add local fonts
 xset s 7200 7200 &                          # set monitor to sleep 2 hours
