@@ -5,6 +5,13 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# On Arch, /etc/zsh/zprofile is sourced after this, sources
+# /etc/profile, and overwites my PATH. Dislike. We comment that and do
+# it here, when it makes sense.
+if [[ "$OSTYPE" != darwin* ]]; then
+  emulate sh -c 'source /etc/profile'
+fi
+
 # Set the path to Oh My Zsh.
 export OMZ="$HOME/.prezto"
 
@@ -42,9 +49,6 @@ path=(
   "$HOME/Code/bin"
   "$HOME/.cabal/bin"
   "$HOME/.bin"
-  /usr/local/Cellar/coreutils/8.15/libexec/gnubin/
-  /usr/bin/core_perl/
-  /usr/bin/vendor_perl/
 
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
