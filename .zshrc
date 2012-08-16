@@ -26,6 +26,9 @@ zstyle ':omz:load' omodule 'environment' \
                            'completion'  \
                            'archive'     \
                            'git'         \
+                           'ghc-pkg'     \
+                           'haskell'     \
+                           'handbrake'   \
                            'pacman'      \
                            'pbrisbin'    \
                            'rails'       \

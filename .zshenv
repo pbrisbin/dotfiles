@@ -47,7 +47,6 @@ unset path_file
 # Set the list of directories that Zsh searches for programs.
 path=(
   "$HOME/Code/bin"
-  "$HOME/.cabal/bin"
   "$HOME/.bin"
 
   /usr/local/{bin,sbin}
