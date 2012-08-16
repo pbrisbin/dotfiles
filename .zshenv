@@ -15,7 +15,10 @@ fi
 # Set the path to Oh My Zsh.
 export OMZ="$HOME/.prezto"
 
+#
 # Paths
+#
+
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
@@ -60,24 +63,35 @@ for path_file in /etc/paths.d/*(.N); do
 done
 unset path_file
 
+#
 # Language
+#
+
 if [[ -z "$LANG" ]]; then
   eval "$(locale)"
 fi
 
+#
 # Editors
+#
+
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
 
+#
 # Browser (Default)
+#
+
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 else
   export BROWSER='chromium'
 fi
 
+#
 # Less
+#
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
