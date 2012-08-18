@@ -5,12 +5,15 @@ eval `cat $HOME/.fehbg` &                   # set background
 setxkbmap -option terminate:ctrl_alt_bksp & # add C-A-BS to kill X
 urxvtd -q -f -o &                           # start urxvt daemon
 xcompmgr -fF &                              # allow transparency
-xflux -z 02139                              # colors by time of day
 xrdb $HOME/.Xdefaults &                     # load Xdefaults
 xset fp+ /usr/share/fonts/local &           # add local fonts
 xset s 7200 7200 &                          # set monitor to sleep 2 hours
 xset s off &                                # disable screensaver
 xsetroot -cursor_name left_ptr              # required for xmonad's cursor
+
+# setup my displays
+xrandr --output VGA1 --mode 1920x1080
+xrandr --output HDMI1 --right-of VGA1
 
 (sleep 3 && xmodmap $HOME/.Xmodmap) &       # adjust keymappings - delay required
 
