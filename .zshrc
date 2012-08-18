@@ -41,6 +41,6 @@ zstyle ':omz:load' omodule 'environment' \
 source "$OMZ/init.zsh"
 
 # Start X appropriately.
-if [[ $(tty) == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
+if [[ $TTY == /dev/tty1 ]] && (( $UID )) && [[ -z $DISPLAY ]]; then
   exec startx
 fi
