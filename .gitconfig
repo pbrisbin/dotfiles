@@ -23,6 +23,13 @@
   added = yellow
   changed = green
   untracked = cyan
+[alias]
+  st = status
+  di = diff
+  dc = diff --cached
+  aa = add --all
+[merge]
+  tool = vimdiff
 [push]
   default = tracking
 [branch]
