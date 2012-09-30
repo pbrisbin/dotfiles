@@ -1,6 +1,0 @@
-#!/bin/bash
-popts='--noconfirm'
-package_directory="$HOME/Packages"
-build_directory="$HOME/Sources"
-edit_pkgbuilds='never'
-resolve_dependencies=true
