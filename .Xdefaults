@@ -1,50 +1,45 @@
-! Colors
-#include "/home/patrick/.xcolors/jasonwryan.xcolors"
+*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 
-! Fonts {{{
-Xft.antialias: true
-Xft.hinting:   true
-Xft.rgba:      rgb
-Xft.hintstyle: hintfull
+*foreground:  #dcdcdc
+*background:  #000000
 
-! }}}
+URxvt*fading:       10%
+URxvt*fadeColor:    grey
+URxvt*scrollBar:    false
 
-! Urxvt {{{
-URxvt*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-URxvt*scrollBar:  false
-URxvt*jumpScroll: true
-URxvt*skipScroll: true
-URxvt*visualBell: false
+URxvt*urgentOnBell: true
+URxvt*visualBell:   false
 
-URxvt*depth:       32
-URxvt*buffered:    true
-URxvt*background:  rgba:0000/0000/0000/dddd
-URxvt*transparent: false
-URxvt*fading:      5%
-URxvt*fadeColor:   grey
-URxvt*shading:     75
-
-URxvt*intensityStyles: true
-URxvt*termName:        rxvt-256color
-URxvt*urgentOnBell:    true
-
-! URLs in rxvt
 URxvt*perl-ext-common: default,matcher
 URxvt*urlLauncher:     /usr/bin/chromium
-URxvt*keysym.C-o:      perl:matcher
 URxvt*matcher.button:  1
 
-! }}}
+!!! jasonwryan colors {{{
 
-! Xterm {{{
-XTerm*font:         -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-XTerm*boldFont:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-XTerm*scrollBar:    false
-XTerm*termName:     xterm-256color
-XTerm*bellIsUrgent: true
+!black
+*color0: #222222
+*color8: #454545
+!red
+*color1: #9E5641
+*color9: #CC896D
+!green
+*color2: #6C7E55
+*color10: #7DB37D
+!yellow
+*color3: #CAAF2B
+*color11: #BFB556
+!blue
+*color4: #4c8ea1
+*color12: #6bc1d0
+!magenta
+*color5: #956D9D
+*color13: #C18FCB
+!cyan
+*color6: #7C9AA6
+*color14: #8FADBF
+!white
+*color7: #909090
+*color15: #FFFFFF
 
-xterm*font:     -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-xterm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-
-! }}}
+!!! }}}

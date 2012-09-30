@@ -3,8 +3,6 @@ require 'fileutils'
 module Dotfiles
   def self.each(&block)
     [
-      '.xcolors/jasonwryan.xcolors',
-      '.xcolors/zenburn.xcolors',
       '.gitconfig',
       '.gitignore',
       '.htoprc',
