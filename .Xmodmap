@@ -1,7 +1,3 @@
-! remap capslock to escape
-!remove Lock = Caps_Lock
-!keysym Caps_Lock = Escape
-
 ! remap capslock to control
 !remove Lock = Caps_Lock
 !keysym Caps_Lock = Control_L
