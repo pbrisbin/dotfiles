@@ -109,6 +109,14 @@ if (( $+commands[brew] )); then
   path=( "$(brew --prefix coreutils)/libexec/gnubin" $path )
 fi
 
+# user gem home on arch
+gem_home="$HOME/.gem/ruby/1.9.1"
+
+if [[ -d "$gem_home" ]]; then
+  export GEM_HOME="$gem_home"
+  path=( "$GEM_HOME/bin" $path )
+fi
+
 if (( $+commands[albumart.php] )); then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
   export AWS_CERT_FILE="$HOME/.aws/cert-67RVMJTXXBDL4ZZOYSYBI3A7ZP56N3XD.pem"
