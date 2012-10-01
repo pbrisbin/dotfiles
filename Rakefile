@@ -12,6 +12,7 @@ module Dotfiles
       '.zshrc',
       '.zshenv',
       '.zlogin',
+      '.zpreztorc',
       '.prezto',
       '.screen',
       '.vim',
