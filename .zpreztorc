@@ -1,0 +1,39 @@
+#
+# Sets Prezto options.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+zstyle ':prezto:*:*' case-sensitive 'yes'
+zstyle ':prezto:*:*' color          'yes'
+
+zstyle ':prezto:load' pmodule 'environment' \
+                              'terminal'    \
+                              'editor'      \
+                              'history'     \
+                              'directory'   \
+                              'spectrum'    \
+                              'utility'     \
+                              'completion'  \
+                              'archive'     \
+                              'git'         \
+                              'ghc-pkg'     \
+                              'haskell'     \
+                              'handbrake'   \
+                              'pacman'      \
+                              'pbrisbin'    \
+                              'rails'       \
+                              'ruby'        \
+                              'screen'      \
+                              'ssh-agent'   \
+                              'prompt'
+
+zstyle ':prezto:module:editor'    keymap         'vi'
+zstyle ':prezto:module:editor'    dot-expansion  'no'
+zstyle ':prezto:module:prompt'    theme          'pbrisbin'
+zstyle ':prezto:module:terminal'  auto-title     'yes'
+zstyle ':prezto:module:ssh-agent' forwarding     'yes'
+zstyle ':prezto:module:ssh-agent' identities     'id_rsa'          \
+                                                 'id_rsa.pbrisbin' \
+                                                 'id_rsa.github'   \
+                                                 'id_rsa.ideeli'
