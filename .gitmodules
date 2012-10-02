@@ -7,6 +7,6 @@
 [submodule ".irssi"]
 	path = .irssi
 	url = https://github.com/pbrisbin/irssi-config
-[submodule ".prezto"]
-	path = .prezto
+[submodule ".zprezto"]
+	path = .zprezto
 	url = https://github.com/pbrisbin/prezto

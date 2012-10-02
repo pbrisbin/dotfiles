@@ -13,7 +13,7 @@ module Dotfiles
       '.zshenv',
       '.zlogin',
       '.zpreztorc',
-      '.prezto',
+      '.zprezto',
       '.screen',
       '.vim',
       '.irssi'
