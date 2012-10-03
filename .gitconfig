@@ -28,6 +28,8 @@
   di = diff
   dc = diff --cached
   aa = add --all
+  spull = !git stash && git svn rebase && git stash apply
+  spush = !git stash && git svn decommit && git stash apply
 [merge]
   tool = vimdiff
 [push]
