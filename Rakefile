@@ -9,11 +9,9 @@ module Dotfiles
       '.irbrc',
       '.dir_colors',
       '.Xdefaults',
-      '.zshrc',
-      '.zshenv',
       '.zlogin',
-      '.zpreztorc',
-      '.zprezto',
+      '.zshenv',
+      '.zshrc',
       '.screen',
       '.vim',
       '.irssi'
