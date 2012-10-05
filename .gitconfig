@@ -28,8 +28,9 @@
   di = diff
   dc = diff --cached
   aa = add --all
+  tg = !sh -c 'git tag -a -m $1 $1' -
   spull = !git stash && git svn rebase && git stash apply
-  spush = !git stash && git svn decommit && git stash apply
+  spush = !git stash && git svn dcommit && git stash apply
 [merge]
   tool = vimdiff
 [push]
