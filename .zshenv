@@ -1,23 +1,21 @@
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
-
-  # if we have brew, add gnu coreutils to path
-  if (( $+commands[brew] )); then
-    path=( "$(brew --prefix coreutils)/libexec/gnubin" $path )
-  fi
 else
-  export BROWSER='chromium'
-
   # fix the incorrect source order on Arch
   emulate sh -c 'source /etc/profile'
+  export BROWSER='chromium'
 fi
 
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
 
-# paths
-typeset -gU cdpath manpath path
+typeset -gU fpath cdpath manpath path
+
+fpath=(
+  /usr/local/share/zsh-completions
+  $fpath
+)
 
 cdpath=(
   "$HOME/Code"
@@ -40,6 +38,11 @@ path=(
   /{bin,sbin}
   $path
 )
+
+# if we have brew, add gnu coreutils to path
+if [[ "$OSTYPE" == darwin* ]] && (( $+commands[brew] )); then
+  path=( "$(brew --prefix coreutils)/libexec/gnubin" $path )
+fi
 
 # likely user gem home
 gem_home="$HOME/.gem/ruby/1.9.1"
