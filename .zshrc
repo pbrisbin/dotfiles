@@ -1,4 +1,4 @@
-# setup
+# environment
 eval "$(dircolors -b $HOME/.dir_colors)"
 export GREP_COLOR='1;32'
 export GREP_OPTIONS='--color=auto'
