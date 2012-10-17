@@ -1,9 +1,13 @@
 # setup
 eval "$(dircolors -b $HOME/.dir_colors)"
+export GREP_COLOR='1;32'
+export GREP_OPTIONS='--color=auto'
+
+# options
+setopt promptcr
 
 # aliases
 alias ls='ls --color=auto'
-alias grep='grep --color=auto'
 
 alias v='vim'
 alias g='git'
@@ -11,6 +15,9 @@ alias p='sudo pacman'
 
 alias b='bundle'
 alias be='b exec'
+
+alias piso='mplayer dvd://1 -dvd-device'
+alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0'
 
 # keymap fixes
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
