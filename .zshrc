@@ -17,7 +17,7 @@ alias b='bundle'
 alias be='b exec'
 
 alias piso='mplayer dvd://1 -dvd-device'
-alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0'
+alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0 -mouse-movements'
 
 # keymap fixes
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
