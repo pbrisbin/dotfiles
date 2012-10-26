@@ -9,6 +9,7 @@ fi
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
+export LESS='-R -w'
 
 typeset -gU fpath cdpath manpath path
 
@@ -17,14 +18,8 @@ fpath=(
   $fpath
 )
 
-cdpath=(
-  "$HOME/Code"
-  $cdpath
-)
-
 manpath=(
   /usr/local/share/man
-  /usr/share/man
   $manpath
 )
 
@@ -34,9 +29,12 @@ path=(
   "$HOME/Code/bin"
 
   /usr/local/{bin,sbin}
-  /usr/{bin,sbin}
-  /{bin,sbin}
   $path
+)
+
+cdpath=(
+  "$HOME/Code"
+  $cdpath
 )
 
 # if we have brew, add gnu coreutils to path
@@ -51,6 +49,7 @@ if [[ -d "$gem_home" ]]; then
   export GEM_HOME="$gem_home"
   path=( "$GEM_HOME/bin" $path )
 fi
+unset -v gem_home
 
 if (( $+commands[albumart.php] )); then
   export AWS_LIB="$HOME/Code/php/albumart/lib"
@@ -68,10 +67,10 @@ if (( $+commands[mpc] )); then
   export MPD_PORT=6600
 fi
 
-# TODO: rescue nonexistence
-source "$HOME/.screen/screen.sh"
-source "$HOME/.aws_keys"
-source "$HOME/.secrets"
+for f in '.screen/screen.sh' '.aws_keys' '.secrets'; do
+  [[ -r "$HOME/$f" ]] && source "$HOME/$f"
+done
+unset -v f
 
 # start x if appropriate
 [[ $TTY == /dev/tty1 ]] \
