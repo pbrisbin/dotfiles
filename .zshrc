@@ -38,6 +38,11 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(
   ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
 )'
 
+# setup command not found
+if (( $+commands[pkgfile] )); then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
 # terminal title
 autoload -Uz add-zsh-hook
 
