@@ -17,6 +17,8 @@ alias rip='dvd2iso -o /mnt/media/Rips/%s.iso'
 alias piso='mplayer dvd://1 -dvd-device'
 alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0 -mouse-movements'
 
+alias hdocs="$BROWSER $HOME/.cabal/share/doc/index.html"
+
 # keymap fixes
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
 bindkey '^[[3~' delete-char                # Delete
