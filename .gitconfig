@@ -24,7 +24,7 @@
   changed = green
   untracked = cyan
 [alias]
-  st = status
+  st = status -sb
   di = diff
   dc = diff --cached
   aa = add --all
