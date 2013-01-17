@@ -49,6 +49,28 @@ if (( $+commands[pkgfile] )); then
   source /usr/share/doc/pkgfile/command-not-found.zsh
 fi
 
+# ssh agent
+ssh_env="$HOME/.ssh/environment-$HOST"
+
+function start_ssh_agent() {
+  /usr/bin/env ssh-agent | sed 's/^echo/#echo/' > "$ssh_env"
+
+  chmod 600 "$ssh_env"; . "$ssh_env"
+
+  /usr/bin/ssh-add $HOME/.ssh/id_rsa
+  /usr/bin/ssh-add $HOME/.ssh/id_rsa.ideeli
+}
+
+if [[ -f "$ssh_env" ]]; then
+  . "$ssh_env" > /dev/null
+  ps -ef | grep $SSH_AGENT_PID | grep -q 'ssh-agent$' || start_ssh_agent
+else
+  start_ssh_agent
+fi
+
+unset ssh_env
+unset -f start_ssh_agent
+
 # terminal title
 autoload -Uz add-zsh-hook
 
