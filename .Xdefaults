@@ -12,7 +12,7 @@ URxvt*urgentOnBell: true
 URxvt*visualBell:   false
 
 URxvt*perl-ext-common: default,matcher
-URxvt*urlLauncher:     /usr/bin/chromium
+URxvt*url-launcher:    /usr/bin/chromium
 URxvt*matcher.button:  1
 
 !!! jasonwryan colors {{{
