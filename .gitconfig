@@ -12,7 +12,7 @@
   status = auto
 [color "branch"]
   current = yellow reverse
-  local = yellow 
+  local = yellow
   remote = green
 [color "diff"]
   meta = yellow bold
@@ -28,6 +28,7 @@
   di = diff
   dc = diff --cached
   aa = add --all
+  sha = svn log --show-commit --oneline -r
   tg = !sh -c 'git tag -a -m $1 $1' -
   spull = !git stash && git svn rebase && git stash apply
   spush = !git stash && git svn dcommit && git stash apply
