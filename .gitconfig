@@ -30,6 +30,7 @@
   aa = add --all
   sha = svn log --show-commit --oneline -r
   tg = !sh -c 'git tag -a -m $1 $1' -
+  sbranch = !sh -c 'git checkout -b ${1}_local $1' -
   spull = !git stash && git svn rebase && git stash apply
   spush = !git stash && git svn dcommit && git stash apply
 [merge]
