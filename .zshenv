@@ -76,4 +76,4 @@ unset -v f
 [[ $TTY == /dev/tty1 ]] \
   && (( $UID ))         \
   && [[ -z $DISPLAY ]]  \
-  && exec startx
+  && exec systemd --user
