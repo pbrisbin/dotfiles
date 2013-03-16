@@ -9,9 +9,8 @@ module Dotfiles
       '.irbrc',
       '.dir_colors',
       '.Xdefaults',
-      '.zlogin',
       '.zshenv',
-      '.zshrc',
+      '.zsh',
       '.screen',
       '.vim',
       '.irssi'
@@ -54,14 +53,17 @@ task :submodules do
   end
 end
 
-desc "installs all dotfiles into the proper places"
-task :install => [:submodules] do
+desc "symlink the dotfiles to the appropriate locations"
+task :link do
   Dotfiles.each(&:install!)
 
   vimrc = Dotfiles::Dotfile.new('.vimrc')
   vimrc.source = File.join(ENV['HOME'], '.vim', 'vimrc')
   vimrc.install!
 end
+
+desc "installs all dotfiles into the proper places"
+task :install => [:submodules, :link]
 
 desc "pulls latest version from github"
 task :pull do
@@ -70,6 +72,6 @@ task :pull do
   end
 end
 
-task :update => [:pull, :submodules]
+task :update => [:pull, :submodules, :link]
 
 task :default => :install
