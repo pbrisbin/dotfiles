@@ -55,6 +55,7 @@ Thumbs.db
 *.o
 *.aes
 dist
+.ghci
 
 # Vagrant #
 ###########
