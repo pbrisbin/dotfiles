@@ -15,8 +15,6 @@ URxvt*perl-ext-common: default,matcher
 URxvt*url-launcher:    /usr/bin/chromium
 URxvt*matcher.button:  1
 
-!!! jasonwryan colors {{{
-
 !black
 *color0: #222222
 *color8: #454545
@@ -41,5 +39,3 @@ URxvt*matcher.button:  1
 !white
 *color7: #909090
 *color15: #FFFFFF
-
-!!! }}}
