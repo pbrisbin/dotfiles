@@ -6,14 +6,12 @@ module Dotfiles
       '.gitconfig',
       '.gitignore',
       '.htoprc',
-      '.irbrc',
       '.dir_colors',
       '.Xdefaults',
       '.zshenv',
       '.zsh',
       '.screen',
       '.vim',
-      '.irssi'
     ].each do |file|
       yield Dotfile.new(file)
     end
