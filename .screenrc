@@ -8,7 +8,6 @@ defencoding UTF-8
 defflow off
 deflogin on
 defutf8 on
-hardcopydir "$HOME/.screen/hardcopy"
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
 sorendition '= W'
 startup_message off
