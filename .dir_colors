@@ -1,8 +1,8 @@
 #                                    LS_COLORS
 # Maintainer: Magnus Woldrich <m@japh.se>
 #        URL: https://github.com/trapd00r/LS_COLORS
-#    Version: 0.238
-#    Updated: 2012-12-19 16:17:51
+#    Version: 0.248
+#    Updated: 2013-04-10 14:54:28
 #
 #   This is a collection of extension:color mappings, suitable to use as your
 #   LS_COLORS environment variable. Most of them use the extended color map,
@@ -31,7 +31,9 @@ FIFO                  38;5;126
 FILE                  38;5;253
 LINK                  target
 MULTIHARDLINK         38;5;220;1
-NORMAL                38;5;254
+# "NORMAL don't reset the bold attribute -
+# https://github.com/trapd00r/LS_COLORS/issues/11
+#NORMAL                38;5;254
 ORPHAN                48;5;196;38;5;232;1
 OTHER_WRITABLE        38;5;220;1
 SETGID                48;5;234;38;5;100;1
@@ -40,8 +42,9 @@ SOCK                  38;5;197
 STICKY                38;5;86;48;5;234
 STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
+*LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 
-# code, text, documents                                                      {{{
+# code, text, documents
 .BAT                  38;5;108
 .PL                   38;5;160
 .asm                  38;5;240;1
@@ -49,7 +52,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .bash                 38;5;173
 .bat                  38;5;108
 .c                    38;5;110
+.cc                   38;5;24;1
 .cfg                  1
+.cl                   38;5;204;1
 .coffee               38;5;94;1
 .conf                 1
 .cpp                  38;5;24;1
@@ -84,6 +89,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .lisp                 38;5;204;1
 .log                  38;5;190
 .lua                  38;5;34;1
+.m                    38;5;130;3
+.mht                  38;5;129
+.mm                   38;5;130;3
 .map                  38;5;58;3
 .markdown             38;5;184
 .md                   38;5;184
@@ -99,8 +107,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pc                   38;5;100
 .pfa                  38;5;43
 .php                  38;5;93
-.pid                  38;5;160
 .pl                   38;5;214
+.plt                  38;5;204;1
 .pm                   38;5;197;1
 .pod                  38;5;172;1
 .py                   38;5;41
@@ -110,6 +118,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .rdf                  38;5;144
 .rst                  38;5;67
 .ru                   38;5;142
+.scm                  38;5;204;1
 .sed                  38;5;130;1
 .sfv                  38;5;197
 .sh                   38;5;113
@@ -133,21 +142,21 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .xml                  38;5;199
 .yml                  38;5;208
 .zsh                  38;5;173
-
 # Build stuff
+*README               38;5;220;1
+*Makefile             38;5;196
+*MANIFEST             38;5;243
+*pm_to_blib           38;5;240
 .1                    38;5;196;1
+.3                    38;5;196;1
+.7                    38;5;196;1
 .1p                   38;5;160
 .3p                   38;5;160
 .am                   38;5;242
 .in                   38;5;242
 .old                  38;5;242
 .out                  38;5;46;1
-
-
-
-
-#}}}
-# pictures, icons                                                            {{{
+# pictures, icons
 .bmp                  38;5;62
 .cdr                  38;5;59
 .gif                  38;5;72
@@ -158,8 +167,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .png                  38;5;68;1
 .svg                  38;5;24;1
 .xpm                  38;5;36
-#}}}
-# Emulator roms, emulator savegames                                          {{{
+# Emulator roms, emulator savegames
 .32x                  38;5;137
 .A64                  38;5;82
 .a00                  38;5;11
@@ -183,24 +191,24 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .sav                  38;5;220
 .sms                  38;5;33
 .st                   38;5;208;1
-#}}}
-# images                                                                     {{{
+# images
 .iso                  38;5;124
 .nrg                  38;5;124
 .qcow                 38;5;141
-#}}}
-# video                                                                      {{{
+# video
 .VOB                  38;5;137
 .IFO                  38;5;240
 .BUP                  38;5;241
 .MOV                  38;5;42
 .asf                  38;5;25
 .avi                  38;5;114
+.divx                 38;5;112
+.f4v                  38;5;125
 .flv                  38;5;131
 .m2v                  38;5;166
 .mkv                  38;5;202
 .mov                  38;5;42
-.mp4                  38;5;160
+.mp4                  38;5;124
 .mpg                  38;5;38
 .mpeg                 38;5;38
 .ogm                  38;5;97
@@ -211,8 +219,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .vob                  38;5;137
 .webm                 38;5;109
 .wmv                  38;5;113
-#}}}
-# music, audio                                                               {{{
+# music, audio
 .S3M                  38;5;71;1
 .aac                  38;5;137
 .cue                  38;5;112
@@ -234,33 +241,30 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .spl                  38;5;173
 .wv                   38;5;149
 .wvc                  38;5;149
-#}}}
-# fonts                                                                      {{{
+# fonts
 .afm                  38;5;58
 .pfb                  38;5;58
 .pfm                  38;5;58
 .ttf                  48;5;1
 .pcf                  38;5;65
 .psf                  38;5;64
-#}}}
-# backups, undo files, tempfiles                                             {{{
+# backups, undo files, tempfiles
 .bak                  38;5;41;1
 .bin                  38;5;249
+.pid                  38;5;160
+.state                38;5;124
 .swo                  38;5;236
 .swp                  38;5;241
 .tmp                  38;5;244
 .un~                  38;5;240
 .zcompdump            38;5;240
 .zwc                  38;5;240
-#}}}
-# databases                                                                  {{{
+# databases
 .db                   38;5;60
 .dump                 38;5;119
 .sqlite               38;5;60
 .typelib              38;5;60
-
-#}}}
-# (compressed) archives                                                      {{{
+# (compressed) archives
 .7z                   38;5;40
 .a                    38;5;46
 .arj                  38;5;41
@@ -393,26 +397,22 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .tgz                  38;5;35;1
 .xz                   38;5;118
 .zip                  38;5;41
-#}}}
-# really compressed archives, but mostly used for documents, comics (and     {{{
-# documentation on MS Windows)                                               
+# really compressed archives, but mostly used for documents, comics (and
+# documentation on MS Windows)
 .pdf                  38;5;203
 .djvu                 38;5;141
 .cbr                  38;5;140
 .cbz                  38;5;140
 .chm                  38;5;144
-#}}}
-# open document formats                                                      {{{
+# open document formats
 .odt                  38;5;111
 .ods                  38;5;112
 .odp                  38;5;166
 .odb                  38;5;161
-#}}}
-# /etc/hosts.{deny,allow}                                                    {{{
+# /etc/hosts.{deny,allow}
 .allow                38;5;112
 .deny                 38;5;196
-#}}}
-# other                                                                      {{{
+# other
 .SKIP                 38;5;244
 .def                  38;5;136
 .directory            38;5;83
@@ -424,7 +424,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .gp3                  38;5;114
 .gp4                  38;5;115
 .tg                   38;5;99
-#}}}
 
 TERM Eterm
 TERM ansi
@@ -477,4 +476,4 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 
-# vim: set ft=dircolors fdm=marker et sw=2:
+# vim: ft=dircolors:fdm=marker:et:sw=2:
