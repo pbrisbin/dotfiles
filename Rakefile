@@ -1,5 +1,13 @@
 require 'fileutils'
 
+COLORS = {
+  :remove => "\e[1;31m",
+  :backup => "\e[1;36m",
+  :link   => "\e[1;32m",
+  :file   => "\e[1;37m",
+  :reset  => "\e[0m"
+}
+
 module Dotfiles
   def self.each(&block)
     [
@@ -31,16 +39,28 @@ module Dotfiles
     end
 
     def install!
-      puts "--> installing #{dotfile} as #{target}..."
       if File.exists?(target)
         if File.symlink?(target)
-          rm target, :verbose => true
+          info(:remove, target)
+          rm target
         else
-          mv target, "#{target}.backup", :verbose => true
+          info(:backup, "#{target}(.backup)")
+          mv target, "#{target}.backup"
         end
       end
 
-      ln_s source, target, :verbose => true
+      info(:link, target)
+      ln_s source, target
+    end
+
+    private
+
+    def info(action, file)
+      a = COLORS[action]
+      f = COLORS[:file]
+      r = COLORS[:reset]
+
+      printf "#{a}%10.10s#{r} #{f}%s#{r}\n", action, file
     end
   end
 end
