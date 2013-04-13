@@ -8,9 +8,10 @@ module Dotfiles
       '.htoprc',
       '.dir_colors',
       '.Xdefaults',
+      '.Xmodmap',
       '.zshenv',
       '.zsh',
-      '.screen',
+      '.screenrc',
       '.vim',
     ].each do |file|
       yield Dotfile.new(file)

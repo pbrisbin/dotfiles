@@ -1,12 +1,6 @@
 [submodule ".vim"]
 	path = .vim
 	url = https://github.com/pbrisbin/vim-config
-[submodule ".screen"]
-	path = .screen
-	url = https://github.com/pbrisbin/screen-config
-[submodule ".irssi"]
-	path = .irssi
-	url = https://github.com/pbrisbin/irssi-config
 [submodule ".zsh"]
 	path = .zsh
 	url = https://github.com/pbrisbin/zsh-config

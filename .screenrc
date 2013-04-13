@@ -1,0 +1,19 @@
+# screenrc
+
+altscreen on
+attrcolor b ".I"
+bell_msg '^Gbell in window %n...'
+defbce on
+defencoding UTF-8
+defflow off
+deflogin on
+defutf8 on
+hardcopydir "$HOME/.screen/hardcopy"
+hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
+sorendition '= W'
+startup_message off
+term xterm-256color
+vbell off
+
+bind ^\
+bind ^q quit
