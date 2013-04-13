@@ -3,16 +3,16 @@ require 'fileutils'
 module Dotfiles
   def self.each(&block)
     [
+      '.Xdefaults',
+      '.Xmodmap',
+      '.dir_colors',
       '.gitconfig',
       '.gitignore',
       '.htoprc',
-      '.dir_colors',
-      '.Xdefaults',
-      '.Xmodmap',
-      '.zshenv',
-      '.zsh',
       '.screenrc',
       '.vim',
+      '.zsh',
+      '.zshenv',
     ].each do |file|
       yield Dotfile.new(file)
     end
