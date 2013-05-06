@@ -39,14 +39,12 @@ module Dotfiles
     end
 
     def install!
-      if File.exists?(target)
-        if File.symlink?(target)
-          info(:remove, target)
-          rm target
-        else
-          info(:backup, "#{target}(.backup)")
-          mv target, "#{target}.backup"
-        end
+      if File.symlink?(target)
+        info(:remove, target)
+        rm target
+      elsif File.exists?(target)
+        info(:backup, "#{target}(.backup)")
+        mv target, "#{target}.backup"
       end
 
       info(:link, target)
