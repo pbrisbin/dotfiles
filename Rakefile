@@ -16,7 +16,6 @@ module Dotfiles
       '.dir_colors',
       '.gitconfig',
       '.gitignore',
-      '.htoprc',
       '.screenrc',
       '.vim',
       '.zsh',
