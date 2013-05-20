@@ -38,7 +38,7 @@
   ff = only
   tool = vimdiff
 [push]
-  default = tracking
+  default = upstream
 [diff]
   mnemonicprefix = true
 
