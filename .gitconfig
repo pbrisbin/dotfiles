@@ -3,9 +3,6 @@
   excludesfile = /home/patrick/.gitignore
 [color]
   ui = auto
-  branch = auto
-  diff = auto
-  status = auto
 [color "branch"]
   current = yellow reverse
   local = yellow
