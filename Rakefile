@@ -12,12 +12,12 @@ module Dotfiles
   def self.each(&block)
     [
       '.Xdefaults',
-      '.Xmodmap',
       '.dir_colors',
       '.gitconfig',
       '.gitignore',
       '.screenrc',
       '.vim',
+      '.xinitrc',
       '.zsh',
       '.zshenv',
     ].each do |file|
