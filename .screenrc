@@ -10,7 +10,6 @@ deflogin on
 defscrollback 10000
 defutf8 on
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
-msgwait 0.5
 sorendition '= W'
 startup_message off
 term xterm-256color
