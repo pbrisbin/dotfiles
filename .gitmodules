@@ -1,6 +1,3 @@
 [submodule ".vim"]
 	path = .vim
 	url = https://github.com/pbrisbin/vim-config
-[submodule ".zsh"]
-	path = .zsh
-	url = https://github.com/pbrisbin/zsh-config
