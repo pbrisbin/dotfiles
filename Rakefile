@@ -12,14 +12,13 @@ module Dotfiles
   def self.each(&block)
     [
       '.Xdefaults',
-      '.dir_colors',
       '.gitconfig',
       '.gitignore',
       '.screenrc',
       '.vim',
       '.xinitrc',
-      '.zsh',
       '.zshenv',
+      '.zshrc',
     ].each do |file|
       yield Dotfile.new(file)
     end
@@ -89,11 +88,5 @@ task :pull do
 end
 
 task :update => [:pull, :submodules, :link]
-
-task :dir_colors do
-  unless system("curl 'https://raw.github.com/trapd00r/LS_COLORS/master/LS_COLORS' > .dir_colors")
-    raise 'error updating .dir_colors from upstream'
-  end
-end
 
 task :default => :install
