@@ -5,7 +5,7 @@ module Sys
     include FileUtils
 
     def run(cmd)
-      info :execute, cmd
+      log :execute, cmd
       system(cmd) or raise $?
     end
 
@@ -13,31 +13,31 @@ module Sys
       source = File.expand_path(source)
       target = File.expand_path(target)
 
-      if File.symlink?(target)
-        return if File.readlink(target) == source
+      if File.symlink?(target) && File.readlink(target) == source
+        log :exists, target
+        return
+      end
 
-        info :remove, target
-        rm target
-      elsif File.exists?(target)
-        info :backup, "#{target}{,.backup}"
+      if File.exists?(target)
+        log :backup, target
         mv target, "#{target}.backup"
       end
 
-      info :link, "#{source} -> #{target}"
+      log :link, target
       ln_s source, target
     end
 
     private
 
-    def info(action, file)
+    def log(action, message)
       c = {
         backup:  "\e[1;36m",
         execute: "\e[1;33m",
+        exists:  "\e[1;34m",
         link:    "\e[1;32m",
-        remove:  "\e[1;31m",
       }.fetch(action)
 
-      printf "#{c}%10.10s \e[1;37m%s\e[0m\n", action, file
+      printf "#{c}%10.10s \e[1;37m%s\e[0m\n", action, message
     end
   end
 end
