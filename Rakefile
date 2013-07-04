@@ -76,6 +76,6 @@ end
 
 task install: [:submodules, :dotfiles, :vundle]
 
-task update: [:pull, :submodules, :dotfiles]
+task update: [:pull, :submodules, :dotfiles, :vundle]
 
 task default: :install
