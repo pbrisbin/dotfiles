@@ -12,7 +12,7 @@ defutf8 on
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
 sorendition '= W'
 startup_message off
-term xterm-256color
+term screen-256color
 vbell off
 
 bind ^\
