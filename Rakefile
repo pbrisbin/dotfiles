@@ -1,81 +1,50 @@
-require 'fileutils'
+def exec(cmd)
+  puts cmd
+  system cmd or raise $?
+end
 
-module Sys
-  class << self
-    include FileUtils
+class Dotfile
+  def initialize(source, target = "~/#{source}")
+    @source = File.expand_path(source)
+    @target = File.expand_path(target)
+  end
 
-    def run(cmd)
-      log :execute, cmd
-      system(cmd) or raise $?
+  def install
+    unless installed?
+      exec "mv '#{@target}' '#{@target}.backup'" if File.exists?(@target)
+      exec "ln -s '#{@source}' '#{@target}'"
     end
+  end
 
-    def install(source, target)
-      source = File.expand_path(source)
-      target = File.expand_path(target)
-
-      if File.symlink?(target) && File.readlink(target) == source
-        log :exists, target
-        return
-      end
-
-      if File.exists?(target)
-        log :backup, target
-        mv target, "#{target}.backup"
-      end
-
-      log :link, target
-      ln_s source, target
-    end
-
-    private
-
-    def log(action, message)
-      c = {
-        backup:  "\e[1;36m",
-        execute: "\e[1;33m",
-        exists:  "\e[1;34m",
-        link:    "\e[1;32m",
-      }.fetch(action)
-
-      printf "#{c}%10.10s \e[1;37m%s\e[0m\n", action, message
-    end
+  def installed?
+    File.symlink?(@target) && File.readlink(@target) == @source
   end
 end
 
-desc "Pulls from origin"
-task :pull do
-  Sys.run 'git pull origin master'
-end
-
-desc "Updates and initializes submodules"
+desc "Update and initializes submodules"
 task :submodules do
-  Sys.run 'git submodule update --init --recursive'
+  exec 'git submodule update --init --recursive'
 end
 
-desc "Installs all dotfiles"
-task :dotfiles do
-  Sys.install '.Xdefaults', '~/.Xdefaults'
-  Sys.install '.gitconfig', '~/.gitconfig'
-  Sys.install '.gitignore', '~/.gitignore'
-  Sys.install '.screenrc' , '~/.screenrc'
-  Sys.install '.vim'      , '~/.vim'
-  Sys.install '.vim/vimrc', '~/.vimrc'
-  Sys.install '.xinitrc'  , '~/.xinitrc'
-  Sys.install '.zshenv'   , '~/.zshenv'
-  Sys.install '.zshrc'    , '~/.zshrc'
+desc "Install all the dotfiles"
+task :link do
+  Dotfile.new('.Xdefaults').install
+  Dotfile.new('.gitconfig').install
+  Dotfile.new('.gitignore').install
+  Dotfile.new('.screenrc').install
+  Dotfile.new('.vim').install
+  Dotfile.new('.vim/vimrc', '~/.vimrc').install
+  Dotfile.new('.xinitrc').install
+  Dotfile.new('.zshenv').install
+  Dotfile.new('.zshrc').install
 end
 
-desc "Sets up Vundle"
+desc "Set up Vundle"
 task :vundle do
-  unless File.exists?('.vim/bundle/vundle')
-    Sys.run 'git clone https://github.com/gmarik/vundle .vim/bundle/vundle'
-  end
-
-  Sys.run 'vim +BundleInstall +qall'
+  exec 'git clone https://github.com/gmarik/vundle .vim/bundle/vundle'
+  exec 'vim +BundleInstall +qall'
 end
 
-task install: [:submodules, :dotfiles, :vundle]
-
-task update: [:pull, :submodules, :dotfiles, :vundle]
+task install: [:submodules, :link, :vundle]
 
 task default: :install
