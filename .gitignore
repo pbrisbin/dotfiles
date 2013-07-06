@@ -65,3 +65,22 @@ vagrant
 # Ruby #
 ########
 pkg
+
+# Android #
+###########
+*.ap_
+*.apk
+*.class
+*.dex
+*.iml
+*.ipr
+*.iws
+.classpath
+.idea/
+.project
+bin/
+gen/
+local.properties
+proguard/
+proguard-project.txt
+.settings
