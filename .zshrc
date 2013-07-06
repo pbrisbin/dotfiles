@@ -1,8 +1,10 @@
-function ruby_version_prompt() {
-  read < <(ruby --version | cut -d ' ' -f 1-2)
-}
-grml_theme_add_token ruby-version -f ruby_version_prompt '%B%F{black}' '%b%f'
-zstyle ':prompt:grml:right:setup' items ruby-version
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr '%F{yellow}+%f'
+zstyle ':vcs_info:*' unstagedstr '%F{green}*%f'
+zstyle ':vcs_info:*' formats \
+  '%%B%F{cyan}[%F{red}%b%c%u%F{cyan}]%f%%b ' '%r:%b'
+zstyle ':vcs_info:*' actionformats \
+  '%%B%F{cyan}[%F{red}%b%c%u%F{cyan}|%F{yellow}%a%F{cyan}]%f%%b ' '%r:%b'
 
 HISTSIZE=12000
 SAVEHIST=50000
