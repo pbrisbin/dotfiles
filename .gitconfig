@@ -32,7 +32,7 @@
   ff = only
   tool = vimdiff
 [push]
-  default = upstream
+  default = current
 [diff]
   mnemonicprefix = true
 
