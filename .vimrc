@@ -1,12 +1,12 @@
 set nocompatible
+
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-
 Bundle 'dag/vim2hs'
+Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'jtratner/vim-flavored-markdown'
 Bundle 'juvenn/mustache.vim'
@@ -31,6 +31,9 @@ Bundle 'tpope/vim-surround'
 Bundle 'ujihisa/neco-ghc'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/Zenburn'
+
+syntax on
+filetype plugin indent on
 
 set autoindent
 set autoread
@@ -66,12 +69,7 @@ set winheight=999
 let mapleader = ','
 let maplocalleader = ','
 
-syntax on
-filetype plugin indent on
-
 let g:ctrlp_clear_cache_on_exit = 0
-let g:pandoc_no_folding         = 1
-let g:pandoc_use_hard_wraps     = 1
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
@@ -83,13 +81,7 @@ let g:syntastic_mode_map = {
   \ 'active_filetypes': ['ruby']
   \ }
 
-let g:ctags_excludes = [
-  \ '~/.bin/',
-  \ '~/.dotfiles/',
-  \ '~/.dotfiles/.vim/',
-  \ '~/.dotfiles/.zsh/',
-  \ '~/.xmonad/',
-  \ ]
+let g:ctags_excludes = ['~/.bin/', '~/.dotfiles/', '~/.xmonad/']
 
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
