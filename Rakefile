@@ -21,30 +21,25 @@ class Dotfile
   end
 end
 
-desc "Update and initializes submodules"
-task :submodules do
-  exec 'git submodule update --init --recursive'
-end
-
 desc "Install all the dotfiles"
 task :link do
   Dotfile.new('.Xdefaults').install
   Dotfile.new('.gitconfig').install
   Dotfile.new('.gitignore').install
   Dotfile.new('.screenrc').install
-  Dotfile.new('.vim').install
-  Dotfile.new('.vim/vimrc', '~/.vimrc').install
+  Dotfile.new('.vimrc').install
   Dotfile.new('.xinitrc').install
   Dotfile.new('.zshenv').install
   Dotfile.new('.zshrc').install
 end
 
-desc "Set up Vundle"
+desc "Install Vundle and vim bundles"
 task :vundle do
-  exec 'git clone https://github.com/gmarik/vundle .vim/bundle/vundle'
+  exec 'mkdir -p ~/.vim'
+  exec 'git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle'
   exec 'vim +BundleInstall +qall'
 end
 
-task install: [:submodules, :link, :vundle]
+task install: [:link, :vundle]
 
 task default: :install
