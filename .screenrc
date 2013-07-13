@@ -1,19 +1,6 @@
-# screenrc
-
 altscreen on
-attrcolor b ".I"
-bell_msg '^Gbell in window %n...'
-defbce on
-defencoding UTF-8
-defflow off
-deflogin on
-defscrollback 10000
-defutf8 on
+defscrollback 50000
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
 sorendition '= W'
-startup_message off
 term screen-256color
-vbell off
-
-bind ^\
-bind ^q quit
+vbell off # supposed to be defualt, but is not
