@@ -26,4 +26,5 @@ bindkey -M viins '^?' backward-delete-char # Backspace
 export BROWSER='chromium'
 export MANWIDTH=80
 
+setopt inc_append_history
 setopt vi
