@@ -6,6 +6,8 @@ zstyle ':vcs_info:*' formats \
 zstyle ':vcs_info:*' actionformats \
   '%%B%F{cyan}[%F{red}%b%c%u%F{cyan}|%F{yellow}%a%F{cyan}]%f%%b ' '%r:%b'
 
+zstyle ':completion:*:sudo:*' command-path $path
+
 HISTSIZE=12000
 SAVEHIST=50000
 
