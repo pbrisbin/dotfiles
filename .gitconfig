@@ -26,11 +26,11 @@
   co = checkout
   dc = diff --cached
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
-  delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
-  pr = !hub pull-request
+  create-branch = "!f() { git push origin HEAD:refs/heads/$1 && git fetch origin && git checkout $1; }; f"
+  delete-branch = "!f() { git push origin :refs/heads/$1 && git branch -d $1; }; f"
+  pr = pull-request
   st = status --short --branch
-  tg = !sh -c 'git tag -a -m $1 $1' -
+  tg = "!f() { git tag -a -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
   in = !git up -i && git push -f && git checkout master && git pull && git merge -
 [merge]
