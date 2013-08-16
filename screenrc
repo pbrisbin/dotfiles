@@ -1,4 +1,5 @@
 altscreen on
+defbce off
 defscrollback 50000
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
 sorendition '= W'
