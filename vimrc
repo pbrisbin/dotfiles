@@ -55,6 +55,8 @@ set ruler
 set scrolloff=999
 set shiftwidth=2
 set showmatch
+set sidescroll=1
+set sidescrolloff=5
 set smartindent
 set smarttab
 set textwidth=72
