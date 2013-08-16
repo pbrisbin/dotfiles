@@ -20,6 +20,7 @@ Bundle 'pbrisbin/vim-rename-file'
 Bundle 'pbrisbin/vim-restore-cursor'
 Bundle 'pbrisbin/vim-runfile'
 Bundle 'scrooloose/syntastic'
+Bundle 'thoughtbot/vim-rspec'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-endwise'
@@ -81,6 +82,13 @@ let g:syntastic_mode_map = {
   \ }
 
 let g:ctags_excludes = ['~/.bin/', '~/.dotfiles/', '~/.xmonad/']
+
+let g:rspec_command = "!bundle exec rspec -c -fd {spec}"
+
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
