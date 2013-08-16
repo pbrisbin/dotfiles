@@ -5,7 +5,7 @@ end
 
 def create_link(dotfile)
   source = File.expand_path(dotfile)
-  target = File.expand_path("~/#{dotfile}")
+  target = File.expand_path("~/.#{dotfile}")
 
   unless File.symlink?(target) && File.readlink(target) == source
     execute "mv '#{target}' '#{target}.backup'" if File.exists?(target)
@@ -14,14 +14,14 @@ def create_link(dotfile)
 end
 
 DOTFILES = %w(
-  .Xdefaults
-  .gitconfig
-  .gitignore
-  .screenrc
-  .vimrc
-  .xinitrc
-  .zshenv
-  .zshrc
+  Xdefaults
+  gitconfig
+  gitignore
+  screenrc
+  vimrc
+  xinitrc
+  zshenv
+  zshrc
 )
 
 task :default do
