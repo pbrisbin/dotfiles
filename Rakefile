@@ -9,7 +9,7 @@ def create_link(dotfile)
 
   unless File.symlink?(target) && File.readlink(target) == source
     execute "mv '#{target}' '#{target}.backup'" if File.exists?(target)
-    execute "ln -s '#{source}' '#{target}'"
+    execute "ln -sf '#{source}' '#{target}'"
   end
 end
 
