@@ -27,6 +27,9 @@ DOTFILES = %w(
 task :default do
   DOTFILES.each(&method(:create_link))
 
-  execute 'git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle'
-  execute 'vim +BundleInstall +qall'
+  begin
+    execute 'git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle'
+    execute 'vim +BundleInstall +qall'
+  rescue
+  end
 end
