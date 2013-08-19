@@ -83,7 +83,7 @@ let g:syntastic_mode_map = {
   \ 'active_filetypes': ['ruby']
   \ }
 
-let g:ctags_excludes = ['~/.bin/', '~/.dotfiles/', '~/.xmonad/']
+let g:ctags_excludes = ['~/.bin/', '~/.dotfiles/', '~/.xmonad/', '~/.mutt']
 
 let g:rspec_command = "!bundle exec rspec -c -fd {spec}"
 
