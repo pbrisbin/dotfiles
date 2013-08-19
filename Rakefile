@@ -17,6 +17,8 @@ DOTFILES = %w(
   Xdefaults
   gitconfig
   gitignore
+  msmtprc
+  offlineimaprc
   screenrc
   vimrc
   xinitrc

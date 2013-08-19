@@ -1,0 +1,53 @@
+# vim: ft=cfg
+
+[general]
+ui = ttyui
+accounts = Gmail,Thoughtbot
+maxsyncaccounts = 2
+pythonfile = ~/.mutt/offlineimap-helpers.py
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes \\\n  "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " \\\n  "
+footer = "\n"
+
+[Account Gmail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+
+[Account Thoughtbot]
+localrepository = Thoughtbot-Local
+remoterepository = Thoughtbot-Remote
+
+[Repository Gmail-Local]
+type = Maildir
+localfolders = ~/Mail/Gmail
+nametrans = nt_local
+
+[Repository Thoughtbot-Local]
+type = Maildir
+localfolders = ~/Mail/Thoughtbot
+nametrans = nt_local
+
+[Repository Gmail-Remote]
+type = Gmail
+remoteuser = pbrisbin@gmail.com
+remotepasseval = get_password('gmail')
+realdelete = no
+maxconnections = 3
+nametrans = nt_remote
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
+
+[Repository Thoughtbot-Remote]
+type = Gmail
+remoteuser = pat@thoughtbot.com
+remotepasseval = get_password('thoughtbot')
+realdelete = no
+maxconnections = 3
+nametrans = nt_remote
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
