@@ -1,7 +1,7 @@
 #!/bin/sh
 [[ -r ~/.monitors ]] && . ~/.monitors
 
-eval $(cat ~/.fehbg)
+feh --bg-tile ~/.background.png
 
 xset s off
 xset fp+ /usr/share/fonts/local
