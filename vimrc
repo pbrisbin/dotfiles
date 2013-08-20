@@ -49,6 +49,7 @@ set incsearch
 set laststatus=2
 set list listchars=tab:»·,trail:·
 set nobackup
+set nojoinspaces
 set nowrap
 set number
 set ruler
