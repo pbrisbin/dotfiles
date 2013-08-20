@@ -4,7 +4,7 @@
 ui = ttyui
 accounts = Gmail,Thoughtbot
 maxsyncaccounts = 2
-pythonfile = ~/.mutt/offlineimap-helpers.py
+pythonfile = ~/.offlineimap.py
 
 [mbnames]
 enabled = yes
