@@ -21,14 +21,8 @@ def nt_local(folder):
 
 # folderfilter = exclude(['Label', 'Label', ... ])
 def exclude(excludes):
-    def inner(folder):
-        try:
-            excludes.index(folder)
-            return False
-        except:
-            return True
-
-    return inner
+    return lambda folder: not folder in excludes
 
 def get_password(account):
-    return os.environ.get(account.upper() + "_PASSWORD")
+    # should except on unset value
+    return os.environ[account.upper() + "_PASSWORD"]
