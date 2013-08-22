@@ -18,6 +18,7 @@ DOTFILES = %w(
   gitconfig
   gitignore
   msmtprc
+  notmuch-config
   offlineimap.py
   offlineimaprc
   screenrc
