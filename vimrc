@@ -86,16 +86,19 @@ let g:syntastic_mode_map = {
 
 let g:ctags_excludes = ['~/.bin/', '~/.dotfiles/', '~/.xmonad/', '~/.mutt']
 
-let g:rspec_command = "!bundle exec rspec -c -fd {spec}"
+" For rspec.vim
+let g:rspec_command = '!bundle exec rspec -c -fd {spec}'
+
+" For when I just want to run it manually
+command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
 
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
-let &colorcolumn = join(range(81,999),",")
+let &colorcolumn = join(range(81,999),',')
 
 highlight ColorColumn ctermbg=235
