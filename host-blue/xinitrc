@@ -1,5 +1,6 @@
 #!/bin/sh
-[[ -r ~/.monitors ]] && . ~/.monitors
+xrandr --output VGA1 --mode 1920x1080
+xrandr --output HDMI1 --right-of VGA1
 
 feh --bg-tile ~/.background.png
 
