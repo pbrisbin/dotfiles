@@ -6,8 +6,13 @@ All of the configs.
 
 1. Install [rcm][]
 
-2. Clone this repo to `~/.dotfiles`
+2. Clone to `~/.dotfiles`
 
-3. Execute `rcup -x README.md`
+3. Execute:
+
+~~~
+$ rcup rcrc
+$ rcup
+~~~
 
 [rcm]: https://github.com/mike-burns/rcm
