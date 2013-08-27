@@ -7,14 +7,12 @@ if [[ -e /usr/share/chruby ]]; then
   chruby $(cat ~/.ruby-version)
 fi
 
-SSHPID=$(ps ax | grep -c "[s]sh-agent")
-
-if (( $SSHPID == 0 )); then
-  ssh-agent | sed 's/^echo/#echo/' > ~/.ssh-env
+if pgrep "ssh-agent" >/dev/null; then
+  source ~/.ssh-env
+else
+  ssh-agent | grep -Fv 'echo' > ~/.ssh-env
   source ~/.ssh-env
   ssh-add
-else
-  source ~/.ssh-env
 fi
 
 cdpath=( "$HOME/Code" $cdpath )
