@@ -1,3 +1,5 @@
+_git-delete-branch() { _git-checkout }
+
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{yellow}+%f'
 zstyle ':vcs_info:*' unstagedstr '%F{green}*%f'
