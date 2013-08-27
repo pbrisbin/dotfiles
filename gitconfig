@@ -1,3 +1,4 @@
+# vim: ft=gitconfig
 [core]
   editor = vim
   excludesfile = /home/patrick/.gitignore
