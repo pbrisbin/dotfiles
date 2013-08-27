@@ -79,6 +79,8 @@ let g:zenburn_old_Visual        = 1
 
 silent! colorscheme zenburn
 
+let g:runfile_by_name = { '.*\.t': '!cram %' }
+
 let g:syntastic_mode_map = {
   \ 'mode': 'passive',
   \ 'active_filetypes': ['ruby']
