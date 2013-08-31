@@ -1,0 +1,6 @@
+# vim: ft=muttrc:
+source /usr/share/doc/mutt/samples/gpg.rc
+
+set pgp_timeout = 3600
+set crypt_autosign = yes
+set crypt_replyencrypt = yes

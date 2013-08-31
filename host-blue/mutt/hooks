@@ -1,0 +1,6 @@
+# vim: ft=muttrc
+folder-hook Gmail/*      source ~/.mutt/accounts/gmail
+folder-hook Thoughtbot/* source ~/.mutt/accounts/thoughtbot
+folder-hook * "exec collapse-all"
+
+source ~/.mutt/accounts/gmail # default account

@@ -1,0 +1,15 @@
+# vim: ft=muttrc
+set from          = "pbrisbin@gmail.com"
+set sendmail      = "/usr/bin/msmtp -a gmail"
+set mbox          = "+Gmail/all_mail"
+set postponed     = "+Gmail/drafts"
+set query_command = "mail-query '%s' ~/Mail/Gmail/INBOX"
+
+color status green default
+
+macro index ,c "<change-folder>+Thoughtbot/INBOX<return>" "change accounts"
+macro index D "<save-message>+Gmail/trash<enter>" "move message to the trash"
+macro index S "<save-message>+Gmail/spam<enter>"  "mark message as spam"
+
+set pgp_sign_as = CEC8925D
+my_hdr X-PGP-Key: http://files.pbrisbin.com/public.key

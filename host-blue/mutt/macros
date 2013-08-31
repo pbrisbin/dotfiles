@@ -1,0 +1,20 @@
+# vim: ft=muttrc
+macro index ,i "<change-folder>!<return>" "go to inbox"
+macro index ,p "<pipe-message>cat > ~/" "save message as"
+macro index ,z "<shell-escape>offlineimap -q -o<return>" "sync IMAP"
+
+# these are toggle, but i bind both and use them as distinct
+macro index zc      "<collapse-thread>" "collapse thread"
+macro index <space> "<collapse-thread>" "uncollapse thread"
+
+macro index ,r \
+  "<tag-pattern>~N<return><tag-prefix><clear-flag>N<untag-pattern>~T<return>" \
+  "mark all as read"
+
+macro index ,R \
+  "<collapse-all>,r<collapse-all>" \
+  "mark all as read (collapsed)"
+
+macro index ,s \
+  "<shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
+  "search mail via notmuch"
