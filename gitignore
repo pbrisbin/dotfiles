@@ -43,7 +43,6 @@ MANIFEST
 Thumbs.db
 [#]*#
 _build
-bin/
 build/
 dist/
 ehthumbs.db
