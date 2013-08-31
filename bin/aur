@@ -1,13 +1,12 @@
-#!/usr/bin/bash -e
+#!/usr/bin/env sh
 #
 # pbrisbin 2013 - stupid simple, feature-less aur installer.
 #
 ###
-(( $# )) || exit 1
+to_package_url() {
+  sed 's|^\(..\).*|https://aur.archlinux.org/packages/\1/&/&.tar.gz|'
+}
 
-AUR='https://aur.archlinux.org/packages'
-
-curl -# "$AUR/${1:0:2}/$1/${1}.tar.gz" | tar fxz -
-
-cd "./$1" ; makepkg -i -r -s
-cd ..     ; rm -r "$1"
+curl -# $(printf "$1" | to_package_url) | tar fxz - \
+  && cd "./$1" && makepkg -i -r -s \
+  && cd ..     && rm -r "$1"
