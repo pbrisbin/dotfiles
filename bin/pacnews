@@ -1,0 +1,24 @@
+#!/usr/bin/bash -e
+#
+# pbrisbin 2013
+#
+###
+if (( $UID )); then
+  echo 'You must be root.' >&2
+  exit 1
+fi
+
+shopt -s globstar nullglob
+
+set -- "${1:-/etc}"/**/*.pacnew
+
+(( $# )) || exit 1
+
+for file; do
+  current="${file/.pacnew/}"
+
+  ${DIFFTOOL:-vimdiff} "$current" "$file"
+
+  rm -iv "$file" # -i gets us prompting for free
+  [[ -f "$file" ]] && mv -iv "$file" "$current"
+done

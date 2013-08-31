@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# offlineimap has some issue joining threads and will occasionally hang
+# indefinitely. this method checks every ten seconds if the process
+# identified as $1 is still running. after 5 checks (~60 seconds), it
+# kills it. non-zero return status indicates something killed.
+monitor() {
+  local pid=$1 i=0
+
+  while ps $pid &>/dev/null; do
+    if (( i++ > 5 )); then
+      echo "Max checks reached. Sending SIGKILL to ${pid}..." >&2
+      kill -9 $pid; return 1
+    fi
+
+    sleep 10
+  done
+
+  return 0
+}
+
+read -r pid < ~/.offlineimap/pid
+
+if ps $pid &>/dev/null; then
+  echo "Process $pid already running. Exiting..." >&2
+  exit 1
+fi
+
+offlineimap -o -u quiet & monitor $!

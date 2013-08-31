@@ -1,0 +1,13 @@
+#!/usr/bin/sh
+#
+# pbrisbin 2013
+#
+###
+htpc='htpc.local'
+
+if ping -c 1 $htpc &>/dev/null; then
+  curl \
+    -H 'Content-type: application/json' \
+    -d '{"jsonrpc":"2.0","method":"VideoLibrary.Scan","id":"blue"}' \
+    "http://$htpc:8080/jsonrpc"
+fi

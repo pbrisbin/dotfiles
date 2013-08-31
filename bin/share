@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+[[ "$1" =~ -p|--prefix ]] && { prefix="$2/"; shift 2; }
+
+file=$(readlink -f "$1")
+base=$(basename "$file")
+share='Site/files'
+
+if [[ $(hostname) == 'blue' ]]; then
+  cp -v "$file" "$HOME/$share/$prefix$base"
+else
+  scp "$file" "pbrisbin.com:~/$share/$prefix$base"
+fi
+
+(( $? )) && exit $?
+
+link="http://files.pbrisbin.com/$prefix$base"
+
+[[ -n "$DISPLAY" ]] && echo -n "$link" | xclip
+
+echo "$link"

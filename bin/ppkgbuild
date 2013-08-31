@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+enabled_repos() { sed '/^\[\(.*\)\]$/!d; s//\1/g; /options/d' /etc/pacman.conf; }
+
+(( $# )) || { echo 'usage: ppkgbuild <package>' >&2; exit 1; }
+
+for repo in $(enabled_repos); do
+  dir="/var/abs/$repo/$1"
+
+  if [[ -d "$dir" ]]; then
+    find "$dir" -name PKGBUILD -exec cat {} \;
+    exit 0
+  fi
+done
+
+# not getting crazy with escaping, deal.
+curl -s "https://aur.archlinux.org/packages/${1:0:2}/$1/PKGBUILD"

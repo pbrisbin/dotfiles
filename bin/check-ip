@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+cache="$HOME/.cache/dynamic-ip"
+touch "$cache"
+
+read -r old < "$cache"
+read -r new < <(wget -q -O - 'http://tnx.nl/ip')
+
+[[ "$old" == "$new" ]] && exit 0
+
+{
+  cat << EOF
+Your dynamic IP address seems to have changed.
+
+  <$old> changed to
+  <$new>
+
+Please update accordingly at:
+
+  https://account.dyn.com/dns/dyn-standard-dns/pbrisbin.com
+
+EOF
+
+} $HOME/.bin/sys-email 'Dynamic IP has changed'
+
+echo $new > "$cache"

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+file="$1"
+
+[[ -z "$file" ]] && { echo 'argument required' >&2; exit 1; }
+
+if [[ $file =~ ^magnet: ]] && [[ "$file" =~ xt=urn:btih:([^&/]+) ]]; then
+  echo "d10:magnet-uri${#file}:${file}e" > "$HOME/Downloads/meta-${BASH_REMATCH[1]}.torrent"
+  exit 0
+fi
+
+if [[ ! -f "$file" ]]; then
+  $BROWSER "$file" &>/dev/null &
+  exit 0
+fi
+
+if ! which xdg-mime &>/dev/null; then
+  echo 'xdg-mime required' >&2
+  exit 1
+fi
+
+read -r mimetype < \
+  <(xdg-mime query filetype "$file" 2>/dev/null | cut -d ';' -f 1)
+
+{
+  case "$mimetype" in
+    application/pdf) zathura "$file"  ;;
+    application/ogg) mplayer "$file"  ;;
+    audio/*)         mplayer "$file"  ;;
+    video/*)         mplayer "$file"  ;;
+    image/*)         mirage  "$file"  ;;
+    text/*)          urxvtc -e vim "$file" ;;
+    *)
+      echo "$file: unmatched mimetype, $mimetype" >&2
+      exit 1
+      ;;
+  esac
+} &>/dev/null

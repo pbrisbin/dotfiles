@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+if (( ! $# )); then
+  # simple, stdin usage
+  read -r link < <(curl -# -F 'sprunge=<-' http://sprunge.us)
+else
+  read -r link < <(curl -# -F 'sprunge=<-' http://sprunge.us < "$1")
+
+  ext="${1##*.}" # no-op if no extension
+  [[ "$ext" != "$1" ]] && link="$link?$ext"
+fi
+
+[[ -n "$DISPLAY" ]] && echo -n "$link" | xclip
+echo "$link"

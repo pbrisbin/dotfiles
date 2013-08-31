@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2013
+#
+###
+device=/dev/sr0
+
+case $1 in
+  -h|--help)
+    printf "usage: burn [-c] <file.iso>\n"
+    exit
+    ;;
+  -c|--cd)
+    shift
+    cdrecord -v speed=48 dev=$device "$1"
+    ;;
+  *)
+    growisofs -dvd-compat -Z $device="$1"
+    ;;
+esac

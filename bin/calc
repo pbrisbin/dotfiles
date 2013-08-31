@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2013
+#
+###
+if which bc &>/dev/null; then
+  printf "scale=10; $*\n" | bc -l
+else
+  awk "BEGIN { print $* }"
+fi

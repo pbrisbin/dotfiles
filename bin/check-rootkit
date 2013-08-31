@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2012
+#
+###
+(( $UID )) && { echo 'you must be root' >&2; exit 1; }
+
+{
+  /usr/bin/rkhunter --versioncheck --nocolors
+  /usr/bin/rkhunter --update --nocolors
+  /usr/bin/rkhunter --cronjob --nocolors --report-warnings-only
+
+} | /home/patrick/.bin/sys-email 'Rootkit check performed'
