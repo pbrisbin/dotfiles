@@ -1,4 +1,4 @@
-#!/usr/bin/bash -e
+#!/usr/bin/env sh
 #
 # pbrisbin 2013
 #
