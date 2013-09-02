@@ -1,36 +1,45 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #
 # pbrisbin 2013 - compress/extract archives by extension.
 #
 ###
-(( $# )) || { echo 'usage: archive [ -x ] [ file, ... ]' >&2; exit 1; }
+perror() { printf "$*\n" >&2; }
 
-if [[ $1 =~ -x|--extract ]]; then
-  shift
-
-  for archive in "$@"; do
-    case "$archive" in
-      *.tbz2|*.tar.bz2) tar xvjf "$archive"   ;;
-      *.tgz|*.tar.gz)   tar xvzf "$archive"   ;;
-      *.tar)            tar xvf "$archive"    ;;
-      *.gz)             gunzip "$archive"     ;;
-      *.bz2)            bunzip2 "$archive"    ;;
-      *.zip)            unzip "$archive"      ;;
-      *.rar)            unrar x "$archive"    ;;
-      *.Z)              uncompress "$archive" ;;
-      *.7z)             7z x "$archive"       ;;
-      *)                echo "$archive: unknown type" >&2 ;;
-    esac
-  done
-else
-  target="$1"; shift
-
-  case "$target" in
-    *.tbz2|*.tar.bz2) tar cvpjf "$target" "$@"     ;;
-    *.tgz|*.tar.gz)   tar cvpzf "$target" "$@"     ;;
-    *.gz)             cat "$@" | gzip > "$target"  ;;
-    *.bz2)            cat "$@" | bzip2 > "$target" ;;
-    *.zip)            zip -r "$target" "$@"        ;;
-    *)                $0 "$target.tar.gz" "$target" "$@" ;;
-  esac
+if [ -z "$1" ]; then
+  perror 'usage: archive [ -x ] [ file, ... ]'
+  exit 1
 fi
+
+case "$1" in
+  -x|--extract)
+    shift
+
+    for archive in "$@"; do
+      case "$archive" in
+        *.tbz2|*.tar.bz2) tar xvjf "$archive"   ;;
+        *.tgz|*.tar.gz)   tar xvzf "$archive"   ;;
+        *.tar)            tar xvf "$archive"    ;;
+        *.gz)             gunzip "$archive"     ;;
+        *.bz2)            bunzip2 "$archive"    ;;
+        *.zip)            unzip "$archive"      ;;
+        *.rar)            unrar x "$archive"    ;;
+        *.Z)              uncompress "$archive" ;;
+        *.7z)             7z x "$archive"       ;;
+        *)                perror "$archive: unknown extension" ;;
+      esac
+    done
+    ;;
+
+  *)
+    target="$1"; shift
+
+    case "$target" in
+      *.tbz2|*.tar.bz2) tar cvpjf "$target" "$@"     ;;
+      *.tgz|*.tar.gz)   tar cvpzf "$target" "$@"     ;;
+      *.gz)             cat "$@" | gzip > "$target"  ;;
+      *.bz2)            cat "$@" | bzip2 > "$target" ;;
+      *.zip)            zip -r "$target" "$@"        ;;
+      *)                $0 "$target.tar.gz" "$target" "$@" ;;
+    esac
+    ;;
+esac
