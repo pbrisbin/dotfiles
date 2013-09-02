@@ -4,7 +4,7 @@
 #
 ###
 if [ $# -eq 0 ]; then
-  echo 'usage: iso <file>, ...' >&2
+  printf "usage: iso <file>, ...\n" >&2
   exit 1
 fi
 
