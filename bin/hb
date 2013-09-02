@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - wrap handbrake to handle commonly needed scenarios.
 #
 ###
 (( $# )) || { echo 'usage: hb [ rip <name> | convert <file> ] [ options ]' >&2; exit 1; }

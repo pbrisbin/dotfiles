@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - open files with the appropriate handler program.
 #
 ###
 file="$1"

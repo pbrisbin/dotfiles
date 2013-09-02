@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 #
-# pbrisbin 2013 - smartly update haskell ctags
+# pbrisbin 2013 - smartly update haskell ctags.
 #
 ###
-
 class Ctags
   def initialize(out)
     @out   = out || 'tags'

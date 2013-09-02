@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - run and mail an rkhunter check.
 #
 ###
 (( $UID )) && { echo 'you must be root' >&2; exit 1; }

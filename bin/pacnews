@@ -1,6 +1,6 @@
 #!/usr/bin/bash -e
 #
-# pbrisbin 2013
+# pbrisbin 2013 - find pacnew files and present for processing.
 #
 ###
 if (( $UID )); then

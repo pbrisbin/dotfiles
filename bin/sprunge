@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - paste stdin or the argument given to sprunge.us.
 #
 ###
 if (( ! $# )); then

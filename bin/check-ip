@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - check that the machine's external IP has not changed.
 #
 ###
 cache="$HOME/.cache/dynamic-ip"

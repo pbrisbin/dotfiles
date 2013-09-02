@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013
+# pbrisbin 2013 - burn an ISO to CD/DVD.
 #
 ###
 device=/dev/sr0

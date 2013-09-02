@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2013
+# pbrisbin 2013 - wrap ghc-pkg to handle commonly needed scenarios.
 #
 ###
 broken_pkgs() {

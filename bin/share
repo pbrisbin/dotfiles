@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - share a file by hosting it on pbrisbin dot com.
 #
 ###
 [[ "$1" =~ -p|--prefix ]] && { prefix="$2/"; shift 2; }

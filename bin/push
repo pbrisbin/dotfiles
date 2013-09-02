@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# pbrisbin 2012
+# pbrisbin 2013 - send a message to the Pushover API.
 #
 ###
 require 'curb'

@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
-
+#
+# pbrisbin 2013 - mount a directory, rsync a backup, and unmount.
+#
+###
 set -e
 
 mount --verbose /mnt/backup-media

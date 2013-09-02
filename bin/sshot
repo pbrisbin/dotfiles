@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013
+# pbrisbin 2013 - share a screenshot on pbrisbin dot com.
 #
 ###
 file="/tmp/desktop_$(date +%y%m%d%H%M%S).png"

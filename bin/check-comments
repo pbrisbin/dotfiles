@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - check for and email new comments on pbrisbin dot com.
 #
 ###
 get_current_count() {

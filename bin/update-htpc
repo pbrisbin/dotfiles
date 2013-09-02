@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013
+# pbrisbin 2013 - trigger an XBMC library update on htpc.local.
 #
 ###
 htpc='htpc.local'

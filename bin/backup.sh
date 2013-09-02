@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+#
+# pbrisbin 2013 - perform a backup via tarsnap.
+#
+###
 
 if [ $UID -ne 0 ]; then
   echo 'You must be root' >&2

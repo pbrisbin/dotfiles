@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013
+# pbrisbin 2013 - rewrite /etc/hosts from someonewhocares.org
 #
 ###
 if [ $UID -ne 0 ]; then

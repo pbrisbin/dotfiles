@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
+# pbrisbin 2013 - print the PKGBUILD for any package, official or AUR.
 #
 ###
 enabled_repos() { sed '/^\[\(.*\)\]$/!d; s//\1/g; /options/d' /etc/pacman.conf; }

@@ -1,9 +1,8 @@
 #!/bin/bash
-
-# offlineimap has some issue joining threads and will occasionally hang
-# indefinitely. this method checks every ten seconds if the process
-# identified as $1 is still running. after 5 checks (~60 seconds), it
-# kills it. non-zero return status indicates something killed.
+#
+# pbrisbin 2013 - spawn and monitor an offlineimap process.
+#
+###
 monitor() {
   local pid=$1 i=0
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2012
-#
-# Note: I support dcompression of more formats than I do compression.
+# pbrisbin 2013 - compress/extract archives by extension.
 #
 ###
 (( $# )) || { echo 'usage: archive [ -x ] [ file, ... ]' >&2; exit 1; }

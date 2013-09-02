@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 #
-# pbrisbin 2011
-#
-# Operates on current directory. Simply lists packages to be removed on
-# stdout. Pipe to some other command (i.e. xargs rm) to take action as
-# desired.
-#
-# Does not take into account the currently installed version. This tool
-# simply saves the N most recent versions of each package found.
+# pbrisbin 2013 - list packages for which more than N versions exist in
+# the current directory.
 #
 ###
 versions_to_keep=${1:-3}
