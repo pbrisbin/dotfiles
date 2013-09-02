@@ -3,18 +3,12 @@
 # pbrisbin 2013 - perform a backup via tarsnap.
 #
 ###
+die() { printf "$*\n" >&2; exit 1; }
 
-if [ $UID -ne 0 ]; then
-  echo 'You must be root' >&2
-  exit 1
-fi
+[ $UID -eq 0 ] || die 'You must be root'
+which tarsnap >/dev/null || die 'You must install tarsnap'
 
-if ! which tarsnap >/dev/null; then
-  echo 'You must install tarsnap' >&2
-  exit 1
-fi
-
-timestamp=`date +%Y%m%d.%H:%M:%S`
+timestamp=$(date +%Y%m%d.%H:%M:%S)
 
 tarsnap "$@" \
   --keyfile /root/tarsnap.key \
