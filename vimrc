@@ -62,17 +62,18 @@ set smartindent
 set smarttab
 set textwidth=72
 set visualbell t_vb=
-set wildignore+=*/.git/*,*/tmp/*
 set wildmode=list:longest
 set winwidth=84
 set winheight=5
 set winminheight=5
 set winheight=999
 
-let mapleader = ','
-let maplocalleader = ','
+let mapleader = ' '
+let maplocalleader = ' '
 
-let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_use_caching  = 0
+
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
