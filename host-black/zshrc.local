@@ -1,0 +1,9 @@
+# vim: ft=zsh
+setmon() {
+  xrandr --output DP1 --off
+
+  if xrandr | grep -Fq 'DP1 connected'; then
+    xrandr --output DP1 --mode 2560x1600 --right-of LVDS1
+    feh --bg-max ~/.background.png
+  fi
+}

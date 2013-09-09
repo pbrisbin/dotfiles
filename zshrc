@@ -18,8 +18,6 @@ alias g='git'
 alias p='sudo pacman'
 alias b='bundle'
 alias be='b exec'
-alias irc='screen -R -D -S irc'
-alias rtor='screen -R -D -S rtor'
 alias piso='mplayer dvd://1 -dvd-device'
 alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0 -mouse-movements'
 alias git=hub; compdef hub=git

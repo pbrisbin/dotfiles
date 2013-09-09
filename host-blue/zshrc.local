@@ -1,0 +1,2 @@
+alias irc='screen -R -D -S irc'
+alias rtor='screen -R -D -S rtor'
