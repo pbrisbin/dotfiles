@@ -1,13 +1,7 @@
 #!/bin/sh
+[ -r ~/.xinitrc.local ] . ~/.xinitrc.local
 
-(
-  sleep 1
-
-  xrandr | grep -Fq 'DP1 connected' && \
-    xrandr --output DP1 --mode 2560x1600 --right-of LVDS1
-
-  feh --bg-max ~/.background.png
-) &
+feh --bg-tile ~/.background.png
 
 xset s off
 xset fp+ /usr/share/fonts/local
