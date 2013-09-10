@@ -55,6 +55,7 @@ set number
 set ruler
 set scrolloff=999
 set shiftwidth=2
+set showcmd
 set showmatch
 set sidescroll=1
 set sidescrolloff=5
@@ -102,6 +103,6 @@ map <Leader>a :call RunAllSpecs()<CR>
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
-let &colorcolumn = join(range(81,999),',')
+let &colorcolumn = join(range(81,400),',')
 
 highlight ColorColumn ctermbg=235
