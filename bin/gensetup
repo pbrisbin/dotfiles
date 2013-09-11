@@ -6,23 +6,20 @@
 #
 ###
 format_arguments() {
-  local current_line= indent='  ' width=78 tmp
-  local lines=()
+  local current_line='' tmp
 
   while read -r; do
-    tmp="$current_line $REPLY"
+    tmp="$current_line$REPLY"
 
-    if (( "${#tmp}" <= $width )); then
-      current_line+=" $REPLY"
+    if (( "${#tmp}" <= 78 )); then
+      current_line+="$REPLY "
     else
-      lines+=( "$current_line \\" )
-      current_line="$indent $REPLY"
+      echo "$current_line\\"
+      current_line="  $REPLY "
     fi
   done
 
-  for line in "${lines[@]}"; do
-    echo "$line"
-  done
+  echo "$current_line"
 }
 
 formatted_packages() {
