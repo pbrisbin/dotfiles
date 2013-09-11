@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2013 - generates and outputs a script which, when run, would
+# install all official and foreign packages that are currently installed
+# on this system.
+#
+###
+format_arguments() {
+  local current_line= indent='  ' width=78 tmp
+  local lines=()
+
+  while read -r; do
+    tmp="$current_line $REPLY"
+
+    if (( "${#tmp}" <= $width )); then
+      current_line+=" $REPLY"
+    else
+      lines+=( "$current_line \\" )
+      current_line="$indent $REPLY"
+    fi
+  done
+
+  for line in "${lines[@]}"; do
+    echo "$line"
+  done
+}
+
+formatted_packages() {
+  pacman -Qqe | grep -v "$(pacman -Qqm)" | format_arguments
+}
+
+formatted_foreign_packages() {
+  pacman -Qqem | format_arguments
+}
+
+cat << EOF
+#!/usr/bin/env sh
+
+sudo pacman -Syu --needed \\
+  $(formatted_packages)
+
+curl 'http://aur.archlinux.org/packages/au/aurget/aurget.tar.gz' | tar fxz -
+(cd ./aurget && makepkg -i -r -s) && rm -r ./aurget
+
+/bin/aurget -S \\
+  $(formatted_foreign_packages)
+
+EOF
