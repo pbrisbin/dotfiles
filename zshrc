@@ -1,12 +1,10 @@
 _git-delete-branch() { _git-checkout }
 
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr '%F{yellow}+%f'
-zstyle ':vcs_info:*' unstagedstr '%F{green}*%f'
-zstyle ':vcs_info:*' formats \
-  '%%B%F{cyan}[%F{red}%b%c%u%F{cyan}]%f%%b ' '%r:%b'
-zstyle ':vcs_info:*' actionformats \
-  '%%B%F{cyan}[%F{red}%b%c%u%F{cyan}|%F{yellow}%a%F{cyan}]%f%%b ' '%r:%b'
+store_current_directory() {
+  echo "$PWD" >! ~/.current-directory
+}
+
+add-zsh-hook chpwd store_current_directory
 
 zstyle ':completion:*:sudo:*' command-path $path
 
@@ -30,3 +28,9 @@ export MANWIDTH=80
 
 setopt inc_append_history
 setopt vi
+
+prompt pure
+
+if [[ -r ~/.current-directory ]]; then
+  cd $(< ~/.current-directory)
+fi
