@@ -1,5 +1,3 @@
-set nocompatible
-
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
@@ -14,7 +12,6 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'pbrisbin/alt-ctags'
 Bundle 'pbrisbin/html-template-syntax'
-Bundle 'pbrisbin/vim-config'
 Bundle 'pbrisbin/vim-mkdir'
 Bundle 'pbrisbin/vim-rename-file'
 Bundle 'pbrisbin/vim-restore-cursor'
@@ -72,37 +69,36 @@ set winheight=999
 let mapleader = ' '
 let maplocalleader = ' '
 
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
-let g:ctrlp_use_caching  = 0
-
+let g:ctags_excludes            = ['~', '~/.dotfiles/']
+let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_use_caching         = 0
+let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
+let g:runfile_by_name           = { '.*\.t': '!cram %' }
+let g:syntastic_mode_map        = { 'mode': 'passive' }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
 
 silent! colorscheme zenburn
 
-let g:runfile_by_name = { '.*\.t': '!cram %' }
-
-let g:syntastic_mode_map = {
-  \ 'mode': 'passive',
-  \ 'active_filetypes': ['ruby']
-  \ }
-
-let g:ctags_excludes = ['~', '~/.dotfiles/']
-
-" For rspec.vim
-let g:rspec_command = '!bundle exec rspec -c -fd {spec}'
-
-" For when I just want to run it manually
-command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
-
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
-
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
-let &colorcolumn = join(range(81,400),',')
+inoremap {<CR> {<CR>}<C-o>O
+inoremap [<CR> [<CR>]<C-o>O
+inoremap (<CR> (<CR>)<C-o>O
+inoremap ({<CR> ({<CR>})<C-o>O
+inoremap ([<CR> ([<CR>])<C-o>O
 
+nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
+
+cmap w!! w !sudo tee % >/dev/null<CR>
+
+command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us
+command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
+
+let &colorcolumn = join(range(81,400),',')
 highlight ColorColumn ctermbg=235
