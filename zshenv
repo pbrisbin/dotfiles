@@ -15,7 +15,7 @@ else
   ssh-add
 fi
 
-cdpath=( "$HOME/Code" $cdpath )
+cdpath=( "$HOME" "$HOME/Code" $cdpath )
 
 path=( "$HOME/.bin" "$HOME/.cabal/bin" $path )
 
