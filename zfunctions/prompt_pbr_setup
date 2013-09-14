@@ -1,0 +1,35 @@
+# vim: ft=zsh:
+#
+# Based on pure: https://github.com/sindresorhus/pure
+#
+###
+prompt_pbr_git_dirty() {
+  command git rev-parse --is-inside-work-tree &>/dev/null || return
+  command git diff --quiet --ignore-submodules HEAD &>/dev/null
+
+  (($? == 1)) && echo '*'
+}
+
+prompt_pbr_precmd() {
+  vcs_info
+  print -P '\n%F{blue}%~%F{8}$vcs_info_msg_0_`prompt_pbr_git_dirty` $prompt_pbr_username%f %F{yellow}%f'
+}
+
+prompt_pbr_setup() {
+  prompt_opts=(cr subst percent)
+
+  autoload -Uz add-zsh-hook
+  autoload -Uz vcs_info
+
+  add-zsh-hook precmd prompt_pbr_precmd
+
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git*' formats ' %b'
+  zstyle ':vcs_info:git*' actionformats ' %b|%a'
+
+  [[ -n "$SSH_CONNECTION" ]] && prompt_pbr_username='%n@%m '
+
+  PROMPT='%(?.%F{magenta}.%F{red})❯%f '
+}
+
+prompt_pbr_setup "$@"

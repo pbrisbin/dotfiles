@@ -29,7 +29,7 @@ export MANWIDTH=80
 setopt inc_append_history
 setopt vi
 
-prompt pure
+prompt pbr
 
 if [[ -r ~/.current-directory ]]; then
   cd $(< ~/.current-directory)

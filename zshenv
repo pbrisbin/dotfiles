@@ -17,6 +17,8 @@ fi
 
 cdpath=( "$HOME" "$HOME/Code" $cdpath )
 
+fpath=( "$HOME/.zfunctions" $fpath )
+
 path=( "$HOME/.bin" "$HOME/.cabal/bin" $path )
 
 [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]] && exec startx
