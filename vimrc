@@ -79,11 +79,13 @@ let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
 
+let b:ctags_command = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript"
+
 silent! colorscheme zenburn
 
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
@@ -97,8 +99,34 @@ nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 
 cmap w!! w !sudo tee % >/dev/null<CR>
 
-command -range=% Sprunge :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us
+command! -range=% Paste :<line1>,<line2>write !curl -sF "f:1=<-" http://ix.io
 command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
 
 let &colorcolumn = join(range(81,400),',')
+
 highlight ColorColumn ctermbg=235
+
+function! SetupMarkdown()
+  setlocal formatoptions+=twn
+  setlocal smartindent
+  setlocal spell
+endfunction
+
+function! SetupHaskell()
+  setlocal omnifunc=necoghc#omnifunc
+  setlocal path+=app,config,templates
+  setlocal shiftwidth=4
+  setlocal suffixesadd+=.hamlet,.julius,.lucius
+
+  let b:ctags_command = 'hs-ctags %f'
+endfunction
+
+augroup vimrc
+  autocmd!
+
+  autocmd BufEnter *.pdc,*.pandoc        setlocal filetype=ghmarkdown
+  autocmd BufEnter *.md,*.mkd,*.markdown setlocal filetype=ghmarkdown
+
+  autocmd FileType haskell call SetupHaskell()
+  autocmd FileType ghmarkdown call SetupMarkdown()
+augroup END
