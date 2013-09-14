@@ -1,11 +1,5 @@
 _git-delete-branch() { _git-checkout }
 
-store_current_directory() {
-  echo "$PWD" >! ~/.current-directory
-}
-
-add-zsh-hook chpwd store_current_directory
-
 zstyle ':completion:*:sudo:*' command-path $path
 
 HISTSIZE=12000
@@ -30,6 +24,12 @@ setopt inc_append_history
 setopt vi
 
 prompt pbr
+
+store_current_directory() {
+  echo "$PWD" >! ~/.current-directory
+}
+
+add-zsh-hook chpwd store_current_directory
 
 if [[ -r ~/.current-directory ]]; then
   cd $(< ~/.current-directory)
