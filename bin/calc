@@ -4,7 +4,7 @@
 #
 ###
 if which bc &>/dev/null; then
-  printf "scale=10; $*\n" | bc -l
+  printf "scale=10; %s\n" "$*" | bc -l
 else
-  awk "BEGIN { print $* }"
+  printf "BEGIN { print %s }" "$*" | awk
 fi

@@ -3,10 +3,8 @@
 # pbrisbin 2013 - compress/extract archives by extension.
 #
 ###
-perror() { printf "$*\n" >&2; }
-
 if [ -z "$1" ]; then
-  perror 'usage: archive [ -x ] [ file, ... ]'
+  printf "usage: archive [ -x ] [ file, ... ]\n" >&2
   exit 1
 fi
 
@@ -14,7 +12,7 @@ case "$1" in
   -x|--extract)
     shift
 
-    for archive in "$@"; do
+    for archive; do
       case "$archive" in
         *.tbz2|*.tar.bz2) tar xvjf "$archive"   ;;
         *.tgz|*.tar.gz)   tar xvzf "$archive"   ;;
@@ -25,7 +23,10 @@ case "$1" in
         *.rar)            unrar x "$archive"    ;;
         *.Z)              uncompress "$archive" ;;
         *.7z)             7z x "$archive"       ;;
-        *)                perror "$archive: unknown extension" ;;
+        *)
+          printf "%s: unknown extension\n" "$archive" >&2
+          exit 1
+          ;;
       esac
     done
     ;;
