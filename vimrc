@@ -69,17 +69,16 @@ set winheight=999
 let mapleader = ' '
 let maplocalleader = ' '
 
+let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript app lib vendor"
 let g:ctags_excludes            = ['~', '~/.dotfiles/']
-let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
 let g:ctrlp_use_caching         = 0
+let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
 let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
 let g:runfile_by_name           = { '.*\.t': '!cram %' }
 let g:syntastic_mode_map        = { 'mode': 'passive' }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
-
-let b:ctags_command = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript"
 
 silent! colorscheme zenburn
 
