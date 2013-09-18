@@ -25,8 +25,6 @@ prompt_pbr_precmd() { print -Pn "\e]0;%~\a"; }
 prompt_pbr_preexec() { print -Pn "\e]0;$PWD:t: ${2//$/\\\\$}\a"; }
 
 prompt_pbr_setup() {
-  local username
-
   prompt_opts=( cr subst percent )
 
   autoload -Uz vcs_info
@@ -39,10 +37,10 @@ prompt_pbr_setup() {
   zstyle ':vcs_info:git*' formats ' %b'
   zstyle ':vcs_info:git*' actionformats ' %b|%a'
 
-  [[ -n "$SSH_CONNECTION" ]] && username=' %n@%m'
+  [[ -n "$SSH_CONNECTION" ]] && prompt_pbr_username=' %n@%m'
 
   PROMPT='
-%F{blue}%~%F{8}$(_ruby_info)$(_git_info)$username%f
+%F{blue}%~%F{8}$(_ruby_info)$(_git_info)$prompt_pbr_username%f
 %(?.%F{magenta}.%F{red})❯%f '
 }
 
