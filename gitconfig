@@ -44,3 +44,6 @@
 
 [url "git@github.com:pbrisbin/"]
   pushInsteadOf = "https://github.com/pbrisbin/"
+[user]
+	email = pbrisbin@gmail.com
+	name = patrick brisbin
