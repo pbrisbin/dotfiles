@@ -5,5 +5,4 @@ if [ ! -d ~/.vim/bundle/vundle ]; then
 fi
 
 count=$(find ~/.vim/bundle -maxdepth 1 -type d -print | wc -l)
-
-[ $count -eq 1 ] && vim +BundleInstall +wall
+[ $count -eq 2 ] && vim +BundleInstall +wall
