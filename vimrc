@@ -36,6 +36,7 @@ set autoindent
 set autoread
 set autowrite
 set cursorline
+set directory=/tmp
 set expandtab
 set foldmethod=marker
 set formatoptions-=t
