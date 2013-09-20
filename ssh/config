@@ -1,0 +1,23 @@
+# vim: ft=sshconfig:
+
+ControlMaster auto
+ControlPath /tmp/ssh-%r@%h:%p
+
+Host *
+  ServerAliveInterval 120
+  ServerAliveCountMax 5
+
+Host teal
+  HostName 162.243.3.84
+
+Host htpc.local
+  User xbmc
+
+Host github.com
+  IdentityFile ~/.ssh/id_rsa.github
+
+Host heroku.com
+  IdentityFile ~/.ssh/id_rsa.heroku
+
+Host nodester.com
+  IdentityFile ~/.ssh/id_rsa.nodester
