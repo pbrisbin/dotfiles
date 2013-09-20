@@ -17,12 +17,12 @@ footer = "\n"
 [Account Gmail]
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
-#postsynchook = notmuch new
+postsynchook = notmuch new
 
 [Account Thoughtbot]
 localrepository = Thoughtbot-Local
 remoterepository = Thoughtbot-Remote
-#postsynchook = notmuch new
+postsynchook = notmuch new
 
 [Repository Gmail-Local]
 type = Maildir
