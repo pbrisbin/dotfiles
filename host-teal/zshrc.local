@@ -1,0 +1,1 @@
+alias irc='screen -R -D -S irc'
