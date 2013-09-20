@@ -1,7 +1,7 @@
 #!/bin/sh
 [ -r ~/.xinitrc.local ] . ~/.xinitrc.local
 
-feh --bg-tile ~/.background.png
+feh --bg-max ~/.background.png
 
 xset s off
 xset fp+ /usr/share/fonts/local
