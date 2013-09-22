@@ -124,7 +124,6 @@ endfunction
 augroup vimrc
   autocmd!
 
-  autocmd BufEnter *.pdc,*.pandoc        setlocal filetype=ghmarkdown
   autocmd BufEnter *.md,*.mkd,*.markdown setlocal filetype=ghmarkdown
 
   autocmd FileType haskell call SetupHaskell()
