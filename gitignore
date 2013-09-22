@@ -29,6 +29,7 @@
 .#*
 .*.sw[nop]
 .DS_Store?
+.cabal-sandbox
 .classpath
 .gdb_history
 .ghci
@@ -44,6 +45,7 @@ Thumbs.db
 [#]*#
 _build
 build/
+cabal.sandbox.config
 dist/
 ehthumbs.db
 gen/
