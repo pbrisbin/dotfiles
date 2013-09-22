@@ -9,32 +9,6 @@ broken_pkgs() {
 }
 
 basic_pkgs=(
-  cab
-  cabal-dev
-  ghc-mod
-  hlint
-  hoogle
-  pandoc
-  xmonad
-  xmonad-contrib
-  yeganesh
-)
-
-all_pkgs=(
-  $basic_pkgs
-  friendly-time
-  gravatar
-  hjsmin
-  keter
-  persistent
-  persistent-postgresql
-  yesod
-  yesod-auth
-  yesod-bin
-  yesod-form
-  yesod-newsfeed
-  yesod-persistent
-  yesod-static
 )
 
 case "$1" in
@@ -68,11 +42,15 @@ case "$1" in
 
     $0 reset || exit $?
 
-    if [[ $(hostname) == 'blue' ]]; then
-      cabal install "$@" "${all_pkgs[@]}"
-    else
-      cabal install "$@" "${basic_pkgs[@]}"
-    fi
+    cabal install "$@" cabal-install
+    cabal install "$@" \
+      ghc-mod \
+      hlint \
+      hoogle \
+      pandoc \
+      xmonad \
+      xmonad-contrib \
+      yeganesh
     ;;
 
   # forward all else
