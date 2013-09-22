@@ -22,7 +22,14 @@ _ruby_info() {
 
 prompt_pbr_precmd() { print -Pn "\e]0;%~\a"; }
 
-prompt_pbr_preexec() { print -Pn "\e]0;$PWD:t: ${2//$/\\\\$}\a"; }
+prompt_pbr_preexec() {
+  local cmd="$2"
+
+  cmd="${cmd%%\n*}"
+  cmd="${cmd//$/\\\\$}"
+
+  print -Pn "\e]0;$PWD:t: $cmd\a"
+}
 
 prompt_pbr_setup() {
   prompt_opts=( cr subst percent )
