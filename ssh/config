@@ -7,8 +7,11 @@ Host *
   ServerAliveInterval 120
   ServerAliveCountMax 5
 
-Host teal
-  HostName 162.243.3.84
+Host blue.local
+  Port 2222
+
+Host black.local
+  Port 2222
 
 Host htpc.local
   User xbmc
