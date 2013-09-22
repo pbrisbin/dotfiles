@@ -70,7 +70,7 @@ set winheight=999
 let mapleader = ' '
 let maplocalleader = ' '
 
-let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript app lib vendor"
+let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript"
 let g:ctags_excludes            = ['~', '~/.dotfiles/']
 let g:ctrlp_use_caching         = 0
 let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
