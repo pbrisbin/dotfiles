@@ -3,20 +3,15 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'dag/vim2hs'
 Bundle 'gmarik/vundle'
-Bundle 'godlygeek/tabular'
-Bundle 'jtratner/vim-flavored-markdown'
 Bundle 'juvenn/mustache.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'pbrisbin/alt-ctags'
-Bundle 'pbrisbin/html-template-syntax'
 Bundle 'pbrisbin/vim-mkdir'
 Bundle 'pbrisbin/vim-rename-file'
 Bundle 'pbrisbin/vim-restore-cursor'
 Bundle 'pbrisbin/vim-runfile'
-Bundle 'scrooloose/syntastic'
 Bundle 'thoughtbot/vim-rspec'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
@@ -25,7 +20,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
-Bundle 'ujihisa/neco-ghc'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/Zenburn'
 
@@ -70,16 +64,16 @@ set winheight=999
 let mapleader = ' '
 let maplocalleader = ' '
 
-let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js' --languages=-javascript"
+let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js'"
 let g:ctags_excludes            = ['~', '~/.dotfiles/']
 let g:ctrlp_use_caching         = 0
 let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
 let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
 let g:runfile_by_name           = { '.*\.t': '!cram %' }
-let g:syntastic_mode_map        = { 'mode': 'passive' }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
+let g:markdown_fenced_languages = ['c', 'haskell', 'ruby', 'sh', 'yaml']
 
 silent! colorscheme zenburn
 
@@ -106,26 +100,11 @@ let &colorcolumn = join(range(81,400),',')
 
 highlight ColorColumn ctermbg=235
 
-function! SetupMarkdown()
-  setlocal formatoptions+=twn
-  setlocal smartindent
-  setlocal spell
-endfunction
-
-function! SetupHaskell()
-  setlocal omnifunc=necoghc#omnifunc
-  setlocal path+=app,config,templates
-  setlocal shiftwidth=4
-  setlocal suffixesadd+=.hamlet,.julius,.lucius
-
-  let b:ctags_command = 'hs-ctags %f'
-endfunction
-
 augroup vimrc
   autocmd!
-
-  autocmd BufEnter *.md,*.mkd,*.markdown setlocal filetype=ghmarkdown
-
-  autocmd FileType haskell call SetupHaskell()
-  autocmd FileType ghmarkdown call SetupMarkdown()
+  autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
+  autocmd FileType gitcommit setlocal spell
+  autocmd FileType haskell setlocal shiftwidth=4 | let b:ctags_command = 'hs-ctags %f'
+  autocmd FileType mail setlocal spell nohlsearch
+  autocmd FileType markdown setlocal formatoptions+=twn nosmartindent spell
 augroup END
