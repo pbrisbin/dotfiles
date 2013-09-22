@@ -1,5 +1,5 @@
 #!/bin/sh
-[ -r ~/.xinitrc.local ] . ~/.xinitrc.local
+[ -r ~/.xinitrc.local ] && . ~/.xinitrc.local
 
 feh --bg-max ~/.background.png
 
