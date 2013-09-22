@@ -1,45 +1,19 @@
 #!/usr/bin/env bash
 #
 # pbrisbin 2013 - generates and outputs a script which, when run, would
-# install all official and foreign packages that are currently installed
-# on this system.
+# install all packages currently installed on the system. This, combined
+# with a restoration of /etc and /home, should constitute an acceptable
+# system recovery.
 #
 ###
-format_arguments() {
-  local current_line='' tmp
-
-  while read -r; do
-    tmp="$current_line$REPLY"
-
-    if (( "${#tmp}" <= 78 )); then
-      current_line+="$REPLY "
-    else
-      echo "$current_line\\"
-      current_line="  $REPLY "
-    fi
-  done
-
-  echo "$current_line"
-}
-
-formatted_packages() {
-  pacman -Qqe | grep -v "$(pacman -Qqm)" | format_arguments
-}
-
-formatted_foreign_packages() {
-  pacman -Qqem | format_arguments
-}
-
 cat << EOF
 #!/usr/bin/env sh
 
-sudo pacman -Syu --needed \\
-  $(formatted_packages)
+echo '$(pacman -Qqe | grep -v "$(pacman -Qqm)")' | sudo pacman -Syu --needed -
 
 curl 'https://aur.archlinux.org/packages/au/aurget/aurget.tar.gz' | tar fxz - \\
   && (cd ./aurget && makepkg -i) && rm -r ./aurget
 
-/bin/aurget -S \\
-  $(formatted_foreign_packages)
+echo '$(pacman -Qqem)' | xargs /bin/aurget -S
 
 EOF
