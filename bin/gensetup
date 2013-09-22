@@ -37,7 +37,7 @@ sudo pacman -Syu --needed \\
   $(formatted_packages)
 
 curl 'https://aur.archlinux.org/packages/au/aurget/aurget.tar.gz' | tar fxz - \\
-  && (cd ./aurget && makepkg -i -r -s) && rm -r ./aurget
+  && (cd ./aurget && makepkg -i) && rm -r ./aurget
 
 /bin/aurget -S \\
   $(formatted_foreign_packages)
