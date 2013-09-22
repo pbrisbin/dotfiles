@@ -5,19 +5,11 @@
 ###
 [[ "$1" =~ -p|--prefix ]] && { prefix="$2/"; shift 2; }
 
-file=$(readlink -f "$1")
-base=$(basename "$file")
-share='Site/files'
-
-if [[ $(hostname) == 'blue' ]]; then
-  cp -v "$file" "$HOME/$share/$prefix$base"
-else
-  scp "$file" "pbrisbin.com:~/$share/$prefix$base"
-fi
-
-(( $? )) && exit $?
-
+file="$(readlink -f "$1")"
+base="${file##*/}"
 link="http://files.pbrisbin.com/$prefix$base"
+
+scp "$file" "pbrisbin.com:/srv/http/files/$prefix$base" || exit $?
 
 [[ -n "$DISPLAY" ]] && echo -n "$link" | xclip
 
