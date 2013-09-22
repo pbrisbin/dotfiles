@@ -1,0 +1,4 @@
+# vim: ft=sh
+xrandr --output DP1 --off
+xrandr | grep -Fq 'DP1 connected' && \
+  xrandr --output DP1 --mode 2560x1600 --right-of LVDS1
