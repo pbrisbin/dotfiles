@@ -11,6 +11,6 @@ link="http://files.pbrisbin.com/$prefix$base"
 
 scp "$file" "pbrisbin.com:/srv/http/files/$prefix$base" || exit $?
 
-[[ -n "$DISPLAY" ]] && echo -n "$link" | xclip
+[[ -n "$DISPLAY" ]] && printf "$link" | xclip
 
-echo "$link"
+printf "%s\n" "$link"

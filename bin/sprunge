@@ -13,5 +13,5 @@ else
   [[ "$ext" != "$1" ]] && link="$link?$ext"
 fi
 
-[[ -n "$DISPLAY" ]] && echo -n "$link" | xclip
-echo "$link"
+[[ -n "$DISPLAY" ]] && printf "$link" | xclip
+printf "%s\n" "$link"

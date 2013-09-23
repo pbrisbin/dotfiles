@@ -5,7 +5,7 @@
 ###
 enabled_repos() { sed '/^\[\(.*\)\]$/!d; s//\1/g; /options/d' /etc/pacman.conf; }
 
-(( $# )) || { echo 'usage: ppkgbuild <package>' >&2; exit 1; }
+(( $# )) || { printf "usage: ppkgbuild <package>\n" >&2; exit 1; }
 
 for repo in $(enabled_repos); do
   dir="/var/abs/$repo/$1"

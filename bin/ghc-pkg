@@ -15,7 +15,7 @@ case "$1" in
     # this may need to be run multiple times to take care of cascading
     # broken packages.
     for pkg in $(broken_pkgs "$@"); do
-      echo "attempting to unregister $pkg..."
+      printf "attempting to unregister %s...\n" "$pkg"
       /usr/bin/ghc-pkg "$@" unregister $pkg
     done
     ;;

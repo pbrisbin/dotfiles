@@ -3,7 +3,10 @@
 # pbrisbin 2013 - wrap handbrake to handle commonly needed scenarios.
 #
 ###
-(( $# )) || { echo 'usage: hb [ rip <name> | convert <file> ] [ options ]' >&2; exit 1; }
+if (( $# < 2 )); then
+  printf "usage: hb [rip <name>|convert <file>] [options]\n" >&2
+  exit 1
+fi
 
 case "$1" in
   rip)     src='/dev/sr0'
