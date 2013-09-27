@@ -8,9 +8,6 @@ broken_pkgs() {
     |& sed '/^There are problems in package \([^:]*\):$/!d; s//\1/'
 }
 
-basic_pkgs=(
-)
-
 case "$1" in
   clean)
     shift
