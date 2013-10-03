@@ -107,4 +107,5 @@ augroup vimrc
   autocmd FileType haskell setlocal shiftwidth=4 | let b:ctags_command = 'hs-ctags %f'
   autocmd FileType mail setlocal spell nohlsearch
   autocmd FileType markdown setlocal formatoptions+=twn nosmartindent spell
+  autocmd FileType html setlocal noshowmatch
 augroup END
