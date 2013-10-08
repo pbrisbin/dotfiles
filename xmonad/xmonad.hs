@@ -8,6 +8,7 @@ import XMonad
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.EZConfig
+import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 
 import qualified XMonad.StackSet as W
@@ -37,5 +38,7 @@ data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
+        name     <- getName w
         Just idx <- fmap (W.findTag w) $ gets windowset
-        safeSpawn "notify-send" ["Terminal Bell", "Workspace: " ++ idx]
+
+        safeSpawn "notify-send" [show name, "workspace " ++ idx]
