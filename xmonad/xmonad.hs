@@ -37,6 +37,5 @@ data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
-        ws <- gets windowset
-        whenJust (W.findTag w ws) $ \idx ->
-            safeSpawn "notify-send" ["Bell, workspace " ++ idx]
+        Just idx <- fmap (W.findTag w) $ gets windowset
+        safeSpawn "notify-send" ["Terminal Bell", "Workspace: " ++ idx]
