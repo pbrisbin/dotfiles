@@ -20,18 +20,10 @@ _ruby_info() {
   printf ' ruby-%s' "$(ruby --version | cut -d' ' -f2)"
 }
 
-prompt_pbr_precmd() { print -Pn "\e]0;%~\a"; }
-
-prompt_pbr_preexec() { printf "\e]0;$PWD:t: $2\a"; }
-
 prompt_pbr_setup() {
   prompt_opts=( cr subst percent )
 
   autoload -Uz vcs_info
-  autoload -Uz add-zsh-hook
-
-  add-zsh-hook precmd prompt_pbr_precmd
-  add-zsh-hook preexec prompt_pbr_preexec
 
   zstyle ':vcs_info:*' enable git
   zstyle ':vcs_info:git*' formats ' %b'
