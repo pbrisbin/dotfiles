@@ -3,39 +3,40 @@
 # pbrisbin 2013 - open files with the appropriate handler program.
 #
 ###
+die() {
+  local fmt="$1"; shift
+
+  printf "$fmt\n" "$@" >&2
+
+  exit 1
+}
+
+(( $# )) || die 'usage: xdg-open <target>'
+
 file="$1"
 
-[[ -z "$file" ]] && { printf "argument required\n" >&2; exit 1; }
-
 if [[ $file =~ ^magnet: ]] && [[ "$file" =~ xt=urn:btih:([^&/]+) ]]; then
-  printf "d10:magnet-uri${#file}:${file}e\n" > "$HOME/Downloads/meta-${BASH_REMATCH[1]}.torrent"
+  printf "d10:magnet-uri${#file}:${file}e\n" > \
+    "$HOME/Downloads/meta-${BASH_REMATCH[1]}.torrent"
   exit 0
 fi
 
 if [[ ! -f "$file" ]]; then
-  $BROWSER "$file" &>/dev/null &
+  $BROWSER "$file"
   exit 0
 fi
 
-if ! which xdg-mime &>/dev/null; then
-  printf "xdg-mime required\n" >&2
-  exit 1
-fi
+which xdg-mime &>/dev/null || die 'xdg-mime required'
 
 read -r mimetype < \
   <(xdg-mime query filetype "$file" 2>/dev/null | cut -d ';' -f 1)
 
-{
-  case "$mimetype" in
-    application/pdf) zathura "$file"  ;;
-    application/ogg) mplayer "$file"  ;;
-    audio/*)         mplayer "$file"  ;;
-    video/*)         mplayer "$file"  ;;
-    image/*)         mirage  "$file"  ;;
-    text/*)          urxvtc -e vim "$file" ;;
-    *)
-      printf "%s: unmatched mimetype, %s\n" "$file" "$mimetype" >&2
-      exit 1
-      ;;
-  esac
-} &>/dev/null
+case "$mimetype" in
+  text/html)       $BROWSER "$file"      ;;
+  application/pdf) exec zathura "$file"  ;;
+  application/ogg) exec mplayer "$file"  ;;
+  audio/*|video/*) exec mplayer "$file"  ;;
+  image/*)         exec mirage  "$file"  ;;
+  text/*)          exec urxvtc -e vim "$file" ;;
+  *) die "%s: unmatched mimetype, %s\n" "$file" "$mimetype" ;;
+esac
