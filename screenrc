@@ -3,4 +3,4 @@ defbce off
 hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{= W}%n %t%{= G}]%{= K}%+w '
 sorendition '= W'
 term screen-256color
-vbell off # supposed to be defualt, but is not
+bell_msg '^GBell in window %n'
