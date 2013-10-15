@@ -1,10 +1,11 @@
 ! vim: ft=xdefaults
-*font:     -*-terminus-medium-*-*-*-18-*-*-*-*-*-*-*
-*boldFont: -*-terminus-medium-*-*-*-18-*-*-*-*-*-*-*
+*font: xft:Droid Sans Mono-14
+*boldFont: xft:Droid Sans Mono-14
 
 *foreground:  #dcdcdc
 *background:  #000000
 
+URxvt*lineSpace:    2
 URxvt*fading:       10%
 URxvt*fadeColor:    grey
 URxvt*scrollBar:    false
