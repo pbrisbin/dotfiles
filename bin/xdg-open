@@ -16,7 +16,7 @@ die() {
 file="$1"
 
 if [[ $file =~ ^magnet: ]] && [[ "$file" =~ xt=urn:btih:([^&/]+) ]]; then
-  printf "d10:magnet-uri${#file}:${file}e\n" > \
+  printf "d10:magnet-uri%s:%se\n" "${#file}" "${file}" > \
     "$HOME/Downloads/meta-${BASH_REMATCH[1]}.torrent"
   exit 0
 fi
