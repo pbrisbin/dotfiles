@@ -3,15 +3,21 @@
 # pbrisbin 2013 - paste stdin or the argument given to sprunge.us.
 #
 ###
-if (( ! $# )); then
-  # simple, stdin usage
-  read -r link < <(curl -# -F 'sprunge=<-' http://sprunge.us)
-else
-  read -r link < <(curl -# -F 'sprunge=<-' http://sprunge.us < "$1")
+content=/dev/stdin
 
-  ext="${1##*.}" # no-op if no extension
-  [[ "$ext" != "$1" ]] && link="$link?$ext"
+if [[ -f "$1" ]]; then
+  content="$1"; shift
 fi
+
+ext="$1"
+
+if [[ -z "$ext" ]] && [[ "$content" == *.* ]]; then
+  ext="${content##*.}"
+fi
+
+read -r link < <(curl -# -F 'sprunge=<-' http://sprunge.us < "$content")
+
+link="$link?$ext"
 
 [[ -n "$DISPLAY" ]] && printf "$link" | xclip
 printf "%s\n" "$link"
