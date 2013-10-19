@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2013: Dynamically setup any connected monitor.
+#
+###
+all_outputs() {
+  sed -r '
+    /^LVDS1.*$/d;
+    /^([^ ]*) ((dis)?connected) (([^\+]+)\+)?.*$/!d;
+    s//\1 \2 \5/;
+  ' "$xrandr_output"
+}
+
+first_mode() { awk '/^'"$1"'/ { getline; print $1 }' "$xrandr_output"; }
+
+last='LVSD1'
+xrandr_output=$(mktemp)
+xrandr_arguments=()
+
+xrandr &> "$xrandr_output"
+
+while read -r output cstatus current; do
+  case "$cstatus" in
+    connected)
+      read -r mode < <(first_mode "$output")
+
+      if [[ "$current" != "$mode" ]]; then
+        xrandr_arguments+=( --output "$output" --off ) # off and then on again
+        xrandr_arguments+=( --output "$output" --mode "$mode" --right-of "$last" )
+        last="$output"
+      fi
+      ;;
+    disconnected) xrandr_arguments+=( --output "$output" --off ) ;;
+  esac
+done < <(all_outputs)
+
+if (( $xrandr_arguments )); then
+  printf "xrandr %s\n" "${xrandr_arguments[*]}"
+  xrandr "${xrandr_arguments[@]}"
+
+  feh --bg-max ~/.background.png
+  pkill notify-osd || true
+fi
