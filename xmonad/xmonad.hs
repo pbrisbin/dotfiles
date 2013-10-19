@@ -24,7 +24,7 @@ main = xmonad
             ]
         }
         `additionalKeysP`
-            [ ("M-p", spawn "x=$(yeganesh -x -- -i -fn Verdana-12) && exec $x")
+            [ ("M-p", spawn "gmrun")
             , ("<XF86AudioRaiseVolume>", spawn "amixer sset Master 3%+")
             , ("<XF86AudioLowerVolume>", spawn "amixer sset Master 3%-")
             , ("<XF86AudioMute>",        spawn "amixer sset Master toggle")
