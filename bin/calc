@@ -6,5 +6,5 @@
 if which bc &>/dev/null; then
   printf "scale=10; %s\n" "$*" | bc -l
 else
-  printf "BEGIN { print %s }" "$*" | awk
+  printf "BEGIN { print %s }\n" "$*" | awk -f -
 fi
