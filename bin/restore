@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# pbrisbin 2013 - restore from most recent tarsnap backup.
+#
+###
+die() { printf "%s\n" "$*" >&2; exit 1; }
+
+tsnap() {
+  printf "\`tarsnap %s'...\n" "$*" >&2
+  tarsnap --keyfile /root/tarsnap.key "$@"
+}
+
+(( $# )) || die 'usage: restore [options] [paths]'
+
+(( UID )) && die 'You must be root'
+which tarsnap >/dev/null || die 'You must install tarsnap'
+
+read -r backup < <(tsnap --list-archives | sort -rn)
+
+args=( -x -f "$backup" )
+
+for arg; do
+  [[ "$arg" == -* ]] \
+    && args+=( "$arg" ) \
+    || args+=( $(readlink -m "$arg" | sed 's|^/||') )
+done
+
+cd / && tsnap "${args[@]}"
