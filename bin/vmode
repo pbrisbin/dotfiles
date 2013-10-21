@@ -13,7 +13,7 @@ all_outputs() {
 
 first_mode() { awk '/^'"$1"'/ { getline; print $1 }' "$xrandr_output"; }
 
-last='LVSD1'
+last='LVDS1'
 xrandr_output=$(mktemp)
 xrandr_arguments=()
 
