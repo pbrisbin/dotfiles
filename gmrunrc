@@ -5,7 +5,7 @@
 # Set terminal
 Terminal = urxvtc
 TermExec = ${Terminal} -e zsh -ilc
-AlwaysInTerm = ssh vim man chat
+AlwaysInTerm = ssh vim man
 
 # Set window geometry (except height)
 Width = 500
