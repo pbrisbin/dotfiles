@@ -1,43 +1,79 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 #
-# pbrisbin 2013: Dynamically setup any connected monitor.
+# pbrisbin 2013 - xrandr wrapper that does smart things.
 #
 ###
-all_outputs() {
-  sed -r '
-    /^LVDS1.*$/d;
-    /^([^ ]*) ((dis)?connected) (([^\+]+)\+)?.*$/!d;
-    s//\1 \2 \5/;
-  ' "$xrandr_output"
-}
+class Xrandr
+  def self.method_missing(*args, &block)
+    @instance ||= new(`xrandr --query`)
+    @instance.send(*args, &block)
+  end
 
-first_mode() { awk '/^'"$1"'/ { getline; print $1 }' "$xrandr_output"; }
+  attr_accessor :primary
+  attr_reader :connected_displays, :disconnected_displays
 
-last='LVDS1'
-xrandr_output=$(mktemp)
-xrandr_arguments=()
+  def initialize(xrandr_output)
+    @primary = nil
+    @connected_displays = []
+    @disconnected_displays = []
 
-xrandr &> "$xrandr_output"
+    parse(xrandr_output)
+  end
 
-while read -r output cstatus current; do
-  case "$cstatus" in
-    connected)
-      read -r mode < <(first_mode "$output")
+  def parse(xrandr_output)
+    lines = xrandr_output.split("\n")
 
-      if [[ "$current" != "$mode" ]]; then
-        xrandr_arguments+=( --output "$output" --off ) # off and then on again
-        xrandr_arguments+=( --output "$output" --mode "$mode" --right-of "$last" )
-        last="$output"
-      fi
-      ;;
-    disconnected) xrandr_arguments+=( --output "$output" --off ) ;;
-  esac
-done < <(all_outputs)
+    while line = lines.shift
+      next unless line =~ /^(.*) (dis)?connected /
 
-if (( $xrandr_arguments )); then
-  printf "xrandr %s\n" "${xrandr_arguments[*]}"
-  xrandr "${xrandr_arguments[@]}"
+      display = Display.new($1)
+      display.read_modes(lines)
 
-  feh --bg-max ~/.background.png
-  pkill notify-osd || true
-fi
+      if primary.nil?
+        self.primary = display
+      else
+        if $2.nil?
+          connected_displays << display
+        else
+          disconnected_displays << display
+        end
+      end
+    end
+  end
+end
+
+class Display
+  attr_reader :name, :modes
+
+  def initialize(name)
+    @name = name
+    @modes = []
+  end
+
+  def read_modes(lines)
+    while line = lines.shift
+      unless line =~ /^\s*(\d+x\d+)/
+        lines.unshift(line)
+        break
+      end
+
+      modes << $1
+    end
+  end
+end
+
+xrandr_arguments = 'xrandr'
+
+Xrandr.disconnected_displays.map do |d|
+  xrandr_arguments << " --output #{d.name} --off"
+end
+
+if connected = Xrandr.connected_displays.first
+  xrandr_arguments << " --output #{connected.name} --off"
+  xrandr_arguments << " --output #{connected.name} --mode #{connected.modes.first}"
+  xrandr_arguments << " --right-of #{Xrandr.primary.name}"
+end
+
+system(xrandr_arguments)
+system('feh --bg-max ~/.background.png')
+system('pkill notify-osd')
