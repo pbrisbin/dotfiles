@@ -3,77 +3,24 @@
 # pbrisbin 2013 - xrandr wrapper that does smart things.
 #
 ###
-class Xrandr
-  def self.method_missing(*args, &block)
-    @instance ||= new(`xrandr --query`)
-    @instance.send(*args, &block)
-  end
+xrandr_output = `xrandr --query`
+xrandr_args = []
 
-  attr_accessor :primary
-  attr_reader :connected_displays, :disconnected_displays
-
-  def initialize(xrandr_output)
-    @primary = nil
-    @connected_displays = []
-    @disconnected_displays = []
-
-    parse(xrandr_output)
-  end
-
-  def parse(xrandr_output)
-    lines = xrandr_output.split("\n")
-
-    while line = lines.shift
-      next unless line =~ /^(.*) (dis)?connected /
-
-      display = Display.new($1)
-      display.read_modes(lines)
-
-      if primary.nil?
-        self.primary = display
-      else
-        if $2.nil?
-          connected_displays << display
-        else
-          disconnected_displays << display
-        end
-      end
-    end
-  end
+# turn off all disconnected displays
+xrandr_output.scan(/^(.*) disconnected/) do |name,_|
+  xrandr_args << "--output #{name} --off"
 end
 
-class Display
-  attr_reader :name, :modes
+pattern = /\n([^\n]*) connected [^\n]*\n *(\d+x\d+)/m
 
-  def initialize(name)
-    @name = name
-    @modes = []
-  end
+# first connected output, at its first mode, right of primary
+(primary, _), (name, mode), _ = xrandr_output.scan(pattern)
 
-  def read_modes(lines)
-    while line = lines.shift
-      unless line =~ /^\s*(\d+x\d+)/
-        lines.unshift(line)
-        break
-      end
-
-      modes << $1
-    end
-  end
+if name
+  xrandr_args << "--output #{name} --off"
+  xrandr_args << "--output #{name} --mode #{mode} --right-of #{primary}"
 end
 
-xrandr_arguments = 'xrandr'
-
-Xrandr.disconnected_displays.map do |d|
-  xrandr_arguments << " --output #{d.name} --off"
-end
-
-if connected = Xrandr.connected_displays.first
-  xrandr_arguments << " --output #{connected.name} --off"
-  xrandr_arguments << " --output #{connected.name} --mode #{connected.modes.first}"
-  xrandr_arguments << " --right-of #{Xrandr.primary.name}"
-end
-
-system(xrandr_arguments)
+system("xrandr #{xrandr_args.join(' ')}")
 system('feh --bg-max ~/.background.png')
 system('pkill notify-osd')
