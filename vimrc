@@ -110,3 +110,41 @@ augroup vimrc
   autocmd FileType eruby setlocal noshowmatch
   autocmd FileType html setlocal noshowmatch
 augroup END
+
+let g:rails_gem_projections = {
+  \ "active_model_serializers": {
+  \   "app/serializers/*_serializer.rb": {
+  \     "command": "serializer",
+  \     "affinity": "model",
+  \     "test": "spec/serializers/%s_spec.rb",
+  \     "related": "app/models/%s.rb",
+  \     "template": "class %SSerializer < ActiveModel::Serializer\nend"
+  \   }
+  \ },
+  \
+  \ "ember-rails": {
+  \   "app/assets/javascripts/models/*.js.coffee": {
+  \     "command": "jmodel",
+  \     "alternate": "spec/javascripts/models/%s_spec.js.coffee",
+  \     "related": "app/assets/javascripts/controllers/%s_controller.js.coffee",
+  \     "template": "App.%S = DS.Model.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/controllers/*_controller.js.coffee": {
+  \     "command": "jcontroller",
+  \     "alternate": "spec/javascripts/controllers/%s_spec.js.coffee",
+  \     "related": "app/assets/javascripts/models/%s.js.coffee",
+  \     "template": "App.%SController = Ember.ObjectController.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/routes/*_route.js.coffee": {
+  \     "command": "jroute",
+  \     "alternate": "spec/javascripts/routes/%s_spec.js.coffee",
+  \     "template": "App.%SRoute = Ember.Route.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/templates/*.hbs": {
+  \     "command": "jtemplate",
+  \     "alternate": "app/assets/javascripts/views/%s.js.coffee"
+  \   },
+  \ }}
