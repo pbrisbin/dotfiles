@@ -4,33 +4,31 @@
 #
 ###
 class Ctags
-  def initialize(out)
-    @out   = out || 'tags'
-    @mains = %w( Main.hs main.hs app/main.hs )
-    @mains << derive_main
+  def initialize(tags)
+    @tags = tags || 'tags'
+    @module = find_module or exit 1
   end
 
   def run
-    @mains.each { |main| ctags(main) and break }
+    system(%{ echo ":ctags #{@tags}" | ghci -v0 '#{@module}' })
   end
 
   private
 
-  attr_reader :out
-
-  def ctags(file)
-    if File.exists?(file)
-      system(%{ echo ":ctags #{out}" | ghci -v0 '#{file}' })
-    end
+  def find_module
+    Dir.glob(module_glob, File::FNM_CASEFOLD).first
   end
 
-  def derive_main
-    # relies on a conventionally-named project directory, i.e.
-    # yesod-comments means Yesod/Comments.hs is the main module
-    file = File.basename(ENV['PWD']).split('-').map(&:capitalize).join('/')
-    file << ".hs"
+  def module_glob
+    File.join('**', "{#{module_name},main}.hs")
+  end
 
-    file
+  def module_name
+    File.join(*project_directory.split('-'))
+  end
+
+  def project_directory
+    File.basename(ENV['PWD'])
   end
 end
 
