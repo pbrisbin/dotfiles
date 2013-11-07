@@ -55,4 +55,5 @@ pkg
 proguard-project.txt
 proguard/
 tags
+tags.temp
 vagrant
