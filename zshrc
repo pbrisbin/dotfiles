@@ -20,7 +20,6 @@ bindkey -M viins '^?' backward-delete-char # Backspace
 export BROWSER='chromium'
 export MANWIDTH=80
 export SCREENRC="$HOME/.config/screenrc"
-export MAILRC="$HOME/.config/mailrc"
 
 setopt inc_append_history
 setopt vi
