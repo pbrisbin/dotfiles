@@ -19,7 +19,7 @@ cdpath=( "$HOME" "$HOME/Code" $cdpath )
 
 fpath=( "$HOME/.zfunctions" $fpath )
 
-path=( "$HOME/.bin" "$HOME/.cabal/bin" $path )
+path=( "$HOME/.local/bin" "$HOME/.cabal/bin" $path )
 
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
   exec startx 2>! ~/.xsession-errors

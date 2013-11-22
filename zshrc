@@ -19,6 +19,8 @@ bindkey -M viins '^?' backward-delete-char # Backspace
 
 export BROWSER='chromium'
 export MANWIDTH=80
+export SCREENRC="$HOME/.config/screenrc"
+export MAILRC="$HOME/.config/mailrc"
 
 setopt inc_append_history
 setopt vi
@@ -26,11 +28,11 @@ setopt vi
 prompt pbr
 
 store_current_directory() {
-  echo "$PWD" >! ~/.current-directory
+  echo "$PWD" >! ~/.cache/current-directory
 }
 
 add-zsh-hook chpwd store_current_directory
 
-if [[ -r ~/.current-directory ]]; then
-  cd $(< ~/.current-directory)
+if [[ -r ~/.cache/current-directory ]]; then
+  cd $(< ~/.cache/current-directory)
 fi
