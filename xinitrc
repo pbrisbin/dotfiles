@@ -1,6 +1,8 @@
 #!/bin/sh
 [ -r ~/.xinitrc.local ] && . ~/.xinitrc.local
 
+xrdb ~/.Xresources
+
 feh --bg-max ~/.background.png
 
 xset s off
