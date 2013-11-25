@@ -1,6 +1,6 @@
 ! vim: ft=xdefaults
-*font: xft:Droid Sans Mono-14
-*boldFont: xft:Droid Sans Mono-14
+*font: xft:Droid Sans Mono-16
+*boldFont: xft:Droid Sans Mono-16
 
 *foreground:  #dcdcdc
 *background:  #000000
