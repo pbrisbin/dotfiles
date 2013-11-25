@@ -24,3 +24,5 @@ path=( "$HOME/.local/bin" "$HOME/.cabal/bin" $path )
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
   exec startx 2>! ~/.xsession-errors
 fi
+
+export NOTITLE=1 # avoid broken grml precmd hook
