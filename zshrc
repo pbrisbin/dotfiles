@@ -64,7 +64,10 @@ bindkey -M viins '^?' backward-delete-char # Backspace
 
 export BROWSER='chromium'
 export MANWIDTH=80
-export SCREENRC="$HOME/.config/screenrc"
+
+export XDG_CONFIG_HOME="$HOME"/.config
+export SCREENRC="$XDG_CONFIG_HOME"/screenrc
+export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 
 setopt inc_append_history
 setopt vi
