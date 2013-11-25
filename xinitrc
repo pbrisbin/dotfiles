@@ -3,7 +3,7 @@
 
 xrdb ~/.config/Xresources
 
-feh --bg-max ~/.local/share/background.png
+feh --no-fehbg --bg-max ~/.local/share/background.png
 
 xset s off
 xsetroot -cursor_name left_ptr
