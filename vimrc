@@ -62,6 +62,10 @@ set winheight=5
 set winminheight=5
 set winheight=999
 
+if isdirectory('.git')
+  set grepprg=git\ grep\ --no-color
+endif
+
 let mapleader = ' '
 let maplocalleader = ' '
 
@@ -91,6 +95,7 @@ inoremap ({<CR> ({<CR>})<C-o>O
 inoremap ([<CR> ([<CR>])<C-o>O
 
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
+nnoremap <leader>k :silent grep! "\b<C-R><C-W>\b" \| copen<CR>
 
 cmap w!! w !sudo tee % >/dev/null<CR>
 
