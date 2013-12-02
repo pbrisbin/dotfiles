@@ -97,7 +97,7 @@ inoremap ([<CR> ([<CR>])<C-o>O
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 nnoremap <leader>k :silent grep! "\b<C-R><C-W>\b" \| copen<CR>
 
-cmap w!! w !sudo tee % >/dev/null<CR>
+cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
 
 command! -range=% Paste :<line1>,<line2>write !curl -sF "f:1=<-" http://ix.io
 command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
