@@ -22,5 +22,5 @@ if name
 end
 
 system("xrandr #{xrandr_args.join(' ')}")
-system('feh --bg-max ~/.background.png')
+system('feh --no-fehbg --bg-max ~/.local/share/background.png')
 system('pkill notify-osd')
