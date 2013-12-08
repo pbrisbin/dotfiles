@@ -9,14 +9,7 @@ if [ ! -d ~/.vim/bundle/vundle ]; then
   git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 fi
 
-count=$(find ~/.vim/bundle -mindepth 1 -maxdepth 1 -type d -print | wc -l)
+vim +BundleInstall +qall
 
-[ $count -eq 1 ] && vim +BundleInstall +qall
-
-dotfiles="$(printf "$0" | sed 's|/hooks/post-up||')"
-
-: ${ZDOTDIR:=$HOME/.config/zsh}
-
-for zfile in .zprofile .zshenv .zshrc; do
-  ln -fvs "$dotfiles/config/zsh/$zfile" "$ZDOTDIR/$zfile"
-done
+# Manually link dot-prefixed zsh files since rcm skips them by default
+rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
