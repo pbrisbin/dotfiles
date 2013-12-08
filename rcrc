@@ -1,3 +1,2 @@
-# vim: ft=sh
-COPY_ALWAYS=msmtprc
-EXCLUDES=README.md
+copy_always=msmtprc
+excludes=README.md
