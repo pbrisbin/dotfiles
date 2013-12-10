@@ -24,14 +24,6 @@ export MANWIDTH=80
 setopt inc_append_history
 setopt vi
 
-store_current_directory() {
-  echo "$PWD" >! ~/.cache/current-directory
-}
-
-add-zsh-hook chpwd store_current_directory
-
-if [[ -r ~/.cache/current-directory ]]; then
-  cd $(< ~/.cache/current-directory)
-fi
+cd - >/dev/null
 
 prompt pbr
