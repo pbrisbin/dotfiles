@@ -1,2 +1,2 @@
-copy_always=msmtprc
-excludes=README.md
+COPY_ALWAYS=msmtprc
+EXCLUDES=README.md
