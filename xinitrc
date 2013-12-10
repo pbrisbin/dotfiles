@@ -1,9 +1,9 @@
 #!/bin/sh
 [ -r ~/.xinitrc.local ] && . ~/.xinitrc.local
 
-xrdb ~/.config/Xresources
+xrdb "$XDG_CONFIG_HOME"/Xresources
 
-feh --no-fehbg --bg-max ~/.local/share/background.png
+feh --no-fehbg --bg-max "$XDG_DATA_HOME"/background.png
 
 xset s off
 xsetroot -cursor_name left_ptr
