@@ -10,9 +10,16 @@ All of the configs.
 
 3. Execute:
 
-~~~
-$ rcup rcrc
-$ rcup
-~~~
+```
+$ RCRC="config/rcrc" lsrc
+```
+
+4. If satisfied, execute:
+
+```
+$ RCRC="config/rcrc" rcup
+```
+
+To modify how or what will be installed, see `man 1 rcup`.
 
 [rcm]: https://github.com/mike-burns/rcm
