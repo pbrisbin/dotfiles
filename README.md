@@ -4,17 +4,17 @@ All of the configs.
 
 ## Installation
 
-1. Install [rcm][]
+* Install [rcm][]
 
-2. Clone to `~/.dotfiles`
+* Clone to `~/.dotfiles`
 
-3. Execute:
+* View what would be installed:
 
 ```
 $ RCRC="config/rcrc" lsrc
 ```
 
-4. If satisfied, execute:
+* Install it:
 
 ```
 $ RCRC="config/rcrc" rcup
