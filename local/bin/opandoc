@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# pbrisbin 2013 - view rendered markdown in a $BROWSER, using style
+# sheets from pbrisbin.com.
+#
+###
+if [ $# -eq 0 ]; then
+  printf "usage: opandoc <markdown-file>\n" >&2
+  exit 1
+fi
+
+file="$(mktemp)"
+
+{
+  printf '<html><body><section class="container">'
+
+  pandoc "$1" \
+    --css="http://pbrisbin.com/css/bootstrap.min.css" \
+    --css="http://pbrisbin.com/css/main.css" \
+    --css="http://pbrisbin.com/css/syntax.css"
+
+  printf '</section></body></html>'
+
+} > "$file" && $BROWSER "file://$file"
