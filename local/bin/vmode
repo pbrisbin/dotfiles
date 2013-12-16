@@ -21,6 +21,8 @@ if name
   xrandr_args << "--output #{name} --mode #{mode} --right-of #{primary}"
 end
 
-system("xrandr #{xrandr_args.join(' ')}")
-system('feh --no-fehbg --bg-max ~/.local/share/background.png')
-system('pkill notify-osd')
+puts "xrandr #{xrandr_args.join(' ')}"
+system "xrandr #{xrandr_args.join(' ')}"
+
+system 'feh --no-fehbg --bg-max ~/.local/share/background.png'
+system 'pkill notify-osd'
