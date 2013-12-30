@@ -78,7 +78,7 @@ let g:runfile_by_name           = { '.*\.t': '!cram %' }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
-let g:markdown_fenced_languages = ['c', 'haskell', 'ruby', 'sh', 'yaml', 'vim']
+let g:markdown_fenced_languages = ['c', 'coffee', 'haskell', 'ruby', 'sh', 'yaml', 'vim']
 
 silent! colorscheme zenburn
 
