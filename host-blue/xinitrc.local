@@ -1,3 +1,0 @@
-# vim: ft=sh
-xrandr --output HDMI1 --auto --right-of VGA1
-android-receiver &
