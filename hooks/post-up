@@ -11,5 +11,10 @@ fi
 
 vim +BundleInstall +qall
 
+# Verify we have some programs these dotfiles rely on
+for app in android-receiver msu urxvtd; do
+  which "$app" &>/dev/null || printf "missing app: %s\n" "$app" >&2
+done
+
 # Manually link dot-prefixed zsh files since rcm skips them by default
 rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
