@@ -4,3 +4,4 @@ hardstatus alwayslastline '%{= kK} %{= G}[%{= W}%H%{= G}] %= %{= K}%-w%{= G}[%{=
 sorendition '= W'
 term screen-256color
 bell_msg '^GBell in window %n'
+vbell off
