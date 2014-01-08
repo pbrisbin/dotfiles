@@ -3,4 +3,4 @@
 # pbrisbin 2013 - open my remote chat session in a new terminal.
 #
 ###
-urxvtc -n chat -e ssh -t pbrisbin.com -- screen -R -D -S irc
+urxvtc -title chat -n chat -e ssh -t pbrisbin.com -- screen -R -D -S irc
