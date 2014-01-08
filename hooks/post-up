@@ -3,6 +3,7 @@
 touch ~/.secrets
 
 [ -f ~/.msmtprc ] && chmod 600 ~/.msmtprc
+[ -d ~/.config/gnupg ] && chmod 700 ~/.config/gnupg
 
 if [ ! -d ~/.vim/bundle/vundle ]; then
   mkdir -p ~/.vim/bundle
