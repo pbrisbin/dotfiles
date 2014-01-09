@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2013 - record screencast as a gif.
+#
+###
+get_geometry() {
+  local pattern='^\(.*\)x\(.*\)[-+]\(.*\)[-+]\(.*\)$'
+  local replacement='--width \1 --height \2 -x \3 -y \4'
+
+  xrectsel | sed "s/$pattern/$replacement/"
+}
+
+gif="${1:-out.gif}"
+
+set -e
+
+printf "select an area, ^C when done.\n"
+recordmydesktop $(get_geometry)
+
+printf "converting...\n"
+mplayer -ao null out.ogv -vo jpeg:outdir=./
+convert *.jpg "$gif"
+
+printf "=> %s\n" "$gif"
+printf "cleaning up...\n"
+rm out.ogv *.jpg
