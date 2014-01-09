@@ -1,35 +1,19 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #
 # pbrisbin 2013 - open files with the appropriate handler program.
 #
 ###
-die() {
-  local fmt="$1"; shift
+read_mime() {
+  local file="$1"
 
-  printf "$fmt\n" "$@" >&2
-
-  exit 1
+  xdg-mime query filetype "$file" 2>/dev/null | cut -d ';' -f 1
 }
 
-(( $# )) || die 'usage: xdg-open <target>'
+[ $# -eq 0 ] && exit 1
 
-file="$1"
+handle-magnet "$1" 2>/dev/null && exit 0
 
-if [[ $file =~ ^magnet: ]] && [[ "$file" =~ xt=urn:btih:([^&/]+) ]]; then
-  printf "d10:magnet-uri%s:%se\n" "${#file}" "${file}" > \
-    "$HOME/Downloads/meta-${BASH_REMATCH[1]}.torrent"
-  exit 0
-fi
-
-if [[ ! -f "$file" ]]; then
-  $BROWSER "$file"
-  exit 0
-fi
-
-which xdg-mime &>/dev/null || die 'xdg-mime required'
-
-read -r mimetype < \
-  <(xdg-mime query filetype "$file" 2>/dev/null | cut -d ';' -f 1)
+mimetype="$(read_mime "$1")" || mimetype='text/html'
 
 case "$mimetype" in
   text/html)       $BROWSER "$file"      ;;
@@ -38,5 +22,4 @@ case "$mimetype" in
   audio/*|video/*) exec mplayer "$file"  ;;
   image/*)         exec mirage  "$file"  ;;
   text/*)          exec urxvtc -e vim "$file" ;;
-  *) die "%s: unmatched mimetype, %s\n" "$file" "$mimetype" ;;
 esac

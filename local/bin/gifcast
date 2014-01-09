@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013 - record screencast as a gif.
+# pbrisbin 2013 - record screencast as a gif. Requires ffcast be
+# installed (it provides xrectsel). TODO: makes pretty big gifs.
 #
 ###
 get_geometry() {
@@ -10,17 +11,24 @@ get_geometry() {
   xrectsel | sed "s/$pattern/$replacement/"
 }
 
-gif="${1:-out.gif}"
+clean_up() {
+  printf "cleaning up...\n"
+  rm -rf "$directory"
+}
+
+trap 'clean_up' EXIT
 
 set -e
 
-printf "select an area, ^C when done.\n"
-recordmydesktop $(get_geometry)
+gif="${1:-out.gif}"
+directory="$(mktemp -d)"
+geometry_args="$(get_geometry)"
 
-printf "converting...\n"
+cd "$directory"
+printf "select an area, ^C when done.\n"
+recordmydesktop $geometry_args # word-splitting intended
 mplayer -ao null out.ogv -vo jpeg:outdir=./
 convert *.jpg "$gif"
-
+cd - &>/dev/null
+cp "$directory/$gif" ./"$gif"
 printf "=> %s\n" "$gif"
-printf "cleaning up...\n"
-rm out.ogv *.jpg
