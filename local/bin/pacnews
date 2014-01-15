@@ -3,7 +3,7 @@
 # pbrisbin 2013 - find pacnew files and present for processing.
 #
 ###
-if (( $UID )); then
+if (( UID )); then
   printf "You must be root.\n" >&2
   exit 1
 fi
