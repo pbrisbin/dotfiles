@@ -25,9 +25,9 @@ main = xmonad
         }
         `additionalKeysP`
             [ ("M-p", spawn "gmrun")
-            , ("<XF86AudioRaiseVolume>", spawn "amixer sset Master 3%+")
-            , ("<XF86AudioLowerVolume>", spawn "amixer sset Master 3%-")
-            , ("<XF86AudioMute>",        spawn "amixer sset Master toggle")
+            , ("<XF86AudioRaiseVolume>", spawn "nmixer up")
+            , ("<XF86AudioLowerVolume>", spawn "nmixer down")
+            , ("<XF86AudioMute>",        spawn "nmixer toggle")
             ]
 
 withMyUrgencyHook :: LayoutClass l Window => XConfig l -> XConfig l
