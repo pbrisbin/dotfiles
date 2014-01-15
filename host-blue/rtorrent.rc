@@ -1,54 +1,37 @@
 # This is an example resource file for rTorrent. Copy to
 # ~/.rtorrent.rc and enable/modify the options as needed. Remember to
 # uncomment the options you wish to enable.
-# vim: ft=cfg tw=0
-
-# socket interface
-#scgi_port = localhost:5000
-
-http_proxy = "localhost:8118"
-proxy_address = "localhost:8118"
 
 # Maximum and minimum number of peers to connect to per torrent.
 #min_peers = 40
-max_peers = 20
+#max_peers = 100
 
 # Same as above but for seeding completed torrents (-1 = same as downloading)
 #min_peers_seed = 10
-max_peers_seed = 20
+#max_peers_seed = 50
 
 # Maximum number of simultanious uploads per torrent.
-max_uploads = 3
+#max_uploads = 15
 
 # Global upload and download rate in KiB. "0" for unlimited.
-download_rate = 2432
+download_rate = 0
 upload_rate = 15
 
 # Default directory to save the downloaded torrents.
-directory = /home/patrick/Downloads/torrents
+directory = /home/patrick/torrents/incoming
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-session = /home/patrick/.cache/rtorrent/session/
+session = /home/patrick/torrents/session
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
-schedule = watch_directory,5,5,load_start=/home/patrick/Downloads/*.torrent
+schedule = watch_directory,5,5,load_start=/home/patrick/torrents/*.torrent
 schedule = untied_directory,5,5,stop_untied=
-#schedule = tied_directory,5,5,start_tied=
 
 # Close torrents when diskspace is low.
 schedule = low_diskspace,5,60,close_low_diskspace=100M
-
-# Move completed torrents
-system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,~/Downloads/torrents/completed/"
-
-# Stop torrents when reaching upload ratio in percent,
-# when also reaching total upload in bytes, or when
-# reaching final upload ratio in percent.
-# example: stop at ratio 2.0 with at least 200 MB uploaded, or else ratio 20.0
-#schedule = ratio,60,60,"stop_on_ratio=200,200M,2000"
 
 # The ip address reported to the tracker.
 #ip = 127.0.0.1
@@ -69,7 +52,7 @@ port_range = 49164-49164
 # fixed that causes lack of diskspace not to be properly reported.
 check_hash = yes
 
-# Set whetever the client should try to connect to UDP trackers.
+# Set whether the client should try to connect to UDP trackers.
 use_udp_trackers = no
 
 # Alternative calls to bind and ip that should handle dynamic ip's.
@@ -100,20 +83,22 @@ dht_port = 6881
 #
 peer_exchange = yes
 
-#
-# Do not modify the following parameters unless you know what you're doing.
-#
+# Privoxy
+http_proxy = "localhost:8118"
+proxy_address = "localhost:8118"
 
-# Hash read-ahead controls how many MB to request the kernel to read
-# ahead. If the value is too low the disk may not be fully utilized,
-# while if too high the kernel might not be able to keep the read
-# pages in memory thus end up trashing.
-#hash_read_ahead = 10
+# Move completed torrents
+system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,/home/patrick/torrents/completed/"
 
-# Interval between attempts to check the hash, in milliseconds.
-#hash_interval = 100
+# Enable the default ratio group.
+ratio.enable=
 
-# Number of attempts to check the hash while using the mincore status,
-# before forcing. Overworked systems might need lower values to get a
-# decent hash checking rate.
-#hash_max_tries = 10
+# Change the limits, the defaults should be sufficient.
+ratio.min.set=1
+#ratio.max.set=300
+#ratio.upload.set=100M
+
+# Changing the command triggered when the ratio is reached.
+system.method.set = group.seeding.ratio.command, d.close=, d.erase=
+
+# vim: ft=cfg tw=0
