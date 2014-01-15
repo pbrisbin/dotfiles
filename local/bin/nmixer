@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2013 - amixer with notifications.
+#
+###
+mixer() {
+  local cmd="$1" body
+
+  body="$(amixer sset Master "$cmd" |\
+    sed '/.*Mono: Playback .* \[\(.*\)\] .* \[\(on\|off\)\].*/!d; s//\1 (\2)/')"
+
+  notify-send -t 1250 'Volume' "Level: $body"
+}
+
+case "$1" in
+  up)     mixer '3%+'   ;;
+  down)   mixer '3%-'   ;;
+  toggle) mixer 'toggle';;
+  *)
+    printf "usage: nmixer [up|down|toggle]\n" >&2
+    exit 64
+    ;;
+esac
