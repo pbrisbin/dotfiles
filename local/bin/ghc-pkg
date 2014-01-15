@@ -41,6 +41,7 @@ case "$1" in
 
     cabal install "$@" cabal-install
     cabal install "$@" \
+      msu \
       pandoc \
       xmonad \
       xmonad-contrib \
