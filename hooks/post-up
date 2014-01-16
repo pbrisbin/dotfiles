@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-touch ~/.secrets
+touch ~/.netrc
+chmod 600 ~/.netrc
 
 [ -f ~/.msmtprc ] && chmod 600 ~/.msmtprc
 [ -d ~/.config/gnupg ] && chmod 700 ~/.config/gnupg
