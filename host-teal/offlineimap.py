@@ -1,6 +1,6 @@
 import os
 import re
-import netrc
+import subprocess
 
 mapping = { 'INBOX':              'INBOX'
           , '[Gmail]/All Mail':   'all_mail'
@@ -25,14 +25,5 @@ def exclude(excludes):
     return lambda folder: not folder in excludes
 
 def get_password(email_address):
-  net_rc = netrc.netrc()
-  email_host = email_address.split('@', 2)[1]
-
-  for host in net_rc.hosts.keys():
-    if host == email_host:
-      authenticator = net_rc.authenticators(host)
-
-      if authenticator[0] == email_address:
-        return authenticator[2]
-
-  return None
+    pw = subprocess.check_output(["/home/patrick/.local/bin/getnetrc", email_address])
+    return str(pw).strip()
