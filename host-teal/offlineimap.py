@@ -1,5 +1,6 @@
 import os
 import re
+import netrc
 
 mapping = { 'INBOX':              'INBOX'
           , '[Gmail]/All Mail':   'all_mail'
@@ -23,6 +24,15 @@ def nt_local(folder):
 def exclude(excludes):
     return lambda folder: not folder in excludes
 
-def get_password(account):
-    # should except on unset value
-    return os.environ[account.upper() + "_PASSWORD"]
+def get_password(email_address):
+  net_rc = netrc.netrc()
+  email_host = email_address.split('@', 2)[1]
+
+  for host in net_rc.hosts.keys():
+    if host == email_host:
+      authenticator = net_rc.authenticators(host)
+
+      if authenticator[0] == email_address:
+        return authenticator[2]
+
+  return None

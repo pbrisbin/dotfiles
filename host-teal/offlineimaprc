@@ -37,7 +37,7 @@ nametrans = nt_local
 [Repository Gmail-Remote]
 type = Gmail
 remoteuser = pbrisbin@gmail.com
-remotepasseval = get_password('gmail')
+remotepasseval = get_password('pbrisbin@gmail.com')
 realdelete = no
 maxconnections = 3
 nametrans = nt_remote
@@ -47,7 +47,7 @@ folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
 [Repository Thoughtbot-Remote]
 type = Gmail
 remoteuser = pat@thoughtbot.com
-remotepasseval = get_password('thoughtbot')
+remotepasseval = get_password('pat@thoughtbot.com')
 realdelete = no
 maxconnections = 3
 nametrans = nt_remote
