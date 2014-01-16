@@ -3,7 +3,7 @@ set from          = "pbrisbin@gmail.com"
 set sendmail      = "/usr/bin/msmtp -a gmail"
 set mbox          = "+Gmail/all_mail"
 set postponed     = "+Gmail/drafts"
-set query_command = "~/.local/bin/gcontacts -a pbrisbin@gmail.com -m short -s name '%s'"
+set query_command = "~/.local/bin/gcontacts -a pbrisbin@gmail.com '%s'"
 
 color status green default
 
