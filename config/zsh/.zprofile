@@ -1,5 +1,3 @@
-source "$HOME/.secrets"
-
 function start_ssh_agent() {
   local ssh_env="$XDG_CACHE_HOME/ssh-env"
 
