@@ -1,0 +1,900 @@
+#!/usr/bin/python2
+
+"""
+Command line interface to Google gmail contacts.
+
+For usage and help:
+
+    gcontacts.py -h        # Brief usage and list of options
+    gcontacts.py -f        # Full help including examples and notes
+
+"""
+
+__version__ = "0.3"
+__author__ = "Jim Karsten (jimkarsten@gmail.com)"
+__copyright__ = "(c) 2009-2010 Jim Karsten. GNU GPL 3."
+__contributors__ = ["Patrick Brisbin (abook and bug fixes)"]
+
+# W0404: *Reimport %r (imported line %s)*
+# pylint: disable=W0404
+from optparse import OptionParser
+import atom
+import email.parser
+import email.utils
+import filecmp
+import gdata.contacts
+import gdata.contacts.service
+import getpass
+import logging
+import netrc
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+CONTACTS_MACRO = 'contacts_account'
+P_ID = re.compile(r'^http://www.google.com/m8/feeds/contacts/.*?/base/(.*)$')
+P_REL = re.compile(r'^http://schemas.google.com/g/2005#(.*)$')
+TMP_DIR = '/tmp/contacts'
+logging.basicConfig(level=logging.WARN,
+    stream=sys.stdout,
+    format='%(levelname)-8s %(message)s',
+    )
+LOG = logging.getLogger('')
+
+
+class Contacts():
+    """Class representing a set of contacts."""
+    def __init__(self, gd_client=None):
+        self.gd_client = gd_client
+        self.query = gdata.contacts.service.ContactsQuery()
+        self.query.max_results = 999999
+        self.feed = gd_client.GetContactsFeed(self.query.ToUri())
+        self.contacts = []
+        self.filtered_contacts = []
+        self.filename = ''
+
+    def add_blank_contact(self):
+        """Adds a blank contact using Google's Contact API
+
+        Returns:
+            Contact instance, if successful. None, otherwise.
+        """
+        LOG.debug("Adding blank contact.")
+        if not self.gd_client:
+            return
+        new_contact = gdata.contacts.ContactEntry(title=atom.Title(
+            text='_new_contact'))
+        new_contact.email = None
+        contact_entry = None
+        try:
+            contact_entry = self.gd_client.CreateContact(new_contact)
+        except gdata.service.RequestError, e:
+            msg = 'Add blank contact failed'
+            if 'reason' in e[0]:
+                reason = e[0]['reason']
+                if e[0]['reason'] == 'Conflict':
+                    reason = 'a contact exists with that email address'
+                msg = '{msg}: {reason}'.format(msg=msg, reason=reason)
+            print >> sys.stderr, msg
+        return Contact(entry=contact_entry)
+
+    def contact_attributes(self, info):
+        """Creates a dictionary of contact attributes from contents in a file
+        Args:
+            info: list, lines of contact info
+        Returns:
+            Dictionary: dictionary with keys: id, name, email, phone
+
+            Example:
+            attributes = { 'id': '1f3ad345afd3534d9',
+                           'name': 'Doe, Jane',
+                           'email_home': ['home@gmail.com', 'home2@gmail.com'],
+                           'email_work': ['work@gmail.com'],
+                           'organization': 'My Company Inc.',
+                           'phone_home': ['519 111-1111'],
+                           'phone_mobile': ['519-222-2222'],
+                         }
+
+        """
+        # R0201: *Method could be a function*
+        # pylint: disable=R0201
+        LOG.debug("Parsing info and creating attributes dictionary.")
+        attributes = {}
+        ## Adapted from OPTCRE in ConfigParser.py
+        item_re = re.compile(
+            r'(?P<key>[^:\s][^:]*)'               # very permissive!
+            r'\s*(?P<vi>[:])\s*'                  # any number of space/tab,
+                                                  # followed by separator
+                                                  # (:), followed
+                                                  # by any # space/tab
+            r'(?P<value>.*)$'                     # everything up to eol
+            )
+
+        email_re = re.compile(r'^email_.*$')
+        phone_re = re.compile(r'^phone_.*$')
+
+        for line in info:
+            mo = item_re.match(line)
+            if mo:
+                item_key, unused_vi, item_value = mo.group('key', 'vi',
+                        'value')
+                em = email_re.match(item_key)
+                ph = phone_re.match(item_key)
+                if em or ph:
+                    if not item_key in attributes:
+                        attributes[item_key] = []
+                    attributes[item_key].append(item_value)
+                else:
+                    attributes[item_key] = item_value
+        return attributes
+
+    def create_contact_from_file(self, filename):
+        """Create contact from a file containing an email message
+
+        Args:
+            filename: string, name of file. If '-', email message is read from
+            STDIN.
+        """
+        fh = None
+        if filename == '-':
+            fh = sys.stdin
+        else:
+            fh = open(filename)
+
+        info = []
+        p = email.parser.Parser()
+        headers = p.parse(fh, headersonly=True)
+        if not 'From' in headers:
+            print >> sys.stderr, "Unable to locate From header in email."
+            return []
+
+        addr = email.utils.parseaddr(headers['From'])
+        name = addr[0] or addr[1]
+        info.append('name: {name}'.format(name=name))
+        info.append('email_work: {addr}'.format(addr=addr[1]))
+        info.append('phone_work: n/a')
+        return self.update_contact(info)
+
+    def edit(self):
+        """Edit the set of contacts"""
+        # Create temp file.
+        if not os.path.exists(TMP_DIR):
+            os.makedirs(TMP_DIR)
+
+        (unused_tmp_file_h, tmp_filename) = tempfile.mkstemp(dir=TMP_DIR)
+        bak_tmp_name = '{tmp}.bak'.format(tmp=tmp_filename)
+
+        # Get contacts into temp file.
+        old_stdout = sys.stdout
+        sys.stdout = open(tmp_filename, 'w')
+        self.print_contacts()
+        sys.stdout = old_stdout
+
+        # Back up file
+        # copy2 is used to preserve meta data
+        shutil.copy2(tmp_filename, bak_tmp_name)
+
+        # Edit file with vim
+        subprocess.call(['vim', tmp_filename])
+
+        # Diff file and backup
+        if not filecmp.cmp(tmp_filename, bak_tmp_name):
+            self.filename = tmp_filename
+
+    def filter(self, keyword=None):
+        """ Filter contacts keeping only those that qualify.
+        Args:
+            keyword: (optional) string, keyword to match one
+        Returns:
+            List of Contact objects.
+        Notes:
+            Keyword matching: contacts which contain the provided keyword in
+            the "name", "organization" or "email" are considers a match.
+            Matching is case insensitive. If no keyword is provided all
+            contacts match.
+        """
+        LOG.debug("Filtering contacts for keyword: {kw}".format(kw=keyword))
+
+        self.filtered_contacts = []
+        if not keyword:
+            self.filtered_contacts = self.contacts
+            return
+        for contact in self.contacts:
+            if contact.is_match(keyword=keyword):
+                self.filtered_contacts.append(contact)
+
+    def get(self):
+        """Get contacts"""
+        self.contacts = []
+        for entry in self.feed.entry:
+            contact = Contact(entry=entry)
+            self.contacts.append(contact)
+
+    def print_contacts(self, mode='long', sort_by='email', print_status=False):
+        """ Print contacts.
+        Args:
+            mode: string, print format mode, one of 'abook', 'long', 'short'
+            sort_by: string, attribute to sort contacts by, one of 'email',
+                'name'
+            print_status: If True, print status line.
+
+        Example output:
+
+        ## Mode: long
+
+        id: 6842af580cd0f065
+        name: Karsten, Jim - vyyvyyv
+        email_home: vyyvyyv@gmail.com
+        phone_mobile: n/a
+
+        ## Mode: short
+
+        vyyvyyv@gmail.com       Karsten, Jim - vyyvyyv  n/a
+
+        """
+
+        if print_status:
+            print 'Searching gmail\t{all} entries\t{match} matches:'.format(
+                all=len(self.contacts), match=len(self.filtered_contacts))
+
+        #
+        # Contacts may have more than one email address, so to facilitate
+        # sorting, create a list of dictionaries. Each dictionary represents
+        # one printable item. The values associated with the 'email' and 'name'
+        # keys are used for sorting.
+        #
+        # When printing in short mode, there is one printable item for each
+        # email address. A contact may have more than one email address.
+        #
+        # When printing in long mode, there is only one printable item per
+        # contact. There isn't an obvious way to handle sorting by email in
+        # long mode when a contact has more than one email address. Contacts
+        # are sorted by the first email.
+        #
+
+        printable_item = []
+        for contact in self.filtered_contacts:
+            emails = []
+            if mode == 'short':
+                emails = contact.emails
+            else:
+                # In long mode, sort by first email
+                if contact.emails:
+                    emails = [contact.emails[0]]
+            if not emails:
+                emails = [{'address': 'n/a', 'rel':'n/a'}]
+            for email_addr in emails:
+                sortable_name = contact.name or contact.organization or ''
+                c = {'email': email_addr['address'], 'name': sortable_name,
+                        'other_info': email_addr['rel'], 'contact': contact}
+                printable_item.append(c)
+
+        cmp_fn = lambda x, y: cmp(x[sort_by].lower(), y[sort_by].lower())
+
+        # This dictionary converts google phone types (stored in 'rel'
+        # field)  to abook phone types. Google has many more phone types
+        # than abook. Any not defined in the table are set to 'other'.
+        abook_phone_lookup = {
+                'home': 'phone',
+                'work': 'workphone',
+                'mobile': 'mobile',
+                'home_fax': 'fax',
+                'work_fax': 'fax',
+                'pager': 'pager',
+                'other': 'phone'
+                }
+
+        for count, printable in enumerate(sorted(printable_item, cmp=cmp_fn)):
+            contact = printable['contact']
+            if mode == 'short':
+                print "{email}\t{name}\t{info}".format(
+                        email=printable['email'], name=contact.fullname,
+                        info=printable['other_info'])
+            elif mode == 'abook':
+                print ""
+                print '[{count}]'.format(count=count)
+                if contact.name or contact.organization:
+                    print "name={name}".format(name=contact.fullname)
+                else:
+                    # abook entries must have a name, so provide a unique
+                    # default using the contact id if no name
+                    print "name=n/a id: {id}".format(id=contact.id)
+                if contact.name:
+                    nick = re.compile(r'[^a-zA-Z0-9\.\s]').sub('',
+                            contact.name.lower())
+                    print "nick={nick}".format(nick=re.compile(r'\s+').sub(
+                        '_', nick))
+                emails = []
+                for email_addr in contact.emails:
+                    emails.append(email_addr['address'])
+                if emails:
+                    print "email={emails}".format(emails=', '.join(emails))
+
+                # Create an abook phones dictionary
+                # Eg phones = {'phone': ['519 222-2222', '519 333-3333'],
+                #              'workphone': ['519 111-1111', '519 444-4444']}
+                phones = {}
+                for key in abook_phone_lookup.keys():
+                    phones[abook_phone_lookup[key]] = []
+                for phone in contact.phones:
+                    phone_type = 'other'
+                    if phone['rel'] in abook_phone_lookup:
+                        phone_type = phone['rel']
+                    if phone_type == 'other':
+                        phones[abook_phone_lookup[phone_type]].append(
+                                "{num} ({rel})".format(num=phone['number'],
+                                    rel=phone['rel']))
+                    else:
+                        phones[abook_phone_lookup[phone_type]].append(
+                                phone['number'])
+                for key in phones.keys():
+                    if phones[key]:
+                        print "{key}={num}".format(key=key,
+                                num=', '.join(phones[key]))
+            elif mode == 'email':
+                print "\"{name}\" <{email}>".format(
+                        email=printable['email'], name=contact.fullname)
+            else:
+                print ""
+                print "id: {id}".format(id=contact.id)
+                if contact.name:
+                    print "name: {name}".format(name=contact.name)
+                if contact.organization:
+                    print "organization: {org}".format(
+                            org=contact.organization)
+                for email_addr in contact.emails:
+                    print "email_{rel}: {email}".format(rel=email_addr['rel'],
+                            email=email_addr['address'])
+                for phone in contact.phones:
+                    print "phone_{rel}: {num}".format(rel=phone['rel'],
+                            num=phone['number'])
+
+    def update(self):
+        """Update contacts from file. """
+        if not self.filename:
+            return
+        for info in self.update_generator():
+            if not self.update_contact(info):
+                print >> sys.stderr, 'Contact update failed:'
+                print >> sys.stderr, info
+        return
+
+    def update_contact(self, info):
+        """Update contact information.
+
+        Args:
+            info: list, list of strings of information data
+        """
+        attributes = self.contact_attributes(info)
+        if not attributes:
+            return
+
+        action = None
+        if 'id' in attributes.keys():
+            if 'name' in attributes.keys() and attributes['name'] == 'DELETE':
+                action = 'delete'
+            else:
+                action = 'update'
+        else:
+            action = 'add'
+
+        if action == 'add':
+            # Add a blank contact and then continue as if updating.
+            contact = self.add_blank_contact()
+            self.contacts.append(contact)
+            if contact.entry.id:
+                match = P_ID.match(contact.entry.id.text)
+                if match:
+                    attributes['id'] = match.group(1)
+            action = 'update'
+
+        # Find the matching contact
+        contact = None
+        for c in self.contacts:
+            match = P_ID.match(c.entry.id.text)
+            if match:
+                if attributes['id'] == match.group(1):
+                    contact = c
+
+        if not contact:
+            return
+
+        label = ''
+        if 'organization' in attributes:
+            label = attributes['organization']
+        elif 'name' in attributes:
+            label = attributes['name']
+        else:
+            label = attributes['id']
+        action_labels = {
+            'add': 'Adding',
+            'delete': 'Deleting',
+            'update': 'Updating',
+            }
+        LOG.info("{action}: {label}".format(action=action_labels[action],
+                label=label))
+        if action == 'delete':
+            return self.gd_client.DeleteContact(
+                    contact.entry.GetEditLink().href)
+
+        entry = contact.entry
+        entry.title = None
+        if 'name' in attributes:
+            entry.title = atom.Title(text=attributes['name'])
+        entry.organization = None
+        if 'organization' in attributes:
+            entry.organization = gdata.contacts.Organization(
+                    org_name=gdata.contacts.OrgName(
+                        text=attributes['organization']))
+
+        email_re = re.compile(r'^email_(.*)$')
+        phone_re = re.compile(r'^phone_(.*)$')
+        entry.email = []
+        entry.phone_number = []
+        for key in attributes.keys():
+            em = email_re.match(key)
+            if em:
+                email_type = em.group(1)
+                rel_type = "REL_{rel}".format(rel=email_type.upper())
+                for email_addr in attributes[key]:
+                    entry.email.append(
+                            gdata.contacts.Email(address=email_addr,
+                            rel=getattr(gdata.contacts, rel_type)))
+            ph = phone_re.match(key)
+            if ph:
+                phone_type = ph.group(1)
+                rel_type = "PHONE_{rel}".format(rel=phone_type.upper())
+                for phone in attributes[key]:
+                    entry.phone_number.append(
+                            gdata.contacts.PhoneNumber(text=phone,
+                            rel=getattr(gdata.contacts, rel_type)))
+        return self.gd_client.UpdateContact(entry.GetEditLink().href, entry)
+
+    def update_generator(self):
+        """Generator bundling lines of info for a single contact"""
+        lines = []
+        with open(self.filename) as f:
+            for line in f:
+                if len(line.strip()) == 0:
+                    if len(lines) > 0:
+                        yield lines
+                    lines = []
+                else:
+                    lines.append(line.strip())
+            if len(lines) > 0:
+                yield lines
+
+
+class Contact():
+    """
+    This class pseudo extends gdata.contacts.ContactEntry. The entry property
+    points to a ContactEntry object.
+    """
+    def __init__(self, entry=None):
+        # C0103: *Invalid name "%s" (should match %s)*
+        # pylint: disable=C0103
+        self.entry = entry
+        self.id = None
+        if self.entry.id:
+            match = P_ID.match(self.entry.id.text)
+            if match:
+                self.id = match.group(1)
+        self.name = self.entry.title.text or None
+        self.organization = None
+        if self.entry.organization and self.entry.organization.org_name:
+            self.organization = self.entry.organization.org_name.text or None
+        self.emails = []
+        self.parse_emails()
+        self.phones = []
+        self.parse_phones()
+        self.fullname = ''
+        self.set_fullname()
+
+    def is_match(self, keyword):
+        """Determine if contact is a match for keyword.
+        Args:
+            keyword: string, keyword to match on
+        Returns:
+            True if contact is a match.
+        Notes:
+            The keyword is matched againse the contact name, organization and
+            address.
+            Matching is case insensitive.
+        """
+        match = False
+        for email_addr in self.emails:
+            if re.search(keyword, email_addr['address'], re.IGNORECASE):
+                match = True
+        if self.name:
+            if re.search(keyword, self.name, re.IGNORECASE):
+                match = True
+        if self.organization:
+            if re.search(keyword, self.organization, re.IGNORECASE):
+                match = True
+        return match
+
+    def parse_emails(self):
+        """Parse email components into the address and type (rel) """
+        for email_addr in self.entry.email:
+            rel = 'other'
+            if email_addr.rel:
+                match = P_REL.match(email_addr.rel)
+                if match:
+                    rel = match.group(1)
+            self.emails.append({'address': email_addr.address, 'rel': rel})
+
+    def parse_phones(self):
+        """Parse phone components into the number and type (rel) """
+        for phone in self.entry.phone_number:
+            rel = 'other'
+            if phone.rel:
+                match = P_REL.match(phone.rel)
+                if match:
+                    rel = match.group(1)
+            self.phones.append({'number': phone.text, 'rel': rel})
+
+    def set_fullname(self):
+        """Determine full name of the contact."""
+        if self.name and self.organization:
+            self.fullname = "{name} ({org})".format(name=self.name,
+                    org=self.organization)
+        elif self.organization:
+            self.fullname = "{org}".format(org=self.organization)
+        elif self.name:
+            self.fullname = "{name}".format(name=self.name)
+        else:
+            self.fullname = 'n/a'
+
+
+def get_email_address():
+    """ Get the google email address associated with Google contacts.
+    Args:
+        None
+    Returns:
+        email address: myusername@gmail.com
+    """
+    try:
+        net_rc = netrc.netrc()
+    except IOError as err:
+        LOG.debug('Unable to read $HOME/.netrc file. {reason}'.format(
+                    reason=str(err)))
+        net_rc = None
+    if net_rc:
+        try:
+            return net_rc.macros[CONTACTS_MACRO][0].strip()
+        except KeyError as err:
+            msg = ' '.join([
+                'Unable to get contacts account from $HOME/.netrc file.',
+                'A macdefs "{macro}" is not defined.'.format(
+                    macro=CONTACTS_MACRO),
+                ])
+            LOG.debug(msg)
+
+    # If we are in interactive mode, prompt for password
+    psi = os.environ.get('PS1', None)
+    if not psi:
+        return None
+    return raw_input('Email account: ')
+
+
+def get_password(email_address):
+    """ Get google email account password.
+    Args:
+        email_address: myusername@gmail.com
+    Returns:
+        password (string)
+    Notes:
+        If a password is not accessible, the user is prompted for one.
+    """
+    try:
+        net_rc = netrc.netrc()
+    except IOError as err:
+        LOG.debug('Unable to read $HOME/.netrc file. {reason}'.format(
+                    reason=str(err)))
+    if net_rc:
+        # Find the first machine entry which corresponds to the domain
+        # of the given email address and has a login that is that email
+        # address.
+        for host in net_rc.hosts.keys():
+            if host == email_address.split('@', 2)[1]:
+                if net_rc.authenticators(host)[0] == email_address:
+                    return net_rc.authenticators(host)[2]
+
+    # If we are in interactive mode, prompt for password
+    psi = os.environ.get('PS1', None)
+    if not psi:
+        return None
+    return getpass.getpass()
+
+
+def usage_full():
+    """Return a string representing the full usage text."""
+
+    return """
+OVERVIEW:
+
+    This script permits listing, creating, editing and deleting gmail
+    contacts.
+
+
+OPTIONS:
+
+    -a, --account
+        The account option is used to indicate the gmail account to use for
+        contacts. The option expects an email address.
+
+            gcontacts.py --account username@gmail.com
+
+    -c, --create
+        The create option is used to create a contact from an email message.
+        If the create option is provided, the --edit option is ignored.
+        The option expects either a filename or '-' to indicate
+        the message is available on standard input.
+
+            # Create from an email message file
+            gcontacts.py --create /path/to/mail/cur/129527.26035_101.host\:2\,S
+
+            # Create from an email message on stdin
+            cat 129527.26035_101.host\:2\,S | gcontacts.py --create '-'
+
+
+    -e, --edit
+        Edit contacts. By default contacts are printed to stdout. The edit
+        option permits creating, updating and deleting contacts.
+
+    -f, --full-help
+        Print this full help and exit. Full help includes examples and notes.
+
+    -m, --mode
+        The mode option indicates the format of the printed output.
+            Choices:
+                abook       format suitable for import into abook
+                email       format suitable for email client address bar
+                            Eg, "name" <email address>
+                long        mulitiple lines per contact, one line per attribute
+                short       one line per contact
+
+    -r, --include-header
+        If the include-header option is provided, a status header is printed
+        before the list of contacts.
+
+    -s, --sort,
+        The sort option indicates how to sort contacts when printed.
+            Choices:
+                email       sort by email address
+                name        sort by contact name
+        The default is 'email'.
+
+    -v, --verbose,
+        Print information messages to stdout.
+
+    --vv
+        More verbose. Print debugging messages to stdout.
+
+
+NOTES:
+    To add a contact, edit contacts and add an entry with no id.
+
+    To delete a contact, edit it and change the name to the single word DELETE.
+    Uppercase is required.
+
+    When editing contacts, a list of contacts is stored in a temp file and
+    the file is opened in the vim editor. If you quit without saving, no
+    updates are made. If you save, all contacts in the file are updated.
+
+    If changes to only a few contacts are made, it's possible to speed up the
+    update by removing everything from the file but the information for
+    the contacts that are changed.
+
+    Available contact info components:
+        id
+        name
+        organization
+        email_home              * multiple
+        email_work              * multiple
+        email_other             * multiple
+        phone_home              * multiple
+        phone_work              * multiple
+
+    *The components flagged multiple, can be used multiple times for a contact.
+
+    Each component of a contact's info must be written on a separate line with
+    no blank lines.
+
+    Use blank lines to separate contacts.
+
+
+    Keyword matching is case insensitive.
+
+
+EXAMPLES:
+
+    # Display all gmail contacts
+    gcontacts.py
+
+    # Display gmail contacts with the keyword 'smith'
+    gcontacts.py smith
+
+    # Display all gmail contacts, short format sorted by name
+    gcontacts.py -f short -s name
+
+    # Edit all gmail contacts
+    gcontacts.py -e
+
+    # Edit all gmail contacts with the keyword 'smith'
+    gcontacts.py -e 'smith'
+
+    # Edit examples
+    # If editing, on saving the folling contacts, the first contact will be
+    # updated, the second contact will be deleted, and the third contact will
+    # be created (it has no 'id').
+
+        id: 12341231a1231e12
+        name: Abraham Apple
+        email_home: abe@gmail.com
+        phone_home: 111 555-2121
+
+        id: 3412ce2134df1212
+        name: DELETE
+        email_home: bbob@gmail.com
+        phone_work: (111) 555-1212 ext 123
+
+        name: Charlene Collingwood
+        organization: CCC Company Inc.
+        email_home: charlene@gmail.com
+        email_work: ccollingwood@gmail.com
+        email_other: fluffykittens@gmail.com
+        phone_home: (111) 555-2222
+        phone_home: (122) 666-1212 (cell)
+        phone_work: (111) 555-1212 ext 123
+
+
+CONFIGURATION:
+
+    Netrc
+
+    Gmail account usernames and passwords can be read from a $HOME/.netrc file.
+    Define a machine for the gmail IMAP server and create a macdef to indicate
+    the gmail account used for contacts.
+
+        machine imap.gmail.com
+            login useraname@gmail.com
+            password fluf5yk1tt3ns
+
+        macdef contacts_account
+            username@gmail.com
+
+    Mutt
+
+    The gcontacts.py script can be used as an address book for mutt.
+
+    # Bind a macro to 'a' to add a contact from the current email message.
+
+    ~/.mutt/bindings
+
+        # Mutt binding for adding contacts.
+        macro index,pager a '\\
+        <enter-command>set my_wait_key=$wait_key<enter>\\
+        <enter-command>set wait_key<enter>\\
+        <pipe-message>/path/to/gcontacts.py -c '-'<return>\\
+        <enter-command>set wait_key=$my_wait_key<enter>'
+
+    # Set the query_command to use gcontacts.py to search gmail contacts
+    # for email addresses. Note: mutt requires a status header line so use
+    # the include-header, -r, option.
+
+    ~/.mutt/muttrc
+        set query_command = "/path/to/gcontacts.py -m short -r -s name %s"
+
+
+REQUIREMENTS:
+
+    This script is written for python 2.6. The following non-standard python
+    modules are required.
+
+        gdata
+
+"""
+
+
+def main():
+    """ Main routine.
+    Args:
+        None.
+    Returns:
+        None.
+    """
+
+    usage = "%prog [options] [keyword]" + \
+            "\nVersion: {ver}".format(ver=__version__)
+    parser = OptionParser(usage=usage)
+
+    parser.add_option("-a", "--account", dest="account",
+        help="The gmail account email address.")
+    parser.add_option("-c", "--create", dest="create",
+        help="Create contact from email.")
+    parser.add_option("-e", "--edit", dest="edit", action="store_true",
+        help="Edit contacts.")
+    parser.add_option("-f", "--full-help", dest="full_help",
+        action="store_true",
+        help="Print full help and exit. Full help includes examples/notes.")
+    parser.add_option('-m', '--mode', dest='mode',
+        choices=('abook', 'email', 'long', 'short'), default='long',
+        help="Mode. One of: 'abook', 'email', 'long', or 'short'. \
+            Default: 'long'")
+    parser.add_option('-r', '--include-header', dest='print_status',
+        action='store_true', default=False,
+        help="Include a status header line. (Required for mutt)")
+    parser.add_option('-s', '--sort', dest='sort',
+        choices=('email', 'name'), default='email',
+        help="Field to sort by. One of 'email' or 'name'. Default 'email'.")
+    parser.add_option('-v', '--verbose',
+        action='store_const', const=1, dest='verbose',
+        help='Print messages to stdout.',)
+    parser.add_option('--vv', action='store_const', const=2,
+        dest='verbose', help='More verbose.')
+
+    (options, args) = parser.parse_args()
+
+    if options.verbose > 0:
+        if options.verbose == 1:
+            LOG.setLevel(logging.INFO)
+        else:
+            LOG.setLevel(logging.DEBUG)
+
+    if options.full_help:
+        parser.print_help()
+        print
+        print usage_full()
+        exit(0)
+
+    keyword = None
+    if len(args) > 0:
+        keyword = args[0]
+
+    if options.account:
+        email_addr = options.account
+    else:
+        email_addr = get_email_address()
+    if not email_addr:
+        msg = "Unable to determine google email account to login with."
+        print >> sys.stderr, msg
+        quit(1)
+
+    password = get_password(email_addr)
+
+    LOG.debug("email: {email} password: {pw}".format(email=email_addr,
+        pw=password))
+
+    LOG.debug("Creating google contacts service.")
+    gd_client = gdata.contacts.service.ContactsService()
+
+    LOG.debug("Logging in.")
+    gd_client.email = email_addr
+    gd_client.password = password
+    gd_client.source = 'dm-contacts-1'
+    gd_client.ProgrammaticLogin()
+
+    if options.edit:
+        # All details are required for edit. Force long mode.
+        options.mode = 'long'
+
+    contact_set = Contacts(gd_client=gd_client)
+
+    if options.create:
+        contact_set.create_contact_from_file(options.create)
+    else:
+        contact_set.get()
+        contact_set.filter(keyword)
+        if options.edit:
+            contact_set.edit()
+            contact_set.update()
+        else:
+            contact_set.print_contacts(mode=options.mode, sort_by=options.sort,
+                print_status=options.print_status)
+
+if __name__ == '__main__':
+    main()
