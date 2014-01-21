@@ -4,5 +4,5 @@
 #
 ###
 urxvtc -title chat -n chat -e \
-  ssh -t pbrisbin.com -- \
-  zsh -ilc screen -R -D -S irc
+  ssh -t pbrisbin.com \
+  "zsh -ilc 'screen -R -D -S irc'"
