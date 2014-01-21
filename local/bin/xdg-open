@@ -16,10 +16,10 @@ handle-magnet "$1" 2>/dev/null && exit 0
 mimetype="$(read_mime "$1")" || mimetype='text/html'
 
 case "$mimetype" in
-  text/html)       $BROWSER "$file"      ;;
-  application/pdf) exec zathura "$file"  ;;
-  application/ogg) exec mplayer "$file"  ;;
-  audio/*|video/*) exec mplayer "$file"  ;;
-  image/*)         exec mirage  "$file"  ;;
-  text/*)          exec urxvtc -e vim "$file" ;;
+  text/html)       $BROWSER "$1"      ;;
+  application/pdf) exec zathura "$1"  ;;
+  application/ogg) exec mplayer "$1"  ;;
+  audio/*|video/*) exec mplayer "$1"  ;;
+  image/*)         exec mirage  "$1"  ;;
+  text/*)          exec urxvtc -e vim "$1" ;;
 esac
