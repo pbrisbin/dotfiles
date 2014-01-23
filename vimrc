@@ -62,10 +62,6 @@ set winheight=5
 set winminheight=5
 set winheight=999
 
-if isdirectory('.git')
-  set grepprg=git\ grep\ --no-color
-endif
-
 let mapleader = ' '
 let maplocalleader = ' '
 
@@ -73,12 +69,45 @@ let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js'"
 let g:ctags_excludes            = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
 let g:ctrlp_use_caching         = 0
 let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
+let g:markdown_fenced_languages = ['c', 'coffee', 'haskell', 'ruby', 'sh', 'yaml', 'vim']
+let g:rails_gem_projections     = {
+  \ "ember-rails": {
+  \   "app/assets/javascripts/controllers/*_controller.js.coffee": {
+  \     "command": "jcontroller",
+  \     "alternate": "spec/javascripts/controllers/%s_spec.js.coffee",
+  \     "related": "app/assets/javascripts/models/%s.js.coffee",
+  \     "template": "App.%SController = Ember.ObjectController.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/models/*.js.coffee": {
+  \     "command": "jmodel",
+  \     "alternate": "spec/javascripts/models/%s_spec.js.coffee",
+  \     "related": "app/assets/javascripts/controllers/%s_controller.js.coffee",
+  \     "template": "App.%S = DS.Model.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/routes/*_route.js.coffee": {
+  \     "command": "jroute",
+  \     "alternate": "spec/javascripts/routes/%s_spec.js.coffee",
+  \     "template": "App.%SRoute = Ember.Route.extend"
+  \   },
+  \
+  \   "app/assets/javascripts/templates/*.hbs": {
+  \     "command": "jtemplate",
+  \     "alternate": "app/assets/javascripts/views/%s.js.coffee"
+  \   },
+  \
+  \   "app/assets/javascripts/views/*_view.js.coffee": {
+  \     "command": "jview",
+  \     "alternate": "app/assets/javascripts/templates/%s.hbs",
+  \     "template": "App.%SView = Ember.View.extend"
+  \   },
+  \ }}
 let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
 let g:runfile_by_name           = { '.*\.t': '!cram %' }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
-let g:markdown_fenced_languages = ['c', 'coffee', 'haskell', 'ruby', 'sh', 'yaml', 'vim']
 
 silent! colorscheme zenburn
 
@@ -95,7 +124,6 @@ inoremap ({<CR> ({<CR>})<C-o>O
 inoremap ([<CR> ([<CR>])<C-o>O
 
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
-nnoremap <leader>k :silent grep! "\b<C-R><C-W>\b" \| copen<CR>
 
 cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
 
@@ -109,49 +137,10 @@ highlight ColorColumn ctermbg=235
 augroup vimrc
   autocmd!
   autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
+  autocmd FileType cram setlocal formatoptions+=twn
   autocmd FileType gitcommit setlocal spell
   autocmd FileType haskell setlocal shiftwidth=4 | let b:ctags_command = 'hs-ctags %f'
+  autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
   autocmd FileType mail setlocal spell nohlsearch
   autocmd FileType markdown setlocal formatoptions+=twn nosmartindent spell
-  autocmd FileType cram setlocal formatoptions+=twn
-  autocmd FileType eruby setlocal noshowmatch
-  autocmd FileType html setlocal noshowmatch
 augroup END
-
-let g:rails_gem_projections = {
-  \ "active_model_serializers": {
-  \   "app/serializers/*_serializer.rb": {
-  \     "command": "serializer",
-  \     "affinity": "model",
-  \     "test": "spec/serializers/%s_spec.rb",
-  \     "related": "app/models/%s.rb",
-  \     "template": "class %SSerializer < ActiveModel::Serializer\nend"
-  \   }
-  \ },
-  \
-  \ "ember-rails": {
-  \   "app/assets/javascripts/models/*.js.coffee": {
-  \     "command": "jmodel",
-  \     "alternate": "spec/javascripts/models/%s_spec.js.coffee",
-  \     "related": "app/assets/javascripts/controllers/%s_controller.js.coffee",
-  \     "template": "App.%S = DS.Model.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/controllers/*_controller.js.coffee": {
-  \     "command": "jcontroller",
-  \     "alternate": "spec/javascripts/controllers/%s_spec.js.coffee",
-  \     "related": "app/assets/javascripts/models/%s.js.coffee",
-  \     "template": "App.%SController = Ember.ObjectController.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/routes/*_route.js.coffee": {
-  \     "command": "jroute",
-  \     "alternate": "spec/javascripts/routes/%s_spec.js.coffee",
-  \     "template": "App.%SRoute = Ember.Route.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/templates/*.hbs": {
-  \     "command": "jtemplate",
-  \     "alternate": "app/assets/javascripts/views/%s.js.coffee"
-  \   },
-  \ }}
