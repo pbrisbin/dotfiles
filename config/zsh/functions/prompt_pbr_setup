@@ -16,8 +16,8 @@ prompt_pbr_setup() {
   autoload -Uz vcs_info
 
   zstyle ':vcs_info:*' enable git
-  zstyle ':vcs_info:git*' formats '%b'
-  zstyle ':vcs_info:git*' actionformats '%b|%a'
+  zstyle ':vcs_info:git*' formats '%r:%b'
+  zstyle ':vcs_info:git*' actionformats '%r:%b|%a'
 
   RPROMPT='%(?..%? )$(__git_info)'
 }
