@@ -104,7 +104,11 @@ let g:rails_gem_projections     = {
   \   },
   \ }}
 let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
-let g:runfile_by_name           = { '.*\.t': '!cram %' }
+let g:runfile_by_name           = {
+  \   '.*\.t': '!cram %',
+  \   '.*\.js\.coffee': '!bundle exec teaspoon %',
+  \   '.*Gemfile': '!bundle'
+  \ }
 let g:zenburn_alternate_Visual  = 1
 let g:zenburn_high_Contrast     = 1
 let g:zenburn_old_Visual        = 1
