@@ -3,7 +3,7 @@ set from          = "pat@thoughtbot.com"
 set sendmail      = "/usr/bin/msmtp -a thoughtbot"
 set mbox          = "+Thoughtbot/all_mail"
 set postponed     = "+Thoughtbot/drafts"
-set query_command = "~/.local/bin/gcontacts -a pat@thoughtbot.com '%s'"
+set query_command = "echo; ~/.local/bin/gcontacts -a pat@thoughtbot.com '%s'"
 
 color status cyan default
 
