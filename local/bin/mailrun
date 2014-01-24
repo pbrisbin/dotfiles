@@ -8,7 +8,7 @@ monitor() {
 
   while ps $pid &>/dev/null; do
     if (( i++ > 5 )); then
-      printf "Max checks reached. Sending SIGKILL to %s." "$pid" >&2
+      printf "Max checks reached. Sending SIGKILL to %s.\n" "$pid" >&2
       kill -9 $pid; return 1
     fi
 
@@ -21,7 +21,7 @@ monitor() {
 read -r pid < ~/.offlineimap/pid
 
 if ps $pid &>/dev/null; then
-  printf "Process %s already running. Exiting." "$pid" >&2
+  printf "Process %s already running. Exiting.\n" "$pid" >&2
   exit 1
 fi
 
