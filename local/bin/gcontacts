@@ -2,15 +2,16 @@
 #
 # pbrisbin 2013 - access Google Contacts for mutt's query_command.
 #
-# gcontacts.py originally written by Jim Karsten <jimkarsten@gmail.com>.
+# Modified version of gcontacts.py, originally written by Jim Karsten
+# <jimkarsten@gmail.com>.
 #
 # Changes by Pat Brisbin <pbrisbin@gmail.com>:
 #
 # * Remove all generalities, support only fetching, sorting by name,
 #   and outputting the short format.
 #
-# * Search netrc for a machine for the given host of the email address
-#   and login that matches the given email address -- use those
+# * Search ~/.netrc for a machine for the given host of the email
+#   address and login that matches the given email address -- use those
 #   credentials.
 #
 # Usage:
@@ -21,12 +22,12 @@
 #     login you@gmail.com
 #     password secret
 #
-#   # default account, override with -a
+#   # default account, override with -a <email-address>
 #   macdef contacts_account pbrisbin@gmail.com
 #
 # Add a query_command to ~/.mutt/muttrc
 #
-#     set query_command = "/path/to/gcontacts '%s'"
+#   set query_command = "echo; /path/to/gcontacts '%s'"
 #
 ###
 import gdata.contacts
@@ -141,7 +142,13 @@ def get_netrc():
 
 def get_email_address():
     net_rc = get_netrc()
-    return net_rc.macros['contacts_account'][0].strip()
+
+    try:
+        account = net_rc.macros['contacts_account'][0].strip()
+    except:
+        die("No default account, set contacts_account or pass -a")
+
+    return account
 
 def get_password(email_address):
     try:
