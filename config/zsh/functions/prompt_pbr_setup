@@ -19,6 +19,7 @@ prompt_pbr_setup() {
   zstyle ':vcs_info:git*' formats '%r:%b'
   zstyle ':vcs_info:git*' actionformats '%r:%b|%a'
 
+  PROMPT='%# '
   RPROMPT='%(?..%? )$(__git_info)'
 }
 
