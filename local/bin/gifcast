@@ -28,7 +28,8 @@ cd "$directory"
 printf "select an area, ^C when done.\n"
 recordmydesktop $geometry_args # word-splitting intended
 mplayer -ao null out.ogv -vo jpeg:outdir=./
-convert *.jpg "$gif"
+convert *.jpg large.gif
+convert large.gif +dither -layers Optimize -colors 32 "$gif"
 cd - &>/dev/null
 cp "$directory/$gif" ./"$gif"
 printf "=> %s\n" "$gif"
