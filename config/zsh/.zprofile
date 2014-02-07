@@ -22,7 +22,7 @@ export RCRC="$XDG_CONFIG_HOME"/rcrc
 export SCREENRC="$XDG_CONFIG_HOME"/screenrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/X11-authority
 
-path=( "$HOME/.local/bin" "$HOME/.cabal/bin" $path )
+path=( "$HOME/.local/bin" './.cabal-sandbox/bin' "$HOME/.cabal/bin" $path )
 
 start_ssh_agent
 
