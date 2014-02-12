@@ -1,35 +1,18 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013 - record screencast as a gif. Requires ffcast be
-# installed (it provides xrectsel). TODO: makes pretty big gifs.
+# pbrisbin 2013 - record screen area as a gif. Requires ffcast (for
+# xrectsel) and byzanz (for the actual recording).
 #
 ###
-get_geometry() {
-  local pattern='^\(.*\)x\(.*\)[-+]\(.*\)[-+]\(.*\)$'
-  local replacement='--width \1 --height \2 -x \3 -y \4'
-
-  xrectsel | sed "s/$pattern/$replacement/"
-}
-
-clean_up() {
-  printf "cleaning up...\n"
-  rm -rf "$directory"
-}
-
-trap 'clean_up' EXIT
-
 set -e
 
-gif="${1:-out.gif}"
-directory="$(mktemp -d)"
-geometry_args="$(get_geometry)"
+tmp=temp.gif
+out="${1:-out.gif}"
+geometry_args="$(xrectsel "--x=%x --y=%y --width=%w --height=%h")"
 
-cd "$directory"
-printf "select an area, ^C when done.\n"
-recordmydesktop $geometry_args # word-splitting intended
-mplayer -ao null out.ogv -vo jpeg:outdir=./
-convert *.jpg large.gif
-convert large.gif +dither -layers Optimize -colors 32 "$gif"
-cd - &>/dev/null
-cp "$directory/$gif" ./"$gif"
-printf "=> %s\n" "$gif"
+[ -e "$out" ] && { printf "%s exists\n" "$out" >&2; exit 1; }
+
+trap "convert -loop 0 '$tmp' '$out' && rm '$tmp'" EXIT
+
+printf "Recording %s. Press ^C when done.\n" ./"$out"
+byzanz-record -d 3600 $geometry_args "$tmp" # word-splitting intended
