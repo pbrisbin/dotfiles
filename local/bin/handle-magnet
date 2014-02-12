@@ -33,13 +33,11 @@ to_content() {
 }
 
 if on_network 'western1'; then
-  store_file() { ssh blue.local cat > '~/Downloads/'"$1"; }
+  store_file() { ssh blue.local 'cat > /home/patrick/torrents/'"$1"; }
 else
   store_file() { cat > "$HOME/Downloads/$1"; }
 fi
 
 (( $# )) || die 'usage: handle-magnet LINK'
 
-file_name="$(to_name "$1")"
-
-to_content "$file" | store_file "$file_name"
+to_content "$1" | store_file "$(to_name "$1")"
