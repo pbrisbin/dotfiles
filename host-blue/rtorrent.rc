@@ -94,7 +94,7 @@ system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.g
 ratio.enable=
 
 # Change the limits, the defaults should be sufficient.
-ratio.min.set=1
+ratio.min.set=0
 #ratio.max.set=300
 #ratio.upload.set=100M
 
