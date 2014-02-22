@@ -1,2 +1,0 @@
-COPY_ALWAYS=msmtprc
-EXCLUDES=README.md
