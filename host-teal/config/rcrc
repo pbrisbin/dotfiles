@@ -1,0 +1,2 @@
+EXCLUDES=README.md
+TAGS='bash mail-recipient mail-sender'
