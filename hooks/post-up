@@ -6,17 +6,14 @@ chmod 600 ~/.netrc
 [ -f ~/.msmtprc ] && chmod 600 ~/.msmtprc
 [ -d ~/.config/gnupg ] && chmod 700 ~/.config/gnupg
 
-if [ ! -d ~/.vim/bundle/vundle ]; then
-  mkdir -p ~/.vim/bundle
-  git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+if grep -Fq Bundle ~/.vimrc; then
+  if [ ! -d ~/.vim/bundle/vundle ]; then
+    mkdir -p ~/.vim/bundle
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+  fi
+
+  vim +BundleInstall +qall
 fi
-
-vim +BundleInstall +qall
-
-# Verify we have some programs these dotfiles rely on
-for app in android-receiver msu urxvtd; do
-  which "$app" &>/dev/null || printf "missing app: %s\n" "$app" >&2
-done
 
 # Manually link dot-prefixed zsh files since rcm skips them by default
 rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
