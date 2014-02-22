@@ -37,7 +37,7 @@ unset record
   set timeout           = 3
   set tmpdir            = ~/.mutt/temp
 
-alternates .*@pbrisbin\.com
+alternates .*@pbrisbin\.com .*@brisb\.in
 
 auto_view text/html
 alternative_order text/plain text/enriched text/html
