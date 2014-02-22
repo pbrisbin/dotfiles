@@ -6,7 +6,7 @@ chmod 600 ~/.netrc
 [ -f ~/.msmtprc ] && chmod 600 ~/.msmtprc
 [ -d ~/.config/gnupg ] && chmod 700 ~/.config/gnupg
 
-if grep -Fq Bundle ~/.vimrc; then
+if [ -f ~/.vimrc ] && grep -Fq Bundle ~/.vimrc; then
   if [ ! -d ~/.vim/bundle/vundle ]; then
     mkdir -p ~/.vim/bundle
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
