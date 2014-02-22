@@ -1,0 +1,21 @@
+set -o vi
+
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_DATA_HOME="$HOME"/.local/share
+export SCREENRC="$XDG_CONFIG_HOME"/screenrc
+export PATH="$HOME/.local/bin:$PATH"
+
+alias g='git'
+alias p='sudo pacman'
+
+rcup() {
+  /usr/bin/rcup -K -x '*' -I \
+    ssh/config \
+    config/aurgetrc \
+    config/screenrc \
+    rtorrent.rc \
+    'bash*' \
+    'local/bin/*' \
+    'config/git/*'
+}
