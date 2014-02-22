@@ -4,18 +4,17 @@ All of the configs.
 
 ## Installation
 
-* Install [rcm][]
-* Clone to `~/.dotfiles`
-* View what would be installed:
+This repo uses [rcm][].
+
+[rcm]: https://github.com/thoughtbot/rcm
 
 ```
-$ RCRC="config/rcrc" lsrc  # See what will happen
-$ RCRC="config/rcrc" rcup  # Do it
+$ aurget -S rcm-git
+$ git clone https://github.com/pbrisbin/dotfiles .dotfiles
+$ cd .dotfiles
+$ RCRC="host-$HOST/config/rcrc" rcup
+$ exit
 ```
-
-To modify how or what will be installed, see `man 1 rcup`.
-
-[rcm]: https://github.com/mike-burns/rcm
 
 ## Structure
 
