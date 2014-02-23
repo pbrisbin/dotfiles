@@ -1,19 +1,32 @@
 #!/usr/bin/env sh
 
-touch ~/.netrc
-chmod 600 ~/.netrc
+secure() {
+  local arg
 
-[ -f ~/.msmtprc ] && chmod 600 ~/.msmtprc
-[ -d ~/.config/gnupg ] && chmod 700 ~/.config/gnupg
+  for arg; do
+    if [ -d "$arg" ]; then
+      chmod 700 "$arg"
+    elif [ -f "$arg" ]; then
+      chmod 600 "$arg"
+    fi
+  done
+}
 
-if [ -f ~/.vimrc ] && grep -Fq Bundle ~/.vimrc; then
-  if [ ! -d ~/.vim/bundle/vundle ]; then
-    mkdir -p ~/.vim/bundle
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+setup_vundle() {
+  local bundles="$HOME/.vim/bundle"
+
+  if [ ! -d "$bundles"/vundle ]; then
+    mkdir -p "$bundles"
+    git clone https://github.com/gmarik/vundle.git "$bundles"/vundle
   fi
 
   vim +BundleInstall +qall
-fi
+}
 
-# Manually link dot-prefixed zsh files since rcm skips them by default
+touch ~/.netrc
+secure ~/.netrc ~/.msmtprc ~/.config/gnupg
+
+grep -sq '^Bundle' ~/.vimrc && setup_vundle
+
+# dot-prefixed files are skipped unless explicitly named
 rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
