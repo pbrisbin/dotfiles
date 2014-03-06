@@ -4,12 +4,26 @@
 #
 ###
 mixer() {
-  local cmd="$1" body
+  local cmd="$1" level state icon message
 
   body="$(amixer sset Master "$cmd" |\
-    sed '/.*Mono: Playback .* \[\(.*\)\] .* \[\(on\|off\)\].*/!d; s//\1 (\2)/')"
+    sed '/.*Mono: Playback .* \[\(.*\)%\] .* \[\(on\|off\)\].*/!d; s//\1 \2/')"
 
-  notify-send -t 1250 'Volume' "Level: $body"
+  level="${body% *}"
+  state="${body#* }"
+
+  if [ "$state" = 'on' ]; then
+    icon='audio-volume-low'
+    message="Level: $level%"
+
+    [ $level -gt 33 ] && icon='audio-volume-medium'
+    [ $level -gt 66 ] && icon='audio-volume-high'
+  else
+    icon='audio-volume-muted'
+    message="Muted"
+  fi
+
+  notify-send -t 1250 -i "$icon" 'Volume' "$message"
 }
 
 case "$1" in
