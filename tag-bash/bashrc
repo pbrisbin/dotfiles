@@ -15,3 +15,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 alias g='git'
 alias p='sudo pacman'
+
+if [ -r /usr/share/bash-completion/bash_completion ]; then
+  source /usr/share/bash-completion/bash_completion
+fi
