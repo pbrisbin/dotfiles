@@ -1,2 +1,2 @@
 EXCLUDES=README.md
-TAGS='gui haskell ruby vim zsh'
+TAGS='git gpg gui haskell ruby vim zsh'
