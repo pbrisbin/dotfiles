@@ -16,9 +16,5 @@ $ RCRC="host-$HOST/config/rcrc" rcup
 $ exit
 ```
 
-## Structure
-
-Files which make sense across all of my machines (screen, git, etc) are 
-kept directly at top-level. Files which should only be installed on 
-certain machines are kept in the appropriate tag subdirectories. The 
-host-specific `rcrc` files then dictate which tags are used where.
+All dotfiles are kept in tag-specific directories. Host-specific rcrc 
+files then dictate which machines get which tags.
