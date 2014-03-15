@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - browse local haskell documentation.
+#
+###
+if [ -z "$1" ]; then
+  printf "usage: hdocs <identifier>\n"
+  exit 64
+fi
+
+package="$(printf "%s" "$*" | sed 's/[ .]/-/g; s/.*/\L&/g')"
+package_glob="*/$package-*/html/index.html"
+
+if [ -e "$PWD/.cabal-sandbox" ]; then
+  docs_directory="$PWD/.cabal-sandbox/share/doc"
+else
+  docs_directory="$HOME/.cabal/share/doc"
+fi
+
+find "$docs_directory" -wholename "$package_glob" -exec $BROWSER {} +
