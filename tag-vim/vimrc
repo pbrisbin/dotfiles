@@ -4,16 +4,12 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'juvenn/mustache.vim'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'pbrisbin/alt-ctags'
-Bundle 'pbrisbin/html-template-syntax'
 Bundle 'pbrisbin/vim-mkdir'
 Bundle 'pbrisbin/vim-rename-file'
 Bundle 'pbrisbin/vim-restore-cursor'
 Bundle 'pbrisbin/vim-runfile'
-Bundle 'slim-template/vim-slim'
 Bundle 'thoughtbot/vim-rspec'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
@@ -24,7 +20,7 @@ Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/Zenburn'
+Bundle 'https://bitbucket.org/kisom/eink.vim.git'
 
 syntax on
 filetype plugin indent on
@@ -32,7 +28,7 @@ filetype plugin indent on
 set autoindent
 set autoread
 set autowrite
-set cursorline
+set background=dark
 set directory=/tmp
 set expandtab
 set foldmethod=marker
@@ -64,12 +60,11 @@ set winwidth=84
 let mapleader = ' '
 let maplocalleader = ' '
 
-let g:ctags_command             = "ctags -f '%f' -R --exclude='*.js'"
-let g:ctags_excludes            = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
-let g:ctrlp_use_caching         = 0
-let g:ctrlp_user_command        = ['.git', 'cd %s && git ls-files']
-let g:markdown_fenced_languages = ['c', 'coffee', 'haskell', 'javascript', 'ruby', 'sh', 'yaml', 'vim']
-let g:rails_gem_projections     = {
+let g:ctags_command         = "ctags -f '%f' -R --exclude='*.js'"
+let g:ctags_excludes        = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
+let g:ctrlp_use_caching     = 0
+let g:ctrlp_user_command    = ['.git', 'cd %s && git ls-files']
+let g:rails_gem_projections = {
   \ "ember-rails": {
   \   "app/assets/javascripts/controllers/*_controller.js.coffee": {
   \     "command": "jcontroller",
@@ -108,11 +103,8 @@ let g:runfile_by_name           = {
   \   '.*\.js\.coffee': '!bundle exec teaspoon %',
   \   '.*Gemfile': '!bundle'
   \ }
-let g:zenburn_alternate_Visual  = 1
-let g:zenburn_high_Contrast     = 1
-let g:zenburn_old_Visual        = 1
 
-silent! colorscheme zenburn
+silent! colorscheme eink
 
 map <Leader>a :call RunAllSpecs()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
@@ -132,10 +124,6 @@ cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
 
 command! -range=% Paste :<line1>,<line2>write !curl -sF "f:1=<-" http://ix.io
 command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
-
-let &colorcolumn = join(range(81,400),',')
-
-highlight ColorColumn ctermbg=235
 
 augroup vimrc
   autocmd!
