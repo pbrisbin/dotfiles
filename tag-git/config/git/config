@@ -47,3 +47,5 @@
   email = pbrisbin@gmail.com
   name = patrick brisbin
   signingkey = CEC8925D
+[fetch]
+  prune = true
