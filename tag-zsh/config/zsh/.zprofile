@@ -15,6 +15,7 @@ export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_DATA_HOME="$HOME"/.local/share
 
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
+export GPG_TTY=/dev/tty
 export LESSHISTFILE="$XDG_CACHE_HOME"/lesshist
 export NOTITLE=1 # avoid broken grml precmd hook
 export NOTMUCH_CONFIG="$XDG_CONFIG_HOME"/notmuchrc
