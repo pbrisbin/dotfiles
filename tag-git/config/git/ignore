@@ -29,6 +29,7 @@
 .#*
 .*.sw[nop]
 .DS_Store?
+.anvil
 .cabal-sandbox
 .classpath
 .env
