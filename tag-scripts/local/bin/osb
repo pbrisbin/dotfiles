@@ -1,18 +1,17 @@
 #!/usr/bin/env sh
 #
-# pbrisbin 2013 - on screen battery info
+# pbrisbin 2014 - on screen battery info.
 #
 ###
 
-# TODO: capture "extras" like time to fully charged, time left etc
-body="$(acpi | sed 's/^.*: \(.*\), \(.*\)%.*$/\1 \2/')"
-state="${body% *}"
-level="${body#* }"
+body="$(acpi -b | sed 's/^.*: \(.*\), \(.*\)%, \(.*\)$/\1 \2 \3/')"
+state="${body%% *}"; rest="${body#* }"
+level="${rest%% *}"; extra="${rest#* }"
 
 case "$state" in
   Unknown|Discharging)
     icon='battery-caution'
-    message="$state, $level%"
+    message="$state - $level%\n$extra"
 
     [ $level -gt 10 ] && icon='battery-low'
     [ $level -gt 40 ] && icon='battery-good'
@@ -20,8 +19,7 @@ case "$state" in
     ;;
 
   Charging)
-    icon='battery-low-charging'
-    message="Charging, $level%"
+    message="Charging - $level%\n$extra"
 
     [ $level -gt 40 ] && icon='battery-good-charging'
     [ $level -gt 97 ] && icon='battery-full-charging'
