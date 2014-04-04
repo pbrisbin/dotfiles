@@ -60,45 +60,12 @@ set winwidth=84
 let mapleader = ' '
 let maplocalleader = ' '
 
-let g:ctags_command         = "ctags -f '%f' -R --exclude='*.js'"
-let g:ctags_excludes        = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
-let g:ctrlp_use_caching     = 0
-let g:ctrlp_user_command    = ['.git', 'cd %s && git ls-files']
-let g:rails_gem_projections = {
-  \ "ember-rails": {
-  \   "app/assets/javascripts/controllers/*_controller.js.coffee": {
-  \     "command": "jcontroller",
-  \     "alternate": "spec/javascripts/controllers/%s_spec.js.coffee",
-  \     "related": "app/assets/javascripts/models/%s.js.coffee",
-  \     "template": "App.%SController = Ember.ObjectController.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/models/*.js.coffee": {
-  \     "command": "jmodel",
-  \     "alternate": "spec/javascripts/models/%s_spec.js.coffee",
-  \     "related": "app/assets/javascripts/controllers/%s_controller.js.coffee",
-  \     "template": "App.%S = DS.Model.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/routes/*_route.js.coffee": {
-  \     "command": "jroute",
-  \     "alternate": "spec/javascripts/routes/%s_spec.js.coffee",
-  \     "template": "App.%SRoute = Ember.Route.extend"
-  \   },
-  \
-  \   "app/assets/javascripts/templates/*.hbs": {
-  \     "command": "jtemplate",
-  \     "alternate": "app/assets/javascripts/views/%s.js.coffee"
-  \   },
-  \
-  \   "app/assets/javascripts/views/*_view.js.coffee": {
-  \     "command": "jview",
-  \     "alternate": "app/assets/javascripts/templates/%s.hbs",
-  \     "template": "App.%SView = Ember.View.extend"
-  \   },
-  \ }}
-let g:rspec_command             = '!bundle exec rspec -c -fd {spec}'
-let g:runfile_by_name           = {
+let g:ctags_command      = "ctags -f '%f' -R --exclude='*.js'"
+let g:ctags_excludes     = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
+let g:ctrlp_use_caching  = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:rspec_command      = '!bundle exec rspec -c -fd {spec}'
+let g:runfile_by_name    = {
   \   '.*\.t': '!cram %',
   \   '.*\.js\.coffee': '!bundle exec teaspoon %',
   \   '.*Gemfile': '!bundle'
