@@ -17,16 +17,16 @@ setup_vundle() {
 
   if [ ! -d "$bundles"/vundle ]; then
     mkdir -p "$bundles"
-    git clone https://github.com/gmarik/vundle.git "$bundles"/vundle
+    git clone https://github.com/gmarik/Vundle.vim "$bundles"/vundle
   fi
 
-  vim +BundleInstall +qall
+  vim +PluginInstall +qall
 }
 
 touch ~/.netrc
 secure ~/.netrc ~/.msmtprc ~/.config/gnupg
 
-grep -sq '^Bundle' ~/.vimrc && setup_vundle
+grep -sq '^Plugin' ~/.vimrc && setup_vundle
 
 # dot-prefixed files are skipped unless explicitly named
 rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
