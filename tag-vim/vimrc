@@ -60,6 +60,8 @@ set winwidth=84
 let mapleader = ' '
 let maplocalleader = ' '
 
+let &colorcolumn = join(range(81,400),',')
+
 let g:ctags_command      = "ctags -f '%f' -R --exclude='*.js'"
 let g:ctags_excludes     = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
 let g:ctrlp_use_caching  = 0
@@ -101,3 +103,8 @@ augroup vimrc
   autocmd FileType mail setlocal spell nohlsearch
   autocmd FileType gitcommit,markdown setlocal formatoptions+=twn nosmartindent spell textwidth=72
 augroup END
+
+" Fix some eink colors
+hi ColorColumn ctermbg=233
+hi Search      cterm=bold,standout ctermbg=0 ctermfg=11
+hi IncSearch   cterm=bold,standout ctermbg=0 ctermfg=11
