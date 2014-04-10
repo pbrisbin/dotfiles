@@ -89,6 +89,13 @@ cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
 command! -range=% Paste :<line1>,<line2>write !curl -sF "f:1=<-" http://ix.io
 command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
 
+function! SetProseOptions()
+  setlocal formatoptions+=twn
+  setlocal nosmartindent
+  setlocal spell
+  setlocal textwidth=72
+endfunction
+
 augroup vimrc
   autocmd!
   autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
@@ -96,5 +103,5 @@ augroup vimrc
   autocmd FileType haskell setlocal shiftwidth=4 | let b:ctags_command = 'hs-ctags %f'
   autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
   autocmd FileType mail setlocal spell nohlsearch
-  autocmd FileType gitcommit,markdown setlocal formatoptions+=twn nosmartindent spell textwidth=72
+  autocmd FileType gitcommit,markdown,lhaskell call SetProseOptions()
 augroup END
