@@ -20,9 +20,7 @@ Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'https://bitbucket.org/kisom/eink.vim.git'
 
-syntax on
 filetype plugin indent on
 
 set autoindent
@@ -60,8 +58,6 @@ set winwidth=84
 let mapleader = ' '
 let maplocalleader = ' '
 
-let &colorcolumn = join(range(81,400),',')
-
 let g:ctags_command      = "ctags -f '%f' -R --exclude='*.js'"
 let g:ctags_excludes     = ['~', '~/.dotfiles/', '~/Code/pbrisbin']
 let g:ctrlp_use_caching  = 0
@@ -72,8 +68,6 @@ let g:runfile_by_name    = {
   \   '.*\.js\.coffee': '!bundle exec teaspoon %',
   \   '.*Gemfile': '!bundle'
   \ }
-
-silent! colorscheme eink
 
 map <Leader>a :call RunAllSpecs()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
@@ -103,8 +97,3 @@ augroup vimrc
   autocmd FileType mail setlocal spell nohlsearch
   autocmd FileType gitcommit,markdown setlocal formatoptions+=twn nosmartindent spell textwidth=72
 augroup END
-
-" Fix some eink colors
-hi ColorColumn ctermbg=233
-hi Search      cterm=bold,standout ctermbg=0 ctermfg=11
-hi IncSearch   cterm=bold,standout ctermbg=0 ctermfg=11
