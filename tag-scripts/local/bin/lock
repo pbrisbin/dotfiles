@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - set myself away in weechat, then lock the screen.
+#
+###
+set_away() {
+  local wid="$1"
+
+  xdotool key  --window "$wid" Down # clears weechat input
+  xdotool type --window "$wid" "/away away"
+  xdotool key  --window "$wid" Return
+}
+
+if command -v xdotool >/dev/null; then
+  wid="$(xdotool search --name "chat")"
+
+  if [ -n "$wid" ]; then
+    set_away "$wid"
+  fi
+fi
+
+slock
