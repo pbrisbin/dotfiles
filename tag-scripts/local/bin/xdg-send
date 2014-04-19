@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# pbrisbin 2013 - seamlessly open mail attachments locally while
+# connected to a remote system via ssh.
+#
+#  Requirements on Local,
+#
+#    - Running sshd on port 2222
+#    - ssh -R 2222:localhost:2222 remote.com
+#
+#  Requirements on Remote,
+#
+#    - ~/.ssh/config
+#
+#        Host loopback
+#          HostName localhost
+#          Port 2222
+#          IdentityFile ~/.ssh/rd_rsa.loopback (optional)
+#
+###
+{
+  scp "$1" loopback:'~/Downloads/'
+  ssh loopback "
+    XAUTHORITY=\"\$(ps -C xinit -f --no-header | sed 's/.*-auth //; s/ -[^ ].*//')\" \
+    DISPLAY=:0 xdg-open ~/Downloads/'$(basename "$1")'
+  "
+} >/dev/null
