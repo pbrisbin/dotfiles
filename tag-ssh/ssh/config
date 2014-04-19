@@ -7,6 +7,11 @@ Host *
   ServerAliveInterval 120
   ServerAliveCountMax 5
 
+Host loopback
+  HostName localhost
+  Port 2222
+  IdentityFile ~/.ssh/id_rsa.loopback
+
 Host blue.local
   Port 2222
 
