@@ -62,12 +62,12 @@ let g:ctags_command      = "ctags -f '%f' -R --exclude='*.js'"
 let g:ctags_excludes     = ['~', '~/.dotfiles/', '~/Code/pbrisbin.com']
 let g:ctrlp_use_caching  = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
-let g:rspec_command      = '!bundle exec rspec -c -fd {spec}'
+let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
   \   '.*\.t': '!cram %',
-  \   '.*\.js\.coffee': '!bundle exec teaspoon %',
   \   '.*\.lhs': '!runhaskell %',
-  \   '.*Gemfile': '!bundle'
+  \   '.*Gemfile': '!bundle',
+  \   '.*\.md': '!opandoc %'
   \ }
 
 map <Leader>a :call RunAllSpecs()<CR>
