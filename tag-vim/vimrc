@@ -78,7 +78,7 @@ map <Leader>r :Run<CR>
 
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 
-cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
+cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit! \| redraw!<CR>
 
 command! -range=% Paste :<line1>,<line2>write !curl -sF "f:1=<-" http://ix.io
 command! -nargs=* RSpec execute '!bundle exec rspec '.join([<f-args>], ' ')
