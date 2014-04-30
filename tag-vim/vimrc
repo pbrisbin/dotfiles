@@ -76,12 +76,6 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
-inoremap {<CR> {<CR>}<C-o>O
-inoremap [<CR> [<CR>]<C-o>O
-inoremap (<CR> (<CR>)<C-o>O
-inoremap ({<CR> ({<CR>})<C-o>O
-inoremap ([<CR> ([<CR>])<C-o>O
-
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 
 cmap w!! execute ":silent w !sudo tee % >/dev/null" \| edit!<CR>
