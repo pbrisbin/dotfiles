@@ -27,18 +27,18 @@
   co = checkout
   dc = diff --cached
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  create-branch = "!f() { git push origin HEAD:refs/heads/$1 && git fetch origin && git checkout $1; }; f"
-  delete-branch = "!f() { git push origin :refs/heads/$1 && git branch -d $1; }; f"
   pr = pull-request
-  st = status --short --branch
+  st = status
   tg = "!f() { git tag -a -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
-  in = !git up -i && git push -f && git checkout master && git pull && git merge -
 [merge]
   ff = only
   tool = vimdiff
 [push]
   default = current
+[status]
+  branch = 1
+  short = 1
 [diff]
   mnemonicprefix = true
 [url "git@github.com:pbrisbin/"]
