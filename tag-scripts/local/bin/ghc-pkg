@@ -45,7 +45,7 @@ case "$1" in
       pandoc \
       xmonad \
       xmonad-contrib \
-      xmonad-util
+      xmonad-utils
     ;;
 
   # forward all else
