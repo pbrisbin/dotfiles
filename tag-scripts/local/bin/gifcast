@@ -10,7 +10,10 @@ tmp=temp.gif
 out="${1:-out.gif}"
 geometry_args="$(xrectsel "--x=%x --y=%y --width=%w --height=%h")"
 
-[ -e "$out" ] && { printf "%s exists\n" "$out" >&2; exit 1; }
+if [ -e "$out" ]; then
+  printf "%s exists. removing...\n" "$out" >&2
+  rm "$out"
+fi
 
 trap "convert -loop 0 '$tmp' '$out' && rm '$tmp'" EXIT
 
