@@ -27,7 +27,7 @@
   co = checkout
   dc = diff --cached
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  pr = pull-request
+  pr = !git push -u origin && gh pull-request
   st = status
   tg = "!f() { git tag -a -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
