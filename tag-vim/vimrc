@@ -29,6 +29,7 @@ set autoindent
 set autoread
 set autowrite
 set background=dark
+set colorcolumn=+1
 set directory=/tmp
 set expandtab
 set foldmethod=marker
