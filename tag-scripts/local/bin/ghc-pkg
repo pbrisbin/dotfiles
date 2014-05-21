@@ -41,11 +41,14 @@ case "$1" in
 
     cabal install "$@" cabal-install
     cabal install "$@" \
+      codex \
+      hi \
+      hlint \
+      hoogle \
       msu \
       pandoc \
       xmonad \
-      xmonad-contrib \
-      xmonad-utils
+      xmonad-contrib
     ;;
 
   # forward all else
