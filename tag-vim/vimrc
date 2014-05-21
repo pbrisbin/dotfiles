@@ -7,10 +7,13 @@ Plugin 'gmarik/vundle'
 Plugin 'bogado/file-line'
 Plugin 'kien/ctrlp.vim'
 Plugin 'pbrisbin/alt-ctags'
+Plugin 'pbrisbin/html-template-syntax'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
 Plugin 'pbrisbin/vim-restore-cursor'
 Plugin 'pbrisbin/vim-runfile'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'slim-template/vim-slim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-commentary'
@@ -21,8 +24,10 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'travitch/hasksyn'
 Plugin 'vim-ruby/vim-ruby'
 
+syntax on
 filetype plugin indent on
 
 set autoindent
@@ -57,6 +62,8 @@ set textwidth=80
 set visualbell t_vb=
 set wildmode=list:longest
 set winwidth=84
+
+silent! colorscheme pencil
 
 let mapleader = ' '
 let maplocalleader = ' '
