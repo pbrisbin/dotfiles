@@ -8,6 +8,5 @@ xsetroot -cursor_name left_ptr
 xautolock -time 5 -locker slock &
 urxvtd -q -f -o
 android-receiver &
-hhp &
 
 xmonad
