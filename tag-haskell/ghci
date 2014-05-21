@@ -1,3 +1,4 @@
 :set prompt "ghci> "
+:set -isrc
 :set -ilib
 :set -iconfig
