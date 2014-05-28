@@ -7,12 +7,12 @@ Plugin 'gmarik/vundle'
 Plugin 'bogado/file-line'
 Plugin 'kien/ctrlp.vim'
 Plugin 'pbrisbin/alt-ctags'
-Plugin 'pbrisbin/html-template-syntax'
+Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
 Plugin 'pbrisbin/vim-restore-cursor'
 Plugin 'pbrisbin/vim-runfile'
-Plugin 'reedes/vim-colors-pencil'
+Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'slim-template/vim-slim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-bundler'
@@ -24,7 +24,6 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'travitch/hasksyn'
 Plugin 'vim-ruby/vim-ruby'
 
 syntax on
@@ -35,6 +34,7 @@ set autoread
 set autowrite
 set background=dark
 set colorcolumn=+1
+set cursorline
 set directory=/tmp
 set expandtab
 set foldmethod=marker
@@ -63,7 +63,7 @@ set visualbell t_vb=
 set wildmode=list:longest
 set winwidth=84
 
-silent! colorscheme pencil
+silent! colorscheme off
 
 let mapleader = ' '
 let maplocalleader = ' '
