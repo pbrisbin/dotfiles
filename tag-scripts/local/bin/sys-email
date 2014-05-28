@@ -3,8 +3,6 @@
 # pbrisbin 2013 - send myself stdin as an email from the system.
 #
 ###
-source ~/.secrets # set credential enviroment variables
-
 {
   cat << EOF
 Subject: ${1:-System email}
