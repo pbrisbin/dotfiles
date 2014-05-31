@@ -6,7 +6,7 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'bogado/file-line'
 Plugin 'kien/ctrlp.vim'
-Plugin 'pbrisbin/alt-ctags'
+Plugin 'pbrisbin/vim-alt-ctags'
 Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
