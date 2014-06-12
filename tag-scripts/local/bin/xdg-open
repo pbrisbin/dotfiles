@@ -11,8 +11,6 @@ read_mime() {
 
 [ $# -eq 0 ] && exit 1
 
-handle-magnet "$1" && exit 0
-
 mimetype="$(read_mime "$1")" || mimetype='text/html'
 
 case "$mimetype" in
