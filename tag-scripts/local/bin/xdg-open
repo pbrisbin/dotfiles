@@ -9,6 +9,13 @@ read_mime() {
   xdg-mime query filetype "$file" 2>/dev/null | cut -d ';' -f 1
 }
 
+handle_archive() {
+  local archive="$1" directory="${1}_extracted"
+
+  mkdir -p "$directory" && cd "$directory" &&
+    archive -x "$archive" && NOCD=1 exec urxvtc -cd "$directory"
+}
+
 [ $# -eq 0 ] && exit 1
 
 mimetype="$(read_mime "$1")" || mimetype='text/html'
@@ -20,4 +27,7 @@ case "$mimetype" in
   audio/*|video/*) exec mplayer "$1"  ;;
   image/*)         exec mirage  "$1"  ;;
   text/*)          exec urxvtc -e vim "$1" ;;
+  application/x-gzip|application/x-rar-compressed|application/zip)
+    handle_archive "$1"
+    ;;
 esac

@@ -24,6 +24,6 @@ export MANWIDTH=80
 setopt inc_append_history
 setopt vi
 
-cd - >/dev/null
+((NOCD)) || cd - >/dev/null
 
 prompt pbr
