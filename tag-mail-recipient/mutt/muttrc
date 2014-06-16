@@ -11,6 +11,7 @@ unset confirmappend
   set forward_format    = "Fwd: %s"
   set forward_quote
   set header_cache      = ~/.mutt/cache
+unset help
   set include
   set index_format      = "%3C %Z %[!%m/%d] %-17.17F %s"
   set mail_check        = 0
@@ -31,6 +32,7 @@ unset record
   set sort              = threads
   set sort_aux          = last-date-received
   set spoolfile         = "+Gmail/INBOX"
+  set status_format     = "-%r- %f%?t? Tag:%t?%?p? Post:%p? -%>-"
   set strict_threads
   set thorough_search
   set tilde
