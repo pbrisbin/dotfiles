@@ -1,3 +1,2 @@
 EXCLUDES=README.md
-COPY_ALWAYS='msmtprc'
-TAGS='bash git gpg mail-recipient mail-sender screen scripts vim weechat'
+TAGS='bash git screen weechat'

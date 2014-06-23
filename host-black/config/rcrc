@@ -1,2 +1,3 @@
 EXCLUDES=README.md
-TAGS='aurget git gpg gui haskell htop inputrc ruby screen scripts ssh vim zsh'
+COPY_ALWAYS='msmtprc'
+TAGS='aurget git gpg gui haskell htop inputrc mail-recipient mail-sender ruby screen scripts ssh vim zsh'
