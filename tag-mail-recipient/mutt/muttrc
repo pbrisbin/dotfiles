@@ -31,7 +31,7 @@ unset record
   set signature         = ~/.mutt/signature
   set sort              = threads
   set sort_aux          = last-date-received
-  set spoolfile         = "+Gmail/INBOX"
+  set spoolfile         = "+gmail/INBOX"
   set status_format     = "-%r- %f%?t? Tag:%t?%?p? Post:%p? -%>-"
   set strict_threads
   set thorough_search

@@ -2,7 +2,7 @@
 
 [general]
 ui = ttyui
-accounts = Gmail,Thoughtbot
+accounts = gmail,thoughtbot
 maxsyncaccounts = 2
 pythonfile = ~/.offlineimap.py
 
@@ -14,27 +14,27 @@ peritem = "+%(accountname)s/%(foldername)s"
 sep = " \\\n  "
 footer = "\n"
 
-[Account Gmail]
-localrepository = Gmail-Local
-remoterepository = Gmail-Remote
+[Account gmail]
+localrepository = gmail-local
+remoterepository = gmail-remote
 postsynchook = notmuch new
 
-[Account Thoughtbot]
-localrepository = Thoughtbot-Local
-remoterepository = Thoughtbot-Remote
+[Account thoughtbot]
+localrepository = thoughtbot-local
+remoterepository = thoughtbot-remote
 postsynchook = notmuch new
 
-[Repository Gmail-Local]
+[Repository gmail-local]
 type = Maildir
-localfolders = ~/Mail/Gmail
+localfolders = ~/Mail/gmail
 nametrans = nt_local
 
-[Repository Thoughtbot-Local]
+[Repository thoughtbot-local]
 type = Maildir
-localfolders = ~/Mail/Thoughtbot
+localfolders = ~/Mail/thoughtbot
 nametrans = nt_local
 
-[Repository Gmail-Remote]
+[Repository gmail-remote]
 type = Gmail
 remoteuser = pbrisbin@gmail.com
 remotepasseval = get_password('pbrisbin@gmail.com')
@@ -44,7 +44,7 @@ nametrans = nt_remote
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
 
-[Repository Thoughtbot-Remote]
+[Repository thoughtbot-remote]
 type = Gmail
 remoteuser = pat@thoughtbot.com
 remotepasseval = get_password('pat@thoughtbot.com')

@@ -1,12 +1,12 @@
 # vim: ft=muttrc
 set from          = "pbrisbin@gmail.com"
 set sendmail      = "/usr/bin/msmtp -a gmail"
-set mbox          = "+Gmail/all_mail"
-set postponed     = "+Gmail/drafts"
+set mbox          = "+gmail/all_mail"
+set postponed     = "+gmail/drafts"
 set query_command = "echo; ~/.local/bin/gcontacts -a pbrisbin@gmail.com '%s'"
 
 color status green default
 
-macro index ,c "<change-folder>+Thoughtbot/INBOX<return>" "change accounts"
-macro index D "<save-message>+Gmail/trash<enter>" "move message to the trash"
-macro index S "<save-message>+Gmail/spam<enter>"  "mark message as spam"
+macro index ,c "<change-folder>+thoughtbot/INBOX<return>" "change accounts"
+macro index D "<save-message>+gmail/trash<enter>" "move message to the trash"
+macro index S "<save-message>+gmail/spam<enter>"  "mark message as spam"
