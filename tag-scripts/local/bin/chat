@@ -4,5 +4,4 @@
 #
 ###
 urxvtc -title chat -n chat -e \
-  ssh -t -R 2222:localhost:2222 pbrisbin.com \
-  "bash -ilc 'screen -R -D -S irc'"
+  ssh -t pbrisbin.com "bash -ilc 'screen -R -D -S irc'"
