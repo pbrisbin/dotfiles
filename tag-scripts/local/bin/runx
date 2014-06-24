@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - run X programs from outside of the X session, as the normal
+# user or root. Looks up XAUTHORITY dynamically, but assumes the X session is on
+# DISPLAY :0.
+#
+###
+xauthority() {
+  ps -C xinit -f --no-header | sed 's/.*-auth //; s/ -[^ ].*//'
+}
+
+if [ -z "$1" ]; then
+  printf "usage: runx <command> [argument, ...]\n" >&2
+  exit 64
+fi
+
+if [ $UID -eq 0 ]; then
+  printf -v cmd "%q " "$@"
+  set -- su patrick -c "$cmd"
+fi
+
+DISPLAY=:0 XAUTHORITY="$(xauthority)" "$@"
