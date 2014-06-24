@@ -25,10 +25,5 @@ Host git.thoughtbot.com
 Host heroku.com
   IdentityFile ~/.ssh/id_rsa.heroku
 
-Host heroku.personal
-  HostName heroku.com
-  IdentityFile ~/.ssh/id_rsa.heroku-personal
-  IdentitiesOnly yes
-
 Host nodester.com
   IdentityFile ~/.ssh/id_rsa.nodester
