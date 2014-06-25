@@ -1,2 +1,2 @@
 EXCLUDES=README.md
-TAGS='bash git screen weechat'
+TAGS='bash git screen ssh weechat'
