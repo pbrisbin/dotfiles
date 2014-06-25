@@ -1,7 +1,6 @@
 # vim: ft=muttrc
 
   set askcc
-  set beep_new
 unset confirmappend
   set delete
   set edit_headers
