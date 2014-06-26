@@ -27,11 +27,12 @@ main = do
             }
 
     xmonad $ conf `additionalKeysP`
-        [ ("M-p", spawn "gmrun")
-        , ("M-S-s", scratchpadSpawnAction conf)
-        , ("<XF86AudioRaiseVolume>", spawn "nmixer up")
-        , ("<XF86AudioLowerVolume>", spawn "nmixer down")
-        , ("<XF86AudioMute>",        spawn "nmixer toggle")
+        [ ("M-p"                   , spawn "gmrun"             )
+        , ("M-S-m"                 , spawn "mail"              )
+        , ("M-S-s"                 , scratchpadSpawnAction conf)
+        , ("<XF86AudioRaiseVolume>", spawn "nmixer up"         )
+        , ("<XF86AudioLowerVolume>", spawn "nmixer down"       )
+        , ("<XF86AudioMute>"       , spawn "nmixer toggle"     )
         ]
 
 withMyUrgencyHook :: LayoutClass l Window => XConfig l -> XConfig l
