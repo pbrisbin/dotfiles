@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+#
+# pbrisbin 2014 - check a Maildir for new messages and spawn a notification via
+# notify-send.
+#
+###
+directory = ARGV.first || "#{ENV["HOME"]}/Mail"
+mailboxes = Hash.new(0)
+
+Dir["#{directory}/**/*/new/*"].each do |message|
+  mailbox = message.sub(%r{#{directory}/(.*)/new/.*}, '\1')
+  mailboxes[mailbox] += 1
+end
+
+body = mailboxes.map { |mailbox, count| "- #{mailbox} (#{count})" }.join("\n")
+
+if body != ""
+  system("notify-send", "-i", "mail_new", "--", "New mail", body)
+end
