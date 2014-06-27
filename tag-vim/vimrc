@@ -38,7 +38,6 @@ set cursorline
 set directory=/tmp
 set expandtab
 set foldmethod=marker
-set formatoptions-=t
 set formatoptions+=j
 set history=500
 set hlsearch
@@ -47,7 +46,6 @@ set laststatus=2
 set list listchars=tab:»·,trail:·
 set nobackup
 set nojoinspaces
-set nowrap
 set number
 set ruler
 set scrolloff=999
@@ -88,13 +86,6 @@ map <Leader>r :Run<CR>
 
 nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 
-function! SetProseOptions()
-  setlocal formatoptions+=twn
-  setlocal nosmartindent
-  setlocal spell
-  setlocal textwidth=72
-endfunction
-
 augroup vimrc
   autocmd!
   autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
@@ -102,5 +93,5 @@ augroup vimrc
   autocmd FileType haskell setlocal shiftwidth=4 | let b:ctags_command = 'hs-ctags %f'
   autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
   autocmd FileType mail setlocal spell nohlsearch
-  autocmd FileType gitcommit,markdown,lhaskell call SetProseOptions()
+  autocmd FileType gitcommit,markdown,lhaskell setlocal nosmartindent | setlocal spell
 augroup END
