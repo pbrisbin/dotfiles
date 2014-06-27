@@ -1,3 +1,14 @@
+function start_gpg_agent() {
+  local gpg_env="$XDG_CACHE_HOME/gpg-env"
+
+  if ! pgrep gpg-agent >/dev/null; then
+    # TODO: --enable-ssh-support, don't run a separate agent
+    gpg-agent --daemon > "$gpg_env"
+  fi
+
+  source "$gpg_env"
+}
+
 function start_ssh_agent() {
   local ssh_env="$XDG_CACHE_HOME/ssh-env"
 
@@ -25,6 +36,7 @@ export XAUTHORITY="$XDG_RUNTIME_DIR"/X11-authority
 
 path=( "$HOME/.local/bin" './.cabal-sandbox/bin' "$HOME/.cabal/bin" $path )
 
+start_gpg_agent
 start_ssh_agent
 
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
