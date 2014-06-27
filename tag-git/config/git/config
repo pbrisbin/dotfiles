@@ -23,8 +23,9 @@
   aa = add --all
   ap = add --patch
   ca = commit --amend
-  ci = commit -v
+  ci = commit --verbose
   co = checkout
+  db = "!f() { git branch -d $1 && git push origin :$1 }; f"
   dc = diff --cached
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   pr = !git push -u origin && gh pull-request
@@ -33,7 +34,6 @@
   up = !git fetch origin && git rebase origin/master
 [merge]
   ff = only
-  tool = vimdiff
 [push]
   default = current
 [status]
@@ -49,3 +49,5 @@
   signingkey = CEC8925D
 [fetch]
   prune = true
+[commit]
+  gpgsign = true
