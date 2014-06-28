@@ -19,6 +19,7 @@ bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
 bindkey -M viins '^?' backward-delete-char # Backspace
 
 export BROWSER='chromium'
+export GPG_TTY="$(tty)"
 export MANWIDTH=80
 
 setopt inc_append_history
