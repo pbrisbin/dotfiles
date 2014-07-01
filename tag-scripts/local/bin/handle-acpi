@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2014 - called directly from /etc/acpi/handler.sh
+#
+###
+bin="$(dirname "$0")"
+
+case "$1" in
+  battery)              "$bin"/runx "$bin"/osb ;;
+  button/screenlock)    "$bin"/runx slock      ;;
+  video/brightnessdown) "$bin"/bl d            ;;
+  video/brightnessup)   "$bin"/bl u            ;;
+
+  # Ignored events
+  ac_adapter|*/volume*|*/mute) : ;;
+
+  *) "$bin"/runx notify-send -i 'emblem-important' 'ACPI action' "$*" ;;
+esac

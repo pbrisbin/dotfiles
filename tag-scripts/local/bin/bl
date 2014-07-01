@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2014 - adjust backlight brightness. Must be run as root.
+#
+###
+directory=/sys/class/backlight/intel_backlight
+
+cur=$(cat "$directory"/brightness)
+max=$(cat "$directory"/max_brightness)
+amt=$((max/10))
+val=$cur
+
+case "$1" in
+  u) val=$((cur+amt)) ;;
+  d) val=$((cur-amt)) ;;
+  m) val=$max         ;;
+  *) { printf "usage: bl [u|d|m]\n" >&2; exit 64; } ;;
+esac
+
+# Bounds check
+[ $val -gt $max ] && val=$max
+[ $val -lt 0    ] && val=0
+
+echo $val > "$directory"/brightness
