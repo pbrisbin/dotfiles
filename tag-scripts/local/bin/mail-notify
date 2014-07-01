@@ -5,6 +5,7 @@
 #
 ###
 directory = ARGV.first || "#{ENV["HOME"]}/Mail"
+cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 
 Dir["#{directory}/**/*/new/*"].each do |message|
@@ -13,7 +14,10 @@ Dir["#{directory}/**/*/new/*"].each do |message|
 end
 
 body = mailboxes.map { |mailbox, count| "- #{mailbox} (#{count})" }.join("\n")
+cached_body = File.read(cachefile) rescue ""
 
-if body != ""
+if body != "" && body != cached_body
   system("notify-send", "-i", "mail_new", "--", "New mail", body)
+
+  File.write(cachefile, body)
 end
