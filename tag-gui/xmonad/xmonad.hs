@@ -19,6 +19,7 @@ main = xmonad $ withMyUrgencyHook $ defaultConfig
     { terminal = "urxvtc"
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
+        , isModal --> doFloat
         , namedScratchpadManageHook scratchpads
         , manageHook defaultConfig
         ]
@@ -30,6 +31,9 @@ main = xmonad $ withMyUrgencyHook $ defaultConfig
         , ("<XF86AudioLowerVolume>", spawn "nmixer down")
         , ("<XF86AudioMute>", spawn "nmixer toggle")
         ]
+
+isModal :: Query Bool
+isModal = isInProperty "_NET_WM_STATE" "_NET_WM_STATE_MODAL"
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
