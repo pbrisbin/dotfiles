@@ -28,5 +28,7 @@ secure ~/.netrc ~/.msmtprc ~/.config/gnupg
 
 grep -sq '^Plugin' ~/.vimrc && setup_vundle
 
+[ -d ~/.mutt ] && mkdir -p ~/.mutt/temp
+
 # dot-prefixed files are skipped unless explicitly named
 rcup -K config/zsh/{.zprofile,.zshenv,.zshrc}
