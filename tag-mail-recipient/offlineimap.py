@@ -20,10 +20,6 @@ def nt_remote(folder):
 def nt_local(folder):
     return r_mapping.get(folder, folder)
 
-# folderfilter = exclude(['Label', 'Label', ... ])
-def exclude(excludes):
-    return lambda folder: not folder in excludes
-
 def get_password(email_address):
     pw = subprocess.check_output(["/home/patrick/.local/bin/getnetrc", email_address])
     return str(pw).strip()

@@ -34,7 +34,6 @@ realdelete = no
 maxconnections = 3
 nametrans = nt_remote
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-folderfilter = exclude(['[Gmail]/Spam'])
 
 [Repository thoughtbot-remote]
 type = Gmail
@@ -44,4 +43,3 @@ realdelete = no
 maxconnections = 3
 nametrans = nt_remote
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-folderfilter = exclude(['[Gmail]/Spam'])
