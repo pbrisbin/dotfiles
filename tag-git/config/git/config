@@ -25,12 +25,12 @@
   ca = commit --amend
   ci = commit --verbose
   co = checkout
-  db = "!f() { git branch -d $1 && git push origin :$1 }; f"
+  db = "!f() { [ -n \"$1\" ] && git branch -d $1 && git push origin :$1; }; f"
   dc = diff --cached
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   pr = !git push -u origin && gh pull-request
   st = status
-  tg = "!f() { git tag -a -m $1 $1; }; f"
+  tg = "!f() { [ -n \"$1\" ] && git tag -a -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
 [merge]
   ff = only

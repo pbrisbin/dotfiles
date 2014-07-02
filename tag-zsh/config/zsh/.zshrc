@@ -1,4 +1,4 @@
-_git-delete-branch() { _git-checkout }
+_git-db() { _git-checkout }
 
 zstyle ':completion:*:sudo:*' command-path $path
 
