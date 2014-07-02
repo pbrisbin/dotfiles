@@ -1,0 +1,10 @@
+mailboxes \
+  "+gmail/INBOX" \
+  "+gmail/lists" \
+  "+gmail/lists.arch" \
+  "+gmail/lists.vim" \
+  "+gmail/lists.web_devel" \
+  "+gmail/lists.xmonad" \
+  "+gmail/lists.yesod" \
+  "+gmail/server" \
+  "+thoughtbot/INBOX"

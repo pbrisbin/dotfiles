@@ -6,14 +6,6 @@ accounts = gmail,thoughtbot
 maxsyncaccounts = 2
 pythonfile = ~/.offlineimap.py
 
-[mbnames]
-enabled = yes
-filename = ~/.mutt/mailboxes
-header = "mailboxes \\\n  "
-peritem = "+%(accountname)s/%(foldername)s"
-sep = " \\\n  "
-footer = "\n"
-
 [Account gmail]
 localrepository = gmail-local
 remoterepository = gmail-remote
@@ -42,7 +34,7 @@ realdelete = no
 maxconnections = 3
 nametrans = nt_remote
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
+folderfilter = exclude(['[Gmail]/Spam'])
 
 [Repository thoughtbot-remote]
 type = Gmail
@@ -52,4 +44,4 @@ realdelete = no
 maxconnections = 3
 nametrans = nt_remote
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-folderfilter = exclude(['[Gmail]/All Mail', '[Gmail]/Spam'])
+folderfilter = exclude(['[Gmail]/Spam'])
