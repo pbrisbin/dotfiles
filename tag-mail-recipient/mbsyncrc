@@ -1,0 +1,108 @@
+# vim: ft=cfg:
+Create Slave
+Expunge Both
+SyncState *
+
+IMAPAccount gmail
+Host imap.gmail.com
+User pbrisbin@gmail.com
+PassCmd "/home/patrick/.local/bin/getnetrc pbrisbin@gmail.com"
+UseIMAPS yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/Mail/gmail/
+Inbox ~/Mail/gmail/INBOX
+
+Channel gmail-inbox
+Master :gmail-remote:INBOX
+Slave :gmail-local:INBOX
+
+Channel gmail-archive
+Master ":gmail-remote:[Gmail]/All Mail"
+Slave :gmail-local:archive
+
+Channel gmail-drafts
+Master :gmail-remote:[Gmail]/Drafts
+Slave :gmail-local:drafts
+
+Channel gmail-sent
+Master ":gmail-remote:[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+
+Channel gmail-spam
+Master :gmail-remote:[Gmail]/Spam
+Slave :gmail-local:spam
+
+Channel gmail-trash
+Master :gmail-remote:[Gmail]/Trash
+Slave :gmail-local:trash
+
+Channel gmail-rest
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * ![Gmail]*
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-archive
+Channel gmail-drafts
+Channel gmail-sent
+Channel gmail-spam
+Channel gmail-trash
+Channel gmail-rest
+
+IMAPAccount thoughtbot
+Host imap.gmail.com
+User pbrisbin@thoughbot.com
+PassCmd "/home/patrick/.local/bin/getnetrc pbrisbin@thoughtbot.com"
+UseIMAPS yes
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore thoughtbot-remote
+Account thoughtbot
+
+MaildirStore thoughtbot-local
+Path ~/Mail/thoughtbot/
+Inbox ~/Mail/thoughtbot/INBOX
+
+Channel thoughtbot-inbox
+Master :thoughtbot-remote:INBOX
+Slave :thoughtbot-local:INBOX
+
+Channel thoughtbot-archive
+Master ":thoughtbot-remote:[Gmail]/All Mail"
+Slave :thoughtbot-local:archive
+
+Channel thoughtbot-drafts
+Master :thoughtbot-remote:[Gmail]/Drafts
+Slave :thoughtbot-local:drafts
+
+Channel thoughtbot-sent
+Master ":thoughtbot-remote:[Gmail]/Sent Mail"
+Slave :thoughtbot-local:sent
+
+Channel thoughtbot-spam
+Master :thoughtbot-remote:[Gmail]/Spam
+Slave :thoughtbot-local:spam
+
+Channel thoughtbot-trash
+Master :thoughtbot-remote:[Gmail]/Trash
+Slave :thoughtbot-local:trash
+
+Channel thoughtbot-rest
+Master :thoughtbot-remote:
+Slave :thoughtbot-local:
+Patterns * ![Gmail]*
+
+Group thoughtbot
+Channel thoughtbot-inbox
+Channel thoughtbot-archive
+Channel thoughtbot-drafts
+Channel thoughtbot-sent
+Channel thoughtbot-spam
+Channel thoughtbot-trash
+Channel thoughtbot-rest
