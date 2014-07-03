@@ -1,7 +1,7 @@
 # vim: ft=muttrc
 set from          = "pbrisbin@gmail.com"
 set sendmail      = "/usr/bin/msmtp -a gmail"
-set mbox          = "+gmail/all_mail"
+set mbox          = "+gmail/archive"
 set postponed     = "+gmail/drafts"
 set query_command = "echo; ~/.local/bin/gcontacts -a pbrisbin@gmail.com '%s'"
 
