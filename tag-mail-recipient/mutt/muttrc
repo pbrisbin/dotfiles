@@ -29,7 +29,7 @@ unset record
   set reverse_name
   set signature         = ~/.mutt/signature
   set sort              = threads
-  set sort_aux          = last-date-received
+  set sort_aux          = reverse-last-date-received
   set spoolfile         = "+gmail/INBOX"
   set status_format     = "-%r- %f%?t? Tag:%t?%?p? Post:%p? -%>-"
   set strict_threads
