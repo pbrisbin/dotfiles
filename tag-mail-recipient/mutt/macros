@@ -1,5 +1,5 @@
 # vim: ft=muttrc
-macro index ,i      "<change-folder>!<return>" "go to inbox"
+macro index ,i      "<change-folder>!<enter>"  "go to inbox"
 macro index ,p      "<pipe-message>cat > ~/"   "save message as"
 macro index <space> "<collapse-thread>"        "[un]collapse thread"
 
@@ -8,5 +8,5 @@ macro index ,s \
   "search"
 
 macro index ,A \
-  "<tag-pattern>all<return><tag-prefix><delete-message><return><sync-mailbox>" \
+  "<tag-pattern>all<return><tag-prefix><delete-message><enter><sync-mailbox>" \
   "archive all"
