@@ -9,8 +9,10 @@ cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 
 Dir["#{directory}/**/*/new/*"].each do |message|
-  mailbox = message.sub(%r{#{directory}/(.*)/new/.*}, '\1')
-  mailboxes[mailbox] += 1
+  unless message =~ %r{/(archive|spam|trash)/}
+    mailbox = message.sub(%r{#{directory}/(.*)/new/.*}, '\1')
+    mailboxes[mailbox] += 1
+  end
 end
 
 body = mailboxes.map { |mailbox, count| "- #{mailbox} (#{count})" }.join("\n")
