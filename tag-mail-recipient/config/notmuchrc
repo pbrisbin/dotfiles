@@ -67,7 +67,7 @@ tags=unread;inbox;
 #	and update tags, while the "notmuch tag" and "notmuch restore"
 #	commands will notice tag changes and update flags in filenames
 #
-ignore=
+ignore=spam;trash;
 
 [maildir]
 synchronize_flags=true
