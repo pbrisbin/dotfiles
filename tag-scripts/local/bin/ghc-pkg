@@ -39,9 +39,8 @@ case "$1" in
 
     $0 reset || exit $?
 
-    cabal install "$@" cabal-install
-    cabal install "$@" \
-      codex \
+    cabal install -j4 "$@" cabal-install
+    cabal install -j4 "$@" \
       hi \
       hlint \
       hoogle \
