@@ -1,10 +1,8 @@
 mailboxes \
   "+gmail/INBOX" \
-  "+gmail/lists" \
-  "+gmail/lists.arch" \
-  "+gmail/lists.vim" \
-  "+gmail/lists.web_devel" \
-  "+gmail/lists.xmonad" \
-  "+gmail/lists.yesod" \
-  "+gmail/server" \
+  "+gmail/ml-arch" \
+  "+gmail/ml-vim" \
+  "+gmail/ml-web-devel" \
+  "+gmail/ml-xmonad" \
+  "+gmail/ml-yesod" \
   "+thoughtbot/INBOX"
