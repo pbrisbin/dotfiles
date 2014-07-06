@@ -6,7 +6,3 @@ macro index <space> "<collapse-thread>"        "[un]collapse thread"
 macro index ,s \
   "<shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
   "search"
-
-macro index ,A \
-  "<tag-pattern>all<return><tag-prefix><delete-message><enter><sync-mailbox>" \
-  "archive all"
