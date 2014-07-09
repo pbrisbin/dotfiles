@@ -1,48 +1,31 @@
 #!/usr/bin/python2
 #
-# pbrisbin 2013 - access Google Contacts for mutt's query_command.
+# pbrisbin 2014 - access Google Contacts for mutt's query_command.
 #
-# Modified version of gcontacts.py, originally written by Jim Karsten
-# <jimkarsten@gmail.com>.
-#
-# Changes by Pat Brisbin <pbrisbin@gmail.com>:
-#
-# * Remove all generalities, support only fetching, sorting by name,
-#   and outputting the short format.
-#
-# * Search ~/.netrc for a machine for the given host of the email
-#   address and login that matches the given email address -- use those
-#   credentials.
+# Originally script by Jim Karsten <jimkarsten@gmail.com>. Modified by Pat
+# Brisbin <pbrisbin@gmail.com> to do a lot less and handle arguments
+# differently.
 #
 # Usage:
 #
-# Add credentials to ~/.netrc
+#   gcontacts <account> <password-command> <keyword>, ...
 #
-#   machine gmail.com
-#     login you@gmail.com
-#     password secret
+# Example Mutt Usage:
 #
-#   # default account, override with -a <email-address>
-#   macdef contacts_account pbrisbin@gmail.com
-#
-# Add a query_command to ~/.mutt/muttrc
-#
-#   set query_command = "echo; /path/to/gcontacts '%s'"
+#   set query_command = "echo; gcontacts foo@gmail.com 'echo SuperSecret' '%s'"
 #
 ###
-import gdata.contacts
-import gdata.contacts.service
-import netrc
 import re
 import sys
+import subprocess
 
-from optparse import OptionParser
+import gdata.contacts
+import gdata.contacts.service
 
-P_ID = re.compile(r'^http://www.google.com/m8/feeds/contacts/.*?/base/(.*)$')
 P_REL = re.compile(r'^http://schemas.google.com/g/2005#(.*)$')
 
 class Contacts():
-    def __init__(self, gd_client=None):
+    def __init__(self, gd_client):
         self.gd_client = gd_client
         self.query = gdata.contacts.service.ContactsQuery()
         self.query.max_results = 999999
@@ -50,15 +33,15 @@ class Contacts():
         self.contacts = []
         self.filtered_contacts = []
 
+    def get(self):
+        for entry in self.feed.entry:
+            contact = Contact(entry)
+            self.contacts.append(contact)
+
     def filter(self, keyword):
         for contact in self.contacts:
             if contact.is_match(keyword=keyword):
                 self.filtered_contacts.append(contact)
-
-    def get(self):
-        for entry in self.feed.entry:
-            contact = Contact(entry=entry)
-            self.contacts.append(contact)
 
     def print_contacts(self):
         printable_item = []
@@ -84,10 +67,11 @@ class Contacts():
                     info=printable['other_info'])
 
 class Contact():
-    def __init__(self, entry=None):
+    def __init__(self, entry):
         self.entry = entry
         self.name = self.entry.title.text or None
         self.organization = None
+
         if self.entry.organization and self.entry.organization.org_name:
             self.organization = self.entry.organization.org_name.text or None
 
@@ -95,10 +79,8 @@ class Contact():
         self.set_fullname()
 
     def is_match(self, keyword):
-        if not keyword:
-            return True
-
         match = False
+
         for email_addr in self.emails:
             if re.search(keyword, email_addr['address'], re.IGNORECASE):
                 match = True
@@ -108,6 +90,7 @@ class Contact():
         if self.organization:
             if re.search(keyword, self.organization, re.IGNORECASE):
                 match = True
+
         return match
 
     def parse_emails(self):
@@ -132,75 +115,22 @@ class Contact():
         else:
             self.fullname = 'n/a'
 
-def get_netrc():
-    try:
-        net_rc = netrc.netrc()
-    except:
-        die("Unable to process ~/.netrc")
-
-    return net_rc
-
-def get_email_address():
-    net_rc = get_netrc()
-
-    try:
-        account = net_rc.macros['contacts_account'][0].strip()
-    except:
-        die("No default account, set contacts_account or pass -a")
-
-    return account
-
-def get_password(email_address):
-    try:
-        email_host = email_address.split('@', 2)[1]
-    except:
-        die("Invalid email address.")
-
-    net_rc = get_netrc()
-
-    for host in net_rc.hosts.keys():
-        if host == email_host:
-            authenticator = net_rc.authenticators(host)
-
-            if authenticator[0] == email_address:
-                return authenticator[2]
-
-    return None
-
-def die(message):
-    print >> sys.stderr, message
-    quit(1)
-
 if __name__ == '__main__':
-    usage = "%prog [options] [keyword]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-a", "--account", dest="account",
-        help="The gmail account email address.")
+    if len(sys.argv) < 4:
+        print >> sys.stderr, "usage: gcontacts <email> <password-command> <keyword>, ..."
+        quit(64)
 
-    (options, args) = parser.parse_args()
-
-    keyword = None
-
-    if len(args) > 0:
-        keyword = args[0]
-
-    email_addr = options.account or get_email_address()
-
-    if not email_addr:
-        die("Invalid email address. Use -a or set contacts_account in netrc")
-
-    password = get_password(email_addr)
-
-    if not password:
-        die("Unable to determine password. Is the account present in netrc?")
+    email, command = sys.argv[1:3]
+    keyword = ' '.join(sys.argv[3:])
+    password = subprocess.check_output(command.split(' '))
 
     gd_client = gdata.contacts.service.ContactsService()
-    gd_client.email = email_addr
+    gd_client.email = email
     gd_client.password = password
     gd_client.source = 'dm-contacts-1'
     gd_client.ProgrammaticLogin()
 
-    contact_set = Contacts(gd_client=gd_client)
+    contact_set = Contacts(gd_client)
     contact_set.get()
     contact_set.filter(keyword)
     contact_set.print_contacts()
