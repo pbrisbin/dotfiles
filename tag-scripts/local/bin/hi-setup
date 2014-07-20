@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - Generate a package skeleton using hi and a custom template,
+# then execute some additional setup.
+#
+###
+set -e
+
+info() { printf "==> %s\n" "$*"; }
+
+if [ $# -lt 2 ]; then
+  printf "usage: hi-setup <module> <package> [hi options]\n" >&2
+  exit 64
+fi
+
+module="$1"
+package="$2"
+shift 2
+
+info "Generating package skeleton..."
+
+hi \
+  --module-name "$module" \
+  --package-name "$package" \
+  --author 'Pat Brisbin' \
+  --email 'pbrisbin@gmail.com' \
+  --repository gh:pbrisbin/hi-hspec "$@"
+
+rm ./README.md
+cd "$package"
+
+info "Initializing sandbox..."
+cabal sandbox init
+cabal install --enable-tests --dependencies-only -j4
+
+info "Done."
