@@ -76,7 +76,8 @@ let g:runfile_by_name    = {
   \   '.*\.t': '!cram %',
   \   '.*\.lhs': '!runhaskell %',
   \   '.*Gemfile': '!bundle',
-  \   '.*\.md': '!opandoc %'
+  \   '.*\.md': '!opandoc %',
+  \   '.*Spec\.hs': '!echo :main | cabal exec -- ghci -v0 %'
   \ }
 
 map <Leader>a :call RunAllSpecs()<CR>
