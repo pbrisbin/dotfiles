@@ -19,8 +19,10 @@ case "$state" in
     ;;
 
   Charging)
+    icon='battery-caution-charging'
     message="Charging - $level%\n$extra"
 
+    [ $level -gt 10 ] && icon='battery-low-charging'
     [ $level -gt 40 ] && icon='battery-good-charging'
     [ $level -gt 97 ] && icon='battery-full-charging'
     ;;
