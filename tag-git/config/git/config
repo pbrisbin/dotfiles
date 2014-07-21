@@ -32,6 +32,7 @@
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -a -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
+  co-pr = "!f() { git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 [merge]
   ff = only
 [push]
