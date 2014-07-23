@@ -13,6 +13,7 @@ case "$1" in
 
   # Ignored events
   ac_adapter|*/volume*|*/mute) : ;;
+  ibm/hotkey|thermal_zone)     : ;;
 
   *) "$bin"/runx notify-send -i 'emblem-important' 'ACPI action' "$*" ;;
 esac
