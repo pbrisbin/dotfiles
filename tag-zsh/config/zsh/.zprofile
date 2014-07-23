@@ -1,11 +1,22 @@
 function start_gpg_agent() {
   local gpg_env="$XDG_CACHE_HOME/gpg-env"
 
-  if pgrep gpg-agent >/dev/null; then
-    source "$gpg_env"
+  if ! pgrep gpg-agent >/dev/null; then
+    # TODO: --enable-ssh-support, don't run a separate agent
+    gpg-agent --daemon > "$gpg_env"
+  fi
+
+  source "$gpg_env"
+}
+
+function start_ssh_agent() {
+  local ssh_env="$XDG_CACHE_HOME/ssh-env"
+
+  if pgrep "ssh-agent" >/dev/null; then
+    source "$ssh_env"
   else
-    gpg-agent --enable-ssh-support --daemon > "$gpg_env"
-    source "$gpg_env"
+    ssh-agent | grep -Fv 'echo' > "$ssh_env"
+    source "$ssh_env"
     ssh-add
   fi
 }
@@ -25,6 +36,7 @@ export XAUTHORITY="$XDG_RUNTIME_DIR"/X11-authority
 path=( "$HOME/.local/bin" './.cabal-sandbox/bin' "$HOME/.cabal/bin" $path )
 
 start_gpg_agent
+start_ssh_agent
 
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
   exec startx 2>! "$XDG_RUNTIME_DIR"/xsession-errors
