@@ -2,7 +2,6 @@ function start_gpg_agent() {
   local gpg_env="$XDG_CACHE_HOME/gpg-env"
 
   if ! pgrep gpg-agent >/dev/null; then
-    # TODO: --enable-ssh-support, don't run a separate agent
     gpg-agent --daemon > "$gpg_env"
   fi
 
