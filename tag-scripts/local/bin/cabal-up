@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - install "system" Haskell packages.
+#
+###
+set -e
+
+cd # avoid accidental sandbox installation
+cabal update
+cabal install cabal-install
+cabal install hi msu pandoc xmonad xmonad-contrib
