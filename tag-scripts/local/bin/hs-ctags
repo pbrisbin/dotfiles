@@ -10,7 +10,7 @@ class Ctags
   end
 
   def run
-    system(%{ echo ":ctags #{@tags}" | ghci -v0 '#{@module}' })
+    system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- -v0 '#{@module}' })
   end
 
   private
