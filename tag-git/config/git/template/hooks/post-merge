@@ -1,0 +1,2 @@
+#!/bin/sh
+"$(dirname "$0")/ctags" >/dev/null 2>&1 &

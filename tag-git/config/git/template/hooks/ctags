@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+tags_file="/tmp/$$.tags"
+
+trap 'rm -f "$tags_file"' EXIT
+
+if [ -f *.cabal ]; then
+  ~/.local/bin/hs-ctags "$tags_file"
+else
+  ctags -f "$tags_file" -R --exclude='*.js'
+fi
+
+mv "$tags_file" tags
