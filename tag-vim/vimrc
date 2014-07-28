@@ -45,6 +45,7 @@ set laststatus=2
 set list listchars=tab:»·,trail:·
 set nobackup
 set nojoinspaces
+set notitle
 set nowrap
 set number
 set ruler
