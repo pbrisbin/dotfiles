@@ -31,7 +31,7 @@ unset record
   set sort              = threads
   set sort_aux          = reverse-last-date-received
   set spoolfile         = "+gmail/INBOX"
-  set status_format     = "-%r- %f%?t? Tag:%t?%?p? Post:%p? -%>-"
+  set status_format     = "-%r- %f%?t? Tagged:%t?%?p? Drafts:%p? -%>-"
   set strict_threads
   set thorough_search
   set tilde
