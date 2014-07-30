@@ -19,7 +19,7 @@ Host htpc.local
 Host github.com
   IdentityFile ~/.ssh/id_rsa.github
 
-Host git.thoughtbot.com
+Host git.upcase.com
   IdentityFile ~/.ssh/id_rsa.github
 
 Host heroku.com
