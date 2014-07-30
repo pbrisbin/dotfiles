@@ -38,5 +38,6 @@ start_gpg_agent
 start_ssh_agent
 
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
-  exec startx 2>! "$XDG_RUNTIME_DIR"/xsession-errors
+  # Note: Since Xorg 1.16, redirecting stderr is unsupported.
+  exec startx # 2>! "$XDG_RUNTIME_DIR"/xsession-errors
 fi
