@@ -1,4 +1,3 @@
-:set prompt "ghci> "
+:set prompt "λ> "
 :set -isrc
-:set -ilib
-:set -iconfig
+:set -itests
