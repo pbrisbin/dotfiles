@@ -5,20 +5,17 @@
 #
 ###
 if [ $# -eq 0 ]; then
-  printf "usage: opandoc <markdown-file>\n" >&2
-  exit 1
+  printf "usage: opandoc FILE\n" >&2
+  exit 64
 fi
 
 file="$(mktemp)"
 
 {
-  printf '<html><body><section class="container">'
+  printf '<html><body>'
 
-  pandoc "$1" \
-    --css="http://pbrisbin.com/css/bootstrap.min.css" \
-    --css="http://pbrisbin.com/css/main.css" \
-    --css="http://pbrisbin.com/css/syntax.css"
+  pandoc "$1"
 
-  printf '</section></body></html>'
+  printf '</body></html>'
 
 } > "$file" && $BROWSER "file://$file"
