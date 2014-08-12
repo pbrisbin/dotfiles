@@ -34,7 +34,6 @@
 .classpath
 .env
 .gdb_history
-.ghci
 .idea/
 .project
 .settings
