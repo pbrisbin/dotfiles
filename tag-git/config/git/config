@@ -14,7 +14,7 @@
   co = checkout
   db = "!f() { [ -n \"$1\" ] && git branch -d $1 && git push origin :$1; }; f"
   dc = diff --cached
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg = log --oneline --decorate --all --graph -30
   pr = !git push -u origin && gh pull-request
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -a -m $1 $1; }; f"
