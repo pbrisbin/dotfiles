@@ -74,12 +74,12 @@ let g:ctrlp_use_caching  = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
-  \   '.*\.t': '!cram %',
-  \   '.*\.lhs': '!runhaskell %',
-  \   '.*Gemfile': '!bundle',
-  \   '.*\.md': '!opandoc %',
-  \   '.*Spec\.hs': '!echo :main | cabal exec -- ghci -v0 %',
-  \   '.*\.hs': '!cabal exec -- ghci %'
+  \   '.*\.t$': '!cram %',
+  \   '.*\.lhs$': '!runhaskell %',
+  \   '.*Gemfile$': '!bundle',
+  \   '.*\.md$': '!opandoc %',
+  \   '.*Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
+  \   '.*\.hs$': '!cabal exec -- ghci %'
   \ }
 let g:syntastic_mode_map = {
   \ "mode": "passive",
