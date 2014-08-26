@@ -18,6 +18,11 @@ handle_archive() {
 
 [ $# -eq 0 ] && exit 1
 
+if [ ! -f "$1" ]; then
+  # Assume non-files are URLs
+  exec $BROWSER "$1"
+fi
+
 mimetype="$(read_mime "$1")" || mimetype='text/html'
 
 case "$mimetype" in
