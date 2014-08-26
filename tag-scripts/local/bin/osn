@@ -8,10 +8,10 @@ essid="$(iwconfig 2>/dev/null | sed '/^.*ESSID:"\(.*\)".*$/!d; s//\1/')"
 if [ -n "$essid" ]; then
   if ping -c 1 google.com >/dev/null; then
     icon='connect_established'
-    message="connected: $essid"
+    message="connected to $essid"
   else
     icon='connect_no'
-    message="network connected, no internet"
+    message="connected to $essid, no internet"
   fi
 else
   icon='connect_no'
