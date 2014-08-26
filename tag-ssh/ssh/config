@@ -15,6 +15,7 @@ Host black.local
 
 Host htpc.local
   User xbmc
+  Port 2222
 
 Host github.com
   IdentityFile ~/.ssh/id_rsa.github
