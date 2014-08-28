@@ -5,8 +5,6 @@ set mbox          = "+thoughtbot/archive"
 set postponed     = "+thoughtbot/drafts"
 set query_command = "echo; ~/.local/bin/gcontacts pat@thoughtbot.com 'getnetrc pat@thoughtbot.com' '%s'"
 
-color status cyan default
-
 macro index ,c "<change-folder>+gmail/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new thoughtbot-inbox<enter>" "sync IMAP"
 macro index D "<save-message>+thoughtbot/trash<enter>" "move message to the trash"

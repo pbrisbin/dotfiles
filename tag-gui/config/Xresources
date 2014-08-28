@@ -2,9 +2,6 @@
 *font: xft:Droid Sans Mono-16
 *boldFont: xft:Droid Sans Mono-16
 
-*foreground:  #dcdcdc
-*background:  #000000
-
 URxvt*lineSpace:    2
 URxvt*fading:       10%
 URxvt*fadeColor:    grey
@@ -18,28 +15,3 @@ URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.matcher.button:       1
 URxvt.url-select.launcher:  /usr/bin/chromium
 URxvt.url-select.underline: true
-
-!black
-*color0: #222222
-*color8: #454545
-!red
-*color1: #9E5641
-*color9: #CC896D
-!green
-*color2: #6C7E55
-*color10: #7DB37D
-!yellow
-*color3: #CAAF2B
-*color11: #BFB556
-!blue
-*color4: #4c8ea1
-*color12: #6bc1d0
-!magenta
-*color5: #956D9D
-*color13: #C18FCB
-!cyan
-*color6: #7C9AA6
-*color14: #8FADBF
-!white
-*color7: #909090
-*color15: #FFFFFF
