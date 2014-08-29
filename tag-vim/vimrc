@@ -80,7 +80,8 @@ let g:runfile_by_name    = {
   \   '.*Gemfile$': '!bundle',
   \   '.*\.md$': '!opandoc %',
   \   '.*Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
-  \   '.*\.hs$': '!cabal exec -- ghci %'
+  \   '.*\.hs$': '!cabal exec -- ghci %',
+  \   '.*\.tex$': '!pdflatex %'
   \ }
 let g:syntastic_mode_map = {
   \ "mode": "passive",
@@ -98,6 +99,7 @@ nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 augroup vimrc
   autocmd!
   autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
+  autocmd BufWritePost *.tex execute ':Run' | execute ':redraw!'
   autocmd FileType cram setlocal formatoptions+=twn
   autocmd FileType haskell setlocal shiftwidth=4
   autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
