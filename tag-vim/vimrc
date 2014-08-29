@@ -41,6 +41,7 @@ set directory=/tmp
 set expandtab
 set foldmethod=marker
 set formatoptions+=j
+set grepprg=git\ grep\ -n\ $*
 set history=500
 set hlsearch
 set incsearch
