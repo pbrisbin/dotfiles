@@ -16,15 +16,3 @@ Host black.local
 Host htpc.local
   User xbmc
   Port 2222
-
-Host github.com
-  IdentityFile ~/.ssh/id_rsa.github
-
-Host git.upcase.com
-  IdentityFile ~/.ssh/id_rsa.github
-
-Host heroku.com
-  IdentityFile ~/.ssh/id_rsa.heroku
-
-Host nodester.com
-  IdentityFile ~/.ssh/id_rsa.nodester
