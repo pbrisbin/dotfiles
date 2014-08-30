@@ -88,7 +88,7 @@ http_proxy = "localhost:8118"
 proxy_address = "localhost:8118"
 
 # Move completed torrents
-system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,/home/patrick/torrents/completed/"
+system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,/home/patrick/sabnzbd/Downloads/complete/"
 
 # Close and delete torrents as soon as they're done
 ratio.enable=
