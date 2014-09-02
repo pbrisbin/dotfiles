@@ -50,6 +50,7 @@ hdr_order from: to: cc: date: subject:
 subscribe arch-announce arch-dev-public arch-haskell aur-general \
           rubyparley vim web-devel xmonad yesod
 
+source ~/.mutt/colors
 source ~/.mutt/mailboxes
 source ~/.mutt/bindings
 source ~/.mutt/macros
