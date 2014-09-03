@@ -33,7 +33,7 @@ path=/home/patrick/Mail
 [user]
 name=Patrick Brisbin
 primary_email=pbrisbin@gmail.com
-other_email=pat@thoughtbot.com;admin@pbrisbin.com;me@pbrisbin.com
+other_email=pat@thoughtbot.com;admin@pbrisbin.com;me@pbrisbin.com,p@brisb.in
 
 # Configuration for "notmuch new"
 #
@@ -45,6 +45,7 @@ other_email=pat@thoughtbot.com;admin@pbrisbin.com;me@pbrisbin.com
 
 [new]
 tags=unread;inbox;
+ignore=spam;trash;
 
 # Maildir compatibility configuration
 #
@@ -67,7 +68,6 @@ tags=unread;inbox;
 #	and update tags, while the "notmuch tag" and "notmuch restore"
 #	commands will notice tag changes and update flags in filenames
 #
-ignore=spam;trash;
 
 [maildir]
 synchronize_flags=true
