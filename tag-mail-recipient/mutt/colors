@@ -1,4 +1,4 @@
 # vim: ft=muttrc:
 color normal black default
 color indicator brightwhite red
-color index red default "~N|~O"
+color index red default "~N"
