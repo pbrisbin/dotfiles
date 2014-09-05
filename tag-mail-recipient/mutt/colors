@@ -1,5 +1,5 @@
 # vim: ft=muttrc:
-color body       black       default ".*"
+color body       black       default "^[^>]*" # all but quoted (naive)
 color body       brightblue  default "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
 color body       brightblue  default "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
 color body       brightblue  default "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
