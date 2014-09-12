@@ -4,5 +4,6 @@ macro index ,p      "<pipe-message>cat > ~/"   "save message as"
 macro index <space> "<collapse-thread>"        "[un]collapse thread"
 
 macro index ,s \
-  "<shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
+  "<shell-escape>notmuch-mutt --prompt search<enter>\
+  <change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
   "search"
