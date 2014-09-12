@@ -20,7 +20,7 @@ setup_vundle() {
     git clone https://github.com/gmarik/Vundle.vim "$bundles"/vundle
   fi
 
-  vim +PluginInstall +qall
+  vim +PluginInstall +PluginClean! +qa
 }
 
 touch ~/.netrc
