@@ -7,3 +7,9 @@ macro index ,s \
   "<shell-escape>notmuch-mutt --prompt search<enter>\
   <change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
   "search"
+
+macro index ,u \
+ "<enter-command>set my_old_pipe_decode=\$pipe_decode nopipe_decode<enter>\
+ <enter-command>pipe_message ghu<enter>\
+ <enter-command>set pipe_decode=\$my_old_pipe_decode<enter>" \
+ "Unsubscribe from any email with a List-Unsubscribe header"
