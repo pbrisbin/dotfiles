@@ -13,8 +13,8 @@ import netrc
 
 (u, _, p) = netrc.netrc().authenticators('hackage.haskell.org')
 
-print u
-print p
+print(u)
+print(p)
 EOF
 }
 
