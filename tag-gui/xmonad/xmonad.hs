@@ -5,6 +5,7 @@
 --
 -------------------------------------------------------------------------------
 import XMonad
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.EZConfig
@@ -15,7 +16,7 @@ import XMonad.Util.NamedScratchpad
 import qualified XMonad.StackSet as W
 
 main :: IO ()
-main = xmonad $ withMyUrgencyHook $ defaultConfig
+main = xmonad $ ewmh $ withMyUrgencyHook $ defaultConfig
     { terminal = "urxvtc"
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
