@@ -9,6 +9,7 @@ macro index ,s \
   "search"
 
 macro index ,u \
- "<enter-command>set my_old_pipe_decode=\$pipe_decode nopipe_decode<enter>| ghu<enter>\
+ "<enter-command>set my_old_pipe_decode=\$pipe_decode nopipe_decode<enter>\
+ <pipe-message>ghu<enter><delete-thread>\
  <enter-command>set pipe_decode=\$my_old_pipe_decode<enter>" \
  "Unsubscribe from any email with a List-Unsubscribe header"
