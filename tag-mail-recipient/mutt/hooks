@@ -3,3 +3,19 @@ folder-hook gmail/*      source ~/.mutt/accounts/gmail
 folder-hook thoughtbot/* source ~/.mutt/accounts/thoughtbot
 
 source ~/.mutt/accounts/gmail # default account
+
+# http://blog.adamspiers.org/2014/10/05/managing-your-github-notifications-inbox-with-mutt/
+message-hook "(~N|~O) ~f notifications@github.com" \
+  "push '\
+    <enter-command>set \
+      my_old_pipe_decode=\$pipe_decode \
+      my_old_wait_key=\$wait_key \
+      nopipe_decode \
+      nowait_key \
+    <enter>\
+    <pipe-message>gh-read<enter>\
+    <enter-command>set \
+      pipe_decode=\$my_old_pipe_decode \
+      wait_key=\$my_old_wait_key \
+    <enter> \
+  '"

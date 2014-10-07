@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# pbrisbin 2014 - details:
+#
+# - http://blog.adamspiers.org/2014/10/05/managing-your-github-notifications-inbox-with-mutt/
+# - https://github.com/aspiers/mutt.pub/blob/master/bin/read-github-notification
+#
+###
+
+# Decoding the HTML part seems to put arbitrary line breaks in the middle of the
+# beacon URL. This function just prints stdin as one long line.
+flatten() {
+  local line
+
+  while read line; do
+    printf "%s" -- "$line"
+  done
+}
+
+beacon_re='https://github\.com/notifications/beacon/.*\.gif'
+beacon_url="$(flatten | grep -o "$beacon_re")"
+
+[ -n "$beacon_url" ] && curl --silent "$beacon_url" >/dev/null
