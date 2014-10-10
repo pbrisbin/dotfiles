@@ -7,6 +7,6 @@
 #
 ###
 beacon_re='https://github\.com/notifications/beacon/.*\.gif'
-beacon_url="$(xargs printf -- "%s" | grep -o "$beacon_re")"
+beacon_url="$(tr -d '\n' | grep -o "$beacon_re")"
 
 [ -n "$beacon_url" ] && curl --silent "$beacon_url" >/dev/null
