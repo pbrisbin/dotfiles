@@ -5,6 +5,13 @@
 ###
 set -e
 
+if [ "$1" = 'clear' ]; then
+  rm -fr \
+    ~/.ghc \
+    ~/.cabal/bin/* \
+    ~/.cabal/packages/*/* \
+fi
+
 cd # avoid accidental sandbox installation
 cabal update
 cabal install cabal-install
