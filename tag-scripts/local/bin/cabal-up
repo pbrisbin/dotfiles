@@ -14,5 +14,5 @@ fi
 
 cd # avoid accidental sandbox installation
 cabal update
-cabal install cabal-install
-cabal install hi msu pandoc xmonad xmonad-contrib
+cabal install cabal-install --avoid-reinstalls
+cabal install hi msu pandoc xmonad xmonad-contrib --avoid-reinstalls
