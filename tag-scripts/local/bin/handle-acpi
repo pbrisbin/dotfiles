@@ -11,6 +11,9 @@ case "$1" in
   video/brightnessdown) "$bin"/bl d            ;;
   video/brightnessup)   "$bin"/bl u            ;;
 
+  # Mic mute
+  button/f20) amixer sset Capture toggle ;;
+
   # Ignored events
   ac_adapter|*/volume*|*/mute) : ;;
   ibm/hotkey|thermal_zone)     : ;;
