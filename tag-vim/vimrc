@@ -107,4 +107,5 @@ augroup vimrc
   autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
   autocmd FileType mail setlocal spell nohlsearch
   autocmd FileType gitcommit,markdown,lhaskell setlocal nosmartindent | setlocal spell
+  autocmd FileType gitcommit setlocal textwidth=72
 augroup END
