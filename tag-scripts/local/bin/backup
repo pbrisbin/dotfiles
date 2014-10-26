@@ -13,4 +13,4 @@ timestamp="$(date +%Y%m%d.%H:%M:%S)"
 tarsnap "$@" \
   --keyfile /root/tarsnap.key \
   --cachedir /usr/local/tarsnap-cache \
-  -c -f "backup-$timestamp" /root /home /etc
+  -c -f "backup-$timestamp" /root /home /etc /srv
