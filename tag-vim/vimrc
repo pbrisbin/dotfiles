@@ -79,7 +79,7 @@ let g:runfile_by_name    = {
   \   '.*Gemfile$': '!bundle',
   \   '.*\.md$': '!opandoc %',
   \   '.*Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
-  \   '.*\.hs$': '!cabal exec -- ghci %',
+  \   '.*\.hs$': '!cabal exec -- ghci -Wall %',
   \   '.*\.tex$': '!pdflatex %'
   \ }
 let g:syntastic_mode_map = {
