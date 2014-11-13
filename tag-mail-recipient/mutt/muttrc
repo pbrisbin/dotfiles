@@ -6,7 +6,7 @@ unset confirmappend
   set edit_headers
   set editor            = "vim +:silent+?^$"
   set fast_reply
-  set folder            = ~/Mail
+  set folder            = ~/mail
   set forward_format    = "Fwd: %s"
   set forward_quote
   set header_cache      = ~/.mutt/cache

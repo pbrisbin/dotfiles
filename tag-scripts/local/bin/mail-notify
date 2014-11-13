@@ -4,7 +4,7 @@
 # notify-send.
 #
 ###
-directory = ARGV.first || "#{ENV["HOME"]}/Mail"
+directory = ARGV.first || "#{ENV["HOME"]}/mail"
 cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 

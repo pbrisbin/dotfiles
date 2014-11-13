@@ -9,6 +9,6 @@ if [[ -e /usr/share/chruby ]]; then
   fi
 fi
 
-cdpath=( "$HOME" "$HOME/Code" $cdpath )
+cdpath=( "$HOME" "$HOME/code" $cdpath )
 
 fpath=( "$ZDOTDIR/functions" $fpath )
