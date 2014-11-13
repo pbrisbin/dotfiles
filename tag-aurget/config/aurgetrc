@@ -1,4 +1,6 @@
 # vim: ft=sh:
+build_directory='/tmp'
+eager_sudo=true
 edit_pkgbuilds='never'
 keep_devels=false
 resolve_dependencies=true
