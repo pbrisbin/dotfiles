@@ -32,7 +32,13 @@ export RCRC="$XDG_CONFIG_HOME"/rcrc
 export SCREENRC="$XDG_CONFIG_HOME"/screenrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/X11-authority
 
-path=( "$HOME/.local/bin" './.cabal-sandbox/bin' "$HOME/.cabal/bin" $path )
+path=(
+  ~/.local/bin
+  ./.cabal-sandbox/bin
+  ~/.cabal/bin
+  ~/.gem/ruby/2.1.5/bin
+  $path
+)
 
 start_gpg_agent
 start_ssh_agent
