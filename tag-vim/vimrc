@@ -74,13 +74,14 @@ let g:ctrlp_use_caching  = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files | grep -Fv node_modules']
 let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
-  \   '.*\.t$': '!cram %',
-  \   '.*\.lhs$': '!runhaskell %',
-  \   '.*Gemfile$': '!bundle',
-  \   '.*\.md$': '!opandoc %',
-  \   '.*Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
-  \   '.*\.hs$': '!cabal exec -- ghci -Wall %',
-  \   '.*\.tex$': '!pdflatex %'
+  \   'Gemfile$': '!bundle',
+  \   'Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
+  \   '\.md$': '!opandoc %',
+  \   '\.tex$': '!pdflatex %'
+  \ }
+let g:runfile_by_type    = {
+  \ 'haskell': '!cabal exec -- ghci -Wall %',
+  \ 'lhaskell': '!cabal exec -- ghci -Wall %'
   \ }
 let g:syntastic_mode_map = {
   \ "mode": "passive",
