@@ -8,7 +8,7 @@
 -- Be careful with spaces and indentation because they are
 -- used to indicate layout for nested sections.
 
-jobs: 4
+jobs: $ncpus
 remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
 remote-repo-cache: /home/patrick/.cabal/packages
 -- local-repo:
