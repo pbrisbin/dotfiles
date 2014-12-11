@@ -26,7 +26,7 @@ path=(
   ~/.local/bin
   ./.cabal-sandbox/bin
   ~/.cabal/bin
-  ~/.gem/ruby/2.1.5/bin
+  ~/.gem/ruby/2.1.0/bin
   $path
 )
 
