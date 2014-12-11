@@ -22,6 +22,15 @@ export RCRC="$XDG_CONFIG_HOME"/rcrc
 export SCREENRC="$XDG_CONFIG_HOME"/screenrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/X11-authority
 
+# With GPG 2.1+ the GPG_AGENT_INFO variable is not set and any value present is
+# ignored. Mutt, however, checks for its existence before attempting to use the
+# agent for authentication. It doesn't use the value, so we just need something
+# unempty to tell mutt it's OK to use the agent.
+#
+# Eventual fix: http://dev.mutt.org/trac/attachment/ticket/3715/gpg21.patch
+#
+export GPG_AGENT_INFO=x
+
 path=(
   ~/.local/bin
   ./.cabal-sandbox/bin
