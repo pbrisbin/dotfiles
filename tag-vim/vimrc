@@ -5,7 +5,7 @@ call vundle#rc()
 
 Plugin 'gmarik/vundle'
 Plugin 'bogado/file-line'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'nicholaides/words-to-avoid.vim'
 Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-mkdir'
