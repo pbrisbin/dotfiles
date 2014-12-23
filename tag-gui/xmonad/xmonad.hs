@@ -15,9 +15,12 @@ import XMonad.Util.NamedScratchpad
 
 import qualified XMonad.StackSet as W
 
+import Data.Monoid ((<>))
+
 main :: IO ()
-main = xmonad $ ewmh $ withMyUrgencyHook $ defaultConfig
+main = xmonad $ withMyUrgencyHook $ defaultConfig
     { terminal = "urxvtc"
+    , logHook = logHook defaultConfig <> ewmhDesktopsLogHook
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
         , isModal --> doFloat
