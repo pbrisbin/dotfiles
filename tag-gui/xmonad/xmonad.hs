@@ -55,8 +55,8 @@ data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
-        name <- getName w
+        n <- getName w
         Just idx <- fmap (W.findTag w) $ gets windowset
 
         safeSpawn "notify-send"
-            ["-i", "emblem-important", show name, "workspace " ++ idx]
+            ["-i", "emblem-important", show n, "workspace " ++ idx]
