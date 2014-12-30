@@ -2,7 +2,6 @@
 source /usr/share/doc/mutt/samples/gpg.rc
 
 set pgp_sign_as = CEC8925D
-set pgp_timeout = 21600 # 6 hours
 set pgp_use_gpg_agent = yes
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
