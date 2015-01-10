@@ -9,7 +9,7 @@ if [ "$1" = 'clear' ]; then
   rm -fr \
     ~/.ghc \
     ~/.cabal/bin/* \
-    ~/.cabal/packages/*/* \
+    ~/.cabal/packages/*/*
 fi
 
 cd # avoid accidental sandbox installation
