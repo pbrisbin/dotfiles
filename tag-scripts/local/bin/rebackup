@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+#
+# pbrisbin 2015 - generate a new tarsnap key and re-encrypt all current backups.
+#
+###
+set -e
+
+die() { printf "%s\n" "$*" >&2; exit 1; }
+
+[ $UID -eq 0 ] || die 'You must be root'
+which tarsnap >/dev/null || die 'You must install tarsnap'
+
+tarsnap-keyregen \
+  --oldkey /root/tarsnap.key \
+  --keyfile /root/tarsnap.key.new \
+  --user pbrisbin@gmail.com --machine "$(hostname)"
+
+tarsnap-recrypt \
+  --oldkey /root/tarsnap.key \
+  --oldcachedir /usr/local/tarsnap-cache \
+  --newkey /root/tarsnap.key.new \
+  --newcachedir /usr/local/tarsnap-cache.new
+
+rm -r /usr/local/tarsnap-cache
+mv /usr/local/tarsnap-cache.new /usr/local/tarsnap-cache
+
+rm /root/tarsnap.key
+mv /root/tarsnap.key.new /root/tarsnap.key
