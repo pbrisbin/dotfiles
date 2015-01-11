@@ -2,10 +2,16 @@
 
 ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
+Protocol 2
 
 Host *
-  ServerAliveInterval 120
+  # https://stribika.github.io/2015/01/04/secure-secure-shell.html
+  Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+  KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+
   ServerAliveCountMax 5
+  ServerAliveInterval 120
 
 Host blue.local
   Port 2222
@@ -14,5 +20,5 @@ Host black.local
   Port 2222
 
 Host htpc.local
-  User xbmc
   Port 2222
+  User xbmc
