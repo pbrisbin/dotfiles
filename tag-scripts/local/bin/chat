@@ -4,4 +4,4 @@
 #
 ###
 urxvtc -title chat -n chat -e \
-  ssh -t pbrisbin.com "bash -ilc 'screen -R -D -S irc weechat'"
+  ssh -t teal.local "bash -ilc 'screen -R -D -S irc weechat'"
