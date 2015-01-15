@@ -13,10 +13,6 @@ Host *
   ServerAliveCountMax 5
   ServerAliveInterval 120
 
-Host teal
-  HostName 162.243.3.84
-  Port 2222
-
 Host blue.local
   Port 2222
 
