@@ -26,7 +26,6 @@ hi \
   --email 'pbrisbin@gmail.com' \
   --repository gh:pbrisbin/hi-hspec "$@"
 
-rm ./README.md
 cd "$package"
 
 info "Initializing sandbox..."
