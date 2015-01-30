@@ -1,6 +1,7 @@
 mailboxes \
   "+gmail/INBOX" \
   "+gmail/ml-arch" \
+  "+gmail/ml-commercial-haskell" \
   "+gmail/ml-vim" \
   "+gmail/ml-web-devel" \
   "+gmail/ml-xmonad" \

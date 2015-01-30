@@ -48,7 +48,7 @@ unignore from: to: cc: date: subject:
 hdr_order from: to: cc: date: subject:
 
 subscribe arch-announce arch-dev-public arch-haskell aur-general \
-          rubyparley vim web-devel xmonad yesod
+          commercial-haskell rubyparley vim web-devel xmonad yesod
 
 source ~/.mutt/colors
 source ~/.mutt/mailboxes
