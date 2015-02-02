@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - upgrade an existing PostgreSQL installation.
+#
+# https://wiki.archlinux.org/index.php/PostgreSQL#Upgrading_PostgreSQL
+#
+###
+die() {
+  printf "error: %s\n" "$*" >&2
+  exit 1
+}
+
+as_postgres() {
+  local cmd
+
+  printf -v cmd "%q " "$@"
+  su postgres -c "$cmd"
+}
+
+[ $UID -eq 0 ] || die 'you must be root'
+
+[ -n "$1" ] || die 'you must supply current version (e.g. "9.3")'
+
+version="$1"
+
+bin='/usr/bin/'
+old_bin="/opt/pgsql-$version/bin/"
+
+data='/var/lib/postgres/data'
+old_data="/var/lib/postgres/data-$version"
+
+pacman -S --needed postgresql-old-upgrade
+
+systemctl stop postgresql
+
+as_postgres mv -v "$data" "$old_data"
+as_postgres mkdir -v "$data"
+as_postgres initdb --local en_US.UTF-8 -E UTF8 -D "$data"
+as_postgres pg_upgrade -b "$old_bin" -B "$bin" -d "$old_data" -D "$data"
+
+systemctl start postgresql
+systemctl status postgresql
