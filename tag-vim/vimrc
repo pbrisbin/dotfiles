@@ -77,6 +77,7 @@ let g:runfile_by_name    = {
   \   'Gemfile$': '!bundle',
   \   'Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
   \   '.*_spec\.rb': '!bundle exec rspec %',
+  \   '.*\.cabal': 'cabal install --dependencies-only --enable-tests',
   \   '\.md$': '!opandoc %',
   \   '\.tex$': '!pdflatex %'
   \ }
