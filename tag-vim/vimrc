@@ -76,6 +76,7 @@ let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
   \   'Gemfile$': '!bundle',
   \   'Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
+  \   '.*_spec\.rb': '!bundle exec rspec %',
   \   '\.md$': '!opandoc %',
   \   '\.tex$': '!pdflatex %'
   \ }
