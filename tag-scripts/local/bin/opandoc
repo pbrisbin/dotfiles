@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# pbrisbin 2013 - view rendered markdown in a $BROWSER, using style
-# sheets from pbrisbin.com.
+# pbrisbin 2015 - view rendered markdown in a $BROWSER
 #
 ###
 if [ $# -eq 0 ]; then
