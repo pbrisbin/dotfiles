@@ -84,8 +84,8 @@ encryption = allow_incoming,try_outgoing,enable_retry
 peer_exchange = yes
 
 # Proxy
-http_proxy = "localhost:8118"
-proxy_address = "localhost:8118"
+http_proxy = "192.168.0.5:8118"
+proxy_address = "192.168.0.5:8118"
 
 # Move completed torrents
 system.method.set_key =event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,/home/patrick/sabnzbd/Downloads/complete/"
