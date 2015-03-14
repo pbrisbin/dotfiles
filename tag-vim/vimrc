@@ -74,7 +74,7 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files | grep -Fv node_modul
 let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
   \   'Gemfile$': '!bundle',
-  \   'Spec\.hs$': '!echo :main | cabal exec -- ghci -v0 %',
+  \   'Spec\.hs$': '!echo :main | cabal exec -- ghci -Wall %',
   \   '.*_spec\.rb': '!bundle exec rspec %',
   \   '.*\.cabal': '!cabal install --dependencies-only --enable-tests',
   \   '\.md$': '!opandoc %',
