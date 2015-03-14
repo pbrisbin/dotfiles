@@ -13,7 +13,6 @@ Plugin 'pbrisbin/vim-rename-file'
 Plugin 'pbrisbin/vim-restore-cursor'
 Plugin 'pbrisbin/vim-runfile'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
-Plugin 'scrooloose/syntastic'
 Plugin 'slim-template/vim-slim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-bundler'
@@ -84,10 +83,6 @@ let g:runfile_by_name    = {
 let g:runfile_by_type    = {
   \ 'haskell': '!cabal exec -- ghci -Wall %',
   \ 'lhaskell': '!cabal exec -- ghci -Wall %'
-  \ }
-let g:syntastic_mode_map = {
-  \ "mode": "passive",
-  \ "active_filetypes": ["javascript"]
   \ }
 
 map <Leader>a :call RunAllSpecs()<CR>
