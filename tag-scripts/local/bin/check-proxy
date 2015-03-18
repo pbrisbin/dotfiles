@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - check that a proxy is working
+#
+###
+check_ip() {
+  curl --silent checkip.dyndns.org | sed 's/.*IP Address: \([^<]*\).*/\1/'
+}
+
+proxy=${1:-192.168.0.5:8118}
+actual=$(check_ip) || exit 2
+proxied=$(http_proxy=$proxy check_ip) || exit 3
+
+printf "actual:  %s\n" "$actual"
+printf "proxied: %s\n" "$proxied"
+
+[ "$actual" != "$proxied" ] || exit 1
