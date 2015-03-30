@@ -37,7 +37,7 @@ main = xmonad $ withMyUrgencyHook $ defaultConfig
         ]
 
 isModal :: Query Bool
-isModal = isInProperty "_NET_WM_STATE" "_NET_WM_STATE_MODAL"
+isModal = "_NET_WM_STATE" `isInProperty` "_NET_WM_STATE_MODAL"
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
