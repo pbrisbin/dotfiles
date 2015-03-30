@@ -9,7 +9,7 @@ cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 
 Dir["#{directory}/**/*/new/*"].each do |message|
-  unless message =~ %r{/(archive|drafts|sent|spam|trash)/}
+  unless message =~ %r{/(archive|drafts|sent|spam|trash|ml-.*)/}
     mailbox = message.sub(%r{#{directory}/(.*)/new/.*}, '\1')
     mailboxes[mailbox] += 1
   end
