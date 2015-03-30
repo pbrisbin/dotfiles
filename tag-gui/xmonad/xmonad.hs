@@ -15,7 +15,10 @@ import XMonad.Util.NamedScratchpad
 
 import qualified XMonad.StackSet as W
 
+import Control.Applicative ((<$>), (<*>))
 import Data.Monoid ((<>))
+
+import qualified Data.Foldable as F
 
 main :: IO ()
 main = xmonad $ withMyUrgencyHook $ defaultConfig
@@ -56,8 +59,9 @@ data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
-        n <- getName w
-        Just idx <- fmap (W.findTag w) $ gets windowset
+        (n, ws) <- (,)
+            <$> getName w
+            <*> gets windowset
 
-        safeSpawn "notify-send"
-            ["-i", "emblem-important", show n, "workspace " ++ idx]
+        F.forM_ (W.findTag w ws) $ \idx -> safeSpawn "notify-send"
+            ["-i" , "emblem-important" , show n , "workspace " ++ idx]
