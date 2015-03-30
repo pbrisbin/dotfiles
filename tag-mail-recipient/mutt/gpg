@@ -6,4 +6,4 @@ set pgp_use_gpg_agent = yes
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
 
-my_hdr X-PGP-Key: http://files.pbrisbin.com/public.key
+my_hdr X-PGP-Key: https://files.pbrisbin.com/public.key
