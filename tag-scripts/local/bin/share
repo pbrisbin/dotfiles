@@ -7,7 +7,7 @@
 
 file="$(readlink -f "$1")"
 base="${file##*/}"
-link="http://files.pbrisbin.com/$prefix$base"
+link="https://files.pbrisbin.com/$prefix$base"
 
 s3cmd --quiet --acl-public \
   put "$file" "s3://files.pbrisbin.com/$prefix$base" || exit $?
