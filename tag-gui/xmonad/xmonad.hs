@@ -29,6 +29,7 @@ main = xmonad $ withMyUrgencyHook $ defaultConfig
         ]
     } `additionalKeysP`
         [ ("M-p", spawn "gmrun")
+        , ("M-S-l", spawn "slock")
         , ("M-S-p", namedScratchpadAction scratchpads "scratch")
         , ("M-S-m", namedScratchpadAction scratchpads "mail")
         , ("<XF86AudioRaiseVolume>", spawn "nmixer up")
