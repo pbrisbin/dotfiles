@@ -7,7 +7,7 @@ directory=/sys/class/backlight/intel_backlight
 
 cur=$(cat "$directory"/brightness)
 max=$(cat "$directory"/max_brightness)
-amt=$((max/10))
+amt=$((max/5))
 val=$cur
 
 case "$1" in
