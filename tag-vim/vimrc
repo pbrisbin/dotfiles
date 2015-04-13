@@ -4,7 +4,6 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
-Plugin 'bogado/file-line'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'nicholaides/words-to-avoid.vim'
 Plugin 'pbrisbin/vim-colors-off'
