@@ -15,15 +15,15 @@ import XMonad.Util.NamedScratchpad
 
 import qualified XMonad.StackSet as W
 
-import Control.Applicative ((<$>), (<*>))
-import Data.Monoid ((<>))
-
 import qualified Data.Foldable as F
 
 main :: IO ()
-main = xmonad $ withMyUrgencyHook $ defaultConfig
+main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
     { terminal = "urxvtc"
-    , logHook = logHook defaultConfig <> ewmhDesktopsLogHook
+    , logHook = mconcat
+        [ logHook defaultConfig
+        , ewmhDesktopsLogHook
+        ]
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
         , isModal --> doFloat
@@ -51,14 +51,10 @@ scratchpads =
         (customFloating $ W.RationalRect 0.6 0.8 0.35 0.1)
     ]
 
-withMyUrgencyHook :: LayoutClass l Window => XConfig l -> XConfig l
-withMyUrgencyHook = withUrgencyHookC LibNotifyUrgencyHook $
-    urgencyConfig { suppressWhen = Focused }
+data LibNotify = LibNotify deriving (Read, Show)
 
-data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
-
-instance UrgencyHook LibNotifyUrgencyHook where
-    urgencyHook LibNotifyUrgencyHook w = do
+instance UrgencyHook LibNotify where
+    urgencyHook LibNotify w = do
         (n, ws) <- (,)
             <$> getName w
             <*> gets windowset
