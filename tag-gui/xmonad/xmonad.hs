@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------
 import XMonad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.EZConfig
@@ -20,9 +21,11 @@ import qualified Data.Foldable as F
 main :: IO ()
 main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
     { terminal = "urxvtc"
+    , focusedBorderColor = "black"
     , logHook = mconcat
         [ logHook defaultConfig
         , ewmhDesktopsLogHook
+        , fadeInactiveLogHook 0.9
         ]
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
