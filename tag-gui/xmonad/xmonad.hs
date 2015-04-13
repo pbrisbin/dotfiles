@@ -25,7 +25,7 @@ main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
     , logHook = mconcat
         [ logHook defaultConfig
         , ewmhDesktopsLogHook
-        , fadeInactiveLogHook 0.9
+        , fadeInactiveLogHook 0.7
         ]
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
