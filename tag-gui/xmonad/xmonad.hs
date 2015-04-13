@@ -26,7 +26,6 @@ main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
         ]
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
-        , isModal --> doFloat
         , namedScratchpadManageHook scratchpads
         , manageHook defaultConfig
         ]
@@ -39,9 +38,6 @@ main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
         , ("<XF86AudioLowerVolume>", spawn "nmixer down")
         , ("<XF86AudioMute>", spawn "nmixer toggle")
         ]
-
-isModal :: Query Bool
-isModal = "_NET_WM_STATE" `isInProperty` "_NET_WM_STATE_MODAL"
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
