@@ -33,7 +33,7 @@ path=/home/patrick/mail
 [user]
 name=Patrick Brisbin
 primary_email=pbrisbin@gmail.com
-other_email=pat@thoughtbot.com;admin@pbrisbin.com;me@pbrisbin.com,p@brisb.in
+other_email=pat@codeclimate.com;admin@pbrisbin.com;me@pbrisbin.com,p@brisb.in
 
 # Configuration for "notmuch new"
 #

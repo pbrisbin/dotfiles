@@ -11,8 +11,8 @@
 #     login pbrisbin@gmail.com
 #     password supersecret
 #
-#   machine thoughtbot.com
-#     login pat@thoughtbot.com
+#   machine codeclimate.com
+#     login pat@codeclimate.com
 #     password othersecret
 #
 # Usage:
@@ -20,7 +20,7 @@
 #   $ getnetrc pbrisbin@gmail.com
 #   supersecret
 #
-#   $ getnetrc pat@thoughtbot.com
+#   $ getnetrc pat@codeclimate.com
 #   othersecret
 #
 ###

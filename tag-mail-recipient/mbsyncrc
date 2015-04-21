@@ -55,54 +55,54 @@ Channel gmail-spam
 Channel gmail-trash
 Channel gmail-rest
 
-IMAPAccount thoughtbot
+IMAPAccount codeclimate
 Host imap.gmail.com
-User pat@thoughtbot.com
-PassCmd "/home/patrick/.local/bin/getnetrc pat@thoughtbot.com"
+User pat@codeclimate.com
+PassCmd "/home/patrick/.local/bin/getnetrc pat@codeclimate.com"
 UseIMAPS yes
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore thoughtbot-remote
-Account thoughtbot
+IMAPStore codeclimate-remote
+Account codeclimate
 
-MaildirStore thoughtbot-local
-Path ~/mail/thoughtbot/
-Inbox ~/mail/thoughtbot/INBOX
+MaildirStore codeclimate-local
+Path ~/mail/codeclimate/
+Inbox ~/mail/codeclimate/INBOX
 
-Channel thoughtbot-inbox
-Master :thoughtbot-remote:INBOX
-Slave :thoughtbot-local:INBOX
+Channel codeclimate-inbox
+Master :codeclimate-remote:INBOX
+Slave :codeclimate-local:INBOX
 
-Channel thoughtbot-archive
-Master ":thoughtbot-remote:[Gmail]/All Mail"
-Slave :thoughtbot-local:archive
+Channel codeclimate-archive
+Master ":codeclimate-remote:[Gmail]/All Mail"
+Slave :codeclimate-local:archive
 
-Channel thoughtbot-drafts
-Master :thoughtbot-remote:[Gmail]/Drafts
-Slave :thoughtbot-local:drafts
+Channel codeclimate-drafts
+Master :codeclimate-remote:[Gmail]/Drafts
+Slave :codeclimate-local:drafts
 
-Channel thoughtbot-sent
-Master ":thoughtbot-remote:[Gmail]/Sent Mail"
-Slave :thoughtbot-local:sent
+Channel codeclimate-sent
+Master ":codeclimate-remote:[Gmail]/Sent Mail"
+Slave :codeclimate-local:sent
 
-Channel thoughtbot-spam
-Master :thoughtbot-remote:[Gmail]/Spam
-Slave :thoughtbot-local:spam
+Channel codeclimate-spam
+Master :codeclimate-remote:[Gmail]/Spam
+Slave :codeclimate-local:spam
 
-Channel thoughtbot-trash
-Master :thoughtbot-remote:[Gmail]/Trash
-Slave :thoughtbot-local:trash
+Channel codeclimate-trash
+Master :codeclimate-remote:[Gmail]/Trash
+Slave :codeclimate-local:trash
 
-Channel thoughtbot-rest
-Master :thoughtbot-remote:
-Slave :thoughtbot-local:
+Channel codeclimate-rest
+Master :codeclimate-remote:
+Slave :codeclimate-local:
 Patterns * ![Gmail]*
 
-Group thoughtbot
-Channel thoughtbot-inbox
-Channel thoughtbot-archive
-Channel thoughtbot-drafts
-Channel thoughtbot-sent
-Channel thoughtbot-spam
-Channel thoughtbot-trash
-Channel thoughtbot-rest
+Group codeclimate
+Channel codeclimate-inbox
+Channel codeclimate-archive
+Channel codeclimate-drafts
+Channel codeclimate-sent
+Channel codeclimate-spam
+Channel codeclimate-trash
+Channel codeclimate-rest

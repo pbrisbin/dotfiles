@@ -5,7 +5,7 @@ set mbox          = "+gmail/archive"
 set postponed     = "+gmail/drafts"
 set query_command = "echo; ~/.local/bin/gcontacts pbrisbin@gmail.com 'getnetrc pbrisbin@gmail.com' '%s'"
 
-macro index ,c "<change-folder>+thoughtbot/INBOX<enter>" "change accounts"
+macro index ,c "<change-folder>+codeclimate/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "sync IMAP"
 macro index D "<save-message>+gmail/trash<enter>" "move message to the trash"
 macro index S "<save-message>+gmail/spam<enter>"  "mark message as spam"

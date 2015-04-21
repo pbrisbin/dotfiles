@@ -1,0 +1,11 @@
+# vim: ft=muttrc
+set from          = "pat@codeclimate.com"
+set sendmail      = "/usr/bin/msmtp -a codeclimate"
+set mbox          = "+codeclimate/archive"
+set postponed     = "+codeclimate/drafts"
+set query_command = "echo; ~/.local/bin/gcontacts pat@codeclimate.com 'getnetrc pat@codeclimate.com' '%s'"
+
+macro index ,c "<change-folder>+gmail/INBOX<enter>" "change accounts"
+macro index ,z "<shell-escape>mbsync --pull-new codeclimate-inbox<enter>" "sync IMAP"
+macro index D "<save-message>+codeclimate/trash<enter>" "move message to the trash"
+macro index S "<save-message>+codeclimate/spam<enter>"  "mark message as spam"
