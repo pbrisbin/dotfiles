@@ -1,0 +1,3 @@
+EXCLUDES=README.md
+COPY_ALWAYS='msmtprc'
+TAGS='aurget git gpg gui haskell htop inputrc mail-recipient mail-sender psql ruby screen scripts ssh vim weechat zsh'
