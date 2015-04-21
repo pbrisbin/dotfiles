@@ -2,9 +2,7 @@
 *font: xft:Droid Sans Mono-16
 *boldFont: xft:Droid Sans Mono-16
 
-URxvt*lineSpace:    2
 URxvt*scrollBar:    false
-
 URxvt*urgentOnBell: true
 URxvt*visualBell:   false
 
