@@ -12,7 +12,7 @@ case "$1" in
   video/brightnessup)   "$bin"/bl u            ;;
 
   # Mic mute
-  button/f20) amixer sset Capture toggle ;;
+  button/f20) amixer -c 1 sset Capture toggle ;;
 
   # Ignored events
   ac_adapter|*/volume*|*/mute) : ;;

@@ -6,7 +6,7 @@
 mixer() {
   local cmd="$1" level state icon message
 
-  body="$(amixer sset Master "$cmd" |\
+  body="$(amixer -c 1 sset Master "$cmd" |\
     sed '/.*Mono: Playback .* \[\(.*\)%\] .* \[\(on\|off\)\].*/!d; s//\1 \2/')"
 
   level="${body% *}"
