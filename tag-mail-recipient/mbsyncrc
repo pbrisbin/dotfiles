@@ -7,7 +7,7 @@ IMAPAccount gmail
 Host imap.gmail.com
 User pbrisbin@gmail.com
 PassCmd "/home/patrick/.local/bin/getnetrc pbrisbin@gmail.com"
-UseIMAPS yes
+SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore gmail-remote
@@ -44,7 +44,7 @@ Slave :gmail-local:trash
 Channel gmail-rest
 Master :gmail-remote:
 Slave :gmail-local:
-Patterns * ![Gmail]*
+Patterns * ![Gmail]* !archive !drafts !sent !spam !trash
 
 Group gmail
 Channel gmail-inbox
@@ -59,7 +59,7 @@ IMAPAccount codeclimate
 Host imap.gmail.com
 User pat@codeclimate.com
 PassCmd "/home/patrick/.local/bin/getnetrc pat@codeclimate.com"
-UseIMAPS yes
+SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore codeclimate-remote
@@ -96,7 +96,7 @@ Slave :codeclimate-local:trash
 Channel codeclimate-rest
 Master :codeclimate-remote:
 Slave :codeclimate-local:
-Patterns * ![Gmail]*
+Patterns * ![Gmail]* !archive !drafts !sent !spam !trash
 
 Group codeclimate
 Channel codeclimate-inbox
