@@ -5,11 +5,12 @@
 #
 ###
 directory = ARGV.first || "#{ENV["HOME"]}/mail"
+to_ignore = %w[ archive drafts sent spam trash github ml-.* ].join("|")
 cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 
 Dir["#{directory}/**/*/new/*"].each do |message|
-  unless message =~ %r{/(archive|drafts|sent|spam|trash|ml-.*)/}
+  unless message =~ %r{/(#{to_ignore})/}
     mailbox = message.sub(%r{#{directory}/(.*)/new/.*}, '\1')
     mailboxes[mailbox] += 1
   end
