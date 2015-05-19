@@ -15,6 +15,7 @@ export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_DATA_HOME="$HOME"/.local/share
 
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
+export GOPATH="$XDG_CONFIG_HOME"/go
 export LESSHISTFILE="$XDG_CACHE_HOME"/lesshist
 export NOTITLE=1 # avoid broken grml precmd hook
 export NOTMUCH_CONFIG="$XDG_CONFIG_HOME"/notmuchrc
@@ -35,6 +36,7 @@ path=(
   ~/.local/bin
   ./.cabal-sandbox/bin
   ~/.cabal/bin
+  $GOPATH/bin
   $path
 )
 
