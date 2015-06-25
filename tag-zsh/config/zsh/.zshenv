@@ -11,4 +11,8 @@ fi
 
 cdpath=( "$HOME" "$HOME/code" $cdpath )
 
+if [[ -e /etc/profile.d/autojump.zsh ]]; then
+  source /etc/profile.d/autojump.zsh
+fi
+
 fpath=( "$ZDOTDIR/functions" $fpath )
