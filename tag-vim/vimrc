@@ -64,7 +64,7 @@ set visualbell t_vb=
 set wildmode=list:longest
 set winwidth=84
 
-silent! colorscheme off
+"silent! colorscheme off
 
 let mapleader = ' '
 let maplocalleader = ' '
