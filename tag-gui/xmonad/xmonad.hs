@@ -1,4 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
 -------------------------------------------------------------------------------
 --
 -- xmonad.hs, pbrisbin 2013
@@ -8,18 +7,13 @@ import XMonad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.UrgencyHook
 import XMonad.Util.EZConfig
-import XMonad.Util.NamedWindows
-import XMonad.Util.Run
 import XMonad.Util.NamedScratchpad
 
 import qualified XMonad.StackSet as W
 
-import qualified Data.Foldable as F
-
 main :: IO ()
-main = xmonad $ withUrgencyHook LibNotify $ defaultConfig
+main = xmonad $ defaultConfig
     { terminal = "urxvtc"
     , focusedBorderColor = "black"
     , logHook = mconcat
@@ -49,14 +43,3 @@ scratchpads =
     , NS "scratch" "urxvtc --title scratch" (title =? "scratch")
         (customFloating $ W.RationalRect 0.6 0.8 0.35 0.1)
     ]
-
-data LibNotify = LibNotify deriving (Read, Show)
-
-instance UrgencyHook LibNotify where
-    urgencyHook LibNotify w = do
-        (n, ws) <- (,)
-            <$> getName w
-            <*> gets windowset
-
-        F.forM_ (W.findTag w ws) $ \idx -> safeSpawn "notify-send"
-            ["-i" , "emblem-important" , show n , "workspace " ++ idx]
