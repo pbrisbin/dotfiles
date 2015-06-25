@@ -23,7 +23,6 @@
   co-pr = "!f() { git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
   merge-pr = "!f() { git fetch origin pull/$1/head:pr/$1 && git merge --no-ff pr/$1; }; f"
   recommit = "!f() { git commit --amend --no-edit; }; f"
-  prune-branches = "!f() { git checkout master && git branch --merged master | grep -v master | xargs git branch -d; }; f"
 [merge]
   ff = only
 [push]
