@@ -3,7 +3,7 @@ set from          = "pbrisbin@gmail.com"
 set sendmail      = "/usr/bin/msmtp -a gmail"
 set mbox          = "+gmail/archive"
 set postponed     = "+gmail/drafts"
-set query_command = "echo; ~/.local/bin/gcontacts pbrisbin@gmail.com 'getnetrc pbrisbin@gmail.com' '%s'"
+set query_command = "~/.local/bin/gcontacts pbrisbin@gmail.com '%s'"
 
 macro index ,c "<change-folder>+codeclimate/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "sync IMAP"
