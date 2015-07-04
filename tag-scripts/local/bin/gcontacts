@@ -3,7 +3,7 @@
 # pbrisbin 2015 - wrapper for https://github.com/pbrisbin/google-contacts
 #
 ###
-cd ~/code/google-contacts
+cd ~/code/pbrisbin/google-contacts
 
 source ./.env
 export GOOGLE_OAUTH_CLIENT_ID
