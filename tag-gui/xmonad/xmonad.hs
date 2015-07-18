@@ -13,7 +13,7 @@ main = xmonad $ defaultConfig
         [ logHook defaultConfig
         , ewmhDesktopsLogHook
         ]
-    , manageHook = composeAll
+    , manageHook = mconcat
         [ isFullscreen --> doFullFloat
         , namedScratchpadManageHook scratchpads
         , manageHook defaultConfig
