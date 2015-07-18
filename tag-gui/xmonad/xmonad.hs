@@ -1,6 +1,5 @@
 import XMonad
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
@@ -14,7 +13,6 @@ main = xmonad $ defaultConfig
     , logHook = mconcat
         [ logHook defaultConfig
         , ewmhDesktopsLogHook
-        , fadeInactiveLogHook 0.7
         ]
     , manageHook = composeAll
         [ isFullscreen --> doFullFloat
