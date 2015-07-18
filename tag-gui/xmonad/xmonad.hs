@@ -1,8 +1,3 @@
--------------------------------------------------------------------------------
---
--- xmonad.hs, pbrisbin 2013
---
--------------------------------------------------------------------------------
 import XMonad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
