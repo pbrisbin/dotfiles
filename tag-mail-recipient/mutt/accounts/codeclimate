@@ -3,7 +3,8 @@ set from          = "pat@codeclimate.com"
 set sendmail      = "/usr/bin/msmtp -a codeclimate"
 set mbox          = "+codeclimate/archive"
 set postponed     = "+codeclimate/drafts"
-set query_command = "~/.local/bin/gcontacts pat@codeclimate.com '%s'"
+set query_command = "docker run --rm --volumes-from gc-config \
+  pbrisbin/google-contacts mutt-query pat@codeclimate.com '%s'"
 
 macro index ,c "<change-folder>+gmail/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new codeclimate-inbox<enter>" "sync IMAP"
