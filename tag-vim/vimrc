@@ -34,7 +34,6 @@ set autoread
 set autowrite
 set background=light
 set colorcolumn=+1
-set cursorline
 set diffopt+=vertical
 set expandtab
 set foldmethod=marker
