@@ -9,7 +9,6 @@ import qualified XMonad.StackSet as W
 main :: IO ()
 main = xmonad $ defaultConfig
     { terminal = "urxvtc"
-    , focusedBorderColor = "black"
     , logHook = mconcat
         [ logHook defaultConfig
         , ewmhDesktopsLogHook
