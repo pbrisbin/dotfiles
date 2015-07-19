@@ -1,4 +1,4 @@
-! vim: ft=Xdefaults:
+! vim: ft=xdefaults:
 ! Tommorrow
 #define t_background        #ffffff
 #define t_current_line      #efefef
