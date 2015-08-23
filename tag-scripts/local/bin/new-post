@@ -8,7 +8,7 @@ post_name() { echo "$*" | sed 's/ \+/_/g; s/.*/\L&/g'; }
 
 set -e
 
-cd ~/code/pbrisbin.com # just in case
+cd ~/code/pbrisbin/pbrisbin.com # just in case
 
 printf 'Title: '; read title
 printf 'Tags: '; read tags
