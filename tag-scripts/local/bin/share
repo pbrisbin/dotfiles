@@ -9,7 +9,7 @@ file="$(readlink -f "$1")"
 base="${file##*/}"
 link="https://files.pbrisbin.com/$prefix$base"
 
-s3cmd --quiet --acl-public \
+s3cmd --quiet --acl-public --no-mime-magic \
   put "$file" "s3://files.pbrisbin.com/$prefix$base" || exit $?
 
 [[ -n "$DISPLAY" ]] && printf "$link" | xclip
