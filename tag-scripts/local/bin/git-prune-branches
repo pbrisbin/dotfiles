@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - prune branches already merged into master
+#
+###
+set -e
+
+if ! git branch | grep -q '^\* master$'; then
+  git checkout master
+fi
+
+git pull
+git branch --merged master | grep -v '^\* master$' | while read branch; do
+  if git branch -d "$branch"; then
+    if git branch -r | grep -Fq "origin/$branch"; then
+      git push origin ":$branch"
+    fi
+  fi
+done
