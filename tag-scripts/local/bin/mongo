@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - docker-based mongodb client
+#
+###
+exec docker run \
+  --rm \
+  --interactive \
+  --tty \
+  --net host \
+  mongo:2.6 mongo "$@"

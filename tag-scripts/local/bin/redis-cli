@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - docker-based redis-cli
+#
+###
+exec docker run \
+  --rm \
+  --interactive \
+  --tty \
+  --net host \
+  redis:2.8 redis-cli "$@"
