@@ -5,9 +5,6 @@ call vundle#rc()
 
 Plugin 'gmarik/vundle'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'jamessan/vim-gnupg'
-Plugin 'nicholaides/words-to-avoid.vim'
-Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
 Plugin 'pbrisbin/vim-restore-cursor'
@@ -23,65 +20,39 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
 
-syntax on
-filetype plugin indent on
-
-set autoindent
 set autoread
 set autowrite
-set background=light
 set colorcolumn=+1
 set diffopt+=vertical
 set expandtab
-set foldmethod=marker
-set formatoptions+=j
 set grepprg=git\ grep\ -n\ $*
-set history=500
-set hlsearch
-set incsearch
-set laststatus=2
-set list listchars=tab:»·,trail:·
-set nobackup
+set list
 set nojoinspaces
-set notitle
 set nowrap
 set number
-set ruler
-set scrolloff=999
 set shiftwidth=2
-set showcmd
-set showmatch
-set sidescroll=1
-set sidescrolloff=5
-set smartindent
 set smarttab
 set textwidth=80
-set visualbell t_vb=
-set wildmode=list:longest
-set winwidth=84
-
-"silent! colorscheme off
 
 let mapleader = ' '
 let maplocalleader = ' '
 
 let g:ctrlp_use_caching  = 0
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files | grep -Fv node_modules']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 let g:rspec_command      = '!bundle exec rspec -c {spec}'
 let g:runfile_by_name    = {
   \   'Gemfile$': '!bundle',
-  \   'Spec\.hs$': '!cabal exec -- ghc -Wall -e main %',
-  \   '.*_spec\.rb': '!bundle exec ruby -Ilib -Ispec %',
-  \   '.*\.cabal': '!cabal install --dependencies-only --enable-tests',
-  \   '\.md$': '!opandoc %',
-  \   '\.tex$': '!pdflatex %'
+  \   'Spec\.hs$': '!stack exec ghc -- -e main %',
+  \   '.*\.cabal$': '!stack install --dependencies-only --enable-tests',
+  \   '.*_spec\.rb$': '!bundle exec ruby -Ilib -Ispec %',
   \ }
 let g:runfile_by_type    = {
-  \ 'haskell': '!cabal exec -- ghci -Wall %',
-  \ 'lhaskell': '!cabal exec -- ghci -Wall %'
+  \ 'haskell': '!stack exec -- ghci -Wall %',
+  \ 'lhaskell': '!stack exec -- ghci -Wall %'
   \ }
 
 map <Leader>a :call RunAllSpecs()<CR>
@@ -90,16 +61,8 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
 
-nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
-
 augroup vimrc
   autocmd!
-  autocmd BufEnter *.md,*.mkd setlocal filetype=markdown
-  autocmd BufWritePost *.tex execute ':Run' | execute ':redraw!'
-  autocmd FileType cram setlocal formatoptions+=twn
   autocmd FileType haskell setlocal shiftwidth=4
-  autocmd FileType html,eruby setlocal noshowmatch " causes lag in these filetypes
-  autocmd FileType mail setlocal spell nohlsearch
-  autocmd FileType gitcommit,markdown,lhaskell setlocal nosmartindent | setlocal spell
-  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown setlocal spell
 augroup END
