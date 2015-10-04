@@ -26,6 +26,8 @@ main = xmonad $ defaultConfig
         , ("<XF86AudioRaiseVolume>", spawn "nmixer up")
         , ("<XF86AudioLowerVolume>", spawn "nmixer down")
         , ("<XF86AudioMute>", spawn "nmixer toggle")
+        , ("<XF86MonBrightnessUp>", spawn "sudo bl u")
+        , ("<XF86MonBrightnessDown>", spawn "sudo bl d")
         ]
 
 scratchpads :: [NamedScratchpad]
