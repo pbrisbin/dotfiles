@@ -16,3 +16,5 @@ if [[ -e /etc/profile.d/autojump.zsh ]]; then
 fi
 
 fpath=( "$ZDOTDIR/functions" $fpath )
+
+unsetopt nomatch
