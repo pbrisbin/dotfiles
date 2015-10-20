@@ -19,7 +19,4 @@ if [ $UID -eq 0 ]; then
   set -- su patrick -c "$cmd"
 fi
 
-# https://github.com/knopwob/dunst/issues/238
-eval $(dbus-launch --sh-syntax --exit-with-session)
-
 DISPLAY=:0 XAUTHORITY="$(xauthority)" "$@"
