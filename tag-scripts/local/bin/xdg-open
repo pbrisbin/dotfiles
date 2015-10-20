@@ -18,6 +18,11 @@ handle_archive() {
 
 [ $# -eq 0 ] && exit 1
 
+if get-magnet ~/downloads "$1"; then
+  # downloaded as a magnet link
+  exit 0
+fi
+
 if [ ! -f "$1" ]; then
   # Assume non-files are URLs
   exec $BROWSER "$1"

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Original: https://github.com/isislovecruft/scripts/blob/master/magnetlink
+#
+###
+downloads=$1
+link=$2
+
+if [[ "$link" =~ xt=urn:btih:([^&/]+) ]]; then
+  h=${BASH_REMATCH[1]}
+
+  if [[ "$link" =~ dn=([^&/]+) ]];then
+    name=${BASH_REMATCH[1]}
+  else
+    name=$h
+  fi
+
+  file="$downloads/meta-"$name".torrent"
+  printf "d10:magnet-uri%s:%se\n" "${#link}" "${link}" > "$file"
+else
+  echo "not magnet link" >&2
+  exit 1
+fi
