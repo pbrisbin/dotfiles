@@ -5,11 +5,11 @@
 ###
 bin="$(dirname "$0")"
 
+logger "ACPI event: $1"
+
 case "$1" in
-  battery)              "$bin"/runx "$bin"/osb ;;
-  button/screenlock)    "$bin"/runx slock      ;;
-  video/brightnessdown) "$bin"/bl d            ;;
-  video/brightnessup)   "$bin"/bl u            ;;
+  battery)           "$bin"/runx "$bin"/osb ;;
+  button/screenlock) "$bin"/runx slock      ;;
 
   # Mic mute
   button/f20) amixer -c 1 sset Capture toggle ;;
@@ -18,5 +18,5 @@ case "$1" in
   ac_adapter|*/volume*|*/mute) : ;;
   ibm/hotkey|thermal_zone)     : ;;
 
-  *) "$bin"/runx notify-send -i 'emblem-important' 'ACPI action' "$*" ;;
+  *) "$bin"/runx notify-send -i 'emblem-important' 'ACPI event' "$*" ;;
 esac
