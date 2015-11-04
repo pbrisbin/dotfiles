@@ -1,0 +1,13 @@
+#!/bin/sh
+bin=$(dirname "$0")
+
+# All the OS X users at WeWork spam my logs because of a bug in the version of
+# avahi they run. So... Disable it if we've connected to that network and enable
+# it otherwise.
+if [ "$1" = "WE WORK" ]; then
+  systemctl stop avahi-daemon.{service,socket}
+else
+  systemctl start avahi-daemon
+fi
+
+"$bin/runx" "$bin/osn"
