@@ -10,7 +10,11 @@ class Ctags
   end
 
   def run
-    system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- -v0 '#{@module}' })
+    if File.exist?("stack.yaml")
+      system(%{ echo ":ctags #{@tags}" | stack exec ghci -- -v0 '#{@module}' })
+    else
+      system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- -v0 '#{@module}' })
+    end
   end
 
   private
