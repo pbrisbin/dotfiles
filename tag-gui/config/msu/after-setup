@@ -1,4 +1,3 @@
 #!/bin/sh
 feh --no-fehbg --bg-max ~/.local/share/background.png
-pkill notify-osd
 notify-send -i 'gnome-window-manager' "Monitor Setup Utility" "Setup complete"
