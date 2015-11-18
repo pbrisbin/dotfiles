@@ -1,2 +1,2 @@
 EXCLUDES=README.md
-TAGS='bash git gpg screen scripts ssh torrents'
+TAGS='bash git gpg mail-sender screen scripts ssh torrents'
