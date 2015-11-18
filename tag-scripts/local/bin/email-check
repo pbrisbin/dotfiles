@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - ensure my custom domain emails are still functioning.
+#
+###
+send_test_email() {
+  local to=$1
+
+  mail -s "[$to] test message" "$to" <<EOF
+Hello,
+
+This is an automated test to ensure you still get emails at this address.
+
+Hopefully you received it.
+
+Thanks,
+Pat
+EOF
+}
+
+send_test_email p@brisb.in
+send_test_email me@pbrisbin.com
