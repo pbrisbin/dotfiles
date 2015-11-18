@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - release script for my OSS projects.
+#
+###
+set -e
+
+if [ -z "$1" ]; then
+  echo "usage: release [VERSION]" >&2
+  exit 64
+fi
+
+version=$1
+package=$(basename "$PWD")
+tmp_repo=$(mktemp -d)/$package
+
+if git tag | grep -q "^$version$"; then
+  echo "tag $version exists"
+else
+  git tag -s -m "$version" "$version"
+  git push --tags
+fi
+
+git clone "ssh://aur@aur.archlinux.org/$package" "$tmp_repo"
+
+(
+  cd "$tmp_repo"
+
+  sed -i "
+    s/^pkgver=.*$/pkgver=$version/; s/=v/=/;
+    s/^pkgrel=.*$/pkgrel=1/;" PKGBUILD
+
+  updpkgsums
+  mksrcinfo
+
+  # git add .SRCINFO PKGBUILD
+  # git commit -m "Release $version"
+  # git push
+)
+
+rm -rf "$tmp_repo"
