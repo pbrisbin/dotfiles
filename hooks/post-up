@@ -13,11 +13,11 @@ secure() {
 }
 
 setup_vundle() {
-  local bundles="$HOME/.vim/bundle"
+  local bundles="$HOME/.local/share/nvim/bundle"
 
-  if [ ! -d "$bundles"/vundle ]; then
+  if [ ! -d "$bundles"/Vundle.vim ]; then
     mkdir -p "$bundles"
-    git clone https://github.com/gmarik/Vundle.vim "$bundles"/vundle
+    git clone https://github.com/gmarik/Vundle.vim "$bundles"/Vundle.vim
   fi
 
   vim +PluginInstall +PluginClean! +qa
@@ -26,7 +26,7 @@ setup_vundle() {
 touch ~/.netrc
 secure ~/.netrc ~/.msmtprc ~/.config/gnupg
 
-grep -sq '^Plugin' ~/.vimrc && setup_vundle
+grep -sq '^Plugin' ~/.config/nvim/init.vim && setup_vundle
 
 [ -d ~/.mutt ] && mkdir -p ~/.mutt/temp
 
