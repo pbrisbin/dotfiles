@@ -15,8 +15,8 @@
   db = "!f() { [ -n \"$1\" ] && git branch -d $1 && git push origin :$1; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
-  pr = !git push -u origin && gh pull-request
-  prb = !git push -u origin && gh pull-request -b
+  pr = !git push -u origin && hub pull-request
+  prb = !git push -u origin && hub pull-request -b
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master

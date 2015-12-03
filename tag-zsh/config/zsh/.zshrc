@@ -13,7 +13,7 @@ alias b='bundle'
 alias be='b exec'
 alias piso='mplayer dvd://1 -dvd-device'
 alias pdvd='mplayer dvdnav:// -dvd-device /dev/sr0 -mouse-movements'
-alias git=gh; compdef gh=git
+alias git=hub; compdef hub=git
 
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
 bindkey -M viins '^?' backward-delete-char # Backspace
