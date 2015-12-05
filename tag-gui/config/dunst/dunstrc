@@ -145,7 +145,7 @@
     icon_position = right
 
     # Paths to default icons.
-    icon_folders = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/:/usr/share/icons/gnome/32x32/apps/:/usr/share/icons/gnome/32x32/emblems/:/usr/share/icons/gnome/32x32/actions/
+    icon_folders = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/:/usr/share/icons/gnome/32x32/apps/:/usr/share/icons/gnome/32x32/emblems/:/usr/share/icons/gnome/32x32/actions/:/usr/share/icons/hicolor/32x32/apps/
 
 [frame]
     width = 1
