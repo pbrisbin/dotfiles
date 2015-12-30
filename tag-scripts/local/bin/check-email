@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# pbrisbin 2015 - confirm my fastmail aliases didn't lapse.
+#
+###
+for email in p@brisb.in me@pbrisbin.com; do
+  mail -s "Email check [$email]" "$email" << EOF
+Hello,
+
+This is an automated test to ensure you still get emails at the
+address \`$email'.
+
+Hopefully you received it.
+
+Thanks,
+Pat
+EOF
+done
