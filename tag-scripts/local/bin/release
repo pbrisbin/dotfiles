@@ -33,9 +33,9 @@ git clone "ssh://aur@aur.archlinux.org/$package" "$tmp_repo"
   updpkgsums
   mksrcinfo
 
-  # git add .SRCINFO PKGBUILD
-  # git commit -m "Release $version"
-  # git push
+  git add .SRCINFO PKGBUILD
+  git commit -m "Release $version"
+  git push
 )
 
 rm -rf "$tmp_repo"
