@@ -25,6 +25,10 @@ export MANWIDTH=80
 setopt inc_append_history
 setopt vi
 
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+eval "$(stack --bash-completion-script stack)"
+
 ((NOCD)) || cd - >/dev/null
 
 prompt pbr
