@@ -17,6 +17,7 @@ unset help
   set mailcap_path      = ~/.mutt/mailcap
 unset mark_old
 unset markers
+  set mime_forward      = ask-no
   set mbox_type         = Maildir
   set menu_scroll
   set pager_context     = 5
