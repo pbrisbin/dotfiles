@@ -39,6 +39,7 @@ set number
 set shiftwidth=2
 set smartindent
 set textwidth=80
+set wildmode=longest:full
 
 syntax enable
 
