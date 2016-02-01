@@ -5,6 +5,7 @@ call vundle#begin('~/.local/share/nvim/bundle')
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'pbrisbin/vim-compiler-stack'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
 Plugin 'pbrisbin/vim-runfile'
@@ -66,13 +67,16 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>n :RenameFile<CR>
 map <Leader>r :Run<CR>
+map <Leader>c :silent :make<CR>
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 tnoremap <Esc> <C-\><C-n>
 
 augroup vimrc
   autocmd!
-  autocmd FileType haskell setlocal shiftwidth=4
+  autocmd FileType haskell setlocal shiftwidth=4 | compiler ghc
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown setlocal spell
   autocmd FileType mail setlocal nohlsearch
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
