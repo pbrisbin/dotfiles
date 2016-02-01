@@ -1,0 +1,4 @@
+resolver: lts-5.0
+packages: []
+extra-deps:
+  - X11-xft-0.3.1

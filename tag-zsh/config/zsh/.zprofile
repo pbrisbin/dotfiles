@@ -34,8 +34,7 @@ export GPG_AGENT_INFO=x
 
 path=(
   ~/.local/bin
-  ./.cabal-sandbox/bin
-  ~/.cabal/bin
+  ~/.stack/bin
   $GOPATH/bin
   $path
 )
