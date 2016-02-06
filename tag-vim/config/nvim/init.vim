@@ -32,12 +32,14 @@ set colorcolumn=+1
 set diffopt+=vertical
 set expandtab
 set grepprg=git\ grep\ -n\ $*
+set linebreak
 set list
 set mouse=
 set nojoinspaces
 set nowrap
 set number
 set shiftwidth=2
+set showbreak=\ ↪\ 
 set smartindent
 set textwidth=80
 set wildmode=longest:full
@@ -77,6 +79,7 @@ augroup vimrc
   autocmd FileType haskell setlocal shiftwidth=4 | compiler ghc
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown setlocal spell
   autocmd FileType mail setlocal nohlsearch
+  autocmd FileType qf setlocal wrap | setlocal colorcolumn=
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
