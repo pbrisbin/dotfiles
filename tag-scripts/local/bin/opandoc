@@ -11,10 +11,12 @@ fi
 file="$(mktemp)"
 
 {
-  printf '<html><body>'
+  printf '<html><body><section class="main">'
 
-  pandoc "$1"
+  pandoc \
+    --css https://pbrisbin.com/css/main.css \
+    --css https://pbrisbin.com/css/syntax.css "$1"
 
-  printf '</body></html>'
+  printf '</section></body></html>'
 
 } > "$file" && $BROWSER "file://$file"
