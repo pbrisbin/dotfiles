@@ -14,6 +14,11 @@ case "$1" in
   # Mic mute
   button/f20) amixer -c 1 sset Capture toggle ;;
 
+  # RF kill
+  button/wlan)
+    "$bin"/runx notify-send -i network-error "RF Kill" "$(rfkill list 2)"
+  ;;
+
   # Ignored events
   ac_adapter|*/volume*|*/mute) : ;;
   ibm/hotkey|thermal_zone)     : ;;
