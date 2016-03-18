@@ -1,4 +1,5 @@
 _git-db() { _git-checkout }
+_git-dbf() { _git-checkout }
 
 zstyle ':completion:*:sudo:*' command-path $path
 

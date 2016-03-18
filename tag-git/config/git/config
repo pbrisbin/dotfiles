@@ -13,6 +13,7 @@
   ci = commit --verbose
   co = checkout
   db = "!f() { [ -n \"$1\" ] && git branch -d $1 && git push origin :$1; }; f"
+  dbf = "!f() { [ -n \"$1\" ] && git branch -D $1 && git push origin :$1; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
   pr = !git push -u origin && hub pull-request
