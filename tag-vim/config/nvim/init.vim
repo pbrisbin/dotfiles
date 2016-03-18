@@ -5,6 +5,7 @@ call vundle#begin('~/.local/share/nvim/bundle')
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-compiler-stack'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'pbrisbin/vim-rename-file'
@@ -45,6 +46,8 @@ set textwidth=80
 set wildmode=longest:full
 
 syntax enable
+
+silent! colorscheme off
 
 let mapleader = ' '
 let maplocalleader = ' '
