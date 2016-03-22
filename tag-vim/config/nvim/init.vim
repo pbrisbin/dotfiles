@@ -4,6 +4,7 @@ set rtp+=~/.local/share/nvim/bundle/Vundle.vim
 call vundle#begin('~/.local/share/nvim/bundle')
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'akheron/cram'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'pbrisbin/vim-colors-off'
 Plugin 'pbrisbin/vim-compiler-stack'
@@ -79,6 +80,7 @@ tnoremap <Esc> <C-\><C-n>
 
 augroup vimrc
   autocmd!
+  autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd FileType haskell setlocal shiftwidth=4 | compiler ghc
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown setlocal spell
   autocmd FileType mail setlocal nohlsearch
