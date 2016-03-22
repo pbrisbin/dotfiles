@@ -1,22 +1,23 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #
-# pbrisbin 2013 - record screen area as a gif. Requires ffcast (for
-# xrectsel) and byzanz (for the actual recording).
+# pbrisbin 2016 - record screen area as a gif and share it.
 #
 ###
 set -e
 
-out="${1:-out.gif}"
+out="${1:-desktop_$(date +%y%m%d%H%M%S).gif}"
 
-if [ -e "$out" ]; then
-  printf "%s exists. removing...\n" "$out" >&2
-  rm "$out"
-fi
+post_process() {
+  echo # newline
+  convert -loop 0 "$tmp" "$out"
+  share --prefix gifs "$out"
+  rm "$tmp" "$out"
+}
 
 tmp=temp.gif
 geometry_args="$(xrectsel "--x=%x --y=%y --width=%w --height=%h")"
 
-trap "convert -loop 0 '$tmp' '$out' && rm '$tmp'" EXIT
+trap post_process EXIT
 
 printf "Recording %s. Press ^C when done.\n" ./"$out"
 byzanz-record -d 3600 $geometry_args "$tmp" # word-splitting intended
