@@ -45,3 +45,6 @@
   gpgsign = true
 [init]
   templatedir = ~/.config/git/template
+[rebase]
+  autoStash = true
+  stat = true
