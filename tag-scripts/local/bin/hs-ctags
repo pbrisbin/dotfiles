@@ -4,6 +4,13 @@
 #
 ###
 class Ctags
+  GHC_OPTIONS = %w[
+    -iapp
+    -isrc
+    -itest
+    -v0
+  ]
+
   def initialize(tags)
     @tags = tags || 'tags'
     @module = find_module or exit 1
@@ -11,9 +18,9 @@ class Ctags
 
   def run
     if File.exist?("stack.yaml")
-      system(%{ echo ":ctags #{@tags}" | stack exec ghci -- -v0 '#{@module}' })
+      system(%{ echo ":ctags #{@tags}" | stack exec ghci -- #{GHC_OPTIONS.join(" ")} '#{@module}' })
     else
-      system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- -v0 '#{@module}' })
+      system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- #{GHC_OPTIONS.join(" ")} '#{@module}' })
     end
   end
 
