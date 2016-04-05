@@ -30,7 +30,6 @@
 .*.sw[nop]
 .DS_Store?
 .anvil
-.cabal-sandbox
 .classpath
 .env
 .gdb_history
@@ -46,8 +45,6 @@ Thumbs.db
 [#]*#
 _build
 build/
-cabal.sandbox.config
-dist/
 ehthumbs.db
 gen/
 local.properties
@@ -56,4 +53,3 @@ proguard-project.txt
 proguard/
 tags
 tags.temp
-vagrant
