@@ -11,4 +11,4 @@ xautolock -time 5 -locker slock -secure &
 # https://github.com/knopwob/dunst/issues/238
 eval $(dbus-launch --sh-syntax --exit-with-session)
 
-xmonad
+stack exec xmonad
