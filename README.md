@@ -1,8 +1,7 @@
 # Dotfiles
 
-This repo uses [rcm][]. Also, all dotfiles are kept in tag-specific 
-directories. Host-specific rcrc files then dictate which machines get 
-which tags. This also allows for easy cherry-picking.
+This repo uses [rcm][]. Also, all dotfiles are kept in tag-specific directories.
+This allows for easy cherry-picking.
 
 For example, if you want only my vim setup:
 
