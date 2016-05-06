@@ -17,4 +17,4 @@ for repo in $(enabled_repos); do
 done
 
 # not getting crazy with escaping, deal.
-curl -s "https://aur.archlinux.org/packages/${1:0:2}/$1/PKGBUILD"
+curl -s "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=$1"
