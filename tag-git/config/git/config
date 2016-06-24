@@ -12,7 +12,7 @@
   dbf = "!f() { [ -n \"$1\" ] && git branch -D $1 && git push origin :$1; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
-  pr = !git push && hub pull-request
+  pr = !git push -u && hub pull-request
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
