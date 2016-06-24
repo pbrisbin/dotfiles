@@ -1,6 +1,8 @@
 _git-db() { _git-checkout }
 _git-dbf() { _git-checkout }
+_git-delete-tag() { compadd "$@" $(git tag) }
 
+zstyle ':completion:*:*:hub:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 zstyle ':completion:*:sudo:*' command-path $path
 
 HISTSIZE=50000
