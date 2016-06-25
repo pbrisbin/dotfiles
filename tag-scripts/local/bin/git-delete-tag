@@ -1,1 +1,5 @@
-/home/patrick/.dotfiles/local/bin/git-delete-tag
+#!/bin/sh
+for tag; do
+  git tag -d "$tag"
+  git push origin :refs/tags/"$tag"
+done
