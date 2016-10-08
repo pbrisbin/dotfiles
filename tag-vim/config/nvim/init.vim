@@ -60,7 +60,7 @@ let g:runfile_debug      = 1
 let g:runfile_by_name    = {
   \   'Gemfile$': '!bundle',
   \   'Spec\.hs$': '!stack exec ghc -- -e main %',
-  \   '.*\.cabal$': '!stack install --dependencies-only --enable-tests',
+  \   '.*\.cabal$': '!stack build --dependencies-only --test',
   \   '.*_spec\.rb$': '!bundle exec ruby -Ilib -Ispec %',
   \ }
 let g:runfile_by_type    = {
