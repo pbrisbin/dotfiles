@@ -2,13 +2,11 @@
 
 msu # Monitor Setup Utility
 
+dunst &
 xrdb "$XDG_CONFIG_HOME"/Xresources
 xset s off
 xsetroot -cursor_name left_ptr
 urxvtd -q -f -o
 xautolock -time 5 -locker slock -secure &
-
-# https://github.com/knopwob/dunst/issues/238
-eval $(dbus-launch --sh-syntax --exit-with-session)
 
 stack exec xmonad
