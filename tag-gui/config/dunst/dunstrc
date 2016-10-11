@@ -21,13 +21,13 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s</b>\n\n%b"
     
     # Sort messages by urgency.
     sort = yes
     
     # Show how many messages are currently hidden (because of geometry).
-    indicate_hidden = yes
+    indicate_hidden = no
     
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -78,7 +78,7 @@
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
     # Set to 0 to disable.
-    idle_threshold = 120
+    idle_threshold = 600
     
     # Which monitor should the notifications be displayed on.
     monitor = 0
@@ -114,13 +114,13 @@
     # Draw a line of "separatpr_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 1
     
     # Padding between text and separator.
-    padding = 8
+    padding = 18
     
     # Horizontal padding.
-    horizontal_padding = 8
+    horizontal_padding = 16
     
     # Define a color for the separator.
     # possible values are:
@@ -148,7 +148,7 @@
     icon_folders = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/:/usr/share/icons/gnome/32x32/apps/:/usr/share/icons/gnome/32x32/emblems/:/usr/share/icons/gnome/32x32/actions/:/usr/share/icons/hicolor/32x32/apps/
 
 [frame]
-    width = 1
+    width = 0
     color = "#bbbbbb"
 
 [shortcuts]
@@ -175,17 +175,17 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
+    background = "#2471A3"
+    foreground = "#ffffff"
     timeout = 10
 
 [urgency_normal]
-    background = "#285577"
+    background = "#2471A3"
     foreground = "#ffffff"
     timeout = 10
 
 [urgency_critical]
-    background = "#900000"
+    background = "#2471A3"
     foreground = "#ffffff"
     timeout = 0
 
