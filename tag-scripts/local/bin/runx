@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 # pbrisbin 2014 - run X programs from outside of the X session, as the normal
-# user or root. Looks up XAUTHORITY dynamically, but assumes the X session is on
-# DISPLAY :0.
+# user or root. Looks up XAUTHORITY dynamically, but assumes a DISPLAY and
+# DBUS_SESSION_BUS_ADDRESS.
 #
 ###
 xauthority() {
@@ -19,4 +19,5 @@ if [ $UID -eq 0 ]; then
   set -- su patrick -c "$cmd"
 fi
 
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
 DISPLAY=:0 XAUTHORITY="$(xauthority)" "$@"
