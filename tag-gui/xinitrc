@@ -9,4 +9,4 @@ xsetroot -cursor_name left_ptr
 urxvtd -q -f -o
 xautolock -time 5 -locker slock -secure &
 
-stack exec xmonad
+exec stack exec xmonad
