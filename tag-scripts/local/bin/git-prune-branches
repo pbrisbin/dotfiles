@@ -10,7 +10,17 @@ if ! git branch | grep -q '^\* master$'; then
 fi
 
 git pull
-git branch --merged master | grep -v '^\* master$' | while read branch; do
+
+echo ":: Rebasing local branches"
+git branch | grep -v '^\* master$' | while read -r branch; do
+  git checkout "$branch" >/dev/null
+  git rebase master >/dev/null || git rebase --abort
+done
+
+git checkout master
+
+echo ":: Deleting merged branches"
+git branch --merged master | grep -v '^\* master$' | while read -r branch; do
   if git branch -d "$branch"; then
     if git branch -r | grep -Fq "origin/$branch"; then
       git push origin ":$branch"
