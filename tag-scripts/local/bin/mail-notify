@@ -5,7 +5,7 @@
 #
 ###
 directory = ARGV.first || "#{ENV["HOME"]}/mail"
-to_ignore = %w[ archive drafts sent spam trash github ml-.* ].join("|")
+to_ignore = %w[ archive drafts sent spam trash cce github ml-.* ].join("|")
 cachefile = "/tmp/mail-notify-message"
 mailboxes = Hash.new(0)
 
