@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# pbrisbin 2015
+#
+###
+set -ex
+docker ps -a | awk '!/gc-config/ && /Exited/ { print $1 }' | xargs -P 4 -n 10 -r docker rm
+docker images | awk '/<none>/ { print $3 }' | xargs -P 4 -n 10 -r docker rmi
