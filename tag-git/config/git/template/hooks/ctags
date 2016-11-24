@@ -6,7 +6,8 @@ tags_file="/tmp/$$.tags"
 trap 'rm -f "$tags_file"' EXIT
 
 if [ -f *.cabal ]; then
-  ~/.local/bin/hs-ctags "$tags_file"
+  # http://hackage.haskell.org/package/fast-tags
+  find -type f -name '*.hs' -exec fast-tags -o "$tags_file" {} +
 else
   ctags -f "$tags_file" -R --exclude='*.js'
 fi

@@ -1,46 +1,7 @@
-#!/usr/bin/env ruby
+#!/bin/sh
 #
-# pbrisbin 2013 - smartly update haskell ctags.
+# pbrisbin 2017 - update haskell ctags using fast-tags
 #
 ###
-class Ctags
-  GHC_OPTIONS = %w[
-    -iapp
-    -isrc
-    -itest
-    -v0
-  ]
-
-  def initialize(tags)
-    @tags = tags || 'tags'
-    @module = find_module or exit 1
-  end
-
-  def run
-    if File.exist?("stack.yaml")
-      system(%{ echo ":ctags #{@tags}" | stack exec ghci -- #{GHC_OPTIONS.join(" ")} '#{@module}' })
-    else
-      system(%{ echo ":ctags #{@tags}" | cabal exec ghci -- #{GHC_OPTIONS.join(" ")} '#{@module}' })
-    end
-  end
-
-  private
-
-  def find_module
-    Dir.glob(module_glob, File::FNM_CASEFOLD).first
-  end
-
-  def module_glob
-    File.join('**', "{#{module_name},main}.hs")
-  end
-
-  def module_name
-    File.join(*project_directory.split('-'))
-  end
-
-  def project_directory
-    File.basename(ENV['PWD'])
-  end
-end
-
-Ctags.new(ARGV.first).run
+tags="${1:-tags}"
+find -type f -name '*.hs' -exec fast-tags -o "$tags" {} +
