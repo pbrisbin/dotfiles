@@ -1,3 +1,0 @@
-#!/bin/sh
-feh --no-fehbg --bg-max ~/.local/share/background.png
-notify-send -i 'gnome-window-manager' "Monitor Setup Utility" "Setup complete"
