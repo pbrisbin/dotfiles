@@ -55,3 +55,5 @@ fi
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
   exec startx
 fi
+
+cd - >/dev/null
