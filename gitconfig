@@ -1,7 +1,5 @@
-# vim: ft=gitconfig
 [core]
   editor = vim
-  excludesfile = /home/patrick/.config/git/ignore
 [color]
   ui = auto
 [help]
@@ -38,8 +36,6 @@
   prune = true
 [commit]
   gpgsign = true
-[init]
-  templatedir = ~/.config/git/template
 [rebase]
   autoStash = true
   stat = true
