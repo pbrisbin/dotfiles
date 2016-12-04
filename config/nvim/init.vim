@@ -17,10 +17,9 @@ set smartindent
 set textwidth=80
 set wildmode=longest:full
 
-syntax enable
+syntax off " enable
 
 let mapleader = ' '
 let maplocalleader = ' '
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-tnoremap <Esc> <C-\><C-n>
