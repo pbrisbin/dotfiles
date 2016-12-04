@@ -17,7 +17,6 @@ export MANWIDTH=80
 
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
-HISTFILE=~/.zsh_history
 
 cdpath=( $HOME $HOME/code $cdpath )
 path=( ~/.local/bin $path )
@@ -37,6 +36,7 @@ eval "$(stack --bash-completion-script stack)"
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
+
 if pgrep ssh-agent >/dev/null; then
   source "$ssh_env"
 else
@@ -44,7 +44,6 @@ else
   source "$ssh_env"
   ssh-add
 fi
-unset ssh_env
 
 # Start X
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
