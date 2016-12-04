@@ -1,17 +1,14 @@
 # Dotfiles
 
-This repo uses [rcm][]. Also, all dotfiles are kept in tag-specific directories.
-This allows for easy cherry-picking.
+This repo uses [rcm][].
 
-For example, if you want only my vim setup:
+[rcm]: https://github.com/thoughtbot/rcm
+
+## Usage
 
 ```
 % git clone https://github.com/pbrisbin/dotfiles .pbrisbin-dotfiles
-% rcup -d .pbrisbin-dotfiles -x README.md -t vim
+% rcup -d .pbrisbin-dotfiles -x README.md -v
 ```
 
-These options could be made the default in your own `~/.rcrc`.
-
 See more details with `man 7 rcm`.
-
-[rcm]: https://github.com/thoughtbot/rcm
