@@ -1,7 +1,0 @@
-# vim: ft=sh:
-build_directory='/tmp'
-edit_pkgbuilds='never'
-keep_devels=false
-resolve_dependencies=true
-ignore_packages=ncurses5-compat-libs
-debug=true

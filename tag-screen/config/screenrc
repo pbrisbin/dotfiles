@@ -1,7 +1,0 @@
-altscreen on
-defbce off
-hardstatus alwayslastline '[%H] %= %-w[%n %t]%+w '
-shell -$SHELL
-term screen-256color
-bell_msg '^GBell in window %n'
-vbell off
