@@ -1,3 +1,10 @@
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
 filetype plugin indent on
 
 set autowrite
@@ -17,7 +24,7 @@ set smartindent
 set textwidth=80
 set wildmode=longest:full
 
-syntax off " enable
+syntax off
 
 let mapleader = ' '
 let maplocalleader = ' '
