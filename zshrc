@@ -36,7 +36,11 @@ HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 
 cdpath=( $HOME $HOME/code $HOME/code/codeclimate $cdpath )
-path=( ~/.local/bin $path )
+path=(
+  ~/.local/bin
+  ~/.gem/ruby/2.3.0/bin
+  $path
+)
 
 # Bindings & Options
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
