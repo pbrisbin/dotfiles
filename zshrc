@@ -12,6 +12,17 @@ zstyle ':vcs_info:git:*' formats '%c%u %r:%b'
 alias g=git
 alias git=hub; compdef hub=git
 
+clone() {
+  case "$1" in
+    */*)
+      target=$HOME/code/$1
+      mkdir -p "$(dirname "$target")"
+      git clone "git@github.com:$1" "$target"
+      cd "$target"
+      ;;
+  esac
+}
+
 # Exports
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
