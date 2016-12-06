@@ -1,3 +1,3 @@
-~/.local/bin/msu
+msu
 xrdb ~/.Xresources
-exec ~/.local/bin/xmonad
+exec xmonad
