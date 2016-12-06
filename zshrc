@@ -11,6 +11,7 @@ zstyle ':vcs_info:git:*' formats '%c%u %r:%b'
 # Aliases & Functions
 alias g=git
 alias git=hub; compdef hub=git
+alias p="sudo pacman"
 
 clone() {
   case "$1" in
