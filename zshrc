@@ -35,7 +35,7 @@ export MANWIDTH=80
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 
-cdpath=( $HOME $HOME/code $cdpath )
+cdpath=( $HOME $HOME/code $HOME/code/codeclimate $cdpath )
 path=( ~/.local/bin $path )
 
 # Bindings & Options
