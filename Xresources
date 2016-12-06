@@ -1,2 +1,2 @@
-xterm*font: 7x13
-xterm*faceName: DejaVu Sans Mono:size=16:antialias=true
+xterm*faceName: DejaVu Sans Mono
+xterm*faceSize: 16
