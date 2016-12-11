@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# pbrisbin 2017 - update haskell ctags using fast-tags
-#
-###
-tags="${1:-tags}"
-find -type f -name '*.hs' -exec fast-tags -o "$tags" {} +

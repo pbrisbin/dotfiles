@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-#
-# pbrisbin 2013 - open weechat in a new terminal.
-#
-###
-urxvtc -title chat -n chat -e weechat

@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-#
-# pbrisbin 2013 - stupid simple, feature-less aur installer.
-#
-###
-package_url=https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz
-
-curl -# "$package_url" | tar fxz - &&
-  (cd "./$1" && makepkg -i -r -s) && rm -rf "./$1"
