@@ -1,0 +1,108 @@
+# vim: ft=cfg:
+Create Slave
+Expunge Both
+SyncState *
+
+IMAPAccount gmail
+Host imap.gmail.com
+User pbrisbin@gmail.com
+PassCmd "get-netrc -o Password -f Name=gmail.com -f Login=pbrisbin@gmail.com"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/mail/gmail/
+Inbox ~/mail/gmail/INBOX
+
+Channel gmail-inbox
+Master :gmail-remote:INBOX
+Slave :gmail-local:INBOX
+
+Channel gmail-archive
+Master ":gmail-remote:[Gmail]/All Mail"
+Slave :gmail-local:archive
+
+Channel gmail-drafts
+Master :gmail-remote:[Gmail]/Drafts
+Slave :gmail-local:drafts
+
+Channel gmail-sent
+Master ":gmail-remote:[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+
+Channel gmail-spam
+Master :gmail-remote:[Gmail]/Spam
+Slave :gmail-local:spam
+
+Channel gmail-trash
+Master :gmail-remote:[Gmail]/Trash
+Slave :gmail-local:trash
+
+Channel gmail-rest
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * ![Gmail]* !archive !drafts !sent !spam !trash
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-archive
+Channel gmail-drafts
+Channel gmail-sent
+Channel gmail-spam
+Channel gmail-trash
+Channel gmail-rest
+
+IMAPAccount codeclimate
+Host imap.gmail.com
+User pat@codeclimate.com
+PassCmd "get-netrc -o Password -f Name=codeclimate.com -f Login=pat@codeclimate.com"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore codeclimate-remote
+Account codeclimate
+
+MaildirStore codeclimate-local
+Path ~/mail/codeclimate/
+Inbox ~/mail/codeclimate/INBOX
+
+Channel codeclimate-inbox
+Master :codeclimate-remote:INBOX
+Slave :codeclimate-local:INBOX
+
+Channel codeclimate-archive
+Master ":codeclimate-remote:[Gmail]/All Mail"
+Slave :codeclimate-local:archive
+
+Channel codeclimate-drafts
+Master :codeclimate-remote:[Gmail]/Drafts
+Slave :codeclimate-local:drafts
+
+Channel codeclimate-sent
+Master ":codeclimate-remote:[Gmail]/Sent Mail"
+Slave :codeclimate-local:sent
+
+Channel codeclimate-spam
+Master :codeclimate-remote:[Gmail]/Spam
+Slave :codeclimate-local:spam
+
+Channel codeclimate-trash
+Master :codeclimate-remote:[Gmail]/Trash
+Slave :codeclimate-local:trash
+
+Channel codeclimate-rest
+Master :codeclimate-remote:
+Slave :codeclimate-local:
+Patterns * ![Gmail]* !archive !drafts !sent !spam !trash
+
+Group codeclimate
+Channel codeclimate-inbox
+Channel codeclimate-archive
+Channel codeclimate-drafts
+Channel codeclimate-sent
+Channel codeclimate-spam
+Channel codeclimate-trash
+Channel codeclimate-rest

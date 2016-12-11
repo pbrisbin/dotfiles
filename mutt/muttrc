@@ -1,0 +1,36 @@
+set delete
+set edit_headers
+set fast_reply
+set folder = ~/mail
+set include
+set sort = threads
+set sort_aux = reverse-last-date-received
+set spoolfile = "+gmail/INBOX"
+unset record
+
+color normal black default
+
+mailboxes \
+  "+gmail/INBOX" \
+  "+gmail/ml-arch" \
+  "+gmail/ml-commercial-haskell" \
+  "+gmail/ml-vim" \
+  "+gmail/ml-web-devel" \
+  "+gmail/ml-xmonad" \
+  "+gmail/ml-yesod" \
+  "+codeclimate/INBOX"
+
+alternates .*@pbrisbin\.com .*@brisb\.in
+
+# GnuPG settings
+source /usr/share/doc/mutt/samples/gpg.rc
+set pgp_sign_as = CEC8925D
+set pgp_use_gpg_agent = yes
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+my_hdr X-PGP-Key: https://files.pbrisbin.com/public.key
+
+# Load account-specific settings when in those mailboxes
+folder-hook gmail/* source ~/.mutt/accounts/gmail
+folder-hook codeclimate/* source ~/.mutt/accounts/codeclimate
+source ~/.mutt/accounts/gmail

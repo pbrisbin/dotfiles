@@ -1,0 +1,3 @@
+#!/bin/sh
+chmod 0600 ~/.msmtprc
+chmod 0600 ~/.netrc.gpg
