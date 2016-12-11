@@ -37,7 +37,13 @@ export MANWIDTH=80
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 
-cdpath=( $HOME $HOME/code $HOME/code/codeclimate $cdpath )
+cdpath=(
+  ~
+  ~/code
+  ~/code/codeclimate
+  ~/code/pbrisbin
+  $cdpath
+)
 path=(
   ~/.local/bin
   ~/.gem/ruby/2.3.0/bin
