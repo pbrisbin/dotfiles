@@ -30,6 +30,11 @@ syntax off
 let mapleader = ' '
 let maplocalleader = ' '
 
+map <Leader>a :w \| :tabnew % \| :terminal make test<CR>
+map <Leader>t :w \| :tabnew % \| :terminal make test RSPEC_ARGS=%<CR>
+map <Leader>c :w \| :tabnew % \| :terminal codeclimate analyze %<CR>
+map <Leader>r :w \| :tabnew % \| :terminal ./%<CR>
+
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 
 augroup vimrc
