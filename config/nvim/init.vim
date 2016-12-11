@@ -31,3 +31,8 @@ let mapleader = ' '
 let maplocalleader = ' '
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+
+augroup vimrc
+  autocmd!
+  autocmd FileType haskell setlocal shiftwidth=4
+augroup END
