@@ -1,7 +1,7 @@
 set from = "pbrisbin@gmail.com"
 set mbox = "+gmail/archive"
 set postponed = "+gmail/drafts"
-set query_command = "google-contacts mutt-query pbrisbin@gmail.com '%s'"
+set query_command = "gc-mutt-query pbrisbin@gmail.com '%s'"
 set sendmail = "/usr/bin/msmtp -a gmail"
 macro index ,c "<change-folder>+codeclimate/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "sync IMAP"

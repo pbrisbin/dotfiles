@@ -1,7 +1,7 @@
 set from = "pat@codeclimate.com"
 set mbox = "+codeclimate/archive"
 set postponed = "+codeclimate/drafts"
-set query_command = "google-contacts mutt-query pat@codeclimate.com '%s'"
+set query_command = "gc-mutt-query pat@codeclimate.com '%s'"
 set sendmail = "/usr/bin/msmtp -a codeclimate"
 macro index ,c "<change-folder>+gmail/INBOX<enter>" "change accounts"
 macro index ,z "<shell-escape>mbsync --pull-new codeclimate-inbox<enter>" "sync IMAP"
