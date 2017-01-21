@@ -3,10 +3,17 @@ set edit_headers
 set fast_reply
 set folder = ~/mail
 set include
+set realname = "Pat Brisbin"
+set reverse_name
 set sort = threads
 set sort_aux = reverse-last-date-received
 set spoolfile = "+gmail/INBOX"
 unset record
+
+alternates .*@pbrisbin\.com .*@brisb\.in
+
+auto_view text/html
+alternative_order text/plain text/html
 
 color normal black default
 
@@ -20,7 +27,21 @@ mailboxes \
   "+gmail/ml-yesod" \
   "+codeclimate/INBOX"
 
-alternates .*@pbrisbin\.com .*@brisb\.in
+# More vim-like bindings
+bind index i  noop
+bind index gg first-entry
+bind index G  last-entry
+bind index N  search-opposite
+bind pager i  exit
+bind pager q  toggle-quoted
+bind pager /  search
+bind pager j  next-line
+bind pager k  previous-line
+bind pager gg top
+bind pager G  bottom
+bind index,pager \# noop
+bind index,pager \& noop
+bind index,pager R  group-reply
 
 # GnuPG settings
 source /usr/share/doc/mutt/samples/gpg.rc
