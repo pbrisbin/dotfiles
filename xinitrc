@@ -11,5 +11,10 @@ dunst \
   -padding 18 \
   -separator_height 1 &
 
+urxvtd &
 xautolock -time 5 -locker slock -secure &
+
+# Do this ourselves until 0.13 lands
+(cd ~/.xmonad && ./build xmonad-x86_64-linux)
+
 exec xmonad

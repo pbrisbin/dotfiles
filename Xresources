@@ -1,7 +1,12 @@
-xterm*faceName: DejaVu Sans Mono
-xterm*faceSize: 16
-xterm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
+*font: xft:DejaVu Sans Mono-16
+*boldFont: xft:DejaVu Sans Mono-16
 
-*VT100.Translations: #override \n\
-  Alt <Key>u: select-needle("://") select-set(PRIMARY) \n\
-  Alt <Key>o: exec-formatted("chromium '%t'", PRIMARY) select-start() select-end()
+URxvt*scrollBar: false
+URxvt*urgentOnBell: true
+URxvt*visualBell: false
+
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.matcher.button: 1
+URxvt.url-select.launcher: /usr/bin/chromium
+URxvt.url-select.underline: true

@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# As of 0.13, xmonad --recompile will look for a custom build script. This one
+# does the default thing, just via stack exec.
+#
+###
+exec stack ghc -- \
+  --make xmonad.hs \
+  -i \
+  -ilib \
+  -fforce-recomp \
+  -main-is main \
+  -v0 \
+  -o "$1"
