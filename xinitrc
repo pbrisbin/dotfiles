@@ -9,7 +9,8 @@ dunst \
   -horizontal_padding 16 \
   -markup \
   -padding 18 \
-  -separator_height 1 &
+  -separator_height 1 \
+  -word_wrap &
 
 urxvtd &
 xautolock -time 5 -locker slock -secure &
