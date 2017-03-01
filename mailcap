@@ -1,2 +1,3 @@
 text/html; elinks %s; nametemplate=%s.html
 text/html; elinks -dump %s; nametemplate=%s.html; copiousoutput
+application/pdf; xdg-open %s; copiousoutput
