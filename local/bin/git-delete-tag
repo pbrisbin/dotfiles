@@ -1,0 +1,5 @@
+#!/bin/sh
+for tag; do
+  git tag -d "$tag"
+  git push origin :refs/tags/"$tag"
+done

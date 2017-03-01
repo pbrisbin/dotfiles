@@ -1,0 +1,20 @@
+#!/bin/sh
+xauthority() {
+  ps -C xinit -f --no-header | sed 's/.*-auth //; s/ -[^ ].*//'
+}
+
+user=patrick
+user_id=$(id -u "$user")
+
+if [ -z "$1" ]; then
+  printf "usage: runx <command> [argument, ...]\n" >&2
+  exit 64
+fi
+
+if [ $UID -eq 0 ]; then
+  printf -v cmd "%q " "$@"
+  set -- su "$user" -c "$cmd"
+fi
+
+DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$user_id/bus" \
+DISPLAY=:0 XAUTHORITY="$(xauthority)" "$@"
