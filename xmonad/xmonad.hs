@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Util.EZConfig
 
 main :: IO ()
 main = xmonad $ def
@@ -9,3 +10,4 @@ main = xmonad $ def
         , ewmhDesktopsLogHook
         ]
     }
+    `additionalKeysP` [("M-S-p", spawn "passmenu --type")]
