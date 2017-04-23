@@ -4,8 +4,8 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
-Host heroku.com
-  # Heroku only supports insecure choices. Fun.
+Host heroku.com gitlab.com
+  # Heroku & Gitlab only support insecure choices. Fun.
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
   MACs hmac-sha1,hmac-md5
 
