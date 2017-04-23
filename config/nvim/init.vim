@@ -51,7 +51,7 @@ augroup vimrc
   autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
     \ setlocal spell | setlocal nosmartindent
-  "autocmd FileType haskell setlocal shiftwidth=4 | compiler ghc
+  autocmd FileType haskell setlocal shiftwidth=4 | compiler ghc
   autocmd FileType haskell
     \ setlocal shiftwidth=4 | let b:ctags_command = 'fast-tags **/*.hs'
   autocmd FileType qf setlocal wrap | setlocal colorcolumn=
