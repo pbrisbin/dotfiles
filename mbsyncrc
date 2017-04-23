@@ -6,7 +6,7 @@ SyncState *
 IMAPAccount gmail
 Host imap.gmail.com
 User pbrisbin@gmail.com
-PassCmd "get-netrc -o Password -f Name=gmail.com -f Login=pbrisbin@gmail.com"
+PassCmd "pass accounts.google.com/pbrisbin@gmail.com"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -58,7 +58,7 @@ Channel gmail-rest
 IMAPAccount codeclimate
 Host imap.gmail.com
 User pat@codeclimate.com
-PassCmd "get-netrc -o Password -f Name=codeclimate.com -f Login=pat@codeclimate.com"
+PassCmd "pass mail.codeclimate.com/pat"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
