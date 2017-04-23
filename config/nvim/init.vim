@@ -36,8 +36,6 @@ set showbreak=\ ↪\
 set smartindent
 set textwidth=80
 
-syntax off
-
 let mapleader = ' '
 let maplocalleader = ' '
 
