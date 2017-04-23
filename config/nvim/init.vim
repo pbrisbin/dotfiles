@@ -1,8 +1,20 @@
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'akheron/cram'
+Plug 'pbrisbin/vim-compiler-stack'
 Plug 'pbrisbin/vim-mkdir'
+Plug 'pbrisbin/vim-rename-file'
+Plug 'pbrisbin/vim-runfile'
+Plug 'pbrisbin/vim-syntax-shakespeare'
+Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'vim-ruby/vim-ruby'
+Plug 'wfleming/vim-codeclimate'
 call plug#end()
 
 filetype plugin indent on
