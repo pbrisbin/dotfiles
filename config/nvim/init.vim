@@ -43,7 +43,7 @@ map <Leader>C :w \| :tabnew % \| :terminal codeclimate analyze %<CR>
 map <Leader>T :!ctags -R .<CR><CR>
 map <Leader>a :w \| :tabnew % \| :terminal make test<CR>
 map <Leader>c :silent :make<CR>
-map <Leader>r :w \| :tabnew % \| :terminal ./%<CR>
+map <Leader>r :w \| :tabnew % \| :execute 'terminal '.expand('%:p')<CR>
 map <Leader>t :w \| :tabnew % \| :terminal make test RSPEC_ARGS=%<CR>
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
