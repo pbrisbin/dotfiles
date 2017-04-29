@@ -4,6 +4,12 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
+Host htpc.local
+  User xbmc
+
+Host *.local
+  Port 2222
+
 Host heroku.com gitlab.com
   # Heroku & Gitlab only support less secure choices
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
@@ -17,13 +23,3 @@ Host *
 
   ServerAliveCountMax 5
   ServerAliveInterval 120
-
-Host blue.local
-  Port 2222
-
-Host black.local
-  Port 2222
-
-Host htpc.local
-  Port 2222
-  User xbmc
