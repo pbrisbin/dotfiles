@@ -38,7 +38,7 @@ let mapleader = ' '
 let maplocalleader = ' '
 
 map <Leader>C :w \| :tabnew % \| :terminal codeclimate analyze %<CR>
-map <Leader>T :!ctags -R .<CR><CR>
+map <Leader>T :execute '!'.b:ctags_command<CR><CR>
 map <Leader>a :w \| :tabnew % \| :terminal make test<CR>
 map <Leader>c :silent :make<CR>
 map <Leader>r :w \| :tabnew % \| :execute 'terminal '.expand('%:p')<CR>
@@ -48,6 +48,10 @@ nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 
 augroup vimrc
   autocmd!
+  autocmd BufEnter *
+    \   if !exists('b:ctags_command')
+    \ |   let b:ctags_command = 'ctags -R .'
+    \ | endif
   autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
     \   setlocal spell
@@ -55,6 +59,7 @@ augroup vimrc
   autocmd FileType haskell
     \   compiler ghc
     \ | setlocal shiftwidth=4
+    \ | let b:ctags_command = 'fast-tags **/*.hs'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
