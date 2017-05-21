@@ -11,7 +11,7 @@ Host *.local
   Port 2222
 
 Host cce-nightly.codeclimate.net
-  User cce-user
+  User cc-user
 
 Host cce-*.codeclimate.net
   User ubuntu
