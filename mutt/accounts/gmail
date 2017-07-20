@@ -4,7 +4,7 @@ set postponed = "+gmail/drafts"
 set query_command = "gc-mutt-query pbrisbin@gmail.com '%s'"
 set sendmail = "/usr/bin/msmtp -a gmail"
 macro index ,c "<change-folder>+codeclimate/INBOX<enter>" "change accounts"
-macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "sync IMAP"
+macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "pull INBOX"
 macro index ,D \
   "<tag-pattern>all<enter><tag-prefix><save-message>+gmail/trash<enter>" \
   "delete all"

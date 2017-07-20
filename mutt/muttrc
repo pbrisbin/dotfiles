@@ -43,6 +43,9 @@ bind index,pager \# noop
 bind index,pager \& noop
 bind index,pager R  group-reply
 
+# Macros
+macro index Z "<shell-escape>mbsync --all<enter>" "Sync all"
+
 # GnuPG settings
 source /usr/share/doc/mutt/samples/gpg.rc
 set pgp_sign_as = CEC8925D
