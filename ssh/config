@@ -4,6 +4,12 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
+Host media
+  HostName 34.228.84.215
+  LocalForward 8080 localhost:8080
+  LocalForward 8081 localhost:8081
+  User ec2-user
+
 Host htpc.local
   User xbmc
 
