@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'akheron/cram'
+Plug 'kien/ctrlp.vim'
 Plug 'pbrisbin/vim-compiler-stack'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'pbrisbin/vim-rename-file'
@@ -28,7 +29,6 @@ set mouse=
 set nojoinspaces
 set nowrap
 set number
-set path+=**
 set shiftwidth=2
 set showbreak=\ ↪\ 
 set smartindent
