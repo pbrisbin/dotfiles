@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'akheron/cram'
+Plug 'alx741/yesod.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'pbrisbin/vim-compiler-stack'
 Plug 'pbrisbin/vim-mkdir'
