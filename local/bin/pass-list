@@ -1,0 +1,20 @@
+#!/usr/bin/env stack
+-- stack --resolver lts-9.0 --install-ghc runghc -- -Wall -Werror
+-- vim: ft=haskell
+module Main (main) where
+
+import Data.List (sort, stripPrefix)
+import Data.Maybe (fromMaybe)
+import System.Environment (getEnv)
+import System.FilePath ((</>), dropExtension)
+import System.Process (readProcess)
+
+main :: IO ()
+main = do
+    store <- (</> ".password-store/") <$> getEnv "HOME"
+
+    mapM_ putStrLn . sort . map (dropExtension . dropPrefix store) . lines
+        =<< readProcess "find" [store, "-type", "f", "-name", "*.gpg"] ""
+
+dropPrefix :: Eq a => [a] -> [a] -> [a]
+dropPrefix p x = fromMaybe x $ stripPrefix p x
