@@ -1,0 +1,10 @@
+#!/bin/sh
+gpg --armor --export pbrisbin@gmail.com |
+  aws s3 cp \
+    --acl public-read \
+    --content-type text/plain \
+    - s3://files.pbrisbin.com/public.key
+
+aws cloudfront create-invalidation \
+  --distribution-id E1E8FI26QTPDW7 \
+  --paths /public.key
