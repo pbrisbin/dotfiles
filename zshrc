@@ -45,7 +45,7 @@ SAVEHIST=$HISTSIZE
 cdpath=(
   ~
   ~/code
-  ~/code/codeclimate
+  ~/code/frontrowed
   ~/code/pbrisbin
   $cdpath
 )

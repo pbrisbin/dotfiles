@@ -16,12 +16,6 @@ Host htpc.local
 Host *.local
   Port 2222
 
-Host cce-nightly.codeclimate.net
-  User cc-user
-
-Host cce-*.codeclimate.net
-  User ubuntu
-
 Host heroku.com gitlab.com
   # Heroku & Gitlab only support less secure choices
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
