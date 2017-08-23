@@ -24,8 +24,7 @@ mailboxes \
   "+gmail/ml-vim" \
   "+gmail/ml-web-devel" \
   "+gmail/ml-xmonad" \
-  "+gmail/ml-yesod" \
-  "+codeclimate/INBOX"
+  "+gmail/ml-yesod"
 
 # More vim-like bindings
 bind index i  noop
@@ -56,5 +55,4 @@ my_hdr X-PGP-Key: https://files.pbrisbin.com/public.key
 
 # Load account-specific settings when in those mailboxes
 folder-hook gmail/* source ~/.mutt/accounts/gmail
-folder-hook codeclimate/* source ~/.mutt/accounts/codeclimate
 source ~/.mutt/accounts/gmail
