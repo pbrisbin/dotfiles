@@ -1,19 +1,17 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'alx741/yesod.vim'
 Plug 'kien/ctrlp.vim'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
 Plug 'pbrisbin/vim-compiler-stack'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'pbrisbin/vim-rename-file'
 Plug 'pbrisbin/vim-syntax-shakespeare'
-Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 filetype plugin indent on
@@ -36,13 +34,12 @@ set textwidth=80
 
 let mapleader = ' '
 let maplocalleader = ' '
+let g:javascript_plugin_flow = 1
+let g:jsx_ext_required = 0
 
-map <Leader>C :w \| :vs % \| :terminal codeclimate analyze %<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
-map <Leader>a :w \| :vs % \| :terminal make test<CR>
 map <Leader>c :silent :make<CR>
 map <Leader>r :w \| :vs % \| :execute 'terminal '.expand('%:p')<CR>
-map <Leader>t :w \| :vs % \| :terminal make test RSPEC_ARGS=%<CR>
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 
