@@ -1,14 +1,16 @@
+set confirmappend = no
 set delete
 set edit_headers
 set fast_reply
 set folder = ~/mail
 set include
+set markers = no
 set realname = "Pat Brisbin"
+set record = no
 set reverse_name
 set sort = threads
 set sort_aux = reverse-last-date-received
 set spoolfile = "+gmail/INBOX"
-unset record
 
 alternates .*@pbrisbin\.com .*@brisb\.in
 
