@@ -9,5 +9,13 @@ main = xmonad $ def
         [ logHook def
         , ewmhDesktopsLogHook
         ]
+    , manageHook = mconcat
+        [ manageHook def
+        , className =? "zoom" --> doFloat
+        , role =? "pop-up" --> doFloat
+        ]
     }
     `additionalKeysP` [("M-S-p", spawn "passmenu --type")]
+
+  where
+    role = stringProperty "WM_WINDOW_ROLE"
