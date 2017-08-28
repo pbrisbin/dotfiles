@@ -21,6 +21,14 @@ Host heroku.com gitlab.com
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
   MACs hmac-sha1,hmac-md5
 
+Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
+  IdentitiesOnly yes
+  LogLevel FATAL
+  PasswordAuthentication no
+  StrictHostKeyChecking no
+  User ubuntu
+  UserKnownHostsFile /dev/null
+
 Host *
   # https://stribika.github.io/2015/01/04/secure-secure-shell.html
   Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
