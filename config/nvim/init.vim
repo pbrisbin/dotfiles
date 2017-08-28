@@ -34,6 +34,10 @@ set textwidth=80
 
 let mapleader = ' '
 let maplocalleader = ' '
+let g:ctrlp_user_command = [
+  \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+  \ 'find %s -type f'
+  \ ]
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
