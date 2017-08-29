@@ -1,0 +1,28 @@
+#!/usr/bin/env stack
+{- stack --resolver lts-9.2 --install-ghc runghc -}
+-- vim: ft=haskell
+module Main (main) where
+
+import Data.List (sort)
+import Data.Maybe (fromMaybe, listToMaybe)
+import System.Environment (getArgs)
+
+main :: IO ()
+main = interact . wordsort . fromMaybe "" . listToMaybe =<< getArgs
+
+-- | Sort a line of words, preserving a prefix across the operation
+--
+-- >>> wordsort ":set " ":set -XC -XA -XB"
+-- ":set -XA -XB -XC"
+--
+-- An empty prefix sorts the whole line:
+--
+-- >>> wordsort "" ":set -XC -XA -XB"
+-- "-XA -XB -XC :set"
+--
+wordsort :: String -> String -> String
+wordsort prefix = (unwords . sort . words) `after` prefix
+
+-- | Apply a function only to the part of a list after some prefix
+after :: ([a] -> [a]) -> [a] -> [a] -> [a]
+after f p s = let (x, y) = splitAt (length p) s in (x ++) $ f y
