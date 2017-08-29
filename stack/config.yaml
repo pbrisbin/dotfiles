@@ -13,3 +13,5 @@ templates:
     category: Network
     copyright: 2017 Patrick Brisbin
     github-username: pbrisbin
+  scm-init: git
+save-hackage-creds: true
