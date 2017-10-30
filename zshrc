@@ -46,6 +46,7 @@ cdpath=(
   ~/code
   ~/code/frontrowed
   ~/code/pbrisbin
+  ~/code/restyled-io/
   $cdpath
 )
 path=(
