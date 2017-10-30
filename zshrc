@@ -66,6 +66,7 @@ unsetopt nomatch
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 eval "$(stack --bash-completion-script stack)"
+source /usr/bin/aws_zsh_completer.sh
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
