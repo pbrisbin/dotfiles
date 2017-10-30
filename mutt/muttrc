@@ -30,6 +30,7 @@ mailboxes \
 
 # More vim-like bindings
 bind index i  noop
+bind index g  noop # clear for next binding
 bind index gg first-entry
 bind index G  last-entry
 bind index N  search-opposite
@@ -38,6 +39,7 @@ bind pager q  toggle-quoted
 bind pager /  search
 bind pager j  next-line
 bind pager k  previous-line
+bind pager g  noop # clear for next binding
 bind pager gg top
 bind pager G  bottom
 bind index,pager \# noop
