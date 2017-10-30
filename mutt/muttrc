@@ -46,6 +46,12 @@ bind index,pager \# noop
 bind index,pager \& noop
 bind index,pager R  group-reply
 
+# Sidebar
+bind index ,b sidebar-toggle-visible
+bind index J  sidebar-next
+bind index K  sidebar-prev
+bind index L  sidebar-open
+
 # Macros
 macro index Z "<shell-escape>mbsync --all<enter>" "Sync all"
 
