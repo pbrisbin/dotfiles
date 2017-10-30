@@ -6,12 +6,11 @@ _git-delete-tag() { compadd "$@" $(git tag) }
 # Styles
 zstyle ':completion:*:*:hub:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 zstyle ':completion:*:sudo:*' command-path $path
-zstyle ':prompt:grml:left:setup' items percent
-zstyle ':prompt:grml:right:setup' items rc vcs
+zstyle ':prompt:grml:left:setup' items percent rc
+zstyle ':prompt:grml:right:setup' items path vcs
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' actionformats '%c%u %r:%b|%a'
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%c%u %r:%b'
+zstyle ':vcs_info:git:*' actionformats '[%r:%b|%a]'
+zstyle ':vcs_info:git:*' formats '[%r:%b]'
 
 # Aliases & Functions
 alias g=git
