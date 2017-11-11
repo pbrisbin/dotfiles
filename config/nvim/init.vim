@@ -2,6 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'alx741/yesod.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mxw/vim-jsx'
+Plug 'nbouscal/vim-stylish-haskell'
 Plug 'pangloss/vim-javascript'
 Plug 'pbrisbin/vim-compiler-stack'
 Plug 'pbrisbin/vim-mkdir'
