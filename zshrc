@@ -28,6 +28,15 @@ clone() {
   esac
 }
 
+stack-watch() {
+  stack build --fast --pedantic --test --file-watch .
+}
+
+stack-watch-rerun() {
+  stack build --fast --pedantic --test --file-watch --test-arguments \
+    '--rerun --failure-report=TESTREPORT --rerun-all-on-success' .
+}
+
 # Exports
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
