@@ -16,6 +16,7 @@ call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
+call minpac#add('w0rp/ale')
 
 filetype plugin indent on
 
@@ -37,6 +38,8 @@ set textwidth=80
 
 let mapleader = ' '
 let maplocalleader = ' '
+let g:ale_open_list = 1
+let g:ale_set_quickfix = 1
 let g:ctrlp_user_command = [
   \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
   \ 'find %s -type f'
