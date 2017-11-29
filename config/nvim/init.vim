@@ -37,6 +37,9 @@ set textwidth=80
 
 let mapleader = ' '
 let maplocalleader = ' '
+let g:ale_fixers = {
+  \ 'javascript': ['prettier'],
+  \ }
 let g:ale_open_list = 1
 let g:ale_set_quickfix = 1
 let g:ctrlp_user_command = [
