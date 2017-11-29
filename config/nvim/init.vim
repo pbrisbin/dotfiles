@@ -7,7 +7,6 @@ call minpac#add('kien/ctrlp.vim')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('nbouscal/vim-stylish-haskell')
 call minpac#add('pangloss/vim-javascript')
-call minpac#add('pbrisbin/vim-compiler-stack')
 call minpac#add('pbrisbin/vim-mkdir')
 call minpac#add('pbrisbin/vim-rename-file')
 call minpac#add('pbrisbin/vim-syntax-shakespeare')
@@ -49,7 +48,6 @@ let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
-map <Leader>c :silent :make<CR>
 map <Leader>r :w \| :vs % \| :execute 'terminal '.expand('%:p')<CR>
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
@@ -67,12 +65,9 @@ augroup vimrc
     \   setlocal spell
     \ | setlocal nosmartindent
   autocmd FileType haskell
-    \   compiler ghc
     \ | setlocal shiftwidth=4
     \ | let b:ctags_command = 'fast-tags **/*.hs'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
-  autocmd QuickFixCmdPost    l* nested lwindow
-  autocmd QuickFixCmdPost [^l]* nested cwindow
 augroup END
