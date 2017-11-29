@@ -1,20 +1,21 @@
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'alx741/yesod.vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'kien/ctrlp.vim'
-Plug 'mxw/vim-jsx'
-Plug 'nbouscal/vim-stylish-haskell'
-Plug 'pangloss/vim-javascript'
-Plug 'pbrisbin/vim-compiler-stack'
-Plug 'pbrisbin/vim-mkdir'
-Plug 'pbrisbin/vim-rename-file'
-Plug 'pbrisbin/vim-syntax-shakespeare'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-call plug#end()
+packadd minpac
+call minpac#init()
+call minpac#add('alx741/yesod.vim')
+call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('kien/ctrlp.vim')
+call minpac#add('mxw/vim-jsx')
+call minpac#add('nbouscal/vim-stylish-haskell')
+call minpac#add('pangloss/vim-javascript')
+call minpac#add('pbrisbin/vim-compiler-stack')
+call minpac#add('pbrisbin/vim-mkdir')
+call minpac#add('pbrisbin/vim-rename-file')
+call minpac#add('pbrisbin/vim-syntax-shakespeare')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-git')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-surround')
 
 filetype plugin indent on
 
