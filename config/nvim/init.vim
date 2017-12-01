@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 packadd minpac
 call minpac#init()
 call minpac#add('alx741/yesod.vim')
