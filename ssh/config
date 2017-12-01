@@ -4,23 +4,6 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
-Host media
-  HostName 34.228.84.215
-  LocalForward 8080 localhost:8080
-  LocalForward 8081 localhost:8081
-  User ec2-user
-
-Host htpc.local
-  User xbmc
-
-Host *.local
-  Port 2222
-
-Host heroku.com gitlab.com
-  # Heroku & Gitlab only support less secure choices
-  KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
-  MACs hmac-sha1,hmac-md5
-
 Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
   IdentitiesOnly yes
   LogLevel FATAL
@@ -29,11 +12,20 @@ Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
   User ubuntu
   UserKnownHostsFile /dev/null
 
+Host github.com
+  # GitHub now blows up on the more secure configuration. Super.
+  #
+  #   debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+  #   Connection closed by 192.30.253.113 port 22
+  #   fatal: Could not read from remote repository.
+  #
+  MACs hmac-sha1,hmac-md5
+
 Host *
   # https://stribika.github.io/2015/01/04/secure-secure-shell.html
   Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
-  #MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,umac-128@openssh.com
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,umac-128@openssh.com
 
   ServerAliveCountMax 5
   ServerAliveInterval 120
