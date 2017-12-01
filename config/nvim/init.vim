@@ -37,8 +37,8 @@ set showbreak=\ ↪\
 set smartindent
 set textwidth=80
 
-let mapleader = ' '
-let maplocalleader = ' '
+let g:mapleader = ' '
+let g:maplocalleader = ' '
 let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ }
