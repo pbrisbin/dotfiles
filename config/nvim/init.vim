@@ -41,9 +41,13 @@ let g:mapleader = ' '
 let g:maplocalleader = ' '
 let g:ale_fixers = {
   \ 'javascript': ['prettier'],
+  \ 'sh': ['shfmt'],
   \ }
-let g:ale_open_list = 1
-let g:ale_set_quickfix = 1
+let g:ale_linters = {
+  \ 'haskell': ['stack-build', 'hlint']
+  \ }
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:ctrlp_user_command = [
   \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
   \ 'find %s -type f'
@@ -75,4 +79,10 @@ augroup vimrc
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
+augroup END
+
+augroup ale
+  autocmd!
+  autocmd CursorHold * call ale#Lint()
+  autocmd InsertLeave * call ale#Lint()
 augroup END
