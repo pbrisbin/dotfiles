@@ -9,7 +9,7 @@ Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
   LogLevel FATAL
   PasswordAuthentication no
   StrictHostKeyChecking no
-  User ubuntu
+  User ec2-user
   UserKnownHostsFile /dev/null
 
 Host github.com
