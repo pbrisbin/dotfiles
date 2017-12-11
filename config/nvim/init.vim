@@ -4,8 +4,9 @@ packadd minpac
 call minpac#init()
 call minpac#add('alx741/yesod.vim')
 call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf.vim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
-call minpac#add('kien/ctrlp.vim')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('nbouscal/vim-stylish-haskell')
 call minpac#add('pangloss/vim-javascript')
@@ -48,14 +49,10 @@ let g:ale_linters = {
   \ }
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
-let g:ctrlp_user_command = [
-  \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-  \ 'find %s -type f'
-  \ ]
-let g:ctrlp_working_path_mode = 0
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
+map <C-P> :FZF<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
 map <Leader>r :w \| :vs % \| :execute 'terminal '.expand('%:p')<CR>
 
