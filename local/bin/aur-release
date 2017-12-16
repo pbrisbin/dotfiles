@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+name=$(basename "$PWD")
+aur_repo=ssh://aur@aur.archlinux.org/$name
+read -r version < ./VERSION
+
+printf "Release: %s-%s\n" "$name" "$version"
+printf "Continue? [y/n] "
+read -r ans; [ "$ans" != y ] && exit 1
+
+git tag --sign --message "v$version" "v$version"
+git push --follow-tags
+
+tmp=$(mktemp -d)
+trap 'rm -r $tmp' EXIT
+git clone "$aur_repo" "$tmp"
+
+(
+  cd "$tmp"
+  sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
+  sed -i "s/^pkgrel=.*$/pkgrel=1/" PKGBUILD
+
+  updpkgsums
+  mksrcinfo
+
+  git add .SRCINFO PKGBUILD
+  git commit --message "Release v $version"
+  git push
+)
