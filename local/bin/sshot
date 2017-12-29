@@ -7,6 +7,6 @@ scrot "$@" "/tmp/$name"
 aws s3 cp --acl public-read --content-type image/png \
   "/tmp/$name" "s3://files.pbrisbin.com/screenshots/$name" >/dev/null
 
-printf "http://files.pbrisbin.com/screenshots/%s" "$name" | xclip
-printf "http://files.pbrisbin.com/screenshots/%s\n" "$name"
+printf "https://files.pbrisbin.com/screenshots/%s" "$name" | xclip
+printf "https://files.pbrisbin.com/screenshots/%s\n" "$name"
 rm -f "/tmp/$name"
