@@ -4,6 +4,9 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
+Host bastion.frontrowed.com
+  User ubuntu
+
 Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
   IdentitiesOnly yes
   LogLevel FATAL
