@@ -28,6 +28,11 @@ clone() {
   esac
 }
 
+stack-test() {
+  stack build --dependencies-only .
+  stack build --fast --pedantic --test .
+}
+
 stack-watch() {
   stack build --fast --pedantic --test --file-watch .
 }
