@@ -96,7 +96,9 @@ if pgrep ssh-agent >/dev/null; then
 else
   ssh-agent | grep -Fv echo > "$ssh_env"
   source "$ssh_env"
-  ssh-add
+
+  # Use pass(1), via wrapper script, to unlock SSH key
+  DISPLAY=99 SSH_ASKPASS="$HOME/.local/bin/ssh-askpass" ssh-add </dev/null
 fi
 
 # Start X

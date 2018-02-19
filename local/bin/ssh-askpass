@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Output SSH key passphrase using pass(1).
+#
+# N.B. We're probably passed the key to unlock as an argument, so it should be
+# possible to use convention to support multiple keys quite easily. At present,
+# I have only one, so we hard-code freely.
+#
+###
+exec pass ssh/patrick@larry
