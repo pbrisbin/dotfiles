@@ -3,4 +3,4 @@ extra-deps: []
 extra-package-dbs: []
 flags: {}
 packages: []
-resolver: lts-9.18
+resolver: lts-11.1
