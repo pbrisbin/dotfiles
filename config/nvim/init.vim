@@ -78,6 +78,7 @@ augroup vimrc
   autocmd FileType haskell
     \   setlocal shiftwidth=4
     \ | let b:ctags_command = 'fast-tags **/*.hs'
+    \ | let g:EditorConfig_disable_rules = ['max_line_length']
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
