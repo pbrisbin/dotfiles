@@ -2,13 +2,13 @@ scriptencoding utf-8
 
 packadd minpac
 call minpac#init()
+call minpac#add('alx741/vim-stylishask')
 call minpac#add('alx741/yesod.vim')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('mxw/vim-jsx')
-call minpac#add('nbouscal/vim-stylish-haskell')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('pbrisbin/vim-mkdir')
 call minpac#add('pbrisbin/vim-rename-file')
