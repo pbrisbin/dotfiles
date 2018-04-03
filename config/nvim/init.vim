@@ -8,6 +8,7 @@ call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('meck/vim-brittany')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('pbrisbin/vim-mkdir')
@@ -41,7 +42,9 @@ set textwidth=80
 
 let g:mapleader = ' '
 let g:maplocalleader = ' '
+let g:brittany_on_save = 0
 let g:ale_fixers = {
+  \ 'haskell': ['brittany'],
   \ 'javascript': ['prettier'],
   \ 'sh': ['shfmt'],
   \ }
