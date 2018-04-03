@@ -4,16 +4,17 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
-Host bastion.frontrowed.com
-  User ubuntu
-
-Host 10.* 172.31.* *.frontrowed.com *.frontrowdev.com
-  IdentitiesOnly yes
-  LogLevel FATAL
-  PasswordAuthentication no
-  StrictHostKeyChecking no
+# FR Dev
+Host 172.32.*
   User ec2-user
-  UserKnownHostsFile /dev/null
+  ProxyCommand ssh ubuntu@bastion.frontrowdev.com -W %h:%p
+  ForwardAgent yes
+
+# FR Prod
+Host 10.*
+  User ec2-user
+  ProxyCommand ssh ubuntu@bastion.frontrowed.com -W %h:%p
+  ForwardAgent yes
 
 Host github.com
   # GitHub now blows up on the more secure configuration. Super.
