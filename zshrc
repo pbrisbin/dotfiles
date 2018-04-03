@@ -28,23 +28,20 @@ clone() {
   esac
 }
 
-stack-test() {
-  stack build --dependencies-only .
-  stack build --fast --pedantic --test .
-}
+stack-test() { stack build --fast --pedantic --test . "$@"; }
 
-stack-watch() {
-  stack build --fast --pedantic --test --file-watch .
-}
+stack-build() { stack-test --no-run-tests "$@"; }
+
+stack-watch() { stack-test --file-watch "$@"; }
 
 stack-watch-match() {
   # N.B. funny characters in the match won't work well
-  stack build --fast --pedantic --test --file-watch --test-arguments "-m $*" .
+  stack-watch --test-arguments "-m $*"
 }
 
 stack-watch-rerun() {
-  stack build --fast --pedantic --test --file-watch --test-arguments \
-    '--rerun --failure-report=TESTREPORT --rerun-all-on-success' .
+  stack-watch --test-arguments \
+    '--rerun --failure-report=TESTREPORT --rerun-all-on-success'
 }
 
 # Exports
