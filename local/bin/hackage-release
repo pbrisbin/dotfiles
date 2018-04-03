@@ -1,7 +1,11 @@
 #!/bin/sh
 set -e
 
-stack build --pedantic --test
+if [ -f Makefile ]; then
+  make clean all
+else
+  stack build --pedantic --test
+fi
 
 version=$(sed '/^version: *\(.*\)$/!d; s//\1/' ./*.cabal)
 
@@ -10,7 +14,7 @@ if [ -z "$version" ]; then
   exit 1
 fi
 
-if ! git show --no-patch --format=%B HEAD | grep -Fqw 'Version bump'; then
+if ! git show --no-patch --format=%B HEAD | grep -Fq 'Version bump'; then
   {
     echo "WARNING: last commit was not in common version bump format:"
     git show --no-patch --format=%B HEAD
