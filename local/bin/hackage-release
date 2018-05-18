@@ -7,6 +7,7 @@ else
   stack build --pedantic --test
 fi
 
+name=$(sed '/^name: *\(.*\)$/!d; s//\1/' ./*.cabal)
 version=$(sed '/^version: *\(.*\)$/!d; s//\1/' ./*.cabal)
 
 if [ -z "$version" ]; then
@@ -22,7 +23,7 @@ if ! git show --no-patch --format=%B HEAD | grep -Fq 'Version bump'; then
   } >&2
 fi
 
-printf "Upload, tag, and push: %s-%s\n" "$(basename "$PWD")" "$version"
+printf "Upload, tag, and push: %s-%s\n" "$name" "$version"
 printf "Continue? [y/n] "
 read -r ans; [ "$ans" != y ] && exit 1
 
