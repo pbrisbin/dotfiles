@@ -1,0 +1,16 @@
+[default]
+region = us-east-1
+
+[profile freckle-dev]
+role_arn = arn:aws:iam::539282909833:role/prod-cross-account-access
+source_profile = freckle
+region = us-east-1
+
+[preview]
+cloudfront = true
+
+[profile freckle]
+role_arn = arn:aws:iam::853032795538:role/OktaAdmin
+source_profile = freckle_source
+region = us-east-1
+
