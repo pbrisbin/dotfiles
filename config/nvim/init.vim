@@ -48,8 +48,12 @@ let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ 'sh': ['shfmt'],
   \ }
+" let g:ale_haskell_stack_build_options = '--fast --pedantic --test --no-run-tests'
+" let g:ale_linters = {
+"   \ 'haskell': ['stack-build', 'hlint']
+"   \ }
 let g:ale_linters = {
-  \ 'haskell': ['stack-build', 'hlint']
+  \ 'haskell': ['hlint']
   \ }
 let g:ale_lint_on_open = 0
 let g:ale_lint_on_text_changed = 'never'
