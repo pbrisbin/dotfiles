@@ -67,7 +67,8 @@ cdpath=(
 )
 path=(
   ~/.local/bin
-  ~/.gem/ruby/2.4.0/bin
+  $(gem env gempath)
+  $(stack path --compiler-tools-bin)
   $path
 )
 
