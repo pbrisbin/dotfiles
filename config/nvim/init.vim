@@ -44,18 +44,17 @@ set textwidth=80
 let g:mapleader = ' '
 let g:maplocalleader = ' '
 let g:brittany_on_save = 0
+
 let g:ale_fixers = {
   \ 'haskell': ['brittany'],
   \ 'javascript': ['prettier'],
   \ 'sh': ['shfmt'],
   \ }
-" let g:ale_haskell_stack_build_options = '--fast --pedantic --test --no-run-tests'
-" let g:ale_linters = {
-"   \ 'haskell': ['stack-build', 'hlint']
-"   \ }
+
 let g:ale_linters = {
   \ 'haskell': ['hlint']
   \ }
+
 let g:ale_lint_on_open = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
