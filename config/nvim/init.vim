@@ -21,6 +21,7 @@ call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
 call minpac#add('w0rp/ale')
+call minpac#add('z0mbix/vim-shfmt')
 
 filetype plugin indent on
 
@@ -60,6 +61,8 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
+let g:shfmt_extra_args = '-i 2 -ci'
+let g:shfmt_fmt_on_save = 1
 
 map <C-P> :FZF<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
