@@ -12,3 +12,8 @@ if [ ! -f ~/.local/share/nvim/site/syntax/cram.vim ]; then
   curl -fLo ~/.local/share/nvim/site/syntax/cram.vim --create-dirs \
     "https://raw.githubusercontent.com/brodie/cram/master/contrib/cram.vim"
 fi
+
+if [ "${STACK_INSTALL:-1}" -eq 1 ]; then
+  # Ensure we're always in ~/ when we run this
+  (cd && stack install ShellCheck msu xmonad xmonad-contrib)
+fi
