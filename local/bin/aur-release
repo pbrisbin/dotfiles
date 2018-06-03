@@ -1,30 +1,34 @@
 #!/bin/sh
 set -e
 
-name=$(basename "$PWD")
+if [ -z "$1" ]; then
+  echo "usage: aur-release <package-name>" >&2
+  exit 64
+fi
+
+name=$1
 aur_repo=ssh://aur@aur.archlinux.org/$name
-read -r version < ./VERSION
-
-printf "Release: %s-%s\n" "$name" "$version"
-printf "Continue? [y/n] "
-read -r ans; [ "$ans" != y ] && exit 1
-
-git tag --sign --message "v$version" "v$version"
-git push --follow-tags
 
 tmp=$(mktemp -d)
 trap 'rm -r $tmp' EXIT
+
 git clone "$aur_repo" "$tmp"
+cd "$tmp"
 
-(
-  cd "$tmp"
-  sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
-  sed -i "s/^pkgrel=.*$/pkgrel=1/" PKGBUILD
+echo "Launching shell in AUR package clone. ^D or exit when done."
+"$SHELL"
 
-  updpkgsums
-  mksrcinfo
+printf "Continue? [y/n] "
+read -r ans; [ "$ans" != y ] && exit 1
 
-  git add .SRCINFO PKGBUILD
-  git commit --message "Release v $version"
-  git push
-)
+updpkgsums
+mksrcinfo
+
+echo "Performing test installation..."
+makepkg --syncdeps --install --force
+
+echo "Updating metadata..."
+git add .SRCINFO PKGBUILD
+
+git commit
+git push
