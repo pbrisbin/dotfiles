@@ -1,0 +1,12 @@
+---
+conf_version: 1
+conf_layout:
+  # 4-space indent, avoid context-aware anything
+  lconfig_indentAmount: 4
+  lconfig_indentPolicy: IndentPolicyLeft
+  lconfig_columnAlignMode: {tag: ColumnAlignModeDisabled}
+
+  # Don't style imports; stylish haskell does that (and better). Also disables
+  # styling exports, which I could take or leave, but since it's a single
+  # configuration key, we have to turn it off.
+  lconfig_reformatModulePreamble: false
