@@ -43,7 +43,6 @@ set textwidth=80
 
 let g:mapleader = ' '
 let g:maplocalleader = ' '
-let g:brittany_on_save = 0
 
 let g:ale_fixers = {
   \ 'haskell': ['brittany'],
@@ -58,6 +57,7 @@ let g:ale_linters = {
 let g:ale_lint_on_open = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
+let g:brittany_on_save = 0
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 let g:shfmt_extra_args = '-i 2 -ci'
