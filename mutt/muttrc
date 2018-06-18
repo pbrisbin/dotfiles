@@ -12,7 +12,7 @@ set sort = threads
 set sort_aux = reverse-last-date-received
 set spoolfile = "+gmail/INBOX"
 
-alternates .*@pbrisbin\.com .*@brisb\.in
+alternates .*@pbrisbin\.com .*@brisb\.in .*@restyled\.io
 
 auto_view text/html
 alternative_order text/plain text/html
