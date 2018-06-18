@@ -13,7 +13,7 @@ if [ ! -f ~/.local/share/nvim/site/syntax/cram.vim ]; then
     "https://raw.githubusercontent.com/brodie/cram/master/contrib/cram.vim"
 fi
 
-if [ "${STACK_INSTALL:-1}" -eq 1 ]; then
+if [ "${STACK_INSTALL:-1}" -eq 1 ] && command -v stack >/dev/null; then
   # Ensure we're always in ~/ when we run this
   (cd && stack install ShellCheck msu xmonad xmonad-contrib)
 fi
