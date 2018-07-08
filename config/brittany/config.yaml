@@ -1,5 +1,10 @@
 ---
 conf_version: 1
+
+conf_errorHandling:
+  # Attempt to exact-print unknown things
+  econf_ExactPrintFallback: ExactPrintFallbackModeRisky
+
 conf_layout:
   # 4-space indent, avoid context-aware anything
   lconfig_indentAmount: 4
@@ -10,3 +15,8 @@ conf_layout:
   # styling exports, which I could take or leave, but since it's a single
   # configuration key, we have to turn it off.
   lconfig_reformatModulePreamble: false
+
+conf_preprocessor:
+  # At least attempt to deal with CPP
+  ppconf_CPPMode: CPPModeWarn
+  ppconf_hackAroundIncludes: true
