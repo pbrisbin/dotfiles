@@ -1,16 +1,8 @@
 #!/usr/bin/env stack
-{- stack
-  --resolver lts-10.3
-  --install-ghc
-  runghc
-  --package aeson
-  --package containers
-  --package process
-  --package text
-  --package vector
-  -- -Wall -Werror
--}
+-- stack script --resolver lts-11.16
+-- vim: ft=haskell
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wall -Werror #-}
 
 module Main (main) where
 
@@ -138,5 +130,3 @@ ghcToBaseVersion v = M.lookup v baseVersions
       , (makeVersion [8, 2, 1], makeVersion [4, 10, 0, 0])
       , (makeVersion [8, 2, 2], makeVersion [4, 10, 1, 0])
       ]
-
--- vim: ft=haskell

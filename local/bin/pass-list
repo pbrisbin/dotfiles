@@ -1,6 +1,8 @@
 #!/usr/bin/env stack
--- stack --resolver lts-9.0 --install-ghc runghc -- -Wall -Werror
+-- stack script --resolver lts-11.16
 -- vim: ft=haskell
+{-# OPTIONS_GHC -Wall -Werror #-}
+
 module Main (main) where
 
 import Data.List (sort, stripPrefix)

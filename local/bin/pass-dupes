@@ -1,6 +1,8 @@
 #!/usr/bin/env stack
--- stack --resolver lts-8.11 --install-ghc runghc -- -Wall
+-- stack script --resolver lts-11.16
 -- vim: ft=haskell
+{-# OPTIONS_GHC -Wall -Werror #-}
+
 module Main (main) where
 
 import Control.Monad (foldM)
