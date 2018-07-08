@@ -1,1 +1,3 @@
+:set -Wall
 :set prompt "λ> "
+:set prompt-cont " | "
