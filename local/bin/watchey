@@ -1,61 +1,30 @@
 #!/usr/bin/env stack
-{- stack
-  --resolver lts-9.2
-  --install-ghc
-  runghc
-  --package bytestring
-  --package github
-  --package text
-  --package vector
-  -- -Wall
--}
+-- stack script --resolver lts-11.15
+-- vim: ft=haskell
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wall -Werror #-}
 
 module Main (main) where
 
-import Data.Text (Text)
-import Data.Monoid ((<>))
-import System.Environment (lookupEnv)
-
-import qualified Data.ByteString.Char8 as C8
+import Data.Foldable
+import Control.Exception.Safe
 import qualified Data.Text.IO as T
 import qualified Data.Vector as V
-import qualified GitHub as GH
-import qualified GitHub.Endpoints.Activity.Watching as GH
-import qualified GitHub.Endpoints.Repos as GH
+import GitHub
+import GitHub.Endpoints.Activity.Watching
+import GitHub.Endpoints.Repos
 
 main :: IO ()
-main = mapM_ (T.putStrLn . fullName)
-    =<< reposToWatch "pbrisbin"
-    =<< getAuthToken
+main = traverse_ putRepo =<< reposToWatch "pbrisbin"
 
-getAuthToken :: IO (Maybe GH.Auth)
-getAuthToken = (GH.OAuth . C8.pack) <$$> lookupEnv "GITHUB_ACCESS_TOKEN"
+putRepo :: Repo -> IO ()
+putRepo = T.putStrLn . getUrl . repoHtmlUrl
 
-reposToWatch :: GH.Name GH.Owner -> Maybe GH.Auth -> IO (V.Vector GH.Repo)
-reposToWatch user auth = (\\)
-    <$> (untry <$> GH.reposWatchedBy' auth user)
-    <*> (untry <$> GH.userRepos' auth user GH.RepoPublicityOwner)
+reposToWatch :: Name Owner -> IO (V.Vector Repo)
+reposToWatch user =
+    (\watched repos -> V.filter (`V.notElem` watched) repos)
+        <$> (untry =<< reposWatchedBy user)
+        <*> (untry =<< userRepos user RepoPublicityOwner)
 
-fullName :: GH.Repo -> Text
-fullName r = repoOwnerLogin r <> "/" <> repoName r
-
-repoOwnerLogin :: GH.Repo -> Text
-repoOwnerLogin = GH.untagName . GH.simpleOwnerLogin . GH.repoOwner
-
-repoName :: GH.Repo -> Text
-repoName = GH.untagName . GH.repoName
-
--- Vector difference. AFAICT, @V.(\\)@ does not exist.
-(\\) :: Eq a => V.Vector a -> V.Vector a -> V.Vector a
-(\\) xs = V.filter (`V.notElem` xs)
-
--- Inverse of @'Control.Exception.try'@, since exploding is perfectly reasonable
-untry :: Show e => Either e a -> a
-untry = either (error . show) id
-
--- An @'fmap'@ for doubly-wrapped values
-(<$$>) :: (Functor f1, Functor f2) => (a -> b) -> f1 (f2 a) -> f1 (f2 b)
-(<$$>) f = ((f <$>) <$>)
-
--- vim: ft=haskell
+untry :: (MonadThrow m, Show e) => Either e a -> m a
+untry = either (throwString . show) pure
