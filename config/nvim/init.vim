@@ -2,13 +2,11 @@ scriptencoding utf-8
 
 packadd minpac
 call minpac#init()
-call minpac#add('alx741/vim-stylishask')
 call minpac#add('alx741/yesod.vim')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
-call minpac#add('meck/vim-brittany')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('pbrisbin/vim-mkdir')
@@ -21,7 +19,6 @@ call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
 call minpac#add('w0rp/ale')
-call minpac#add('z0mbix/vim-shfmt')
 
 filetype plugin indent on
 
@@ -45,7 +42,7 @@ let g:mapleader = ' '
 let g:maplocalleader = ' '
 
 let g:ale_fixers = {
-  \ 'haskell': ['brittany'],
+  \ 'haskell': ['brittany', 'hlint', 'stylish-haskell'],
   \ 'javascript': ['prettier'],
   \ 'sh': ['shfmt'],
   \ }
@@ -54,14 +51,12 @@ let g:ale_linters = {
   \ 'haskell': ['hlint']
   \ }
 
+let g:ale_fix_on_save = 1
 let g:ale_lint_on_open = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
-let g:brittany_on_save = 0
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
-let g:shfmt_extra_args = '-i 2 -ci'
-let g:shfmt_fmt_on_save = 0
 
 map <C-P> :FZF<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
