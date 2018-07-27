@@ -9,8 +9,10 @@ region = us-east-1
 [preview]
 cloudfront = true
 
-[profile freckle]
+[freckle]
 role_arn = arn:aws:iam::853032795538:role/OktaAdmin
-source_profile = freckle_source
+source_profile = freckle
 region = us-east-1
 
+[profile freckle]
+region = us-east-1
