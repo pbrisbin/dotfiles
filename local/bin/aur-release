@@ -1,22 +1,28 @@
 #!/bin/sh
 set -e
 
-if [ -z "$1" ]; then
-  echo "usage: aur-release <package-name>" >&2
-  exit 64
+case "$1" in
+  -h|--help)
+    echo "usage: aur-release [package-name]" >&2
+    exit 64
+    ;;
+esac
+
+if [ -n "$1" ]; then
+  name=$1
+  aur_repo=ssh://aur@aur.archlinux.org/$name
+
+  tmp=$(mktemp -d)
+  trap 'rm -r $tmp' EXIT
+
+  git clone "$aur_repo" "$tmp"
+  cd "$tmp"
+
+  echo "Launching shell in AUR package clone. ^D or exit when done."
+  "$SHELL"
+else
+  echo "Releasing this directory as AUR repository"
 fi
-
-name=$1
-aur_repo=ssh://aur@aur.archlinux.org/$name
-
-tmp=$(mktemp -d)
-trap 'rm -r $tmp' EXIT
-
-git clone "$aur_repo" "$tmp"
-cd "$tmp"
-
-echo "Launching shell in AUR package clone. ^D or exit when done."
-"$SHELL"
 
 printf "Continue? [y/n] "
 read -r ans; [ "$ans" != y ] && exit 1
