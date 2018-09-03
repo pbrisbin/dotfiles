@@ -52,6 +52,12 @@ export XDG_DATA_HOME=$HOME/.local/share
 export BROWSER=chromium
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export GPG_TTY="$(tty)"
+export FZF_DEFAULT_COMMAND='
+  ( git ls-tree -r --name-only HEAD ||
+    find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
+    sed s/^..//
+  ) 2>/dev/null
+'
 export MANWIDTH=80
 
 HISTSIZE=500000
