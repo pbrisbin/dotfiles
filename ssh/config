@@ -16,6 +16,10 @@ Host 10.*
   ProxyCommand ssh ubuntu@bastion.frontrowed.com -W %h:%p
   ForwardAgent yes
 
+Host bastion.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
 Host github.com
   # GitHub now blows up on the more secure configuration. Super.
   #
