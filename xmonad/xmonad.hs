@@ -2,6 +2,8 @@ import XMonad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.EZConfig
 
+-- brittany-disable-next-binding
+
 main :: IO ()
 main = xmonad $ def
     { terminal = "urxvtc"
