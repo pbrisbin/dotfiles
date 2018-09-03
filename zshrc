@@ -73,7 +73,7 @@ cdpath=(
 )
 path=(
   ~/.local/bin
-  $(gem env gempath)
+  $(ruby -r rubygems -e "puts Gem.user_dir")/bin
   $(stack path --compiler-tools-bin)
   $path
 )
