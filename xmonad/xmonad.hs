@@ -11,6 +11,7 @@ main = xmonad $ def
         ]
     , manageHook = mconcat
         [ manageHook def
+        , className =? "Vncviewer" --> doFloat
         , className =? "zoom" --> doFloat
         , role =? "pop-up" --> doFloat
         ]
