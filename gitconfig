@@ -39,3 +39,9 @@
   stat = true
 [rerere]
   enabled = true
+[merge]
+  tool = nvimdiff
+[mergetool]
+  keepBackup = false
+[mergetool "nvimdiff"]
+  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c '$wincmd l' -c '$wincmd J'
