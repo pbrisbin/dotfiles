@@ -7,13 +7,13 @@ Protocol 2
 # FR Dev
 Host 172.32.*
   User ec2-user
-  ProxyCommand ssh ubuntu@bastion.frontrowdev.com -W %h:%p
+  ProxyCommand ssh ec2-user@bastion.freckletest.com -W %h:%p
   ForwardAgent yes
 
 # FR Prod
 Host 10.*
   User ec2-user
-  ProxyCommand ssh ubuntu@bastion.frontrowed.com -W %h:%p
+  ProxyCommand ssh ec2-user@bastion.freckle.com -W %h:%p
   ForwardAgent yes
 
 Host bastion.*
