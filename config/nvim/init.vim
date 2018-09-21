@@ -78,7 +78,7 @@ augroup vimrc
     \ | setlocal nosmartindent
   autocmd FileType haskell
     \   setlocal shiftwidth=4
-    \ | let b:ctags_command = 'fast-tags **/*.hs'
+    \ | let b:ctags_command = 'fast-tags -R --nomerge .'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
