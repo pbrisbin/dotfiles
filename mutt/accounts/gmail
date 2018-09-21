@@ -1,8 +1,11 @@
+# vim: ft=muttrc
 set from = "pbrisbin@gmail.com"
 set mbox = "+gmail/archive"
 set postponed = "+gmail/drafts"
 set query_command = "gc-mutt-query pbrisbin@gmail.com '%s'"
+set record = no
 set sendmail = "/usr/bin/msmtp -a gmail"
+set spoolfile = "+gmail/INBOX"
 macro index ,z "<shell-escape>mbsync --pull-new gmail-inbox<enter>" "pull INBOX"
 macro index ,D \
   "<tag-pattern>all<enter><tag-prefix><save-message>+gmail/trash<enter>" \

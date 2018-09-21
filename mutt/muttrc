@@ -6,11 +6,9 @@ set folder = ~/mail
 set include
 set markers = no
 set realname = "Pat Brisbin"
-set record = no
 set reverse_name
 set sort = threads
 set sort_aux = reverse-last-date-received
-set spoolfile = "+gmail/INBOX"
 
 alternates .*@pbrisbin\.com .*@brisb\.in .*@restyled\.io
 
@@ -26,7 +24,8 @@ mailboxes \
   "+gmail/ml-vim" \
   "+gmail/ml-web-devel" \
   "+gmail/ml-xmonad" \
-  "+gmail/ml-yesod"
+  "+gmail/ml-yesod" \
+  "+fastmail/INBOX"
 
 # More vim-like bindings
 bind index i  noop
@@ -46,12 +45,6 @@ bind index,pager \# noop
 bind index,pager \& noop
 bind index,pager R  group-reply
 
-# Sidebar
-bind index ,b sidebar-toggle-visible
-bind index J  sidebar-next
-bind index K  sidebar-prev
-bind index L  sidebar-open
-
 # Macros
 macro index Z "<shell-escape>mbsync --all<enter>" "Sync all"
 
@@ -65,4 +58,5 @@ my_hdr X-PGP-Key: https://files.pbrisbin.com/public.key
 
 # Load account-specific settings when in those mailboxes
 folder-hook gmail/* source ~/.mutt/accounts/gmail
+folder-hook fastmail/* source ~/.mutt/accounts/fastmail
 source ~/.mutt/accounts/gmail
