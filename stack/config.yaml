@@ -5,7 +5,7 @@ templates:
     author-email: pbrisbin@gmail.com
     author-name: Patrick Brisbin
     category: Network
-    copyright: 2017 Patrick Brisbin
+    copyright: 2018 Patrick Brisbin
     github-username: pbrisbin
   scm-init: git
 save-hackage-creds: true
