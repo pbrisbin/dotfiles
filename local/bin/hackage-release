@@ -37,9 +37,10 @@ if ! git show --no-patch --format=%B HEAD | grep -Fq 'Version bump'; then
   } >&2
 fi
 
-printf "Upload, tag, and push: %s-%s\n" "$name" "$version"
+printf 'Upload, tag, and push: %s-%s\n' "$name" "$version"
 printf "Continue? [y/n] "
-read -r ans; [ "$ans" != y ] && exit 1
+read -r ans
+[ "$ans" != y ] && exit 1
 
 stack upload .
 git tag --sign --message "v$version" "v$version"
