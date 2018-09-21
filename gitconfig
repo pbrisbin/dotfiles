@@ -11,12 +11,9 @@
   dbf = "!f() { for b; do git branch -D $b && git push origin :$b; done; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
-  pr = !git push -u && hub pull-request
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
-  co-pr = "!f() { git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
-  merge-pr = "!f() { git fetch origin pull/$1/head:pr/$1 && git merge pr/$1; }; f"
   recommit = "!f() { git commit --amend --no-edit; }; f"
 [merge]
   ff = only
