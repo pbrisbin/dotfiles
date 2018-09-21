@@ -7,8 +7,8 @@
   autocorrect = 1
 [alias]
   co = checkout
-  db = "!f() { [ -n \"$1\" ] && git branch -d $1 && git push origin :$1; }; f"
-  dbf = "!f() { [ -n \"$1\" ] && git branch -D $1 && git push origin :$1; }; f"
+  db = "!f() { for b; do git branch -d $b && git push origin :$b; done; }; f"
+  dbf = "!f() { for b; do git branch -D $b && git push origin :$b; done; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
   pr = !git push -u && hub pull-request
