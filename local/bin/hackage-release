@@ -1,10 +1,24 @@
 #!/bin/sh
 set -e
 
-if [ -f Makefile ]; then
-  make clean all
-else
-  stack build --pedantic --test
+build() {
+  if [ -f Makefile ]; then
+    make clean all
+  else
+    stack build --pedantic --test
+  fi
+}
+
+if ! build; then
+  if [ "${FORCE:-0}" -eq 1 ]; then
+    {
+      echo
+      echo "WARNING: Build failure"
+      printf 'Proceeding anyway (FORCE=%s)\n' "$FORCE"
+    } >&2
+  else
+    exit 1
+  fi
 fi
 
 name=$(sed '/^name: *\(.*\)$/!d; s//\1/' ./*.cabal)
