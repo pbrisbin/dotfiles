@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#
+# Small stack wrapper.
+#
+###
+set -e
+
+options=(--fast --pedantic --test)
+
+while [ -n "$1" ]; do
+  case "$1" in
+    --rerun)
+      options+=(
+        --test-arguments
+        '--rerun --failure-report=TESTREPORT --rerun-all-on-success'
+      )
+      ;;
+    --match)
+      shift
+      options+=(--test-arguments "--match \"$1\"")
+      ;;
+
+    --skip)
+      shift
+      options+=(--test-arguments "--skip \"$1\"")
+      ;;
+
+    *) options+=("$1") ;;
+  esac
+
+  shift
+done
+
+echo stack build "${options[@]}"
+exec stack build "${options[@]}"

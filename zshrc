@@ -28,22 +28,6 @@ clone() {
   esac
 }
 
-stack-test() { stack build --fast --pedantic --test . "$@"; }
-
-stack-build() { stack-test --no-run-tests "$@"; }
-
-stack-watch() { stack-test --file-watch "$@"; }
-
-stack-watch-match() {
-  # N.B. funny characters in the match won't work well
-  stack-watch --test-arguments "-m $*"
-}
-
-stack-watch-rerun() {
-  stack-watch --test-arguments \
-    '--rerun --failure-report=TESTREPORT --rerun-all-on-success'
-}
-
 # Exports
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
