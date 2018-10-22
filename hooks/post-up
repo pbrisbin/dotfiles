@@ -14,6 +14,17 @@ if [ ! -f ~/.local/share/nvim/site/syntax/cram.vim ]; then
 fi
 
 if [ "${STACK_INSTALL:-1}" -eq 1 ] && command -v stack >/dev/null; then
-  # Ensure we're always in ~/ when we run this
-  (cd && stack install ShellCheck msu xmonad xmonad-contrib)
+  (
+    # Ensure we're always in ~/ when we run this
+    cd && stack install \
+      ShellCheck \
+      brittany \
+      fast-tags \
+      hlint \
+      msu \
+      stylish-haskell \
+      weeder \
+      xmonad \
+      xmonad-contrib
+  )
 fi
