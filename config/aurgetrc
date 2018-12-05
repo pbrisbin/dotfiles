@@ -1,5 +1,4 @@
 # shellcheck disable=SC2034
 # vim: ft=sh
-debug=true
 edit_pkgbuilds=never
 resolve_dependencies=true
