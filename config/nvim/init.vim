@@ -73,6 +73,7 @@ augroup vimrc
     \ |   let b:ctags_command = 'ctags -R .'
     \ | endif
   autocmd BufNewFile,BufRead *.t set filetype=cram
+  autocmd BufNewFile,BufRead PULLREQ_EDITMSG set filetype=markdown
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
     \   setlocal spell
     \ | setlocal nosmartindent
