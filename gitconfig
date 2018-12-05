@@ -1,47 +1,48 @@
-[core]
-  editor = vim
-  excludesfile = ~/.gitignore
-[color]
-  ui = auto
-[help]
-  autocorrect = 1
 [alias]
   co = checkout
   db = "!f() { for b; do git branch -d $b && git push origin :$b; done; }; f"
   dbf = "!f() { for b; do git branch -D $b && git push origin :$b; done; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
+  recommit = "!f() { git commit --amend --no-edit; }; f"
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   up = !git fetch origin && git rebase origin/master
-  recommit = "!f() { git commit --amend --no-edit; }; f"
-[merge]
-  ff = only
-[push]
-  default = current
-[status]
-  branch = 1
-  short = 1
-[diff]
-  mnemonicprefix = true
-[url "git@github.com:pbrisbin/"]
-  pushInsteadOf = "https://github.com/pbrisbin/"
-[user]
-  email = pbrisbin@gmail.com
-  name = patrick brisbin
-  signingkey = CEC8925D
-[fetch]
-  prune = true
+[color]
+  ui = auto
 [commit]
   gpgsign = true
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore
+[diff]
+  mnemonicprefix = true
+[fetch]
+  prune = true
+[help]
+  autocorrect = 1
+[merge]
+  ff = only
+  tool = nvimdiff
+[mergetool]
+  keepBackup = false
+[mergetool "nvimdiff"]
+  # wincmd not doing what I'd expect. Removed to experiment manually
+  #cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c '$wincmd l' -c '$wincmd J'
+  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE"
+[push]
+  default = current
 [rebase]
   autoStash = true
   stat = true
 [rerere]
   enabled = true
-[merge]
-  tool = nvimdiff
-[mergetool]
-  keepBackup = false
-[mergetool "nvimdiff"]
-  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c '$wincmd l' -c '$wincmd J'
+[status]
+  branch = 1
+  short = 1
+[user]
+  email = pbrisbin@gmail.com
+  name = patrick brisbin
+  signingkey = CEC8925D
+[url "git@github.com:pbrisbin/"]
+  pushInsteadOf = "https://github.com/pbrisbin/"
