@@ -23,6 +23,7 @@ call minpac#add('w0rp/ale')
 filetype plugin indent on
 
 set autowrite
+set background=light
 set colorcolumn=+1
 set diffopt+=vertical
 set expandtab
