@@ -16,4 +16,6 @@ region = us-east-1
 
 [profile freckle]
 region = us-east-1
+role_arn = arn:aws:iam::853032795538:role/OktaAdmin
+source_profile = freckle
 
