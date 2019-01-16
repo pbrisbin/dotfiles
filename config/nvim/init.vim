@@ -54,6 +54,9 @@ let g:ale_linters = {
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_open = 0
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_haskell_brittany_executable='stack'
+let g:ale_haskell_hlint_executable='stack'
+let g:ale_haskell_stylish_haskell_executable='stack'
 let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
@@ -79,7 +82,7 @@ augroup vimrc
     \ | setlocal nosmartindent
   autocmd FileType haskell
     \   setlocal shiftwidth=4
-    \ | let b:ctags_command = 'fast-tags -R --nomerge .'
+    \ | let b:ctags_command = 'stack exec -- fast-tags -R --nomerge .'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=

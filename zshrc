@@ -58,7 +58,6 @@ cdpath=(
 path=(
   ~/.local/bin
   $(ruby -r rubygems -e "puts Gem.user_dir")/bin
-  $(stack path --compiler-tools-bin)
   $path
 )
 
