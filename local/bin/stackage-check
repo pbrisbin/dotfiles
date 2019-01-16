@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+if [ -z "$1" ]; then
+  echo "usage: stackage-check <name-version>" >&2
+  exit 64
+fi
+
+stack unpack "$1"
+cd "$1"
+stack init --resolver nightly
+stack build --resolver nightly --haddock --test --bench --no-run-benchmarks
