@@ -57,6 +57,6 @@ set crypt_replyencrypt = yes
 my_hdr X-PGP-Key: https://files.pbrisbin.com/public.key
 
 # Load account-specific settings when in those mailboxes
-folder-hook gmail/* source ~/.mutt/accounts/gmail
-folder-hook fastmail/* source ~/.mutt/accounts/fastmail
+folder-hook gmail/.* source ~/.mutt/accounts/gmail
+folder-hook fastmail/.* source ~/.mutt/accounts/fastmail
 source ~/.mutt/accounts/gmail
