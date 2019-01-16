@@ -53,8 +53,6 @@ let g:ale_linters = {
   \ }
 
 let g:ale_fix_on_save = 1
-let g:ale_lint_on_open = 0
-let g:ale_lint_on_text_changed = 'never'
 let g:ale_haskell_brittany_executable='stack'
 let g:ale_haskell_hlint_executable='stack'
 let g:ale_haskell_stylish_haskell_executable='stack'
@@ -87,10 +85,4 @@ augroup vimrc
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
-augroup END
-
-augroup ale
-  autocmd!
-  autocmd CursorHold * call ale#Lint()
-  autocmd InsertLeave * call ale#Lint()
 augroup END
