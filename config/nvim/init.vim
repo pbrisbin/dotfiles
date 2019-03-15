@@ -18,6 +18,7 @@ call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
+call minpac#add('vmchale/dhall-vim')
 call minpac#add('w0rp/ale')
 
 filetype plugin indent on
