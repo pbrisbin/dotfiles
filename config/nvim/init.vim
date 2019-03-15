@@ -2,7 +2,7 @@ scriptencoding utf-8
 
 packadd minpac
 call minpac#init()
-call minpac#add('alx741/yesod.vim')
+call minpac#add('5outh/yesod-routes.vim')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
