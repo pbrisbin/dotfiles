@@ -5,7 +5,7 @@
 ###
 set -e
 
-options=(--fast --pedantic --test)
+options=(--fast --pedantic --test --interleaved-output)
 
 while [ -n "$1" ]; do
   case "$1" in
