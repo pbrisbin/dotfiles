@@ -13,6 +13,6 @@ dunst \
   -word_wrap &
 
 urxvtd &
-xautolock -time 5 -locker slock -secure &
+xautolock -time 15 -locker slock -secure &
 
 exec xmonad
