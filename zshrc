@@ -50,7 +50,7 @@ SAVEHIST=$HISTSIZE
 cdpath=(
   ~
   ~/code
-  ~/code/frontrowed
+  ~/code/freckle
   ~/code/pbrisbin
   ~/code/restyled-io/
   $cdpath
