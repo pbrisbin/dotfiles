@@ -3,38 +3,51 @@ set -e
 
 case "$1" in
   -h|--help)
-    echo "usage: aur-release [package-name]" >&2
+    echo "usage: aur-release [package-name] [version]" >&2
     exit 64
     ;;
 esac
 
-if [ -n "$1" ]; then
-  name=$1
+name=$1
+version=$2
+
+if [ -n "$name" ]; then
   aur_repo=ssh://aur@aur.archlinux.org/$name
 
   tmp=$(mktemp -d)
-  trap 'rm -r $tmp' EXIT
+  trap 'rm -rf $tmp' EXIT
 
   git clone "$aur_repo" "$tmp"
   cd "$tmp"
 
-  echo "Launching shell in AUR package clone. ^D or exit when done."
-  "$SHELL"
+  if [ -n "$version" ]; then
+    echo "Performing automated version bump..."
+    sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
+    sed -i "s/^pkgrel=.*$/pkgrel=0/" PKGBUILD
+  else
+    echo "Launching shell in AUR package clone. ^D or exit when done."
+    "$SHELL"
+  fi
 else
   echo "Releasing this directory as AUR repository"
 fi
 
-printf "Continue? [y/n] "
-read -r ans; [ "$ans" != y ] && exit 1
-
 updpkgsums
-mksrcinfo
+makepkg --printsrcinfo > .SRCINFO
 
 echo "Performing test installation..."
 makepkg --syncdeps --install --force
 
-echo "Updating metadata..."
 git add .SRCINFO PKGBUILD
+git diff --cached
 
-git commit
+printf "Continue? [y/n] "
+read -r ans; [ "$ans" != y ] && exit 1
+
+if [ -n "$version" ]; then
+  git commit -m "Release v$version"
+else
+  git commit
+fi
+
 git push
