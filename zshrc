@@ -65,6 +65,17 @@ path=(
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
 bindkey -M viins '^?' backward-delete-char # Backspace
 
+# Use *all* of command-line so far when navigating history up/down
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey -M vicmd 'k' history-beginning-search-backward
+bindkey -M vicmd 'j' history-beginning-search-forward
+
+# v to edit command in $VISUAL or $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 setopt inc_append_history
 setopt vi
 unsetopt nomatch
