@@ -11,11 +11,6 @@ conf_layout:
   lconfig_indentPolicy: IndentPolicyLeft
   lconfig_columnAlignMode: {tag: ColumnAlignModeDisabled}
 
-  # Don't style imports; stylish haskell does that (and better). Also disables
-  # styling exports, which I could take or leave, but since it's a single
-  # configuration key, we have to turn it off.
-  lconfig_reformatModulePreamble: false
-
 conf_preprocessor:
   # At least attempt to deal with CPP
   ppconf_CPPMode: CPPModeWarn
