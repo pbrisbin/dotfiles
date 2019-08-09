@@ -29,6 +29,10 @@ Host github.com
   #
   MACs hmac-sha1,hmac-md5
 
+Host *.tmate.io
+  # tmate can't work with our more secure MACs below
+  MACs hmac-sha2-256
+
 Host *
   # https://stribika.github.io/2015/01/04/secure-secure-shell.html
   Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
