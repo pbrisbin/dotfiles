@@ -20,15 +20,6 @@ Host bastion.*
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
 
-Host github.com
-  # GitHub now blows up on the more secure configuration. Super.
-  #
-  #   debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-  #   Connection closed by 192.30.253.113 port 22
-  #   fatal: Could not read from remote repository.
-  #
-  MACs hmac-sha1,hmac-md5
-
 Host *.tmate.io
   # tmate can't work with our more secure MACs below
   MACs hmac-sha2-256
