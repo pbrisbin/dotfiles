@@ -33,6 +33,7 @@
 [push]
   default = current
 [rebase]
+  autoSquash = true
   autoStash = true
   stat = true
 [rerere]
