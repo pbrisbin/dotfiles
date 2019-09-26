@@ -9,6 +9,7 @@ if ! git branch | grep -q '^\* master$'; then
   git checkout --quiet master
 fi
 
+echo ":: Updating master"
 git pull
 
 echo ":: Rebasing local branches"
