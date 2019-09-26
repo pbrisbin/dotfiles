@@ -31,6 +31,13 @@ if [ -n "$name" ]; then
   fi
 else
   echo "Releasing this directory as AUR repository"
+  aur_repo=ssh://aur@aur.archlinux.org/$(basename "$PWD")
+
+  if ! git remote -v | grep -Fq aur.archlinux.org; then
+    git remote add aur "$aur_repo"
+    git fetch aur
+    git branch --set-upstream-to=aur/master
+  fi
 fi
 
 updpkgsums
