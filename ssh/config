@@ -4,21 +4,17 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
-# FR Dev
-Host 172.32.*
+# Freckle session-manager-based SSH by instance-id
+host i-*
+  ProxyCommand ~/code/freckle/megarepo/ops/aws-scripts/freckle-ssh-ec2 %h
   User ec2-user
-  ProxyCommand ssh ec2-user@bastion.freckletest.com -W %h:%p
-  ForwardAgent yes
-
-# FR Prod
-Host 10.*
-  User ec2-user
-  ProxyCommand ssh ec2-user@bastion.freckle.com -W %h:%p
-  ForwardAgent yes
-
-Host bastion.*
+  IdentityFile /tmp/freckle-ssh-key
   StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
+  UserKnownHostsFile /dev/null
+  PasswordAuthentication no
+  IdentitiesOnly yes
+  LogLevel FATAL
+  ControlPersist 30m
 
 Host *.tmate.io
   # tmate can't work with our more secure MACs below
