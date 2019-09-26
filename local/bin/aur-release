@@ -21,6 +21,7 @@ if [ -n "$name" ]; then
   cd "$tmp"
 
   if [ -n "$version" ]; then
+    version=${version#v} # strip v if present
     echo "Performing automated version bump..."
     sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
     sed -i "s/^pkgrel=.*$/pkgrel=0/" PKGBUILD
