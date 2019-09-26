@@ -22,9 +22,6 @@ git checkout --quiet master
 
 echo ":: Deleting merged branches"
 git branch --merged master | grep -v '^\* master$' | while read -r branch; do
-  if git branch -d "$branch"; then
-    if git branch -r | grep -Fq "origin/$branch"; then
-      git push origin ":$branch"
-    fi
-  fi
+  git branch --delete "$branch"
+  git branch --delete --remote "origin/$branch" 2>/dev/null || true
 done
