@@ -2,7 +2,7 @@
 set -e
 
 case "$1" in
-  -h|--help)
+  -h | --help)
     echo "usage: aur-release [package-name] [version]" >&2
     exit 64
     ;;
@@ -33,7 +33,7 @@ else
 fi
 
 updpkgsums
-makepkg --printsrcinfo > .SRCINFO
+makepkg --printsrcinfo >.SRCINFO
 
 echo "Performing test installation..."
 makepkg --syncdeps --install --force
@@ -42,7 +42,8 @@ git add .SRCINFO PKGBUILD
 git diff --cached
 
 printf "Continue? [y/n] "
-read -r ans; [ "$ans" != y ] && exit 1
+read -r ans
+[ "$ans" != y ] && exit 1
 
 if [ -n "$version" ]; then
   git commit -m "Release v$version"
