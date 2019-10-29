@@ -1,2 +1,2 @@
-resolver: lts-13.13
+resolver: lts-14.12
 packages: []
