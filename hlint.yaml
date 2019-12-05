@@ -7,3 +7,6 @@
     # noise when specifications, contexts, and examples are inevitably added.
     name: Redundant do
     within: spec
+- arguments:
+  - -XTypeApplications
+  - -XNoStaticPointers
