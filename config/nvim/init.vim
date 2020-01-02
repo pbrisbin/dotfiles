@@ -20,6 +20,7 @@ call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
 call minpac#add('vmchale/dhall-vim')
 call minpac#add('w0rp/ale')
+call minpac#add('wfleming/vim-codeclimate')
 
 filetype plugin indent on
 
