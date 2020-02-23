@@ -24,7 +24,7 @@ if [ -n "$name" ]; then
     version=${version#v} # strip v if present
     echo "Performing automated version bump..."
     sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
-    sed -i "s/^pkgrel=.*$/pkgrel=0/" PKGBUILD
+    sed -i "s/^pkgrel=.*$/pkgrel=1/" PKGBUILD
   else
     echo "Launching shell in AUR package clone. ^D or exit when done."
     "$SHELL"
