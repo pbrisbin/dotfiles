@@ -1,5 +1,5 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-11.16
+-- stack script --resolver lts-15.7
 -- vim: ft=haskell
 {-# OPTIONS_GHC -Wall -Werror #-}
 
@@ -8,7 +8,7 @@ module Main (main) where
 import Data.List (sort, stripPrefix)
 import Data.Maybe (fromMaybe)
 import System.Environment (getEnv)
-import System.FilePath ((</>), dropExtension)
+import System.FilePath (dropExtension, (</>))
 import System.Process (readProcess)
 
 main :: IO ()
