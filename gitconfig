@@ -50,3 +50,5 @@
   signingkey = CEC8925D
 [url "git@github.com:pbrisbin/"]
   pushInsteadOf = "https://github.com/pbrisbin/"
+[pull]
+  ff = only
