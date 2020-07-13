@@ -1,27 +1,33 @@
 #!/bin/sh
 #
-# pbrisbin 2015 - prune branches already merged into master
+# Prune branches already merged into main
 #
 ###
 set -e
 
-if ! git branch | grep -q '^\* master$'; then
-  git checkout --quiet master
+non_default_branches() {
+  git branch "$@" | grep -v ' \(main\|master\)$'
+}
+
+main=${1:-main}
+
+if ! git branch | grep -q '^\* '"$main"'$'; then
+  git checkout --quiet "$main"
 fi
 
-echo ":: Updating master"
+echo ":: Updating default branch $main"
 git pull
 
-echo ":: Rebasing local branches"
-git branch | grep -v '^\* master$' | while read -r branch; do
+non_default_branches | while read -r branch; do
+  echo ":: Rebasing $branch onto $main"
   git checkout --quiet "$branch"
-  git rebase master >/dev/null 2>&1 || git rebase --abort
+  git rebase "$main" >/dev/null 2>&1 || git rebase --abort
 done
 
-git checkout --quiet master
+git checkout --quiet "$main"
 
-echo ":: Deleting merged branches"
-git branch --merged master | grep -v '^\* master$' | while read -r branch; do
+non_default_branches --merged | while read -r branch; do
+  echo ":: Deleting merged branch $branch"
   git branch --delete "$branch"
   git branch --delete --remote "origin/$branch" 2>/dev/null || true
 done
