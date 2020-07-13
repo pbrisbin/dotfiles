@@ -1,9 +1,15 @@
 #!/bin/sh
 set -e
 
+edit=0
+
 case "$1" in
+  -e | --edit)
+    edit=1
+    shift
+    ;;
   -h | --help)
-    echo "usage: aur-release [package-name] [version]" >&2
+    echo "usage: aur-release [-e] [package-name] [version]" >&2
     exit 64
     ;;
 esac
@@ -25,7 +31,9 @@ if [ -n "$name" ]; then
     echo "Performing automated version bump..."
     sed -i "s/^pkgver=.*$/pkgver=$version/" PKGBUILD
     sed -i "s/^pkgrel=.*$/pkgrel=1/" PKGBUILD
-  else
+  fi
+
+  if [ -z "$version" ] || [ "$edit" -eq 1 ]; then
     echo "Launching shell in AUR package clone. ^D or exit when done."
     "$SHELL"
   fi
