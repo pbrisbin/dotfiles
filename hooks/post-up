@@ -19,8 +19,10 @@ if [ "${STACK_INSTALL:-1}" -eq 1 ] && command -v stack >/dev/null; then
     # Ensure we're always in ~/ when we run this
     cd && stack install \
       ShellCheck \
-      msu \
       xmonad \
       xmonad-contrib
   )
+
+  # Install msu from source for this one
+  (cd ~/code/pbrisbin/msu && stack install)
 fi
