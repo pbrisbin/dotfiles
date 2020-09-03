@@ -8,5 +8,31 @@
     name: Redundant do
     within: spec
 - arguments:
+  # Typical extensions
+  - -XBangPatterns
+  - -XDataKinds
+  - -XDeriveAnyClass
+  - -XDeriveFoldable
+  - -XDeriveFunctor
+  - -XDeriveGeneric
+  - -XDeriveLift
+  - -XDeriveTraversable
+  - -XDerivingStrategies
+  - -XFlexibleContexts
+  - -XFlexibleInstances
+  - -XGADTs
+  - -XGeneralizedNewtypeDeriving
+  - -XLambdaCase
+  - -XMultiParamTypeClasses
+  - -XNoImplicitPrelude
+  - -XNoMonomorphismRestriction
+  - -XOverloadedStrings
+  - -XRankNTypes
+  - -XRecordWildCards
+  - -XScopedTypeVariables
+  - -XStandaloneDeriving
   - -XTypeApplications
+  - -XTypeFamilies
+
+  # Avoid reserved word issue
   - -XNoStaticPointers

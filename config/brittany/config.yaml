@@ -15,3 +15,30 @@ conf_preprocessor:
   # At least attempt to deal with CPP
   ppconf_CPPMode: CPPModeWarn
   ppconf_hackAroundIncludes: true
+
+conf_forward:
+  options_ghc:
+    - -XBangPatterns
+    - -XDataKinds
+    - -XDeriveAnyClass
+    - -XDeriveFoldable
+    - -XDeriveFunctor
+    - -XDeriveGeneric
+    - -XDeriveLift
+    - -XDeriveTraversable
+    - -XDerivingStrategies
+    - -XFlexibleContexts
+    - -XFlexibleInstances
+    - -XGADTs
+    - -XGeneralizedNewtypeDeriving
+    - -XLambdaCase
+    - -XMultiParamTypeClasses
+    - -XNoImplicitPrelude
+    - -XNoMonomorphismRestriction
+    - -XOverloadedStrings
+    - -XRankNTypes
+    - -XRecordWildCards
+    - -XScopedTypeVariables
+    - -XStandaloneDeriving
+    - -XTypeApplications
+    - -XTypeFamilies
