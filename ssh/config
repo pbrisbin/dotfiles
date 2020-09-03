@@ -16,6 +16,9 @@ host i-*
   LogLevel FATAL
   ControlPersist 30m
 
+Host ec2-*
+  User ec2-user
+
 Host *.tmate.io
   # tmate can't work with our more secure MACs below
   MACs hmac-sha2-256
