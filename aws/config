@@ -1,6 +1,9 @@
 [default]
 region = us-east-1
 
+[restyled]
+region = us-east-1
+
 [preview]
 cloudfront = true
 
