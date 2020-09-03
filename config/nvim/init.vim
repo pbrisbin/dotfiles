@@ -47,6 +47,7 @@ let g:maplocalleader = ' '
 let g:ale_fixers = {
   \ 'haskell': ['brittany', 'hlint', 'stylish-haskell'],
   \ 'javascript': ['eslint', 'prettier'],
+  \ 'python': ['autopep8'],
   \ 'sh': ['shfmt'],
   \ }
 
