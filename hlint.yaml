@@ -1,5 +1,19 @@
 ---
 - ignore:
+    # I find this most-often leads to less readable code, for example:
+    #
+    # Compare the cognitive over of:
+    #
+    #   Use roEnabled, defaulting to True:
+    #
+    #     { rEnabled = fromMaybe True roEnabled
+    #
+    #   The "fixed" version, is roEnabled not presently-False?
+    #
+    #     { rEnabled = Just False /= roEnabled
+    #
+    name: Use Just
+- ignore:
     # I find this hint is overwhelmingly false-positives
     name: Reduce duplication
 - ignore:
