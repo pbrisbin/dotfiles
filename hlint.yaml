@@ -21,6 +21,9 @@
     # noise when specifications, contexts, and examples are inevitably added.
     name: Redundant do
     within: spec
+- ignore:
+    # Gets confused my Database.Esqueleto.(^.) vs Control.Lens.(^.)
+    name: Redundant ^.
 - arguments:
   # Typical extensions
   - -XBangPatterns
