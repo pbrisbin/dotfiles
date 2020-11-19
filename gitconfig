@@ -53,3 +53,5 @@
   pushInsteadOf = "https://github.com/pbrisbin/"
 [pull]
   ff = only
+[init]
+	defaultBranch = main
