@@ -1,45 +1,68 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-11.16
+-- stack script --resolver lts-16.12
 -- vim: ft=haskell
+{-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -Wall -Werror #-}
 
-module Main (main) where
+module Main
+    ( main
+    )
+where
 
-import Control.Monad (foldM)
-import Data.List (stripPrefix)
-import Data.Maybe (fromMaybe)
-import Data.Monoid ((<>))
+import RIO
+
+import qualified Data.ByteString.Lazy.Char8 as BSL8
+import RIO.FilePath (dropExtension, (</>))
+import qualified RIO.HashMap as HashMap
+import RIO.List (dropPrefix, intercalate)
+import RIO.Process
 import System.Environment (getEnv)
-import System.FilePath ((</>), dropExtension)
-import System.Process (readProcess)
-
-import qualified Data.Map as M
 
 main :: IO ()
 main = do
     store <- (</> ".password-store/") <$> getEnv "HOME"
-    names <- map (dropExtension . dropPrefix store) . lines
-        <$> readProcess "find" [store, "-type", "f", "-name", "*.gpg"] ""
 
-    let total = length names
+    runSimpleApp $ do
+        names <- map (dropExtension . dropPrefix store)
+            <$> readProcessLines "find" [store, "-type", "f", "-name", "*.gpg"]
 
-    passwords <- foldM (\m name -> do
-        progress (sum $ map length $ M.elems m) total
-        password <- readProcess "pass" [name] ""
-        return $ M.insertWith (<>) password [name] m) M.empty names
+        let total = length names
 
-    progress total total
-    putStrLn ""
+        passwords <- foldM
+            (\m name -> do
+                logSticky $ progress (sum $ map length $ HashMap.elems m) total
+                maybe m (\password -> HashMap.insertWith (<>) password [name] m)
+                    . listToMaybe
+                    <$> readProcessLines "pass" [name]
+            )
+            HashMap.empty
+            names
 
-    mapM_ (putStrLn . ("Duplicate found: " <>) . show)
-        $ (M.elems . M.filter ((> 1) . length)) passwords
+        logStickyDone $ progress total total
+        traverse_ warnDuplicates $ HashMap.elems $ HashMap.filter
+            ((> 1) . length)
+            passwords
 
-dropPrefix :: Eq a => [a] -> [a] -> [a]
-dropPrefix p x = fromMaybe x $ stripPrefix p x
+warnDuplicates
+    :: (MonadIO m, MonadReader env m, HasLogFunc env) => [String] -> m ()
+warnDuplicates xs =
+    logWarn $ "All of the following use the same password:\n  " <> fromString
+        (intercalate "\n  " xs)
 
-progress :: Int -> Int -> IO ()
-progress c t = putStr $ "\r"
-    <> "Reading passwords... "
-    <> "[" <> show c
-    <> "/" <> show t
-    <> "]"
+progress :: Int -> Int -> Utf8Builder
+progress c t =
+    "Reading passwords... "
+        <> "["
+        <> displayShow c
+        <> "/"
+        <> displayShow t
+        <> "]"
+
+readProcessLines
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => String
+    -> [String]
+    -> m [String]
+readProcessLines cmd args = do
+    bs <- proc cmd args readProcessStdout_
+    pure $ lines $ BSL8.unpack bs
