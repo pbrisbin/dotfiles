@@ -6,7 +6,7 @@ Protocol 2
 
 # Freckle session-manager-based SSH by instance-id
 host i-*
-  ProxyCommand ~/code/freckle/megarepo/ops/aws-scripts/freckle-ssh-ec2 %h
+  ProxyCommand ~/code/freckle/megarepo/ops/scripts/freckle-ssh-ec2 %h
   User ec2-user
   IdentityFile /tmp/freckle-ssh-key
   StrictHostKeyChecking no
