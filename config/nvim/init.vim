@@ -3,6 +3,7 @@ scriptencoding utf-8
 packadd minpac
 call minpac#init()
 call minpac#add('5outh/yesod-routes.vim')
+call minpac#add('dense-analysis/ale')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
@@ -19,7 +20,6 @@ call minpac#add('tpope/vim-projectionist')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-surround')
 call minpac#add('vmchale/dhall-vim')
-call minpac#add('w0rp/ale')
 call minpac#add('wfleming/vim-codeclimate')
 
 filetype plugin indent on
@@ -45,6 +45,7 @@ let g:mapleader = ' '
 let g:maplocalleader = ' '
 
 let g:ale_fixers = {
+  \ 'dhall': ['dhall'],
   \ 'haskell': ['brittany', 'hlint', 'stylish-haskell'],
   \ 'javascript': ['eslint', 'prettier'],
   \ 'python': ['autopep8'],
@@ -57,6 +58,7 @@ let g:ale_linters = {
   \ }
 
 let g:ale_fix_on_save = 1
+let g:ale_dhall_format_executable='stack'
 let g:ale_haskell_brittany_executable='stack'
 let g:ale_haskell_hlint_executable='stack'
 let g:ale_haskell_stylish_haskell_executable='stack'
