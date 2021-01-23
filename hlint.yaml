@@ -24,6 +24,14 @@
 - ignore:
     # Gets confused my Database.Esqueleto.(^.) vs Control.Lens.(^.)
     name: Redundant ^.
+- ignore:
+    # This never helps readability, and sometimes breaks compilation since it
+    # can mix up precedence and won't add a possibly-required-($).
+    name: Use join
+- ignore:
+    # I often make lists of lists to position commandline arguments in pairs. If
+    # the list is small enough HLint suggests ++.
+    name: Use ++
 - arguments:
   # Typical extensions
   - -XBangPatterns
