@@ -55,6 +55,10 @@ cdpath=(
   ~/code/restyled-io/
   $cdpath
 )
+fpath=(
+  ~/.local/share/zsh/site-functions
+  $fpath
+)
 path=(
   ~/.local/bin
   $(ruby -r rubygems -e "puts Gem.user_dir")/bin
@@ -80,10 +84,13 @@ setopt inc_append_history
 setopt vi
 unsetopt nomatch
 
+if [[ ! -f ~/.local/share/zsh/site-functions/_stack ]]; then
+  stack --zsh-completion-script stack > \
+    ~/.local/share/zsh/site-functions/_stack
+fi
+
 # Completion
 autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-eval "$(stack --bash-completion-script stack)"
 source /usr/bin/aws_zsh_completer.sh
 
 # SSH Agent
