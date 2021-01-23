@@ -1,0 +1,123 @@
+#!/usr/bin/env stack
+-- stack script --resolver lts-16.12
+-- vim: ft=haskell
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedStrings #-}
+
+{-# OPTIONS_GHC -Wall -Werror #-}
+
+module Main
+    ( main
+    )
+where
+
+import RIO
+
+import qualified Data.ByteString.Char8 as BS8
+import Data.Csv (DefaultOrdered(..), FromField(..), FromNamedRecord(..))
+import qualified Data.Csv as Csv
+import Network.URI (URI(..), URIAuth(..), parseAbsoluteURI)
+import qualified RIO.ByteString.Lazy as BSL
+import RIO.List (dropPrefix)
+import RIO.Process
+import RIO.Text (pack, unpack)
+import qualified RIO.Text.Partial as T (replace)
+import System.Environment (getArgs)
+
+newtype URL = URL
+    { unURL :: URI
+    }
+    deriving newtype Show
+
+instance FromField URL where
+    parseField = maybe mzero (pure . URL) . parseAbsoluteURI . BS8.unpack
+
+newtype Username = Username
+    { unUsername :: Text
+    }
+    deriving newtype FromField
+
+newtype Password = Password
+    { unPassword :: Text
+    }
+    deriving stock Eq
+    deriving newtype FromField
+
+data ChromePassword = ChromePassword
+    { name :: Text -- ^ Unused
+    , url :: URL
+    , username :: Maybe Username
+    , password :: Password
+    }
+    deriving stock Generic
+    deriving anyclass (DefaultOrdered, FromNamedRecord)
+
+newtype PassName = PassName
+    { unPassName :: Text
+    }
+    deriving newtype Display
+
+data ImportAction
+    = InvalidInput String
+    | PassExists PassName
+    | PassInsert PassName Password
+
+main :: IO ()
+main = do
+    mPath <- listToMaybe <$> getArgs
+
+    runSimpleApp $ for_ mPath $ \path -> do
+        bs <- BSL.readFile path
+
+        case Csv.decodeByName bs of
+            Left err -> logError $ fromString err
+            Right (_, xs) -> traverse_ (runImportAction <=< getImportAction) xs
+
+getImportAction
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => ChromePassword
+    -> m ImportAction
+getImportAction ChromePassword { url, username, password } = do
+    case toPassName url username of
+        Nothing -> pure $ InvalidInput $ show url <> " is not a valid URL"
+        Just passName -> do
+            (ec, _, _) <- proc "pass" [unpack $ unPassName passName] readProcess
+
+            -- Assuming error means it doesn't exist. If it's some other error,
+            -- an attempt to insert should fail similarly -- and will definitely
+            -- fail if it actually exists, because we don't pass --force.
+            pure $ case ec of
+                ExitSuccess -> PassExists passName
+                ExitFailure _ -> PassInsert passName password
+
+runImportAction
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => ImportAction
+    -> m ()
+runImportAction = \case
+    InvalidInput msg -> logError $ "Invalid input: " <> fromString msg
+    PassExists passName ->
+        logInfo $ "Skipping " <> display passName <> ", exists"
+    PassInsert passName password -> do
+        logInfo $ "Inserting " <> display passName
+        proc "sh" ["-c", insertSh passName password] runProcess_
+
+insertSh :: PassName -> Password -> String
+insertSh passName password = unpack $ mconcat
+    [ "echo " <> esc (unPassword password) <> "|"
+    , "pass insert --echo " <> esc (unPassName passName)
+    ]
+  where
+    esc :: Text -> Text
+    esc x = "'" <> T.replace "'" "\\'" x <> "'"
+
+toPassName :: URL -> Maybe Username -> Maybe PassName
+toPassName url username = do
+    auth <- uriAuthority $ unURL url
+    let host = dropPrefix "www." $ uriRegName auth
+    pure $ PassName $ pack host <> maybe "" (("/" <>) . unUsername) username
