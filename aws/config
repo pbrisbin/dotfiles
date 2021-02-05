@@ -1,24 +1,22 @@
 [default]
 region = us-east-1
 
-[restyled]
+[profile restyled]
 region = us-east-1
 
-[preview]
-cloudfront = true
-
-[profile freckle-dev]
-role_arn = arn:aws:iam::539282909833:role/prod-cross-account-access
-source_profile = freckle
-region = us-east-1
-
-[freckle]
-role_arn = arn:aws:iam::853032795538:role/OktaAdmin
-source_profile = freckle
+[profile restyled-ci]
 region = us-east-1
 
 [profile freckle]
+sso_start_url = https://rensso.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 853032795538
+sso_role_name = AdministratorAccess
 region = us-east-1
-role_arn = arn:aws:iam::853032795538:role/OktaAdmin
-source_profile = freckle
 
+[profile freckle-dev]
+sso_start_url = https://rensso.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 539282909833
+sso_role_name = AdministratorAccess
+region = us-east-1
