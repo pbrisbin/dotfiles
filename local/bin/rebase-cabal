@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eu
+default_branch=${1:-main}
+
+mapfile -t paths < <(git status | sed '/^UU \(.*\.cabal\)$/!d; s//\1/')
+
+if (("${#paths[@]}")); then
+  git reset "$default_branch" -- "${paths[@]}"
+  git checkout -- "${paths[@]}"
+  stack build --dry-run
+  git add -- "${paths[@]}"
+fi
