@@ -51,6 +51,7 @@ let g:ale_fixers = {
   \ 'javascript': ['eslint', 'prettier'],
   \ 'python': ['autopep8'],
   \ 'sh': ['shfmt'],
+  \ 'typescript': ['prettier'],
   \ }
 
 let g:ale_linters = {
