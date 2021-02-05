@@ -46,7 +46,7 @@ let g:mapleader = ' '
 let g:maplocalleader = ' '
 
 let g:ale_fixers = {
-  \ 'dhall': ['dhall'],
+  \ 'dhall': ['dhall-format'],
   \ 'haskell': ['brittany', 'hlint', 'stylish-haskell'],
   \ 'javascript': ['eslint', 'prettier'],
   \ 'python': ['autopep8'],
@@ -59,7 +59,7 @@ let g:ale_linters = {
   \ }
 
 let g:ale_fix_on_save = 1
-let g:ale_dhall_format_executable='stack'
+let g:ale_dhall_executable='stack'
 let g:ale_haskell_brittany_executable='stack'
 let g:ale_haskell_hlint_executable='stack'
 let g:ale_haskell_stylish_haskell_executable='stack'
