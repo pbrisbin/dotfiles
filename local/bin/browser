@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# This is just a redirect that I can set as $BROWSER (etc), so that I can switch
+# between chromium and firefox (or anything else) experimentally without
+# restarting a bunch of things.
+#
+###
+exec firefox-nightly "$@"
