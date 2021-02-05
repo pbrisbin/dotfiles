@@ -4,7 +4,6 @@ _git-dbf() { _git-checkout }
 _git-delete-tag() { compadd "$@" $(git tag) }
 
 # Styles
-zstyle ':completion:*:*:hub:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 zstyle ':completion:*:sudo:*' command-path $path
 zstyle ':prompt:grml:left:setup' items percent rc
 zstyle ':prompt:grml:right:setup' items path vcs
@@ -14,7 +13,6 @@ zstyle ':vcs_info:git:*' formats '[%r:%b]'
 
 # Aliases & Functions
 alias g=git
-alias git=hub; compdef hub=git
 alias p="sudo pacman"
 
 clone() {
@@ -27,43 +25,6 @@ clone() {
       ;;
   esac
 }
-
-# Exports
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-
-export BROWSER=chromium
-export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
-export GPG_TTY="$(tty)"
-export FZF_DEFAULT_COMMAND='
-  ( git ls-tree -r --name-only HEAD ||
-    find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
-    sed s/^..//
-  ) 2>/dev/null
-'
-export MANWIDTH=80
-
-HISTSIZE=500000
-SAVEHIST=$HISTSIZE
-
-cdpath=(
-  ~
-  ~/code
-  ~/code/freckle
-  ~/code/pbrisbin
-  ~/code/restyled-io/
-  $cdpath
-)
-fpath=(
-  ~/.local/share/zsh/site-functions
-  $fpath
-)
-path=(
-  ~/.local/bin
-  $(ruby -r rubygems -e "puts Gem.user_dir")/bin
-  $path
-)
 
 # Bindings & Options
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
@@ -84,14 +45,13 @@ setopt inc_append_history
 setopt vi
 unsetopt nomatch
 
-if [[ ! -f ~/.local/share/zsh/site-functions/_stack ]]; then
-  stack --zsh-completion-script stack > \
-    ~/.local/share/zsh/site-functions/_stack
-fi
+# Plugins
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-execute
 
 # Completion
-autoload -U +X compinit && compinit
-source /usr/bin/aws_zsh_completer.sh
+#source /usr/bin/aws_zsh_completer.sh
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
