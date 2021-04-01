@@ -20,3 +20,7 @@ sso_region = us-east-1
 sso_account_id = 539282909833
 sso_role_name = AdministratorAccess
 region = us-east-1
+
+[profile freckle-dev-jobs]
+role_arn = arn:aws:iam::539282909833:role/dev-consume-dev-jobs-TaskRole-9D2VG407EE9V
+source_profile = freckle-dev
