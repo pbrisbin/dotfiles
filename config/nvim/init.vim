@@ -49,7 +49,7 @@ let g:ale_fixers = {
   \ 'dhall': ['dhall-format'],
   \ 'haskell': ['brittany', 'hlint', 'stylish-haskell'],
   \ 'javascript': ['eslint', 'prettier'],
-  \ 'python': ['autopep8'],
+  \ 'python': ['add_blank_lines_for_python_control_statements', 'autoimport', 'autopep8', 'black', 'isort', 'reorder-python-imports', 'yapf'],
   \ 'sh': ['shfmt'],
   \ 'typescript': ['prettier'],
   \ }
