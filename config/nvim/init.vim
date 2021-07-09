@@ -70,7 +70,7 @@ let g:jsx_ext_required = 0
 
 map <C-P> :FZF<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
-map <Leader>r :w \| :vs % \| :execute 'terminal '.expand('%:p')<CR>
+map <Leader>r :w \| :bel sp \| :execute 'terminal '.expand('%:p')<CR>
 
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 
