@@ -55,3 +55,5 @@
   ff = only
 [init]
 	defaultBranch = main
+[url "ssh://git@heroku.com/"]
+	insteadOf = https://git.heroku.com/
