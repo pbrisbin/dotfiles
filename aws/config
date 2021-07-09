@@ -23,4 +23,4 @@ region = us-east-1
 
 [profile freckle-dev-jobs]
 role_arn = arn:aws:iam::539282909833:role/dev-consume-dev-jobs-TaskRole-9D2VG407EE9V
-source_profile = freckle-dev
+source_profile = freckle-dev-pbrisbin
