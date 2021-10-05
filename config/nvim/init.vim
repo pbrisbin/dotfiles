@@ -3,6 +3,7 @@ scriptencoding utf-8
 packadd minpac
 call minpac#init()
 call minpac#add('5outh/yesod-routes.vim')
+call minpac#add('cespare/vim-toml')
 call minpac#add('dense-analysis/ale')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('junegunn/fzf')
