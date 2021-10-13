@@ -1,0 +1,36 @@
+- name: none
+  match:
+    displays:
+      eq:
+        - eDP1
+
+  exec:
+    xrandr
+      --output eDP1 --primary --mode 1920x1080
+      --output VIRTUAL1 --off
+      --output DP-1-1.2 --off
+      --output DP-1-0 --off
+      --output DP-1-1 --off
+      --output HDMI-1-0 --off
+
+- name: home-dual
+  match:
+    displays:
+      eq:
+        - eDP1
+        - DP-1-1.2
+
+    wifi:
+      in:
+        - pb-and-j
+        - pb-and-j-5g
+        - pb-and-j-5g-2
+
+  exec:
+    xrandr
+      --output eDP1 --mode 1920x1080 --right-of DP-1-1.2
+      --output VIRTUAL1 --off
+      --output DP-1-1.2 --primary --mode 2560x1440
+      --output DP-1-0 --off
+      --output DP-1-1 --off
+      --output HDMI-1-0 --off
