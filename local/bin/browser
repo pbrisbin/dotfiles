@@ -5,4 +5,6 @@
 # restarting a bunch of things.
 #
 ###
-exec firefox-nightly "$@"
+#exec chromium "$@"
+#exec firefox-nightly "$@"
+exec firefox "$@"
