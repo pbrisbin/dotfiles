@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+card=$(pactl list short cards | awk '/bluez/ { print $1 }')
+profile=headset-head-unit-msbc
+
+if pactl list cards | grep -Fq "Active Profile: $profile"; then
+  echo "Card already set to $profile"
+  exit 0
+fi
+
+echo "Setting card #$card to $profile"
+exec pactl set-card-profile "$card" "$profile"
