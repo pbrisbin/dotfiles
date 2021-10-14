@@ -13,6 +13,9 @@ export FZF_DEFAULT_COMMAND='
 '
 export MANWIDTH=80
 
+# Prevents alacritty from screwing up on multiple monitors
+export WINIT_X11_SCALE_FACTOR=1
+
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 

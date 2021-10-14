@@ -12,7 +12,6 @@ dunst \
   -separator_height 1 \
   -word_wrap &
 
-urxvtd &
 xautolock -time 15 -locker slock -secure &
 
 exec xmonad

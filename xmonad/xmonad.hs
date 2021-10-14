@@ -6,7 +6,7 @@ import XMonad.Util.EZConfig
 
 main :: IO ()
 main = xmonad $ def
-    { terminal = "urxvtc"
+    { terminal = "alacritty"
     , logHook = mconcat
         [ logHook def
         , ewmhDesktopsLogHook
