@@ -52,7 +52,9 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-execute
 
 # Completion
-#source /usr/bin/aws_zsh_completer.sh
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C '/usr/bin/aws_completer' aws
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
