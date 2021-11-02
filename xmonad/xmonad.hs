@@ -1,11 +1,12 @@
 import XMonad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 
 -- brittany-disable-next-binding
 
 main :: IO ()
-main = xmonad $ def
+main = xmonad $ docks $ ewmh $ def
     { terminal = "alacritty"
     , logHook = mconcat
         [ logHook def
@@ -17,6 +18,8 @@ main = xmonad $ def
         , className =? "zoom" --> doFloat
         , role =? "pop-up" --> doFloat
         ]
+    , layoutHook = avoidStruts $ layoutHook def
+    , handleEventHook = handleEventHook def <+> fullscreenEventHook
     }
     `additionalKeysP` [("M-S-p", spawn "passmenu --type")]
 
