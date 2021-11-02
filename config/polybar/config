@@ -1,0 +1,138 @@
+[colors]
+gray = #e0e0e0
+black = #212121
+orange = #ff985e
+green = #abd5ab
+
+[paddings]
+module-item-spacing = 6
+
+[bar/base]
+;monitor = eDP1
+width = 100%
+height = 32
+padding-right = 2
+
+;font-N = <fontconfig pattern>;<vertical offset>
+font-0 = Noto Sans:size=12;1
+font-1 = Noto Emoji:scale=10;2
+font-2 = Unifont;1
+font-3 = Wuncon Siji;1
+
+background = ${colors.black}
+foreground = ${colors.gray}
+
+modules-left = workspaces
+modules-center = xwindow
+modules-right = wifi volume battery date
+
+[module/workspaces]
+type = internal/xworkspaces
+format = <label-state>
+
+label-empty-padding-right = 1
+
+label-occupied-foreground = ${colors.green}
+label-occupied-padding-right = 1
+
+label-active-padding-right = 1
+label-active-background = ${colors.green}
+label-active-foreground = ${colors.black}
+
+label-urgent-padding-right = 1
+label-urgent-background = ${colors.orange}
+label-urgent-foreground = ${colors.black}
+
+[module/xwindow]
+type = internal/xwindow
+format = <label>
+label = %title:0:100:%
+
+[module/wifi]
+type = internal/network
+interface = wlan0
+ping-interval = 3
+
+format-connected = <ramp-signal> <label-connected>
+
+label-connected = "%essid%"
+label-connected-padding-right = ${paddings.module-item-spacing}
+
+format-disconnected = <label-disconnected>
+format-disconnected-foreground = ${colors.orange}
+
+label-disconnected = 
+label-disconnected-padding-right = ${paddings.module-item-spacing}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+
+[module/volume]
+type = internal/pulseaudio
+mapped = true
+
+; format-volume = <ramp-volume> <label-volume>
+
+; label-volume = "%percentage%%"
+; label-volume-padding-right = ${paddings.module-item-spacing}
+
+format-volume = <ramp-volume>
+ramp-volume-padding-right = ${paddings.module-item-spacing}
+
+format-muted = <label-muted>
+
+label-muted = 
+label-muted-padding-right = ${paddings.module-item-spacing}
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/battery]
+type = internal/battery
+full-at = 98
+battery = BAT0
+adapter = AC0
+poll-interval = 5
+
+format-charging = <label-charging>
+
+label-charging = 
+label-charging-foreground = ${colors.green}
+label-charging-padding-right = ${paddings.module-item-spacing}
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-discharging = "%time% remaining"
+label-discharging-foreground = ${colors.orange}
+label-discharging-padding-right = ${paddings.module-item-spacing}
+
+ramp-capacity-foreground = ${colors.orange}
+ramp-capacity-padding-right = 1
+
+format-full = <label-full>
+
+label-full = 
+label-full-padding-right = ${paddings.module-item-spacing}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = "%Y-%m-%d"
+time = "%H:%M %p"
+label = "%date% %time%"
+
+format = <label>
+
+; vim:ft=dosini
