@@ -1,6 +1,6 @@
 # Beware! This file is rewritten by htop when settings are changed in the interface.
 # The parser is also very primitive, and not human-friendly.
-htop_version=3.1.0
+htop_version=3.1.1
 config_reader_min_version=2
 fields=0 48 38 39 40 2 46 47 49 1
 sort_key=46
@@ -21,7 +21,7 @@ highlight_changes_delay_secs=5
 find_comm_in_cmdline=1
 strip_exe_from_cmdline=1
 show_merged_command=0
-tree_view=1
+tree_view=0
 tree_view_always_by_pid=0
 all_branches_collapsed=0
 header_margin=1
