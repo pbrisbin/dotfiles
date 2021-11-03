@@ -1,0 +1,5 @@
+[Unit]
+Description=Automatic screen locker
+
+[Service]
+ExecStart=/usr/bin/xautolock -time 15 -locker slock -secure

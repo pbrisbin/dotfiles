@@ -1,0 +1,6 @@
+[Unit]
+Description=xrdb
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/xrdb %h/.Xresources

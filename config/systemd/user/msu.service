@@ -1,0 +1,6 @@
+[Unit]
+Description=Monitor setup utility
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/msu
