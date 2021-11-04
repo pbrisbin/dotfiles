@@ -11,12 +11,6 @@ if [ ! -f ~/.local/share/nvim/site/syntax/cram.vim ]; then
     "https://raw.githubusercontent.com/brodie/cram/master/contrib/cram.vim"
 fi
 
-if [ "${STACK_INSTALL:-1}" -eq 1 ] && command -v stack >/dev/null; then
-  (
-    # Ensure we're always in ~/ when we run this
-    cd && stack install \
-      ShellCheck \
-      xmonad \
-      xmonad-contrib
-  )
+if [ ! -d ~/.password-store ]; then
+  git clone git@gitlab.com:pbrisbin/password-store.git ~/.password-store
 fi
