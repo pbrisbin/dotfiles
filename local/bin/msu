@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Reset my monitor after unplugging an external.
+#
+###
+set -ex
+xrandr --auto
+pkill -USR1 polybar

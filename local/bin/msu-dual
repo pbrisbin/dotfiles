@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Setup my monitor after plugging in my home-office external.
+#
+###
+set -ex
+xrandr \
+  --output DP-1-1.2 --primary --mode 2560x1440 \
+  --output eDP1 --mode 1920x1080 --right-of DP-1-1.2
+pkill -USR1 polybar

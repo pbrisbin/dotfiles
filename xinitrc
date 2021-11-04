@@ -1,6 +1,5 @@
 # vim: ft=sh
 
-systemctl --user start msu
 systemctl --user start xrdb
 systemctl --user start dunst polybar xautolock
 
