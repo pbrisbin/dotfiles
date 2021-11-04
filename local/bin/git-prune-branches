@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Prune branches already merged into main
+# Prune branches already merged into main.
 #
 ###
 set -e

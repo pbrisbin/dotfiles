@@ -1,4 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
+#
+# Run a command (presumably as root and from a non-X context) as my normal user
+# and with access to the running X context. For example, to pop up a
+# notification from acpi/handler.sh.
+#
+###
+set -euo pipefail
+
 xauthority() {
   ps -C xinit -f --no-header | sed 's/.*-auth //; s/ -[^ ].*//'
 }
@@ -6,15 +14,15 @@ xauthority() {
 user=patrick
 user_id=$(id -u "$user")
 
-if [ -z "$1" ]; then
+if (($# < 1)); then
   printf "usage: runx <command> [argument, ...]\n" >&2
   exit 64
 fi
 
-if [ $UID -eq 0 ]; then
+if ((!UID)); then
   printf -v cmd "%q " "$@"
   set -- su "$user" -c "$cmd"
 fi
 
 DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$user_id/bus" DISPLAY=:0 \
-XAUTHORITY="$(xauthority)" XDG_RUNTIME_DIR="/run/user/$user_id" "$@"
+  XAUTHORITY="$(xauthority)" XDG_RUNTIME_DIR="/run/user/$user_id" "$@"

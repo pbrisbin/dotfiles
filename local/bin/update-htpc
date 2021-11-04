@@ -1,6 +1,0 @@
-#!/bin/sh
-curl \
-  --silent \
-  --header 'Content-type: application/json' \
-  --data '{"jsonrpc":"2.0","method":"VideoLibrary.Scan","id":"blue"}' \
-  "http://htpc.local:8080/jsonrpc"

@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+# Delete a tag, locally and in the remote named `origin'.
+#
+###
 for tag; do
   git tag -d "$tag"
   git push origin :refs/tags/"$tag"

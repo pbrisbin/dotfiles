@@ -1,12 +1,18 @@
-#!/bin/sh
-set -e
+#!/usr/bin/env bash
+#
+# Forward arguments to `scrot', upload the result, copy and output a link to it.
+#
+###
+set -euo pipefail
 
 name=screenshot.$$.png
 scrot "$@" "/tmp/$name"
+trap 'rm -f "/tmp/$name"' EXIT
 
 aws s3 cp --acl public-read --content-type image/png \
   "/tmp/$name" "s3://files.pbrisbin.com/screenshots/$name" >/dev/null
 
-printf "https://files.pbrisbin.com/screenshots/%s" "$name" | xclip
-printf "https://files.pbrisbin.com/screenshots/%s\n" "$name"
-rm -f "/tmp/$name"
+url=https://files.pbrisbin.com/screenshots/$name
+printf "%s" "$url" | xclip
+printf "%s" "$url" | xclip -selection clipboard
+printf "%s\n" "$url"

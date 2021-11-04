@@ -1,5 +1,12 @@
 #!/bin/sh
+#
+# Despite what I do in bluez-monitor.conf, my Bluetooth headset always sets
+# itself up as a2dp_sink, which means no mic. This switches it to headset, if
+# necessary.
+#
+###
 set -eu
+
 card=$(pactl list short cards | awk '/bluez/ { print $1 }')
 profile=headset-head-unit-msbc
 

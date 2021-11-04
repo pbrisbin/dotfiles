@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# Update https://files.pbrisbin.com/public.key; for when I've created a new
+# subkey, signed, or trusted another.
+#
+###
 gpg --armor --export pbrisbin@gmail.com |
   aws s3 cp \
     --acl public-read \

@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+# Verify a package builds with stackage-nightly.
+#
+###
 set -e
 
 if [ -z "$1" ]; then

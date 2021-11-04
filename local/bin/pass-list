@@ -1,6 +1,9 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-15.7
+-- stack script --resolver lts-18.14
 -- vim: ft=haskell
+--
+-- Like `pass list', but in non-tree output, for easier grepping.
+--
 {-# OPTIONS_GHC -Wall -Werror #-}
 
 module Main (main) where

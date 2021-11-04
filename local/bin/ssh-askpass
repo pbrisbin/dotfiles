@@ -7,4 +7,4 @@
 # I have only one, so we hard-code freely.
 #
 ###
-exec pass ssh/patrick@$(hostname)
+exec pass "ssh/patrick@$(hostname)"
