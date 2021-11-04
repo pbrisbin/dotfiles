@@ -19,3 +19,10 @@ If you made your way here looking for something specific and can't find it,
 consider viewing the [`v1.0`][v1] tag.
 
 [v1]: https://github.com/pbrisbin/dotfiles/tree/v1.0
+
+## Mutt Removal
+
+If you made your way here looking for Mutt configuration, consider viewing the
+[`pre-mutt-removal`][pre-mutt-removal] tag.
+
+[pre-mutt-removal]: https://github.com/pbrisbin/dotfiles/tree/pre-mutt-removal
