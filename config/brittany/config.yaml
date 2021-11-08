@@ -12,8 +12,8 @@ conf_layout:
   lconfig_columnAlignMode: {tag: ColumnAlignModeDisabled}
 
 conf_preprocessor:
-  # At least attempt to deal with CPP
-  ppconf_CPPMode: CPPModeWarn
+  # Don't attempt to deal with CPP
+  ppconf_CPPMode: CPPModeAbort
   ppconf_hackAroundIncludes: true
 
 conf_forward:
