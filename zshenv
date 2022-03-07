@@ -12,6 +12,7 @@ export FZF_DEFAULT_COMMAND='
   ) 2>/dev/null
 '
 export MANWIDTH=80
+export RCRC="$XDG_CONFIG_HOME"/rcm/rcrc
 
 # Prevents alacritty from screwing up on multiple monitors
 export WINIT_X11_SCALE_FACTOR=1
