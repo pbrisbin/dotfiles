@@ -4,7 +4,11 @@
 #
 ###
 set -ex
+
+output=DP-1-1.2
+mode=2560x1440
+
 xrandr \
-  --output DP-1-1.2 --primary --mode 2560x1440 \
-  --output eDP1 --mode 1920x1080 --right-of DP-1-1.2
+  --output "$output" --primary --mode "$mode" \
+  --output eDP1 --mode 1920x1080 --right-of "$output"
 pkill -USR1 polybar
