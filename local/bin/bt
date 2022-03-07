@@ -10,6 +10,11 @@ set -eu
 card=$(pactl list short cards | awk '/bluez/ { print $1 }')
 profile=headset-head-unit-msbc
 
+if [ -z "$card" ]; then
+  echo "No bluez card found" >&2
+  exit 1
+fi
+
 if pactl list cards | grep -Fq "Active Profile: $profile"; then
   echo "Card already set to $profile"
   exit 0
