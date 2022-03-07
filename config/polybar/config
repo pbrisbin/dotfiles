@@ -17,7 +17,7 @@ padding-right = 2
 font-0 = Noto Sans:size=12;1
 font-1 = Noto Emoji:scale=10;2
 font-2 = Unifont;1
-font-3 = Wuncon Siji;1
+font-3 = Siji;1
 
 background = ${colors.black}
 foreground = ${colors.gray}
