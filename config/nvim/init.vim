@@ -6,10 +6,11 @@ call minpac#add('5outh/yesod-routes.vim')
 call minpac#add('cespare/vim-toml')
 call minpac#add('dense-analysis/ale')
 call minpac#add('editorconfig/editorconfig-vim')
-call minpac#add('junegunn/fzf')
-call minpac#add('junegunn/fzf.vim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('mxw/vim-jsx')
+call minpac#add('nvim-lua/plenary.nvim')
+call minpac#add('nvim-telescope/telescope.nvim')
+call minpac#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
 call minpac#add('pangloss/vim-javascript')
 call minpac#add('pbrisbin/vim-mkdir')
 call minpac#add('pbrisbin/vim-rename-file')
@@ -70,7 +71,7 @@ let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
-map <C-P> :FZF<CR>
+map <C-P> :Telescope git_files<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
 map <Leader>r :w \| :bel sp \| :execute 'terminal '.expand('%:p')<CR>
 
