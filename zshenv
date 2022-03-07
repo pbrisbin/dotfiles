@@ -8,6 +8,8 @@ export GPG_TTY="$(tty)"
 export MANWIDTH=80
 export RCRC="$XDG_CONFIG_HOME"/rcm/rcrc
 
+export GITHUB_ACCESS_TOKEN=$(pass github/tokens/$USER@$HOST)
+
 # Prevents alacritty from screwing up on multiple monitors
 export WINIT_X11_SCALE_FACTOR=1
 
