@@ -6,7 +6,7 @@
 set -e
 
 non_default_branches() {
-  git branch "$@" | grep -v ' \(main\|master\)$'
+  git branch "$@" | grep -v ' \(main\|master\|v[0-9]\+\)$'
 }
 
 main=${1:-main}
