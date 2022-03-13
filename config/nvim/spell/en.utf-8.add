@@ -71,3 +71,4 @@ k8s
 Fargate
 ECS
 pid
+memoizing
