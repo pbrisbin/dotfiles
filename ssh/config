@@ -4,6 +4,7 @@ ControlMaster auto
 ControlPath /tmp/ssh-%r@%h:%p
 Protocol 2
 
+
 # Freckle session-manager-based SSH by instance-id
 host i-*
   ProxyCommand ~/code/freckle/megarepo/ops/scripts/freckle-ssh-ec2 %h
@@ -31,3 +32,8 @@ Host *
 
   ServerAliveCountMax 5
   ServerAliveInterval 120
+
+# This is required for SSH into Circle to work, but it's insecure otherwise. I
+# find it hard to believe Circle is setting up insecure defaults, but I don't
+# know what I might've done to get me into this mess.
+#PubkeyAcceptedKeyTypes +ssh-rsa
