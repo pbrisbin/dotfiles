@@ -71,7 +71,7 @@ let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
-map <C-P> :Telescope git_files<CR>
+map <C-P> :Telescope find_files<CR>
 map <Leader>T :execute '!'.b:ctags_command<CR><CR>
 map <Leader>r :w \| :bel sp \| :execute 'terminal '.expand('%:p')<CR>
 
