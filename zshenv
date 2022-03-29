@@ -5,6 +5,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export BROWSER=browser
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export GPG_TTY="$(tty)"
+export LS_COLORS="$(vivid generate nord)"
 export MANWIDTH=80
 export RCRC="$XDG_CONFIG_HOME"/rcm/rcrc
 
