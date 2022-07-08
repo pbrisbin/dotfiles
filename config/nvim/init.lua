@@ -18,6 +18,7 @@ vim.call("minpac#add", 'pbrisbin/vim-rename-file')
 vim.call("minpac#add", 'pbrisbin/vim-syntax-shakespeare')
 vim.call("minpac#add", 'rhysd/vim-syntax-codeowners')
 vim.call("minpac#add", 'tpope/vim-commentary')
+vim.call("minpac#add", 'tpope/vim-eunuch')
 vim.call("minpac#add", 'tpope/vim-fugitive')
 vim.call("minpac#add", 'tpope/vim-git')
 vim.call("minpac#add", 'tpope/vim-projectionist')
@@ -43,6 +44,7 @@ vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.shiftwidth = 2
 vim.opt.showbreak = ' ↪ '
+vim.opt.signcolumn = 'number'
 vim.opt.smartindent = true
 vim.opt.textwidth = 80
 
