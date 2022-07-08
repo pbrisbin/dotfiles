@@ -857,6 +857,10 @@ colors:
   primary:
     background: '#f1f1f1'
     foreground: '#424242'
+
+    # This is supposed to be calculated if missing, but that's not working
+    dim_foreground: '#808080'
+
   # Normal colors
   normal:
     black:   '#212121'
