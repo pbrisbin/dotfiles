@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOM'
+Usage: stack-ls-snapshots [option...]
+Print Stackage Snapshots by GHC version
+
+Options:
+  --lts                 Fetch LTS Snapshots (this is the default)
+
+  --nightly             Fetch Nightly Snapshots
+
+  --ghc-major           Truncate GHC versions to Major before sort/unique
+
+  --ghc-minor           Truncate GHC versions to Minor before sort/unique (this
+                        is the default)
+
+  --ghc-patch           Don't truncate GHC versions before sort/unique
+
+  --first               Print the first (oldest) Snapshot to contain that GHC
+
+  --last                Print the last (newest) Snapshots to contain that GHC
+                        (this is the defuault)
+
+  --printf FMT          A printf formatting string to use when printing. The
+                        arguments are resolver then GHC, default is "%s,%s\n"
+
+EOM
+}
+
+print_resolver_ghc_from_csv() {
+  local fmt=$1 resolver ghc
+
+  while IFS=, read -r resolver ghc; do
+    # shellcheck disable=2059
+    printf "$fmt" "$resolver" "$ghc"
+  done
+}
+
+truncate_resolvers_by_ghc() {
+  local level=$1 sort_version=$2 sort_reverse=$3 ss
+  local sort_options=()
+
+  if ((sort_version)); then
+    sort_options+=(--version-sort)
+  fi
+
+  if ((sort_reverse)); then
+    sort_options+=(--reverse)
+  fi
+
+  case "$level" in
+    major)
+      ss='s/,\([0-9]\+\)\.[0-9]\+.[0-9]\+$/,\1/'
+      ;;
+    minor)
+      ss='s/,\([0-9]\+\.[0-9]\+\).[0-9]\+$/,\1/'
+      ;;
+    patch)
+      ss='' # no-op
+      ;;
+    *)
+      echo "Invalid ghc-level $level, must be major|minor|patch" >&2
+      exit 1
+      ;;
+  esac
+
+  sort "${sort_options[@]}" --field-separator=, --key=2,2 --key=1,1 |
+    sort --version-sort --reverse --field-separator=, --key=2,2 --unique |
+    sed "$ss" |
+    sort --version-sort --reverse --field-separator=, --key=2,2 --unique
+}
+
+get_snapshots_page() {
+  curl \
+    --silent \
+    --fail \
+    --show-error \
+    --header "Accept: application/json" \
+    "https://www.stackage.org/snapshots?page=$1"
+}
+
+get_snapshots() {
+  local per=50 total pages
+
+  total=$(get_snapshots_page 1 | jq '.totalCount')
+  pages=$((total / per + 1))
+
+  for ((page = 1; page <= pages; page++)); do
+    get_snapshots_page "$page"
+  done
+}
+
+get_snapshots_by_prefix() {
+  local prefix=$1
+  local jq='.snapshots[] | .[] | select(.[0] | test("^'"$prefix"'-")) | (.[0] + ": " + .[1])'
+  local ss='/^\('"$prefix"'-[^:]\+\):.*(ghc-\([0-9]\+\.[0-9]\+.[0-9]\+\))$/!d; s//\1,\2/'
+  get_snapshots | jq --raw-output "$jq" | sed "$ss"
+}
+
+prefix=lts
+ghc_level='minor'
+sort_version=1
+sort_reverse=1
+fmt='%s,%s\n'
+
+while [[ -n "${1:-""}" ]]; do
+  case "$1" in
+    --lts)
+      prefix=lts
+      ;;
+    --nightly)
+      prefix=nightly
+      sort_version=0
+      ;;
+    --ghc-major)
+      ghc_level='major'
+      ;;
+    --ghc-minor)
+      ghc_level='minor'
+      ;;
+    --ghc-patch)
+      ghc_level='patch'
+      ;;
+    --first)
+      sort_reverse=0
+      ;;
+    --last)
+      sort_reverse=1
+      ;;
+    --printf)
+      shift
+      fmt=$1
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Invalid option $1" >&2
+      usage >&2
+      exit 64
+      ;;
+  esac
+
+  shift
+done
+
+get_snapshots_by_prefix "$prefix" |
+  truncate_resolvers_by_ghc "$ghc_level" "$sort_version" "$sort_reverse" |
+  print_resolver_ghc_from_csv "$fmt"
