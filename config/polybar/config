@@ -95,7 +95,7 @@ ramp-volume-2 = 
 
 [module/battery]
 type = internal/battery
-full-at = 98
+full-at = 97
 battery = BAT0
 adapter = AC0
 poll-interval = 5
