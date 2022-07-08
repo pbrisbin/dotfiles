@@ -7,18 +7,32 @@
 ###
 set -eu
 
+notify() {
+  echo "$*"
+  dunstify -r 99 Bluetooth "$*"
+}
+
 card=$(pactl list short cards | awk '/bluez/ { print $1 }')
 profile=headset-head-unit-msbc
+attempt=1
+max_attempts=10
 
-if [ -z "$card" ]; then
-  echo "No bluez card found" >&2
-  exit 1
-fi
+while [ -z "$card" ]; do
+  notify "No bluez card found (attempt $attempt)" >&2
+
+  if [ "$attempt" -ge "$max_attempts" ]; then
+    notify "Giving up" >&2
+    exit 1
+  fi
+
+  sleep 1
+  attempt=$((attempt + 1))
+done
 
 if pactl list cards | grep -Fq "Active Profile: $profile"; then
-  echo "Card already set to $profile"
+  notify "Card already set to $profile"
   exit 0
 fi
 
-echo "Setting card #$card to $profile"
+notify "Setting card #$card to $profile"
 exec pactl set-card-profile "$card" "$profile"
