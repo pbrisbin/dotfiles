@@ -3,7 +3,7 @@ vim.scriptencoding = 'utf-8'
 vim.cmd [[ packadd minpac ]]
 
 vim.call('minpac#init')
-vim.call('minpac#add', '5outh/yesod-routes.vim')
+vim.call("minpac#add", 'aliou/bats.vim')
 vim.call("minpac#add", 'cespare/vim-toml')
 vim.call("minpac#add", 'dense-analysis/ale')
 vim.call("minpac#add", 'editorconfig/editorconfig-vim')
@@ -17,6 +17,7 @@ vim.call("minpac#add", 'pbrisbin/vim-mkdir')
 vim.call("minpac#add", 'pbrisbin/vim-rename-file')
 vim.call("minpac#add", 'pbrisbin/vim-syntax-shakespeare')
 vim.call("minpac#add", 'rhysd/vim-syntax-codeowners')
+vim.call("minpac#add", 'skilstak/vim-abnf-utf8')
 vim.call("minpac#add", 'tpope/vim-commentary')
 vim.call("minpac#add", 'tpope/vim-eunuch')
 vim.call("minpac#add", 'tpope/vim-fugitive')
@@ -25,8 +26,10 @@ vim.call("minpac#add", 'tpope/vim-projectionist')
 vim.call("minpac#add", 'tpope/vim-repeat')
 vim.call("minpac#add", 'tpope/vim-rhubarb')
 vim.call("minpac#add", 'tpope/vim-surround')
+vim.call("minpac#add", 'vim-scripts/lbnf.vim')
 vim.call("minpac#add", 'vmchale/dhall-vim')
 vim.call("minpac#add", 'wfleming/vim-codeclimate')
+vim.call('minpac#add', '5outh/yesod-routes.vim')
 
 vim.cmd [[ filetype plugin indent on ]]
 
@@ -75,9 +78,14 @@ vim.g.ale_fixers = {
 
 vim.g.ale_linters = {haskell = {'hlint'}, javascript = {}}
 
+require('telescope').setup {
+    defaults = {layout_strategy = 'vertical'},
+    pickers = {git_files = {use_git_root = false}}
+}
+
 local map = vim.api.nvim_set_keymap
 
-map('n', '<C-P>', ':Telescope find_files<CR>', {})
+map('n', '<C-P>', ':Telescope git_files<CR>', {})
 map('n', '<Leader>T', ':execute \'!\'.b:ctags_command<CR><CR>', {})
 map('n', '<Leader>r',
     ':w | :bel sp | :execute \'terminal \'.expand(\'%:p\')<CR>', {})
@@ -101,7 +109,7 @@ augroup vimrc
     \ | setlocal nosmartindent
   autocmd FileType haskell
     \   setlocal shiftwidth=4
-    \ | let b:ctags_command = 'stack exec -- fast-tags -R --nomerge .'
+    \ | let b:ctags_command = 'stack exec -- fast-tags -R .'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
