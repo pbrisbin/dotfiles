@@ -32,6 +32,13 @@
     # I often make lists of lists to position commandline arguments in pairs. If
     # the list is small enough HLint suggests ++.
     name: Use ++
+- ignore:
+    # Sometimes small lists (e.g. 2) of conditions read better as a list if
+    # they're individually long.
+    name: Use &&
+- ignore:
+    # Same as ^
+    name: Use ||
 - arguments:
   # Typical extensions
   - -XBangPatterns
