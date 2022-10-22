@@ -16,7 +16,7 @@ if ! git branch | grep -q '^\* '"$main"'$'; then
 fi
 
 echo ":: Updating default branch $main"
-git pull
+git pull origin "$main"
 
 non_default_branches | while read -r branch; do
   echo ":: Rebasing $branch onto $main"

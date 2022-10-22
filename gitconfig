@@ -8,8 +8,8 @@
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   tgf = "!f() { [ -n \"$1\" ] && git tag -f -s -m $1 $1; }; f"
-  up = !git fetch origin && git rebase origin/main
-  upm = !git fetch origin && git rebase origin/master
+  up = !git fetch origin main && git rebase origin/main
+  upm = !git fetch origin master && git rebase origin/master
 [color]
   ui = auto
 [commit]
