@@ -1,3 +1,5 @@
+[advice]
+  skippedCherryPicks = false
 [alias]
   co = checkout
   db = "!f() { for b; do git branch -d $b && git push origin :$b; done; }; f"
