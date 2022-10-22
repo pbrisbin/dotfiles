@@ -24,7 +24,10 @@ main = xmonad $ docks $ ewmh $ def
     , layoutHook = avoidStruts $ layoutHook def
     , handleEventHook = handleEventHook def <+> fullscreenEventHook
     }
-    `additionalKeysP` [("M-S-p", spawn "passmenu --type")]
+    `additionalKeysP`
+        [ ("M-p", spawn "dmenu_run -fn 'Noto Sans-16'")
+        , ("M-S-p", spawn "passmenu --type")
+        ]
 
   where
     role = stringProperty "WM_WINDOW_ROLE"
