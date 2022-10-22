@@ -1,4 +1,2 @@
 -- vim: ft=lua
-std = {
-  globals = {"vim"}
-}
+std = {globals = {"vim", "require"}}
