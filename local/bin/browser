@@ -7,4 +7,5 @@
 ###
 #exec chromium "$@"
 #exec firefox-nightly "$@"
-exec firefox "$@"
+#exec firefox "$@"
+exec librewolf "$@"
