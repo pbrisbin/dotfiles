@@ -5,6 +5,12 @@
 # restarting a bunch of things.
 #
 ###
+case "$(uname -s)" in
+  Darwin)
+    exec open "$@"
+    ;;
+esac
+
 #exec chromium "$@"
 #exec firefox-nightly "$@"
 #exec firefox "$@"
