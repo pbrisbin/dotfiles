@@ -1,0 +1,15 @@
+TAGS=Darwin
+COPY_ALWAYS="aws/config"
+EXCLUDES="
+  README.md
+  Xresources
+  config/alacritty/*
+  config/dunst/*
+  config/fontconfig/*
+  config/pipewire/*
+  config/polybar/*
+  config/systemd/*
+  weechat/*
+  xinitrc
+  xmonad/*
+"
