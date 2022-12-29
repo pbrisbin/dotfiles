@@ -46,11 +46,21 @@ setopt inc_append_history
 setopt vi
 unsetopt nomatch
 
-# Plugins
+# Autosuggestions
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080"
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-execute
+
+for _plugins in /usr/local/share /usr/share/zsh/plugins; do
+  _plugin=$_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+  if [[ -f "$_plugin" ]]; then
+    source "$_plugin"
+    bindkey '^ ' autosuggest-execute
+  fi
+done
+
+unset _plugin
+unset _plugins
 
 # Completion
 autoload bashcompinit && bashcompinit
