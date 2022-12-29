@@ -61,7 +61,11 @@ complete -C '/usr/bin/aws_completer' aws
 ssh_env="$HOME/.ssh/agent-env"
 
 if pgrep ssh-agent >/dev/null; then
-  source "$ssh_env"
+  if [[ -f $ssh_env ]]; then
+    source "$ssh_env"
+  else
+    echo "ssh-agent running but $ssh_env not found" >&2
+  fi
 else
   ssh-agent | grep -Fv echo > "$ssh_env"
   source "$ssh_env"
