@@ -1,3 +1,4 @@
+# vim: ft=zsh
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
@@ -8,8 +9,6 @@ export GPG_TTY="$(tty)"
 export LS_COLORS="$(vivid generate nord)"
 export MANWIDTH=80
 export RCRC="$XDG_CONFIG_HOME"/rcm/rcrc
-
-export GITHUB_ACCESS_TOKEN=$(pass github/tokens/$USER@$HOST)
 
 # Prevents alacritty from screwing up on multiple monitors
 export WINIT_X11_SCALE_FACTOR=1
