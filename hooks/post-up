@@ -1,5 +1,11 @@
 #!/bin/sh
-chmod 0600 ~/.netrc.gpg
+if [ -f ~/.netrc.gpg ]; then
+  chmod 0600 ~/.netrc.gpg
+fi
+
+if [ -f ~/.config/gnupg ]; then
+  chmod 0700 ~/.config/gnupg
+fi
 
 if [ ! -d ~/.config/nvim/pack/minpac/opt/minpac ]; then
   git clone https://github.com/k-takata/minpac.git \
