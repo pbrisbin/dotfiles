@@ -13,5 +13,5 @@ esac
 
 #exec chromium "$@"
 #exec firefox-nightly "$@"
-#exec firefox "$@"
-exec librewolf "$@"
+exec firefox "$@"
+#exec librewolf "$@"
