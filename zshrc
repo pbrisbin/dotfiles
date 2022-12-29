@@ -65,7 +65,10 @@ unset _plugins
 # Completion
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
-complete -C '/usr/bin/aws_completer' aws
+
+if [[ -f /usr/bin/aws_completer ]]; then
+  complete -C /usr/bin/aws_completer aws
+fi
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
