@@ -115,3 +115,18 @@ augroup vimrc
     \ | setlocal colorcolumn=
 augroup END
 ]]
+
+vim.cmd [[
+function MustacheYaml()
+  set filetype=yaml
+  syn region stach start=/{{/ end=/}}/ keepend
+  syn region stach2 start=/{{{/ end=/}}}/ keepend
+  hi def link stach Keyword
+  hi def link stach2 Keyword
+endfunction
+
+augroup mustache_yaml
+  autocmd!
+  autocmd BufRead,BufNewFile *.yaml.mustache call MustacheYaml()
+augroup END
+]]
