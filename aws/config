@@ -8,19 +8,15 @@ region = us-east-1
 region = us-east-1
 
 [profile freckle]
-sso_start_url = https://rensso.awsapps.com/start
+sso_start_url = https://d-90675613ab.awsapps.com/start
 sso_region = us-east-1
 sso_account_id = 853032795538
-sso_role_name = AdministratorAccess
+sso_role_name = AWSAdministratorAccess
 region = us-east-1
 
 [profile freckle-dev]
-sso_start_url = https://rensso.awsapps.com/start
+sso_start_url = https://d-90675613ab.awsapps.com/start
 sso_region = us-east-1
 sso_account_id = 539282909833
-sso_role_name = AdministratorAccess
+sso_role_name = AWSAdministratorAccess
 region = us-east-1
-
-[profile freckle-dev-jobs]
-role_arn = arn:aws:iam::539282909833:role/dev-consume-dev-jobs-TaskRole-9D2VG407EE9V
-source_profile = freckle-dev-pbrisbin
