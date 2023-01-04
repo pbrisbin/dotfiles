@@ -8,6 +8,7 @@ main :: IO ()
 main =
     xmonad
         $ docks
+        $ disableEwmhManageDesktopViewport
         $ ewmh
         $ ewmhFullscreen
         $ def
