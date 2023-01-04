@@ -3,7 +3,7 @@ if [ -f ~/.netrc.gpg ]; then
   chmod 0600 ~/.netrc.gpg
 fi
 
-if [ -f ~/.config/gnupg ]; then
+if [ -d ~/.config/gnupg ]; then
   chmod 0700 ~/.config/gnupg
 fi
 
