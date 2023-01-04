@@ -4,12 +4,33 @@
 # subkey, signed, or trusted another.
 #
 ###
-gpg --armor --export pbrisbin@gmail.com |
-  aws s3 cp \
-    --acl public-read \
-    --content-type text/plain \
-    - s3://files.pbrisbin.com/public.key
+set -e
 
-aws cloudfront create-invalidation \
-  --distribution-id E1E8FI26QTPDW7 \
-  --paths /public.key
+bucket=files.pbrisbin.com
+path=/public.key
+distribution_id=E1E8FI26QTPDW7
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+old_key=$tmp/old.key
+new_key=$tmp/new.key
+
+if [ -n "$1" ]; then
+  echo "Using existing file $1"
+  cp "$1" "$new_key"
+else
+  echo "Exporting current public key..."
+  gpg --armor --export pbrisbin@gmail.com >"$new_key"
+fi
+
+echo "Fetching published key..."
+aws s3 cp "s3://$bucket$path" "$old_key" >/dev/null
+
+if diff "$old_key" "$new_key" >/dev/null; then
+  echo "Published key matches new key, skipping"
+  exit 0
+fi
+
+aws s3 cp --acl public-read --content-type text/plain "$new_key" "s3://$bucket$path"
+aws cloudfront create-invalidation --distribution-id "$distribution_id" --paths "$path"
