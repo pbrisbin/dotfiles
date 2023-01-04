@@ -1,2 +1,4 @@
 resolver: lts-20.05
 packages: []
+extra-deps:
+  - /home/patrick/code/xmonad/xmonad-contrib
