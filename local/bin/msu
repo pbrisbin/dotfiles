@@ -3,6 +3,23 @@
 # Reset my monitor after unplugging an external.
 #
 ###
-set -ex
-xrandr --auto
+set -e
+
+case "${1:---auto}" in
+  --auto)
+    xrandr --auto
+    ;;
+  --dual)
+    dual_output=DP-1-2-1
+    dual_mode=2560x1440
+    xrandr \
+      --output "$dual_output" --primary --mode "$dual_mode" \
+      --output eDP1 --mode 1920x1080 --right-of "$dual_output"
+    ;;
+  *)
+    echo "usage: msu [--dual]" >&2
+    exit 64
+    ;;
+esac
+
 pkill -USR1 polybar
