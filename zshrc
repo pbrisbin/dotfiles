@@ -73,6 +73,29 @@ fi
 # GPG
 export GPG_TTY="$(tty)"
 
+# History
+HISTSIZE=500000
+SAVEHIST=$HISTSIZE
+
+# Paths
+cdpath=(
+  ~
+  ~/code
+  ~/code/freckle
+  ~/code/pbrisbin
+  ~/code/restyled-io/
+  $cdpath
+)
+fpath=(
+  ~/.local/share/zsh/site-functions
+  $fpath
+)
+path=(
+  ~/.local/bin
+  $(ruby -r rubygems -e "puts Gem.user_dir")/bin
+  $path
+)
+
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
 
