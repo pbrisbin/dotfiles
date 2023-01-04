@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-deprecations #-}
+
 import Graphics.X11.Xlib.Extras
 import XMonad
 import XMonad.Hooks.EwmhDesktops
