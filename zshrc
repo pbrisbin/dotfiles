@@ -70,6 +70,9 @@ if [[ -f /usr/bin/aws_completer ]]; then
   complete -C /usr/bin/aws_completer aws
 fi
 
+# GPG
+export GPG_TTY="$(tty)"
+
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
 
