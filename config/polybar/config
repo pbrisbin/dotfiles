@@ -50,7 +50,7 @@ label = %title:0:100:%
 
 [module/wifi]
 type = internal/network
-interface = wlan0
+interface = wlp0s20f3
 ping-interval = 3
 
 format-connected = <ramp-signal> <label-connected>
