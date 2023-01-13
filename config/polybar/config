@@ -102,7 +102,7 @@ poll-interval = 5
 
 format-charging = <label-charging>
 
-label-charging = 
+label-charging = "%percentage%% "
 label-charging-foreground = ${colors.green}
 label-charging-padding-right = ${paddings.module-item-spacing}
 
