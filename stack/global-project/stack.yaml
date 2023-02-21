@@ -1,4 +1,14 @@
-resolver: lts-20.05
+# This is the implicit global project's config file, which is only used when
+# 'stack' is run outside of a real project. Settings here do _not_ act as
+# defaults for all projects. To change Stack's default settings, edit
+# '/home/patrick/.stack/config.yaml' instead.
+#
+# For more information about Stack's configuration, see
+# http://docs.haskellstack.org/en/stable/yaml_configuration/
+#
 packages: []
+resolver: lts-20.11
 extra-deps:
-  - /home/patrick/code/xmonad/xmonad-contrib
+  # https://github.com/xmonad/xmonad-contrib/pull/791
+  - github: xmonad/xmonad-contrib
+    commit: 4e8857ecee2100c58c240ff988facb289308a5fb
