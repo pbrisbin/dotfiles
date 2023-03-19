@@ -102,6 +102,9 @@ augroup vimrc
     \   if !exists('b:ctags_command')
     \ |   let b:ctags_command = 'ctags -R .'
     \ | endif
+  autocmd BufNewFile,BufRead ~/.aws/config,~/.aws/credentials
+    \ set filetype=dosini
+    \ commentstring=#\ %s
   autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd BufNewFile,BufRead PULLREQ_EDITMSG set filetype=markdown
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
