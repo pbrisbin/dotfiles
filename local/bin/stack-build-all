@@ -14,6 +14,18 @@ prompt() {
   esac
 }
 
+list_stack_yamls() {
+  if [[ -f .github/workflows/ci.yml ]] && command -v yq &>/dev/null; then
+    # Only build what's CI-enabled
+    yq -r '.jobs.test.strategy.matrix.stack-yaml[]' .github/workflows/ci.yml
+  else
+    # Build everything present
+    find . -type f -wholename './stack-nightly.yaml'
+    find . -type f -wholename './stack.yaml'
+    find . -type f -wholename './stack-lts-*.yaml' | sort -rV
+  fi
+}
+
 stack_build() {
   local tmp
   tmp=$(mktemp)
@@ -80,5 +92,5 @@ if ((${SETUP:-0})); then
 else
   while read -r stack_yaml; do
     stack_build --stack-yaml "$stack_yaml"
-  done < <(find . -name 'stack*.yaml' | sort -V)
+  done < <(list_stack_yamls)
 fi
