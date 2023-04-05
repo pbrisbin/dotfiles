@@ -119,3 +119,7 @@ if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
 fi
 
 popd >/dev/null
+
+if [[ -f ./package.json ]]; then
+  source /usr/share/nvm/init-nvm.sh
+fi
