@@ -1,25 +1,32 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-18.14
+{- stack script
+    --resolver lts-20.11
+    --package Glob
+    --package extra
+    --package filepath
+-}
 -- vim: ft=haskell
 --
 -- Like `pass list', but in non-tree output, for easier grepping.
 --
+{-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -Wall -Werror #-}
 
-module Main (main) where
+module Main
+    ( main
+    ) where
 
-import Data.List (sort, stripPrefix)
-import Data.Maybe (fromMaybe)
+import Data.Foldable (traverse_)
+import Data.List (sort)
+import Data.List.Extra (dropPrefix)
 import System.Environment (getEnv)
 import System.FilePath (dropExtension, (</>))
-import System.Process (readProcess)
+import System.FilePath.Glob (globDir1)
 
 main :: IO ()
 main = do
     store <- (</> ".password-store/") <$> getEnv "HOME"
-
-    mapM_ putStrLn . sort . map (dropExtension . dropPrefix store) . lines
-        =<< readProcess "find" [store, "-type", "f", "-name", "*.gpg"] ""
-
-dropPrefix :: Eq a => [a] -> [a] -> [a]
-dropPrefix p x = fromMaybe x $ stripPrefix p x
+    traverse_ putStrLn
+        . sort
+        . map (dropExtension . dropPrefix store)
+        =<< globDir1 "**/*.gpg" store
