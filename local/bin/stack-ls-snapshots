@@ -82,13 +82,21 @@ get_snapshots_page() {
 }
 
 get_snapshots() {
-  local per=50 total pages
+  local per=50 page=1 total=0 pages=0
 
-  total=$(get_snapshots_page 1 | jq '.totalCount')
-  pages=$((total / per + 1))
+  while true; do
+    json=$(get_snapshots_page "$page")
 
-  for ((page = 1; page <= pages; page++)); do
-    get_snapshots_page "$page"
+    if ((!pages)); then
+      total=$(jq '.totalCount' <<<"$json")
+      pages=$((total / per + 1))
+    fi
+
+    echo "$json"
+
+    if ((page++ >= pages)); then
+      break
+    fi
   done
 }
 
