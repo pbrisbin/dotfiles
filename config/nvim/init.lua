@@ -105,6 +105,7 @@ augroup vimrc
   autocmd BufNewFile,BufRead ~/.aws/config,~/.aws/credentials
     \ set filetype=dosini
     \ commentstring=#\ %s
+  autocmd BufNewFile,BufRead *.ronn set filetype=markdown
   autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd BufNewFile,BufRead PULLREQ_EDITMSG set filetype=markdown
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
