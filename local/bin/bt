@@ -12,12 +12,17 @@ notify() {
   dunstify -r 99 Bluetooth "$*"
 }
 
-card=$(pactl list short cards | awk '/bluez/ { print $1 }')
 profile=headset-head-unit-msbc
 attempt=1
-max_attempts=10
+max_attempts=15
 
-while [ -z "$card" ]; do
+while true; do
+  card=$(pactl list short cards | awk '/bluez/ { print $1 }')
+
+  if [ -n "$card" ]; then
+    break
+  fi
+
   notify "No bluez card found (attempt $attempt)" >&2
 
   if [ "$attempt" -ge "$max_attempts" ]; then
