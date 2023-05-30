@@ -27,6 +27,14 @@ clone() {
   esac
 }
 
+setup_nvm() {
+  if [[ -f ./package.json ]]; then
+    source /usr/share/nvm/init-nvm.sh
+  fi
+}
+
+chpwd_functions+=(setup_nvm)
+
 # Bindings & Options
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
 bindkey -M viins '^?' backward-delete-char # Backspace
@@ -119,7 +127,3 @@ if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
 fi
 
 popd >/dev/null
-
-if [[ -f ./package.json ]]; then
-  source /usr/share/nvm/init-nvm.sh
-fi
