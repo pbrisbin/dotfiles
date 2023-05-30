@@ -70,14 +70,6 @@ done
 unset _plugin
 unset _plugins
 
-# Completion
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-
-if [[ -f /usr/bin/aws_completer ]]; then
-  complete -C /usr/bin/aws_completer aws
-fi
-
 # GPG
 export GPG_TTY="$(tty)"
 
@@ -103,6 +95,14 @@ path=(
   $(ruby -r rubygems -e "puts Gem.user_dir")/bin
   $path
 )
+
+# Completion
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+
+if [[ -f /usr/bin/aws_completer ]]; then
+  complete -C /usr/bin/aws_completer aws
+fi
 
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
