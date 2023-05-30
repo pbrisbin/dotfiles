@@ -32,6 +32,8 @@ vim.call("minpac#add", 'vmchale/dhall-vim')
 vim.call("minpac#add", 'wfleming/vim-codeclimate')
 vim.call('minpac#add', '5outh/yesod-routes.vim')
 
+vim.call('minpac#add', 'neoclide/coc.nvim', {['branch'] = 'release'})
+
 vim.cmd [[ filetype plugin indent on ]]
 
 vim.opt.autowrite = true
@@ -134,4 +136,19 @@ augroup mustache_yaml
   autocmd!
   autocmd BufRead,BufNewFile *.yaml.mustache call MustacheYaml()
 augroup END
+
+vim.cmd [[
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
 ]]
