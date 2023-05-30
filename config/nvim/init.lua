@@ -124,7 +124,7 @@ augroup END
 ]]
 
 vim.cmd [[
-function MustacheYaml()
+function! MustacheYaml()
   set filetype=yaml
   syn region stach start=/{{/ end=/}}/ keepend
   syn region stach2 start=/{{{/ end=/}}}/ keepend
@@ -136,6 +136,20 @@ augroup mustache_yaml
   autocmd!
   autocmd BufRead,BufNewFile *.yaml.mustache call MustacheYaml()
 augroup END
+
+function! MustacheMarkdown()
+  set filetype=markdown
+  syn region stach start=/{{/ end=/}}/ keepend
+  syn region stach2 start=/{{{/ end=/}}}/ keepend
+  hi def link stach Keyword
+  hi def link stach2 Keyword
+endfunction
+
+augroup mustache_md
+  autocmd!
+  autocmd BufRead,BufNewFile *.md.mustache call MustacheMarkdown()
+augroup END
+]]
 
 vim.cmd [[
 " Use K to show documentation in preview window
