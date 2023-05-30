@@ -5,7 +5,6 @@
     --package extra
     --package filepath
 -}
--- vim: ft=haskell
 --
 -- Like `pass list', but in non-tree output, for easier grepping.
 --
@@ -30,3 +29,5 @@ main = do
         . sort
         . map (dropExtension . dropPrefix store)
         =<< globDir1 "**/*.gpg" store
+
+-- vim: ft=haskell
