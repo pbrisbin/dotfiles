@@ -60,6 +60,7 @@ vim.g.maplocalleader = ' '
 vim.g.ale_fix_on_save = 1
 vim.g.ale_dhall_executable = 'stack'
 vim.g.ale_haskell_brittany_executable = 'stack'
+vim.g.ale_haskell_fourmolu_executable = 'stack'
 vim.g.ale_haskell_hlint_executable = 'stack'
 vim.g.ale_haskell_stylish_haskell_executable = 'stack'
 vim.g.ale_sh_shfmt_options = '-i 2 -ci'
@@ -68,6 +69,7 @@ vim.g.jsx_ext_required = 0
 
 vim.g.ale_fixers = {
     dhall = {'dhall-format'},
+    -- haskell = {'fourmolu', 'hlint'},
     haskell = {'brittany', 'hlint', 'stylish-haskell'},
     javascript = {'eslint', 'prettier'},
     lua = {'lua-format'},
