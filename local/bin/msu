@@ -1,24 +1,28 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
-# Reset my monitor after unplugging an external.
+# Reset my monitor after un/plugging an external.
 #
 ###
 set -e
 
-case "${1:---auto}" in
-  --auto)
+mapfile -t connected_displays < <(xrandr |
+  sed -E '/^([^ ]*) connected.*$/!d; s//\1/' |
+  grep -v '^eDP1')
+
+case "${#connected_displays[@]}" in
+  0)
     xrandr --auto
     ;;
-  --dual)
-    dual_output=DP-1-2-1
-    dual_mode=2560x1440
+  1)
+    display=${connected_displays[0]}
+
     xrandr \
-      --output "$dual_output" --primary --mode "$dual_mode" \
-      --output eDP1 --mode 1920x1080 --right-of "$dual_output"
+      --output "$display" --primary --mode 2560x1440 \
+      --output eDP1 --mode 1920x1080 --right-of "$display"
     ;;
   *)
-    echo "usage: msu [--dual]" >&2
-    exit 64
+    echo "More than one external display found: ${connected_displays[*]}" >&2
+    exit 1
     ;;
 esac
 
