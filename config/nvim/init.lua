@@ -60,23 +60,21 @@ vim.g.maplocalleader = ' '
 
 vim.g.ale_fix_on_save = 1
 vim.g.ale_dhall_executable = 'stack'
-vim.g.ale_haskell_brittany_executable = 'stack'
 vim.g.ale_haskell_fourmolu_executable = 'stack'
 vim.g.ale_haskell_hlint_executable = 'stack'
-vim.g.ale_haskell_stylish_haskell_executable = 'stack'
 vim.g.ale_sh_shfmt_options = '-i 2 -ci'
 vim.g.javascript_plugin_flow = 1
 vim.g.jsx_ext_required = 0
 
 vim.g.ale_fixers = {
     dhall = {'dhall-format'},
-    -- haskell = {'fourmolu', 'hlint'},
-    haskell = {'brittany', 'hlint', 'stylish-haskell'},
+    haskell = {'fourmolu', 'hlint'},
     javascript = {'eslint', 'prettier'},
     lua = {'lua-format'},
     python = {
         'add_blank_lines_for_python_control_statements', 'autoimport',
-        'autopep8', 'black', 'isort', 'reorder-python-imports', 'yapf'
+        'autoflake', 'autopep8', 'black', 'isort', 'reorder-python-imports',
+        'yapf'
     },
     sh = {'shfmt'},
     typescript = {'prettier'}
@@ -118,8 +116,7 @@ augroup vimrc
     \   setlocal spell
     \ | setlocal nosmartindent
   autocmd FileType haskell
-    \   setlocal shiftwidth=4
-    \ | let b:ctags_command = 'stack exec -- fast-tags -R .'
+    \   let b:ctags_command = 'stack exec -- fast-tags -R .'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
