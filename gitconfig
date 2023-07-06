@@ -2,8 +2,6 @@
   skippedCherryPicks = false
 [alias]
   co = checkout
-  db = "!f() { for b; do git branch -d $b && git push origin :$b; done; }; f"
-  dbf = "!f() { for b; do git branch -D $b && git push origin :$b; done; }; f"
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
   recommit = "!f() { git commit --amend --no-edit; }; f"
