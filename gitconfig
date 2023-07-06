@@ -4,7 +4,7 @@
   co = checkout
   dc = diff --cached
   lg = log --oneline --decorate --all --graph -30
-  recommit = "!f() { git commit --amend --no-edit; }; f"
+  recommit = commit --amend --no-edit
   st = status
   tg = "!f() { [ -n \"$1\" ] && git tag -s -m $1 $1; }; f"
   tgf = "!f() { [ -n \"$1\" ] && git tag -f -s -m $1 $1; }; f"
