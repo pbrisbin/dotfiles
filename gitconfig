@@ -32,9 +32,7 @@
 [mergetool]
   keepBackup = false
 [mergetool "nvimdiff"]
-  # wincmd not doing what I'd expect. Removed to experiment manually
-  #cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c '$wincmd l' -c '$wincmd J'
-  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE"
+  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c ':wincmd l' -c ':wincmd J'
 [push]
   default = current
 [rebase]
