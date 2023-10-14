@@ -104,3 +104,8 @@ Yaml
 GHA
 Fourmolu
 OpenIDConnect
+levenshtein
+GHC
+stackage
+globbing
+triggerable
