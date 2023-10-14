@@ -1,11 +1,9 @@
----
-ghc-build: standard
 templates:
   params:
-    author-email: pbrisbin@gmail.com
-    author-name: Patrick Brisbin
-    category: Network
-    copyright: 2018 Patrick Brisbin
-    github-username: pbrisbin
-  scm-init: git
-save-hackage-creds: true
+   author-name: Patrick Brisbin
+   author-email: pbrisbin@gmail.com
+   copyright: 2023 Patrick Brisbin
+   github-username: pbrisbin
+
+ghc-options:
+  "$everything": -j
