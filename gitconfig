@@ -1,4 +1,5 @@
 [advice]
+  detachedHead = false
   skippedCherryPicks = false
 [alias]
   co = checkout
