@@ -102,7 +102,7 @@ sticky_history = yes
 history_length = 20
 
 # Display indicators for URLs (U) and actions (A).
-show_indicators = yes
+show_indicators = no
 
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
@@ -135,9 +135,9 @@ dmenu = /usr/bin/dmenu -p dunst:
 browser = /usr/bin/firefox -new-tab
 
 # Align icons left/right/off
-icon_position = off
-min_icon_size = 0
-max_icon_size = 64
+icon_position = left
+min_icon_size = 16
+max_icon_size = 16
 
 # Vertical alignment of message text and icon.
 # Possible values are "top", "center" and "bottom".
@@ -149,7 +149,10 @@ ellipsize = middle
 
 # Paths to default icons.
 #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Adwaita/16x16/legacy/
+#icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Adwaita/16x16/legacy/
+
+icon_theme = "Adwaita"
+enable_recursive_icon_lookup = true
 
 frame_width = 0
 frame_color = "#abd5ab"
