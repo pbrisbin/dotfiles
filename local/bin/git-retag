@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if (($# != 1)); then
+  echo "usage: git retag <tag>" >&2
+  exit 64
+fi
+
+git delete-tag "$1"
+git tag --sign --message "$1" "$1"
+git push --follow-tags

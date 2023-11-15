@@ -2,6 +2,7 @@
 _git-db() { _git-checkout }
 _git-dbf() { _git-checkout }
 _git-delete-tag() { compadd "$@" $(git tag) }
+_git-retag() { compadd "$@" $(git tag) }
 _git-pr() { _gh-pull-request }
 
 # Styles
