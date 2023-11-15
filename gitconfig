@@ -16,10 +16,9 @@
 [commit]
   gpgsign = true
 [core]
-  autocrlf = input
+  autocrlf = false
   editor = vim
   excludesfile = ~/.gitignore
-  safecrlf = true
 [diff]
   mnemonicprefix = true
 [fetch]
