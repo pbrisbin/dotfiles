@@ -115,6 +115,8 @@ augroup vimrc
   autocmd FileType gitcommit,hamlet,lhaskell,mail,markdown
     \   setlocal spell
     \ | setlocal nosmartindent
+  autocmd FileType groovy
+    \   setlocal shiftwidth=4
   autocmd FileType haskell
     \   let b:ctags_command = 'stack exec -- fast-tags -R .'
   autocmd FileType qf
