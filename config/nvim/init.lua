@@ -35,8 +35,6 @@ vim.call('minpac#add', 'vim-scripts/lbnf.vim')
 vim.call('minpac#add', 'vmchale/dhall-vim')
 vim.call('minpac#add', 'wfleming/vim-codeclimate')
 
-vim.call('minpac#add', 'neoclide/coc.nvim', {['branch'] = 'release'})
-
 vim.cmd [[ filetype plugin indent on ]]
 
 vim.opt.autowrite = true
