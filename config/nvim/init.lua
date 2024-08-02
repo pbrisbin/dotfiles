@@ -4,6 +4,7 @@ vim.cmd [[ packadd minpac ]]
 
 vim.call('minpac#init')
 vim.call('minpac#add', '5outh/yesod-routes.vim')
+vim.call('minpac#add', 'NoahTheDuke/vim-just')
 vim.call('minpac#add', 'aliou/bats.vim')
 vim.call('minpac#add', 'cespare/vim-toml')
 vim.call('minpac#add', 'dense-analysis/ale')
@@ -11,6 +12,7 @@ vim.call('minpac#add', 'editorconfig/editorconfig-vim')
 vim.call('minpac#add', 'hashivim/vim-terraform')
 vim.call('minpac#add', 'junegunn/vader.vim')
 vim.call('minpac#add', 'k-takata/minpac', {type = 'opt'})
+vim.call('minpac#add', 'leafgarland/typescript-vim')
 vim.call('minpac#add', 'mxw/vim-jsx')
 vim.call('minpac#add', 'nvim-lua/plenary.nvim')
 vim.call('minpac#add', 'nvim-telescope/telescope.nvim')
@@ -69,6 +71,7 @@ vim.g.jsx_ext_required = 0
 vim.g.ale_fixers = {
     dhall = {'dhall-format'},
     haskell = {'fourmolu', 'hlint'},
+    html = {'prettier'},
     javascript = {'eslint', 'prettier'},
     lua = {'lua-format'},
     python = {
@@ -77,10 +80,15 @@ vim.g.ale_fixers = {
         'yapf'
     },
     sh = {'shfmt'},
-    typescript = {'prettier'}
+    typescript = {'prettier'},
+    yaml = {'prettier', 'remove_trailing_lines', 'trim_whitespace', 'yamlfix'}
 }
 
-vim.g.ale_linters = {haskell = {'hlint'}, javascript = {}}
+vim.g.ale_linters = {
+  haskell = {'hlint'},
+  javascript = {},
+  yaml = {'yaml-language-server', 'spectral', 'yamllint'}
+}
 
 require('telescope').setup {
     defaults = {layout_strategy = 'vertical'},
@@ -109,6 +117,8 @@ augroup vimrc
   autocmd BufNewFile,BufRead ~/.aws/config,~/.aws/credentials
     \ set filetype=dosini
     \ commentstring=#\ %s
+  autocmd BufNewFile,BufRead .github/workflows/*.yml
+    \ call add(g:ale_linters["yaml"], "actionlint")
   autocmd BufNewFile,BufRead *.ronn set filetype=markdown
   autocmd BufNewFile,BufRead *.t set filetype=cram
   autocmd BufNewFile,BufRead PULLREQ_EDITMSG set filetype=markdown
