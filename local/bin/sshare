@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+bucket=files.pbrisbin.com
+
+usage() {
+  cat <<EOM
+Usage: sshare [-k <key>] [-Rh] <path>
+Copy <path> to s3://$bucket/<key> and put a link in clipboard
+
+Options:
+  -k KEY                Set key, default is basename of <path>
+
+  -R                    Remove file after copying
+
+  -h                    Display this help
+EOM
+}
+
+key=
+remove=0
+
+# TODO: optparse
+
+path=$1
+key=${key:-$(basename "$path")}
+url=https://$bucket/$key
+cp_args=(--acl public-read)
+
+case "$path" in
+  *.png)
+    cp_args+=(--content-type image/png)
+    ;;
+  *.gif)
+    cp_args+=(--content-type image/gif)
+    ;;
+esac
+
+aws s3 cp "${cp_args[@]}" "$path" "s3://$bucket/$key" >/dev/null
+
+if ((remove)); then
+  rm "$path"
+fi
+
+printf "%s" "$url" | xclip
+printf "%s" "$url" | xclip -selection clipboard
+printf "%s\n" "$url"
