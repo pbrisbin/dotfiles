@@ -31,10 +31,17 @@ clone() {
 setup_nvm() {
   if [[ -f ./package.json ]]; then
     source /usr/share/nvm/init-nvm.sh
+    nvm use
   fi
 }
 
-chpwd_functions+=(setup_nvm)
+setup_venv() {
+  if [[ -f ./.venv/bin/activate ]]; then
+    source ./.venv/bin/activate
+  fi
+}
+
+chpwd_functions+=(setup_nvm setup_venv)
 
 # Bindings & Options
 bindkey '^[[Z' reverse-menu-complete       # Shift-Tab
@@ -74,6 +81,9 @@ unset _plugins
 # GPG
 export GPG_TTY="$(tty)"
 
+# Bundler
+export BUNDLE_PATH=$(ruby -e 'puts Gem.user_dir')
+
 # History
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
@@ -93,7 +103,7 @@ fpath=(
 )
 path=(
   ~/.local/bin
-  $(ruby -r rubygems -e "puts Gem.user_dir")/bin
+  $BUNDLE_PATH/bin
   $path
 )
 
@@ -108,23 +118,29 @@ fi
 # SSH Agent
 ssh_env="$HOME/.ssh/agent-env"
 
-if pgrep ssh-agent >/dev/null; then
-  if [[ -f $ssh_env ]]; then
-    source "$ssh_env"
-  else
-    echo "ssh-agent running but $ssh_env not found" >&2
-  fi
-else
-  ssh-agent | grep -Fv echo > "$ssh_env"
-  source "$ssh_env"
+setup_ssh_agent() {
+ if pgrep ssh-agent >/dev/null; then
+   if [[ -f $ssh_env ]]; then
+     source "$ssh_env"
+   else
+     echo "ssh-agent running but $ssh_env not found" >&2
+   fi
+ else
+   ssh-agent | grep -Fv echo > "$ssh_env"
+   source "$ssh_env"
 
-  # Use pass(1), via wrapper script, to unlock SSH key
-  DISPLAY=99 SSH_ASKPASS="$HOME/.local/bin/ssh-askpass" ssh-add </dev/null
-fi
+   # Use pass(1), via wrapper script, to unlock SSH key
+   DISPLAY=99 SSH_ASKPASS="$HOME/.local/bin/ssh-askpass" ssh-add </dev/null
+ fi
+}
 
 # Start X
 if [[ $TTY == /dev/tty1 ]] && [[ -z $DISPLAY ]]; then
   exec startx
 fi
+
+setup_ssh_agent
+setup_nvm
+setup_venv
 
 popd >/dev/null
