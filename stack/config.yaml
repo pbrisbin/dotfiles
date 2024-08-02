@@ -7,3 +7,5 @@ templates:
 
 ghc-options:
   "$everything": -j
+
+notify-if-nix-on-path: false
