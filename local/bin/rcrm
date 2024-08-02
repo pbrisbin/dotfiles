@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+for file; do
+  rcdn -v "$file"
+  rm -v "$file"
+done
