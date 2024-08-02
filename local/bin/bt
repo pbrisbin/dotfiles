@@ -12,7 +12,7 @@ notify() {
   dunstify -r 99 Bluetooth "$*"
 }
 
-profile=headset-head-unit-msbc
+profile=headset-head-unit
 attempt=1
 max_attempts=15
 
