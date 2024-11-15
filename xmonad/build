@@ -4,7 +4,10 @@
 # does the default thing, just via stack exec.
 #
 ###
-exec stack ghc -- \
+exec stack ghc \
+  --package xmonad \
+  --package xmonad-contrib \
+  -- \
   --make xmonad.hs \
   -i \
   -ilib \
