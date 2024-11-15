@@ -67,7 +67,6 @@ vim.g.jsx_ext_required = 0
 vim.g.ale_fixers = {
     dhall = {'dhall-format'},
     haskell = {'fourmolu', 'hlint'},
-    html = {'prettier'},
     javascript = {'eslint', 'prettier'},
     lua = {'lua-format'},
     python = {
