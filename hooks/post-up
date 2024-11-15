@@ -7,6 +7,14 @@ if [ -d ~/.config/gnupg ]; then
   chmod 0700 ~/.config/gnupg
 fi
 
+if [ ! -x ~/.local/bin/indirect ]; then
+  tag=$(curl -sSf -L https://api.github.com/repos/pbrisbin/indirect/releases/latest | jq --raw-output '.tag_name')
+  curl -sSf -L -O "https://github.com/pbrisbin/indirect/releases/download/$tag/indirect-linux-x86_64"
+  install -D ./indirect-linux-x86_64 ~/.local/bin/indirect
+  rm ./indirect-linux-x86_64
+  indirect setup --links ~/.local/bin
+fi
+
 if [ ! -d ~/.config/nvim/pack/minpac/opt/minpac ]; then
   git clone https://github.com/k-takata/minpac.git \
     ~/.config/nvim/pack/minpac/opt/minpac
