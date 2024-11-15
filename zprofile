@@ -7,6 +7,7 @@ export BROWSER=browser
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export LS_COLORS="$(vivid generate nord)"
 export MANWIDTH=80
+export PAGER="less -R"
 export RCRC="$XDG_CONFIG_HOME"/rcm/rcrc
 
 # Prevents alacritty from screwing up on multiple monitors
