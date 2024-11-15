@@ -36,6 +36,7 @@ vim.call('minpac#add', 'vmchale/dhall-vim')
 vim.call('minpac#add', 'wfleming/vim-codeclimate')
 
 vim.cmd [[ filetype plugin indent on ]]
+vim.cmd [[ colorscheme wildcharm ]]
 
 vim.opt.autowrite = true
 vim.opt.background = 'light'
