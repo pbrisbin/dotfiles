@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2001
+set -euo pipefail
+
+usage() {
+  cat <<'EOM'
+Usage: drop-shadow [-brtlo] [--bottom] [--right] [--left] [--overwrite] [--] <image> [image...]
+Description: Add add a drop-shadow to an image
+
+Options:
+  -b, --bottom          Cast the shadow towards the bottom (default)
+  -r, --right           Cast the shadow to the bottom (default)
+  -t, --top             Cast the shadow towards the top
+  -l, --left            Cast the shadow to the left
+
+  -o, --overwrite       Replace the image in place
+
+  -h, --help            Show this help.
+
+EOM
+}
+
+images=()
+opacity=50
+size=10
+x=+15
+y=+15
+overwrite=0
+
+while (($#)); do
+  case "$1" in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    -b | --bottom)
+      shift
+      y=+15
+      ;;
+    -t | --top)
+      shift
+      y=-15
+      ;;
+    -l | --left)
+      shift
+      x=-15
+      ;;
+    -r | --right)
+      shift
+      x=+15
+      ;;
+    -o | --overwrite)
+      overwrite=1
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "Unexpected option: $1. See --help" >&2
+      exit 64
+      ;;
+    *)
+      images+=("$1")
+      ;;
+  esac
+  shift
+done
+
+if ((!${images[@]})); then
+  echo "Missing required argument: image. See --help" >&2
+  exit 64
+fi
+
+if ! command -v convert &>/dev/null; then
+  echo "The \`convert' command was not found. Is imagemagick installed?" >&2
+  exit 1
+fi
+
+for image in "${images[@]}"; do
+  output=$(sed 's/\.\([^.]*\)$/-shadow.\1/' <<<"$image")
+
+  printf 'Creating %s...\n' "$output"
+
+  convert "$image" \
+    \( +clone -background black -shadow "${opacity}x${size}${x}${y}" \) \
+    +swap -background none -layers merge +repage "$output"
+
+  if ((overwrite)); then
+    printf 'Overwriting %s...\n' "$image"
+    mv "$output" "$image"
+  fi
+done
