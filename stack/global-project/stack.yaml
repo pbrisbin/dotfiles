@@ -7,7 +7,7 @@
 # http://docs.haskellstack.org/en/stable/yaml_configuration/
 #
 packages: []
-resolver: lts-20.11
+resolver: lts-22.40
 extra-deps:
   # https://github.com/xmonad/xmonad-contrib/pull/791
   - github: xmonad/xmonad-contrib
