@@ -29,7 +29,7 @@ clone() {
 }
 
 setup_nvm() {
-  if [[ -f ./package.json ]]; then
+  if [[ -f ./package.json ]] || [[ -f .nvmrc ]]; then
     source /usr/share/nvm/init-nvm.sh
     nvm use
   fi
