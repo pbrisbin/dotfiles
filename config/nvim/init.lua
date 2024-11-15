@@ -60,9 +60,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.ale_fix_on_save = 1
-vim.g.ale_dhall_executable = 'stack'
-vim.g.ale_haskell_fourmolu_executable = 'stack'
-vim.g.ale_haskell_hlint_executable = 'stack'
 vim.g.ale_sh_shfmt_options = '-i 2 -ci'
 vim.g.javascript_plugin_flow = 1
 vim.g.jsx_ext_required = 0
@@ -127,7 +124,7 @@ augroup vimrc
   autocmd FileType groovy
     \   setlocal shiftwidth=4
   autocmd FileType haskell
-    \   let b:ctags_command = 'stack exec -- fast-tags -R .'
+    \   let b:ctags_command = 'fast-tags -R .'
   autocmd FileType qf
     \   setlocal wrap
     \ | setlocal colorcolumn=
