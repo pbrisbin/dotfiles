@@ -157,19 +157,3 @@ augroup mustache_md
   autocmd BufRead,BufNewFile *.md.mustache call MustacheMarkdown()
 augroup END
 ]]
-
-vim.cmd [[
-" Use K to show documentation in preview window
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
-]]
