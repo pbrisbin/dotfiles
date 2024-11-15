@@ -1,0 +1,100 @@
+[defaults]
+vars.bin = "${HOME}/.local/bin"
+vars.curl = "curl -Ssf -L"
+
+vars.arch = "x86_64"
+vars.os = "linux"
+
+binary = "${bin}/${name}-${version}"
+
+[indirect]
+vars.version = "1.0.0.0"
+vars.artifact = "${name}-${os}-${arch}"
+
+install = """
+  ${curl} -O https://github.com/pbrisbin/${name}/releases/download/v${version}/${artifact}
+  install ${artifact} ${binary}
+"""
+
+# Doesn't compile
+# [apply-refact]
+# vars.version = "0.8.0.0"
+
+# install = """
+#   stack install ${name}-${version}
+# """
+
+[fast-tags]
+vars.version = "2.0.2"
+
+install = """
+  stack install --local-bin-path $(pwd) ${name}-${version}
+  mv ./${name} ${binary}
+"""
+
+[fourmolu]
+vars.version = "0.16.2.0"
+vars.artifact = "${name}-${version}-${os}-${arch}"
+
+install = """
+  ${curl} -O https://github.com/${name}/${name}/releases/download/v${version}/${artifact}
+  install ${artifact} ${binary}
+"""
+
+[headroom]
+vars.version = "0.4.3.0"
+
+install = """
+  stack install --local-bin-path $(pwd) ${name}-${version}
+  mv ./${name} ${binary}
+"""
+
+[hlint]
+vars.version = "3.8"
+
+install = """
+  ${curl} https://github.com/ndmitchell/${name}/releases/download/v${version}/${name}-${version}-${arch}-${os}.tar.gz | tar xzf -
+  cp ${name}-${version}/${name} ${binary}
+"""
+
+[pandoc]
+vars.version = "3.5"
+
+install = """
+  ${curl} https://github.com/jgm/${name}/releases/download/${version}/${name}-${version}-${os}-amd64.tar.gz | tar xzf -
+  cp ${name}-${version}/bin/${name} ${binary}
+"""
+
+[platform]
+vars.version = "3.2.17.0"
+vars.archive = "${name}-${arch}-${os}.tar.gz"
+
+install = """
+  gh --repo freckle/${name} release download --pattern ${archive} v${version}
+  tar xzf ${archive}
+  cp ${name}/${name} ${binary}
+"""
+
+[shellcheck]
+vars.version = "stable"
+
+install = """
+  ${curl} https://github.com/koalaman/${name}/releases/download/${version}/${name}-${version}.${os}.${arch}.tar.xz | tar xJf -
+  cp ${name}-${version}/${name} ${binary}
+"""
+
+[stackctl]
+vars.version = "1.7.2.0"
+
+install = """
+  ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
+  cp ${name}/${name} ${binary}
+"""
+
+[stack-lint-extra-deps]
+vars.version = "1.2.3.1"
+
+install = """
+  ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
+  cp ${name}/${name} ${binary}
+"""
