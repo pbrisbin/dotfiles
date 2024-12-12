@@ -1,4 +1,8 @@
 #!/bin/sh
+if ! aurtoi setup; then
+  echo "Unable to setup AUR inventory" >&2
+fi
+
 if [ -f ~/.netrc.gpg ]; then
   chmod 0600 ~/.netrc.gpg
 fi

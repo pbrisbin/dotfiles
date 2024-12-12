@@ -1,0 +1,96 @@
+#!/bin/sh
+set -e
+
+: "${AUR_INVENTORY:=${XDG_DATA_HOME:-$HOME/.local/share}/aur-packages.csv}"
+
+usage() {
+  cat <<'EOM'
+NAME
+
+  aurtoi - manage an inventory of AUR packages.
+
+SYNOPSIS
+
+  aurto setup
+  aurto add <package> [package...]
+
+
+COMMANDS
+
+  setup                 install aur(utils|to), initialize aurto, and install all
+                        AUR packages in our inventory.
+
+  add <package>         run aurto add <package>, pacman -Sy <package>, and add
+                        the package's details to the inventory.
+
+ENVIRONMENT
+
+  AUR_INVENTORY         location of the inventory file, default is
+                        ${XDG_DATA_HOME:-$HOME/.local/share}/aur-packages.csv
+
+EOM
+}
+
+get_maintainer() {
+  aur query -t info "$1" | jq '.results[0].Maintainer' --raw-output
+}
+
+get_pgpkey() {
+  curl -L -sSf "https://aur.archlinux.org/cgit/aur.git/plain/.SRCINFO?h=$1" |
+    sed '/^\tvalidpgpkeys = \(.*\)$/!d; s//\1/'
+}
+
+package_csv() {
+  printf '%s,%s,%s\n' "$1" "$(get_maintainer "$1")" "$(get_pgpkey "$1")"
+}
+
+case "$1" in
+  help)
+    usage
+    exit 0
+    ;;
+  setup)
+    if [ ! -f /etc/aurto/trusted-users ]; then
+      echo "Configuring aurto trusted users GPG keys..."
+      cut -d, -f2 "$AUR_INVENTORY" | sort -u | sudo tee /etc/aurto/trusted-users
+      cut -d, -f3 "$AUR_INVENTORY" | sort -u | GNUPGHOME="" xargs gpg --recv-keys
+    fi
+
+    if ! command -v aurto >/dev/null 2>/dev/null; then
+      cd /tmp
+
+      echo "Installing aurutils..."
+      curl -L https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz | tar xz
+
+      (cd aurutils && makepkg -srci --noconfirm)
+
+      echo "Installing aurto..."
+      curl -L https://aur.archlinux.org/cgit/aur.git/snapshot/aurto.tar.gz | tar xz
+
+      (cd aurto && makepkg -srci --noconfirm)
+
+      aurto init
+
+      cut -d, -f1 "$AUR_INVENTORY" | xargs aurto add
+      cut -d, -f1 "$AUR_INVENTORY" | xargs sudo pacman -Sy --needed --noconfirm
+    fi
+    ;;
+  add)
+    shift
+
+    aurto add "$@"
+    sudo pacman -Sy "$@"
+
+    echo "Updating AUR inventory ($AUR_INVENTORY)..."
+
+    {
+      cat "$AUR_INVENTORY"
+      for pkg; do package_csv "$pkg"; done
+    } | sort -u | sponge "$AUR_INVENTORY"
+    ;;
+  *)
+    echo "Invalid subcommand $1" >&2
+    usage >&2
+    exit 64
+    ;;
+esac
