@@ -26,5 +26,7 @@ if [ ! -f ~/.local/share/nvim/site/syntax/cram.vim ]; then
 fi
 
 if [ ! -d ~/.password-store ]; then
-  git clone git@gitlab.com:pbrisbin/password-store.git ~/.password-store
+  if ! git clone git@gitlab.com:pbrisbin/password-store.git ~/.password-store; then
+    echo "Unable to clone password-store, SSH not configured?" >&2
+  fi
 fi
