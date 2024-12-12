@@ -91,6 +91,14 @@ install = """
   cp ${name}/${name} ${binary}
 """
 
+[stack-all]
+vars.version = "0.6.4"
+
+install = """
+  stack install --local-bin-path $(pwd) ${name}-${version}
+  mv ./${name} ${binary}
+"""
+
 [stack-lint-extra-deps]
 vars.version = "1.2.3.1"
 
