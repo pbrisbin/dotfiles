@@ -30,3 +30,8 @@ if [ ! -d ~/.password-store ]; then
     echo "Unable to clone password-store, SSH not configured?" >&2
   fi
 fi
+
+if ! command -v xmonad >/dev/null 2>&1; then
+  stack setup
+  stack install xmonad xmonad-contrib
+fi
