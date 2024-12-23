@@ -11,14 +11,14 @@ NAME
 
 SYNOPSIS
 
-  aurto setup
-  aurto add <package> [package...]
+  aurtoi setup
+  aurtoi add <package> [package...]
 
 
 COMMANDS
 
   setup                 install aur(utils|to), initialize aurto, and install all
-                        AUR packages in our inventory.
+                        AUR packages currently in inventory.
 
   add <package>         run aurto add <package>, pacman -Sy <package>, and add
                         the package's details to the inventory.
@@ -71,6 +71,7 @@ case "$1" in
 
       aurto init
 
+      echo "Installing entire inventory..."
       cut -d, -f1 "$AUR_INVENTORY" | xargs aurto add
       cut -d, -f1 "$AUR_INVENTORY" | xargs sudo pacman -Sy --needed --noconfirm
     fi
@@ -79,9 +80,9 @@ case "$1" in
     shift
 
     aurto add "$@"
-    sudo pacman -Sy "$@"
+    sudo pacman -Sy --needed --noconfirm "$@"
 
-    echo "Updating AUR inventory ($AUR_INVENTORY)..."
+    echo "Updating inventory..."
 
     {
       cat "$AUR_INVENTORY"
