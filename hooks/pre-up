@@ -3,9 +3,9 @@ if [ -z "$RCRC" ] || [ ! -f "$RCRC" ]; then
   cat >&2 <<EOM
 \$RCRC variable not set or file not found (RCRC=$RCRC).
 
-Initial RCM setup still required, run one of:
+Initial RCM setup still required, run:
 
-  RCRC=\$PWD/config/rcm/rcrc rcup [-t Darwin]
+  RCRC=\$PWD/config/rcm/rcrc rcup
 
 EOM
   exit 1
