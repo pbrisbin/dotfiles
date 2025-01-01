@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+pkill -USR1 polybar
+dunstify -i display "Display profile" "$AUTORANDR_CURRENT_PROFILE"
