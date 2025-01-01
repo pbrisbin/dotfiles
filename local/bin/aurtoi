@@ -54,6 +54,7 @@ case "$1" in
   setup)
     if [ ! -f /etc/aurto/trusted-users ]; then
       echo "Configuring aurto trusted users GPG keys..."
+      sudo mkdir -p /etc/aurto
       cut -d, -f2 "$AUR_INVENTORY" | sort -u | sudo tee /etc/aurto/trusted-users
       cut -d, -f3 "$AUR_INVENTORY" | sort -u | GNUPGHOME="" xargs gpg --recv-keys
     fi
