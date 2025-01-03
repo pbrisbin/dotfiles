@@ -16,13 +16,13 @@ install = """
   install ${artifact} ${binary}
 """
 
-# Doesn't compile
-# [apply-refact]
-# vars.version = "0.8.0.0"
+[refactor]
+vars.version = "0.13.0.0"
 
-# install = """
-#   stack install ${name}-${version}
-# """
+install = """
+  stack install --local-bin-path $(pwd) apply-refact-${version}
+  mv ./${name} ${binary}
+"""
 
 [fast-tags]
 vars.version = "2.0.2"
