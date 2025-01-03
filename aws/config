@@ -11,12 +11,37 @@ region = us-east-1
 sso_start_url = https://d-90675613ab.awsapps.com/start
 sso_region = us-east-1
 sso_account_id = 853032795538
-sso_role_name = AWSAdministratorAccess
+sso_role_name = AWSFrecklePlatformEngineer
+region = us-east-1
+
+[profile freckle-eng]
+sso_start_url = https://d-90675613ab.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 853032795538
+sso_role_name = Freckle-Prod-Engineers
 region = us-east-1
 
 [profile freckle-dev]
 sso_start_url = https://d-90675613ab.awsapps.com/start
 sso_region = us-east-1
 sso_account_id = 539282909833
-sso_role_name = AWSAdministratorAccess
+sso_role_name = AWSFrecklePlatformEngineer
 region = us-east-1
+
+[profile freckle-dev-eng]
+sso_start_url = https://d-90675613ab.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 539282909833
+sso_role_name = Freckle-Dev-Engineers
+region = us-east-1
+
+[profile freckle-jobs]
+role_arn = arn:aws:iam::853032795538:role/prod-consume-dev-jobs-TaskRole-1MCS10UG6HT07
+source_profile = freckle
+
+[profile rli-devops]
+sso_start_url = https://d-90675613ab.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 112784725199
+sso_role_name = RGP_Developers-RLI-DEVOPS
+region = us-west-2
