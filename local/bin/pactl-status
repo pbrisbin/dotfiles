@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tmp=$(mktemp)
+trap 'rm -f "$tmp"' EXIT
+
+sink=$(pactl get-default-sink)
+
+pactl list sinks | grep -A 10 -F "Name: $sink" | grep -E 'Mute|Volume' >"$tmp"
+
+mute=$(sed -E '/^\s*Mute: (yes|no).*$/!d; s//\1/' "$tmp")
+
+if [[ "$mute" == yes ]]; then
+  echo Muted
+  exit
+fi
+
+# Assume the first % we see is what we want
+sed -E '/^\s*Volume: .* ([0-9]{2,3}%) .*$/!d; s//\1/' "$tmp"
