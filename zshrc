@@ -143,4 +143,7 @@ setup_ssh_agent
 setup_nvm
 setup_venv
 
+# Increased ulimit needed for some projects
+ulimit -n 2048
+
 popd >/dev/null
