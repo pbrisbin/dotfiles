@@ -132,7 +132,7 @@ separator_color = frame
 dmenu = /usr/bin/dmenu -p dunst:
 
 # Browser for opening urls in context menu.
-browser = /usr/bin/firefox -new-tab
+browser = /home/patrick/.local/bin/browser
 
 # Align icons left/right/off
 icon_position = left
