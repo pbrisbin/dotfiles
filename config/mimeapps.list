@@ -1,8 +1,8 @@
 
 [Default Applications]
 x-scheme-handler/msteams=teams.desktop
-text/html=browser.desktop
-x-scheme-handler/http=browser.desktop
-x-scheme-handler/https=browser.desktop
-x-scheme-handler/about=browser.desktop
-x-scheme-handler/unknown=browser.desktop
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop

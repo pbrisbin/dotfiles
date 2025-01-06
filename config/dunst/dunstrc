@@ -132,7 +132,7 @@ separator_color = frame
 dmenu = /usr/bin/dmenu -p dunst:
 
 # Browser for opening urls in context menu.
-browser = /home/patrick/.local/bin/browser
+browser = /usr/bin/xdg-open
 
 # Align icons left/right/off
 icon_position = left
