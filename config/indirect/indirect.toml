@@ -7,15 +7,6 @@ vars.os = "linux"
 
 binary = "${bin}/${name}-${version}"
 
-[indirect]
-vars.version = "1.0.0.0"
-vars.artifact = "${name}-${os}-${arch}"
-
-install = """
-  ${curl} -O https://github.com/pbrisbin/${name}/releases/download/v${version}/${artifact}
-  install ${artifact} ${binary}
-"""
-
 [refactor]
 vars.version = "0.13.0.0"
 
