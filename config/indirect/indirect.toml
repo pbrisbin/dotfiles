@@ -12,7 +12,7 @@ vars.version = "0.13.0.0"
 
 install = """
   stack install --local-bin-path $(pwd) apply-refact-${version}
-  mv ./${name} ${binary}
+  cp -v ./${name} ${binary}
 """
 
 [restyle]
@@ -31,7 +31,7 @@ vars.version = "2.0.2"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  mv ./${name} ${binary}
+  cp -v ./${name} ${binary}
 """
 
 [fourmolu]
@@ -48,7 +48,7 @@ vars.version = "0.4.3.0"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  mv ./${name} ${binary}
+  cp -v ./${name} ${binary}
 """
 
 [hlint]
@@ -56,7 +56,7 @@ vars.version = "3.8"
 
 install = """
   ${curl} https://github.com/ndmitchell/${name}/releases/download/v${version}/${name}-${version}-${arch}-${os}.tar.gz | tar xzf -
-  cp ${name}-${version}/${name} ${binary}
+  cp -v ${name}-${version}/${name} ${binary}
 """
 
 [pandoc]
@@ -64,7 +64,7 @@ vars.version = "3.5"
 
 install = """
   ${curl} https://github.com/jgm/${name}/releases/download/${version}/${name}-${version}-${os}-amd64.tar.gz | tar xzf -
-  cp ${name}-${version}/bin/${name} ${binary}
+  cp -v ${name}-${version}/bin/${name} ${binary}
 """
 
 [platform]
@@ -74,7 +74,7 @@ vars.archive = "${name}-${arch}-${os}.tar.gz"
 install = """
   gh --repo freckle/${name} release download --pattern ${archive} v${version}
   tar xzf ${archive}
-  cp ${name}/${name} ${binary}
+  cp -v ${name}/${name} ${binary}
 """
 
 [shellcheck]
@@ -82,7 +82,7 @@ vars.version = "stable"
 
 install = """
   ${curl} https://github.com/koalaman/${name}/releases/download/${version}/${name}-${version}.${os}.${arch}.tar.xz | tar xJf -
-  cp ${name}-${version}/${name} ${binary}
+  cp -v ${name}-${version}/${name} ${binary}
 """
 
 [stackctl]
@@ -90,7 +90,7 @@ vars.version = "1.7.2.0"
 
 install = """
   ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
-  cp ${name}/${name} ${binary}
+  cp -v ${name}/${name} ${binary}
 """
 
 [stack-all]
@@ -98,7 +98,7 @@ vars.version = "0.6.4"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  mv ./${name} ${binary}
+  cp -v ./${name} ${binary}
 """
 
 [stack-lint-extra-deps]
@@ -106,5 +106,5 @@ vars.version = "1.2.3.1"
 
 install = """
   ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
-  cp ${name}/${name} ${binary}
+  cp -v ${name}/${name} ${binary}
 """
