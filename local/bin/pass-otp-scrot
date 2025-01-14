@@ -1,7 +1,19 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+
+if [ $# -ne 1 ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
+  cat >&2 <<EOM
+Usage: pass-otp-scrot <name>
+Select a QR image with scrot and store it in pass-otp
+
+Options:
+  <name>        secret name
+EOM
+  exit 64
+fi
+
+printf 'Saving OTP password at %s\n' "$1"
 
 scrot --select --file - |
   zbarimg -q - |
-  sed 's%^QR-Code:%%' |
-  pass otp insert otp/"$1"
+  sed 's/^QR-Code:' |
+  pass otp insert "$1"
