@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+scrot --select --file - |
+  zbarimg -q - |
+  sed 's%^QR-Code:%%' |
+  pass otp insert otp/"$1"
