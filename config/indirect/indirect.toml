@@ -1,29 +1,27 @@
 [defaults]
-vars.bin = "${HOME}/.local/bin"
 vars.curl = "curl -Ssf -L"
-
 vars.arch = "x86_64"
 vars.os = "linux"
 
-binary = "${bin}/${name}-${version}"
+binary = "${name}-${version}"
 
 [refactor]
 vars.version = "0.13.0.0"
 
 install = """
   stack install --local-bin-path $(pwd) apply-refact-${version}
-  cp -v ./${name} ${binary}
+  cp -v ./${name} "$1"
 """
 
 [restyle]
-vars.version = "v0.6.0.2"
+vars.version = "0.6.0.2"
 
 install = """
   mkdir -p ./bin
   curl --proto '=https' --tlsv1.2 -sSf \
     https://raw.githubusercontent.com/restyled-io/restyler/main/install |
-      sh -s -- -p $(pwd) -t ${version}
-  cp -v ./bin/${name} ${binary}
+      sh -s -- -p $(pwd) -t v${version}
+  cp -v ./bin/${name} "$1"
 """
 
 [fast-tags]
@@ -31,7 +29,7 @@ vars.version = "2.0.2"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  cp -v ./${name} ${binary}
+  cp -v ./${name} "$1"
 """
 
 [fourmolu]
@@ -40,7 +38,7 @@ vars.artifact = "${name}-${version}-${os}-${arch}"
 
 install = """
   ${curl} -O https://github.com/${name}/${name}/releases/download/v${version}/${artifact}
-  install ${artifact} ${binary}
+  install ${artifact} "$1"
 """
 
 [headroom]
@@ -48,7 +46,7 @@ vars.version = "0.4.3.0"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  cp -v ./${name} ${binary}
+  cp -v ./${name} "$1"
 """
 
 [hlint]
@@ -56,7 +54,7 @@ vars.version = "3.8"
 
 install = """
   ${curl} https://github.com/ndmitchell/${name}/releases/download/v${version}/${name}-${version}-${arch}-${os}.tar.gz | tar xzf -
-  cp -v ${name}-${version}/${name} ${binary}
+  cp -v ${name}-${version}/${name} "$1"
 """
 
 [pandoc]
@@ -64,7 +62,7 @@ vars.version = "3.5"
 
 install = """
   ${curl} https://github.com/jgm/${name}/releases/download/${version}/${name}-${version}-${os}-amd64.tar.gz | tar xzf -
-  cp -v ${name}-${version}/bin/${name} ${binary}
+  cp -v ${name}-${version}/bin/${name} "$1"
 """
 
 [platform]
@@ -74,7 +72,7 @@ vars.archive = "${name}-${arch}-${os}.tar.gz"
 install = """
   gh --repo freckle/${name} release download --pattern ${archive} v${version}
   tar xzf ${archive}
-  cp -v ${name}/${name} ${binary}
+  cp -v ${name}/${name} "$1"
 """
 
 [shellcheck]
@@ -82,7 +80,7 @@ vars.version = "stable"
 
 install = """
   ${curl} https://github.com/koalaman/${name}/releases/download/${version}/${name}-${version}.${os}.${arch}.tar.xz | tar xJf -
-  cp -v ${name}-${version}/${name} ${binary}
+  cp -v ${name}-${version}/${name} "$1"
 """
 
 [stackctl]
@@ -90,7 +88,7 @@ vars.version = "1.7.2.0"
 
 install = """
   ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
-  cp -v ${name}/${name} ${binary}
+  cp -v ${name}/${name} "$1"
 """
 
 [stack-all]
@@ -98,13 +96,13 @@ vars.version = "0.6.4"
 
 install = """
   stack install --local-bin-path $(pwd) ${name}-${version}
-  cp -v ./${name} ${binary}
+  cp -v ./${name} "$1"
 """
 
 [stack-lint-extra-deps]
-vars.version = "1.2.3.1"
+vars.version = "1.3.0.0"
 
 install = """
   ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
-  cp -v ${name}/${name} ${binary}
+  cp -v ${name}/${name} "$1"
 """
