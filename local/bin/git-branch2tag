@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+remote=origin
+
+for name; do
+  echo "Creating remote tag $name in $remote"
+  git push "$remote" "$remote/$name:refs/tags/$name"
+
+  echo "Deleting remote branch $name in $remote"
+  git push "$remote" ":refs/heads/$name"
+
+  echo "Deleting local branch $name"
+  if ! git branch -D "$name"; then
+    echo "Local branch did not exist"
+  fi
+done
