@@ -2,6 +2,7 @@
 vars.curl = "curl -Ssf -L"
 vars.arch = "x86_64"
 vars.os = "linux"
+vars.Os = "Linux"
 
 binary = "${name}-${version}"
 
@@ -39,6 +40,15 @@ vars.artifact = "${name}-${version}-${os}-${arch}"
 install = """
   ${curl} -O https://github.com/${name}/${name}/releases/download/v${version}/${artifact}
   install ${artifact} "$1"
+"""
+
+[hadolint]
+vars.version = "2.12.0"
+
+install = """
+  ${curl} -o ${name} https://github.com/${name}/${name}/releases/download/v${version}/${name}-${Os}-${arch}
+  chmod +x ./${name}
+  cp -v ./${name} "$1"
 """
 
 [headroom]
