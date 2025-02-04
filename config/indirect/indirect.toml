@@ -116,3 +116,12 @@ install = """
   ${curl} https://github.com/freckle/${name}/releases/download/v${version}/${name}-${arch}-${os}.tar.gz | tar xzf -
   cp -v ${name}/${name} "$1"
 """
+
+[yq]
+vars.version = "4.45.1"
+
+install = """
+  ${curl} -O https://github.com/mikefarah/${name}/releases/download/v${version}/${name}_linux_amd64
+  chmod +x ./${name}_linux_amd64
+  cp -v ./${name}_linux_amd64 "$1"
+"""
