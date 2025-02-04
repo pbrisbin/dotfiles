@@ -140,6 +140,7 @@ endfunction
 
 augroup mustache_yaml
   autocmd!
+  autocmd BufRead,BufNewFile *.yml.mustache call MustacheYaml()
   autocmd BufRead,BufNewFile *.yaml.mustache call MustacheYaml()
 augroup END
 
