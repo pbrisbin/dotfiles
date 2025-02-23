@@ -15,5 +15,5 @@ printf 'Saving OTP password at %s\n' "$1"
 
 scrot --select --file - |
   zbarimg -q - |
-  sed 's/^QR-Code:' |
+  sed 's/^QR-Code://' |
   pass otp insert "$1"
