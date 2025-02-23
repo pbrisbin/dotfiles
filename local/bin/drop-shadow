@@ -67,13 +67,13 @@ while (($#)); do
   shift
 done
 
-if ((!${images[@]})); then
+if ((!${#images[@]})); then
   echo "Missing required argument: image. See --help" >&2
   exit 64
 fi
 
-if ! command -v convert &>/dev/null; then
-  echo "The \`convert' command was not found. Is imagemagick installed?" >&2
+if ! command -v magick &>/dev/null; then
+  echo "The \`magick' command was not found. Is imagemagick v7 installed?" >&2
   exit 1
 fi
 
@@ -82,7 +82,7 @@ for image in "${images[@]}"; do
 
   printf 'Creating %s...\n' "$output"
 
-  convert "$image" \
+  magick convert "$image" \
     \( +clone -background black -shadow "${opacity}x${size}${x}${y}" \) \
     +swap -background none -layers merge +repage "$output"
 
