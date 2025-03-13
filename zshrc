@@ -103,6 +103,7 @@ fpath=(
 )
 path=(
   ~/.local/bin
+  ~/.nix-profile/bin
   $BUNDLE_PATH/bin
   $path
 )
