@@ -1,0 +1,92 @@
+#!/usr/bin/env stack
+{- stack --resolver lts-20 script
+  --resolver lts-23
+  --package bytestring
+  --package containers
+  --package typed-process
+  --package unliftio
+-}
+
+--
+-- This script looks for version-like tags in a git repository (current
+-- directory) and checks if they have a corresponding release on GitHub. If not,
+-- it creates a release for that tag (all using the GitHub CLI).
+--
+-- It's assumed that the tags are in the format "vX.Y.Z". Tags in any other
+-- format are ignored. It's also assumed that none of the backfilled releases
+-- should be set as latest.
+--
+{-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Control.Applicative ((<|>))
+import Control.Monad (guard, when)
+import Control.Monad.IO.Class (MonadIO (..))
+import Data.ByteString.Lazy (ByteString)
+import Data.ByteString.Lazy.Char8 qualified as BSL8
+import Data.Foldable (for_, toList, traverse_)
+import Data.Maybe (mapMaybe)
+import Data.Set (Set)
+import Data.Set qualified as Set
+import Data.Version
+import System.Process.Typed
+import Text.ParserCombinators.ReadP (eof, readP_to_S)
+import UnliftIO.Exception (throwString)
+
+main :: IO ()
+main = do
+  tags <-
+    readVersions
+      <$> readProcessStdout_ (proc "git" ["tag"])
+
+  putStrLn $ "Found " <> show (Set.size tags) <> " version-like tags"
+
+  released <-
+    readVersions
+      <$> readProcessStdout_
+        (proc "gh" ["release", "list", "--json", "tagName", "--jq", ".[] | .tagName"])
+
+  putStrLn $ "Found " <> show (Set.size released) <> " releases"
+
+  let needed = tags Set.\\ released
+
+  when (null needed) $ do
+    putStrLn "All version-like tags have releases"
+
+  for_ needed $ \tag -> do
+    putStrLn $ "Creating release for v" <> showVersion tag
+    createRelease tag $ Set.lookupLT tag tags
+
+createRelease :: MonadIO m => Version -> Maybe Version -> m ()
+createRelease tag mPrevious = runProcess_ $ proc "gh" options
+ where
+  addStartTag :: [String] -> [String]
+  addStartTag = maybe id (\v -> (<> ["--notes-start-tag", "v" <> showVersion v])) mPrevious
+
+  options :: [String]
+  options =
+    addStartTag
+      [ "release"
+      , "create"
+      , "v" <> showVersion tag
+      , "--generate-notes"
+      , "--latest=false"
+      , "--verify-tag"
+      , "--title"
+      , "v" <> showVersion tag
+      ]
+
+readVersions :: ByteString -> Set Version
+readVersions = Set.fromList . mapMaybe go . BSL8.lines
+ where
+  go bs = do
+    v <- BSL8.stripPrefix "v" bs
+    guard $ BSL8.all (`elem` ('.' : ['0' .. '9'])) v
+    readVersion $ BSL8.unpack v
+
+readVersion :: String -> Maybe Version
+readVersion s = case readP_to_S (parseVersion <* eof) s of
+  [(v, "")] -> Just v
+  _ -> Nothing
