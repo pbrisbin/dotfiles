@@ -34,6 +34,8 @@ vim.call('minpac#add', 'vim-scripts/lbnf.vim')
 vim.call('minpac#add', 'vmchale/dhall-vim')
 vim.call('minpac#add', 'wfleming/vim-codeclimate')
 
+vim.call('minpac#add', 'github/copilot.vim')
+
 vim.cmd [[ filetype plugin indent on ]]
 vim.cmd [[ colorscheme wildcharm ]]
 
@@ -97,6 +99,13 @@ map('n', '<Leader>r',
     ':w | :bel sp | :execute \'terminal \'.expand(\'%:p\')<CR>', {})
 
 map('n', '<silent> <C-L>', ':nohlsearch<CR><C-L>', {noremap = true})
+
+-- Tell copilot to use <C-J> instead of <Tab>
+vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false
+})
+vim.g.copilot_no_tab_map = true
 
 -- TODO: trouble making this one work
 -- map('t', '<Esc>', '<C-\><C-n>', {noremap = true })
