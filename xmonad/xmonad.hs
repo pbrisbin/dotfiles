@@ -25,8 +25,8 @@ main =
       , layoutHook = avoidStruts $ layoutHook def
       }
       `additionalKeysP` [ ("M-p", spawn "dmenu_run -fn 'Noto Sans-16'")
-                        , ("M-S-o", spawn "passmenu-otp --type")
-                        , ("M-S-p", spawn "passmenu --type")
+                        , ("M-S-o", spawn "passmenu-otp --type -fn 'Noto Sans-16'")
+                        , ("M-S-p", spawn "passmenu --type -fn 'Noto Sans-16'")
                         ]
  where
   role = stringProperty "WM_WINDOW_ROLE"
